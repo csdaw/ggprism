@@ -1,6 +1,13 @@
 theme_prism_bw <- function(base_size = 11, base_family = "",
                            base_line_size = base_size / 22,
-                           base_rect_size = base_size / 22) {
+                           base_rect_size = base_size / 22,
+                           axis_text_angle = 0) {
+  # ensure x axis text is at a sensible angle
+  angle <- axis_text_angle[1]
+  if(!angle %in% c(0, 45, 90, 270))
+    stop(sprintf("'axis_text_angle' must be one of [%s]",
+                 paste(c(0, 45, 90, 270),collapse=", ")), call.=FALSE)
+
   # The half-line (base-fontsize / 2) sets up the basic vertical
   # rhythm of the theme. Most margins will be set to this value.
   # However, when we work with relative sizes, we may want to multiply
@@ -31,7 +38,12 @@ theme_prism_bw <- function(base_size = 11, base_family = "",
       axis.title.y      = element_text(angle = 90, margin = margin(r = rel(10))),
       # change axis text
       axis.text         = element_text(face = "bold", size = rel(0.8), colour = "black"),
-      axis.text.x       = element_text(margin = margin(t = rel(2.5))),
+      axis.text.x       = element_text(
+        margin = margin(t = rel(2.5)),
+        angle = axis_text_angle,
+        hjust = ifelse(axis_text_angle %in% c(45, 90, 270), 1, 0.5),
+        vjust = ifelse(axis_text_angle %in% c(0, 90, 270), 0.5, 1)
+        ),
       axis.text.y       = element_text(margin = margin(r = rel(1))),
       # change axis ticks
       axis.ticks.length = unit(half_line / 1.35, "pt"),
