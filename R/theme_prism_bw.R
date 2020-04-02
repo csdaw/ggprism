@@ -26,12 +26,18 @@ theme_prism_bw <- function(base_size = 11, base_family = "",
       # change plot title
       plot.title        = element_text(face = "bold", size = rel(1), hjust = 0.5),
       # change axes titles
-      axis.title        = element_text(face = "bold", size = rel(0.8)),
+      axis.title        = element_text(face = "bold", size = rel(0.9)),
+      axis.title.x      = element_text(margin = margin(t = rel(7.5))),
+      axis.title.y      = element_text(angle = 90, margin = margin(r = rel(10))),
       # change axis text
       axis.text         = element_text(face = "bold", size = rel(0.8), colour = "black"),
+      axis.text.x       = element_text(margin = margin(t = rel(2.5))),
+      axis.text.y       = element_text(margin = margin(r = rel(1))),
       # change axis ticks
-      axis.ticks.length = unit(half_line / 1.85, "pt"),
-      axis.ticks        = element_line(colour = "black"),
+      axis.ticks.length = unit(half_line / 1.35, "pt"),
+      axis.ticks        = element_line(colour = "black", size = half_line / 8.5),
+      # show axes
+      axis.line         = element_line(colour = "black", size = half_line / 8.5),
       # white background and dark border
       panel.background  = element_rect(fill = "white", colour = NA),
       panel.border      = element_blank(),
@@ -39,8 +45,6 @@ theme_prism_bw <- function(base_size = 11, base_family = "",
       panel.grid = element_line(colour = "grey92"),
       panel.grid.major  = element_blank(),
       panel.grid.minor  = element_blank(),
-      # show axes
-      axis.line         = element_line(colour = "black", size = rel(1)),
       # contour strips to match panel contour
       strip.background  = element_rect(fill = "white", colour = "black", size = rel(2)),
       # match legend key to background
@@ -51,3 +55,4 @@ theme_prism_bw <- function(base_size = 11, base_family = "",
       complete = TRUE
     )
 }
+
