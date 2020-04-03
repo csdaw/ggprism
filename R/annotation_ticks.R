@@ -94,6 +94,110 @@ GeomTicks <- ggproto(
     for (s in 1:length(sides)) {
       if (grepl("[b|t]", sides[s])) {
 
+        # for ggplot2 < 3.3.0 use: xticks <- panel_params$x.minor
+        xticks <- panel_scales$x$break_positions_minor()
+
+        # Make the grobs
+        if (grepl("b", sides[s])) {
+          ticks$x_b <- with(
+            data,
+            segmentsGrob(
+              x0 = unit(xticks, "npc"),
+              x1 = unit(xticks, "npc"),
+              y0 = unit(0, "npc"),
+              y1 = ticklength,
+              gp = gpar(
+                col = alpha(colour, alpha),
+                lty = linetype,
+                lwd = size * .pt
+              )
+            )
+          )
+        }
+        if (grepl("t", sides[s])) {
+          ticks$x_t <- with(
+            data,
+            segmentsGrob(
+              x0 = unit(xticks, "npc"),
+              x1 = unit(xticks, "npc"),
+              y0 = unit(1, "npc"),
+              y1 = unit(1, "npc") - ticklength,
+              gp = gpar(
+                col = alpha(colour, alpha),
+                lty = linetype,
+                lwd = size * .pt
+              )
+            )
+          )
+        }
+      }
+
+
+      if (grepl("[l|r]", sides[s])) {
+
+        # for ggplot2 < 3.3.0 use: yticks <- panel_params$y.minor
+        yticks <- panel_scales$y$break_positions_minor()
+
+        # Make the grobs
+        if (grepl("l", sides[s])) {
+          ticks$y_l <- with(
+            data,
+            segmentsGrob(
+              y0 = unit(yticks, "npc"),
+              y1 = unit(yticks, "npc"),
+              x0 = unit(0, "npc"),
+              x1 = ticklength,
+              gp = gpar(
+                col = alpha(colour, alpha),
+                lty = linetype, lwd = size * .pt
+              )
+            )
+          )
+        }
+        if (grepl("r", sides[s])) {
+          ticks$y_r <- with(
+            data,
+            segmentsGrob(
+              y0 = unit(yticks, "npc"),
+              y1 = unit(yticks, "npc"),
+              x0 = unit(1, "npc"),
+              x1 = unit(1, "npc") - ticklength,
+              gp = gpar(
+                col = alpha(colour, alpha),
+                lty = linetype,
+                lwd = size * .pt
+              )
+            )
+          )
+        }
+      }
+    }
+    gTree(children = do.call("gList", ticks))
+  },
+  default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = 1)
+)
+
+GeomTicksOld <- ggproto(
+  "GeomTicksOld", Geom,
+  extra_params = "",
+  handle_na = function(data, params) {
+    data
+  },
+
+  draw_panel = function(data,
+                        panel_scales,
+                        coord,
+                        base = c(10, 10),
+                        sides = c("b", "l"),
+                        scaled = TRUE,
+                        ticklength = unit(0.1, "cm"),
+                        ticks_per_base = base - 1,
+                        delog = c(x = TRUE, y = TRUE)) {
+    ticks <- list()
+
+    for (s in 1:length(sides)) {
+      if (grepl("[b|t]", sides[s])) {
+
         xticks <- panel_scales$x.minor
 
         # Make the grobs
