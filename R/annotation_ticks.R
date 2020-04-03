@@ -7,7 +7,7 @@ annotation_ticks <- function(sides = "b",
                              outside = FALSE,
                              ticklength = unit(0.1, "cm"),
                              colour = "black",
-                             size = 0.5,
+                             base_size = 14,
                              linetype = 1,
                              alpha = 1,
                              color = NULL,
@@ -18,6 +18,11 @@ annotation_ticks <- function(sides = "b",
   if (!is.null(color)) {
     colour <- color
   }
+
+  # check for numeric base_size
+  if (!is.numeric(base_size)) {
+    stop("base_size must be numeric")
+  } else {size = (base_size / 2) / 8.5}
 
   # check for invalid side
   if (grepl("[^btlr]", sides)) {
@@ -115,7 +120,8 @@ GeomTicks <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -131,7 +137,8 @@ GeomTicks <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -157,7 +164,9 @@ GeomTicks <- ggproto(
               x1 = ticklength,
               gp = gpar(
                 col = alpha(colour, alpha),
-                lty = linetype, lwd = size * .pt
+                lty = linetype,
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -173,7 +182,8 @@ GeomTicks <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -182,7 +192,7 @@ GeomTicks <- ggproto(
     }
     gTree(children = do.call("gList", ticks))
   },
-  default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = 1)
+  default_aes = aes(colour = "black", size = 7 / 8.5, linetype = 1, alpha = 1)
 )
 
 GeomTicksOld <- ggproto(
@@ -222,7 +232,8 @@ GeomTicksOld <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -238,7 +249,8 @@ GeomTicksOld <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -263,7 +275,9 @@ GeomTicksOld <- ggproto(
               x1 = ticklength,
               gp = gpar(
                 col = alpha(colour, alpha),
-                lty = linetype, lwd = size * .pt
+                lty = linetype,
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -279,7 +293,8 @@ GeomTicksOld <- ggproto(
               gp = gpar(
                 col = alpha(colour, alpha),
                 lty = linetype,
-                lwd = size * .pt
+                lwd = size * .pt,
+                lineend = "butt"
               )
             )
           )
@@ -288,5 +303,5 @@ GeomTicksOld <- ggproto(
     }
     gTree(children = do.call("gList", ticks))
   },
-  default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = 1)
+  default_aes = aes(colour = "black", size = 7 / 8.5, linetype = 1, alpha = 1)
 )
