@@ -99,7 +99,9 @@ GeomTicks <- ggproto(
       if (grepl("[b|t]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: xticks <- panel_params$x.minor
-        xticks <- panel_scales$x$break_positions_minor()
+        minor_breaks <- panel_scales$x$break_positions_minor()
+        major_breaks <- panel_scales$x$break_positions()
+        xticks <- setdiff(minor_breaks, major_breaks)
 
         # Make the grobs
         if (grepl("b", sides[s])) {
@@ -140,7 +142,9 @@ GeomTicks <- ggproto(
       if (grepl("[l|r]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: yticks <- panel_params$y.minor
-        yticks <- panel_scales$y$break_positions_minor()
+        minor_breaks <- panel_scales$y$break_positions_minor()
+        major_breaks <- panel_scales$y$break_positions()
+        yticks <- setdiff(minor_breaks, major_breaks)
 
         # Make the grobs
         if (grepl("l", sides[s])) {
@@ -202,7 +206,9 @@ GeomTicksOld <- ggproto(
     for (s in 1:length(sides)) {
       if (grepl("[b|t]", sides[s])) {
 
-        xticks <- panel_scales$x.minor
+        minor_breaks <- panel_scales$x.minor
+        major_breaks <- panel_scales$x.major
+        xticks <- setdiff(minor_breaks, major_breaks)
 
         # Make the grobs
         if (grepl("b", sides[s])) {
@@ -242,7 +248,9 @@ GeomTicksOld <- ggproto(
 
       if (grepl("[l|r]", sides[s])) {
 
-        yticks <- panel_scales$y.minor
+        minor_breaks <- panel_scales$y.minor
+        major_breaks <- panel_scales$y.major
+        yticks <- setdiff(minor_breaks, major_breaks)
 
         # Make the grobs
         if (grepl("l", sides[s])) {
