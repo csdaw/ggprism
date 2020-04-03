@@ -4,6 +4,7 @@
 annotation_ticks <- function(sides = "b",
                              scale = "identity",
                              scaled = TRUE,
+                             outside = FALSE,
                              ticklength = unit(0.1, "cm"),
                              colour = "black",
                              size = 0.5,
@@ -47,6 +48,8 @@ annotation_ticks <- function(sides = "b",
       }
     }
   }
+
+  if (outside) {ticklength <- -1 * ticklength} else {ticklength <- ticklength}
 
   delog <- scale %in% "identity"
 
