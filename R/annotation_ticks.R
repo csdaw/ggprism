@@ -11,6 +11,7 @@ annotation_ticks <- function(sides = "b",
                              alpha = 1,
                              color = NULL,
                              ticks_per_base = NULL,
+                             data = data.frame(x = NA),
                              ...) {
   if (!is.null(color)) {
     colour <- color
@@ -49,7 +50,7 @@ annotation_ticks <- function(sides = "b",
   delog <- scale %in% "identity"
 
   layer(
-    data = data.frame(x = NA),
+    data = data,
     mapping = NULL,
     stat = StatIdentity,
     geom = GeomTicks,
