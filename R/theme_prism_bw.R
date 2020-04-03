@@ -6,7 +6,9 @@ theme_prism_bw <- function(base_size = 14, base_family = "",
   angle <- axis_text_angle[1]
   if(!angle %in% c(0, 45, 90, 270))
     stop(sprintf("'axis_text_angle' must be one of [%s]",
-                 paste(c(0, 45, 90, 270),collapse=", ")), call.=FALSE)
+                 paste(c(0, 45, 90, 270),collapse=", ")),
+         ".\nFor other angles, use the guide_axis() function in ggplot2 instead.",
+         call.=FALSE)
 
   # The half-line (base-fontsize / 2) sets up the basic vertical
   # rhythm of the theme. Most margins will be set to this value.
