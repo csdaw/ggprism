@@ -12,6 +12,7 @@ annotation_ticks <- function(sides = "b",
                              color = NULL,
                              ticks_per_base = NULL,
                              data = data.frame(x = NA),
+                             geom_old = FALSE,
                              ...) {
   if (!is.null(color)) {
     colour <- color
@@ -53,7 +54,7 @@ annotation_ticks <- function(sides = "b",
     data = data,
     mapping = NULL,
     stat = StatIdentity,
-    geom = GeomTicks,
+    geom = ifelse(geom_old, GeomTicksOld, GeomTicks),
     position = PositionIdentity,
     show.legend = FALSE,
     inherit.aes = FALSE,
