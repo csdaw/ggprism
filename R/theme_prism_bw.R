@@ -1,4 +1,4 @@
-theme_prism_bw <- function(base_size = 14, base_family = "",
+theme_prism_bw <- function(base_size = 12, base_family = "",
                            base_fontface = "bold",
                            base_line_size = base_size / 22,
                            base_rect_size = base_size / 22,
@@ -36,25 +36,25 @@ theme_prism_bw <- function(base_size = 14, base_family = "",
       # make line endings 'square' instead of 'butt'
       line              = element_line(lineend = "square"),
       # change plot title
-      plot.title        = element_text(face = base_fontface, size = rel(1), hjust = 0.5),
+      plot.title        = element_text(face = base_fontface, size = rel(1.2), hjust = 0.5),
       # change axes titles
-      axis.title        = element_text(face = base_fontface, size = rel(0.9)),
+      axis.title        = element_text(face = base_fontface, size = base_size),
       axis.title.x      = element_text(margin = margin(t = rel(7.5))),
       axis.title.y      = element_text(angle = 90, margin = margin(r = rel(10))),
       # change axis text
-      axis.text         = element_text(face = base_fontface, size = rel(0.8), colour = "black"),
+      axis.text         = element_text(face = base_fontface, size = rel(0.95), colour = "black"),
       axis.text.x       = element_text(
-        margin = margin(t = rel(2.5)),
+        margin = margin(t = rel(4)),
         angle = axis_text_angle,
         hjust = ifelse(axis_text_angle %in% c(45, 90, 270), 1, 0.5),
         vjust = ifelse(axis_text_angle %in% c(0, 90, 270), 0.5, 1)
         ),
       axis.text.y       = element_text(margin = margin(r = rel(1))),
       # change axis ticks
-      axis.ticks.length = unit(half_line / 1.35, "pt"),
-      axis.ticks        = element_line(colour = "black", size = half_line / 8.5),
+      axis.ticks.length = unit(half_line / 1.4, "pt"),
+      axis.ticks        = element_line(colour = "black", size = half_line / 10),
       # show axes
-      axis.line         = element_line(colour = "black", size = half_line / 8.5),
+      axis.line         = element_line(colour = "black", size = half_line / 10),
       # white background and dark border
       panel.background  = element_rect(fill = "white", colour = NA),
       panel.border      = element_blank(),
