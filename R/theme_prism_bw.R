@@ -49,7 +49,7 @@ theme_prism_bw <- function(base_size = 12, base_family = "",
         hjust = ifelse(axis_text_angle %in% c(45, 90, 270), 1, 0.5),
         vjust = ifelse(axis_text_angle %in% c(0, 90, 270), 0.5, 1)
         ),
-      axis.text.y       = element_text(margin = margin(r = rel(1))),
+      axis.text.y       = element_text(margin = margin(r = rel(1)), hjust = 1),
       # change axis ticks
       axis.ticks.length = unit(half_line / 1.4, "pt"),
       axis.ticks        = element_line(colour = "black", size = half_line / 10),
