@@ -1,4 +1,5 @@
 theme_prism_bw <- function(base_size = 14, base_family = "",
+                           base_fontface = "bold",
                            base_line_size = base_size / 22,
                            base_rect_size = base_size / 22,
                            axis_text_angle = 0) {
@@ -6,9 +7,9 @@ theme_prism_bw <- function(base_size = 14, base_family = "",
   angle <- axis_text_angle[1]
   if(!angle %in% c(0, 45, 90, 270))
     stop(sprintf("'axis_text_angle' must be one of [%s]",
-                 paste(c(0, 45, 90, 270),collapse=", ")),
+                 paste(c(0, 45, 90, 270), collapse=", ")),
          ".\nFor other angles, use the guide_axis() function in ggplot2 instead.",
-         call.=FALSE)
+         call. = FALSE)
 
   # The half-line (base-fontsize / 2) sets up the basic vertical
   # rhythm of the theme. Most margins will be set to this value.
@@ -22,6 +23,8 @@ theme_prism_bw <- function(base_size = 14, base_family = "",
   # Throughout the theme, we use three font sizes, `base_size` (`rel(1)`)
   # for normal, `rel(0.8)` for small, and `rel(1.2)` for large.
 
+  # Fontface is bold by default. Use plain for normal font.
+
   # Starts with theme_grey and then modify some parts
   theme_grey(
     base_size = base_size,
@@ -33,13 +36,13 @@ theme_prism_bw <- function(base_size = 14, base_family = "",
       # make line endings 'square' instead of 'butt'
       line              = element_line(lineend = "square"),
       # change plot title
-      plot.title        = element_text(face = "bold", size = rel(1), hjust = 0.5),
+      plot.title        = element_text(face = base_fontface, size = rel(1), hjust = 0.5),
       # change axes titles
-      axis.title        = element_text(face = "bold", size = rel(0.9)),
+      axis.title        = element_text(face = base_fontface, size = rel(0.9)),
       axis.title.x      = element_text(margin = margin(t = rel(7.5))),
       axis.title.y      = element_text(angle = 90, margin = margin(r = rel(10))),
       # change axis text
-      axis.text         = element_text(face = "bold", size = rel(0.8), colour = "black"),
+      axis.text         = element_text(face = base_fontface, size = rel(0.8), colour = "black"),
       axis.text.x       = element_text(
         margin = margin(t = rel(2.5)),
         angle = axis_text_angle,
