@@ -7,7 +7,7 @@ annotation_ticks <- function(sides = "b",
                              outside = FALSE,
                              ticklength = unit(0.15, "cm"),
                              colour = "black",
-                             base_size = 14,
+                             base_size = 12,
                              linetype = 1,
                              alpha = 1,
                              color = NULL,
@@ -203,5 +203,5 @@ GeomTicks <- ggproto(
     }
     gTree(children = do.call("gList", ticks))
   },
-  default_aes = aes(colour = "black", size = 7 / 8.5, linetype = 1, alpha = 1)
+  default_aes = aes(colour = "black", size = 6 / 10, linetype = 1, alpha = 1)
 )
