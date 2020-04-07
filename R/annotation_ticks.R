@@ -5,7 +5,7 @@ annotation_ticks <- function(sides = "b",
                              scale = "identity",
                              scaled = TRUE,
                              outside = FALSE,
-                             ticklength = unit(0.1, "cm"),
+                             ticklength = unit(0.15, "cm"),
                              colour = "black",
                              base_size = 14,
                              linetype = 1,
@@ -13,7 +13,6 @@ annotation_ticks <- function(sides = "b",
                              color = NULL,
                              ticks_per_base = NULL,
                              data = data.frame(x = NA),
-                             geom_old = FALSE,
                              ...) {
   if (!is.null(color)) {
     colour <- color
@@ -22,7 +21,7 @@ annotation_ticks <- function(sides = "b",
   # check for numeric base_size
   if (!is.numeric(base_size)) {
     stop("base_size must be numeric")
-  } else {size = (base_size / 2) / 8.5}
+  } else {size = (base_size / 2) / 10}
 
   # check for invalid side
   if (grepl("[^btlr]", sides)) {
@@ -104,9 +103,15 @@ GeomTicks <- ggproto(
       if (grepl("[b|t]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: xticks <- panel_params$x.minor
-        minor_breaks <- panel_scales$x$break_positions_minor()
-        major_breaks <- panel_scales$x$break_positions()
-        xticks <- setdiff(minor_breaks, major_breaks)
+        if (utils::packageVersion("ggplot2") >= "3.2.1.9000") {
+          x_minor_breaks <- panel_scales$x$break_positions_minor()
+          x_major_breaks <- panel_scales$x$break_positions()
+        } else {
+          x_minor_breaks <- panel_scales$x.minor
+          x_major_breaks <- panel_scales$x.major
+        }
+
+        xticks <- setdiff(x_minor_breaks, x_major_breaks)
 
         # Make the grobs
         if (grepl("b", sides[s])) {
@@ -149,120 +154,15 @@ GeomTicks <- ggproto(
       if (grepl("[l|r]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: yticks <- panel_params$y.minor
-        minor_breaks <- panel_scales$y$break_positions_minor()
-        major_breaks <- panel_scales$y$break_positions()
-        yticks <- setdiff(minor_breaks, major_breaks)
-
-        # Make the grobs
-        if (grepl("l", sides[s])) {
-          ticks$y_l <- with(
-            data,
-            segmentsGrob(
-              y0 = unit(yticks, "npc"),
-              y1 = unit(yticks, "npc"),
-              x0 = unit(0, "npc"),
-              x1 = ticklength,
-              gp = gpar(
-                col = alpha(colour, alpha),
-                lty = linetype,
-                lwd = size * .pt,
-                lineend = "butt"
-              )
-            )
-          )
+        if (utils::packageVersion("ggplot2") >= "3.2.1.9000") {
+          y_minor_breaks <- panel_scales$y$break_positions_minor()
+          y_major_breaks <- panel_scales$y$break_positions()
+        } else {
+          y_minor_breaks <- panel_scales$y.minor
+          y_major_breaks <- panel_scales$y.major
         }
-        if (grepl("r", sides[s])) {
-          ticks$y_r <- with(
-            data,
-            segmentsGrob(
-              y0 = unit(yticks, "npc"),
-              y1 = unit(yticks, "npc"),
-              x0 = unit(1, "npc"),
-              x1 = unit(1, "npc") - ticklength,
-              gp = gpar(
-                col = alpha(colour, alpha),
-                lty = linetype,
-                lwd = size * .pt,
-                lineend = "butt"
-              )
-            )
-          )
-        }
-      }
-    }
-    gTree(children = do.call("gList", ticks))
-  },
-  default_aes = aes(colour = "black", size = 7 / 8.5, linetype = 1, alpha = 1)
-)
 
-GeomTicksOld <- ggproto(
-  "GeomTicksOld", Geom,
-  extra_params = "",
-  handle_na = function(data, params) {
-    data
-  },
-
-  draw_panel = function(data,
-                        panel_scales,
-                        coord,
-                        base = c(10, 10),
-                        sides = c("b", "l"),
-                        scaled = TRUE,
-                        ticklength = unit(0.1, "cm"),
-                        ticks_per_base = base - 1,
-                        delog = c(x = TRUE, y = TRUE)) {
-    ticks <- list()
-
-    for (s in 1:length(sides)) {
-      if (grepl("[b|t]", sides[s])) {
-
-        minor_breaks <- panel_scales$x.minor
-        major_breaks <- panel_scales$x.major
-        xticks <- setdiff(minor_breaks, major_breaks)
-
-        # Make the grobs
-        if (grepl("b", sides[s])) {
-          ticks$x_b <- with(
-            data,
-            segmentsGrob(
-              x0 = unit(xticks, "npc"),
-              x1 = unit(xticks, "npc"),
-              y0 = unit(0, "npc"),
-              y1 = ticklength,
-              gp = gpar(
-                col = alpha(colour, alpha),
-                lty = linetype,
-                lwd = size * .pt,
-                lineend = "butt"
-              )
-            )
-          )
-        }
-        if (grepl("t", sides[s])) {
-          ticks$x_t <- with(
-            data,
-            segmentsGrob(
-              x0 = unit(xticks, "npc"),
-              x1 = unit(xticks, "npc"),
-              y0 = unit(1, "npc"),
-              y1 = unit(1, "npc") - ticklength,
-              gp = gpar(
-                col = alpha(colour, alpha),
-                lty = linetype,
-                lwd = size * .pt,
-                lineend = "butt"
-              )
-            )
-          )
-        }
-      }
-
-
-      if (grepl("[l|r]", sides[s])) {
-
-        minor_breaks <- panel_scales$y.minor
-        major_breaks <- panel_scales$y.major
-        yticks <- setdiff(minor_breaks, major_breaks)
+        yticks <- setdiff(y_minor_breaks, y_major_breaks)
 
         # Make the grobs
         if (grepl("l", sides[s])) {
