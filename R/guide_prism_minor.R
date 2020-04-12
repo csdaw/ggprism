@@ -35,8 +35,8 @@
 #' p + guides(x = guide_axis(n.dodge = 2), y.sec = guide_axis())
 #'
 #'
-guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                       order = 0, position = waiver()) {
+guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
+                       n.dodge = 1, order = 0, position = waiver()) {
   structure(
     list(
       title = title,
@@ -55,7 +55,7 @@ guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.
 
       name = "axis"
     ),
-    class = c("guide", "axis")
+    class = c("guide", "prism_minor", "axis")
   )
 }
 
