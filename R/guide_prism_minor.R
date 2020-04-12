@@ -63,7 +63,12 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = N
 guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
+
+  # Get major breaks
   breaks <- scale$get_breaks()
+
+  # Get minor breaks
+  minor_breaks <- setdiff(scale$get_breaks_minor(), breaks)
 
   empty_ticks <- new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
@@ -87,9 +92,33 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
     guide$key <- ticks[is.finite(ticks[[aesthetic]]), ]
   }
 
+  if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
+    warn(glue(
+      "axis guide needs appropriate scales: ",
+      glue_collapse(guide$available_aes, ", ", last = " or ")
+    ))
+    guide$minor <- empty_ticks
+  } else if (length(minor_breaks) == 0) {
+    guide$minor <- empty_ticks
+  } else {
+    mapped_minor_breaks <- if (scale$is_discrete()) scale$map(minor_breaks) else minor_breaks
+    minor_ticks <- new_data_frame(setNames(list(mapped_minor_breaks), aesthetic))
+    minor_ticks$.value <- minor_breaks
+    # Make all minor ticks have blank label
+    minor_ticks$.label <- rep("", length(minor_breaks))
+
+    guide$minor <- minor_ticks[is.finite(minor_ticks[[aesthetic]]), ]
+  }
+
   guide$name <- paste0(guide$name, "_", aesthetic)
-  guide$hash <- digest::digest(list(guide$title, guide$key$.value, guide$key$.label, guide$name))
+  guide$hash <- digest::digest(list(
+    guide$title, guide$name,
+    guide$key$.value, guide$key$.label,
+    guide$minor$.value, guide$minor$.label
+  )
+  )
   guide
+  print(guide)
 }
 
 #' @export
