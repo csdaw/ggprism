@@ -64,11 +64,15 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
 
-  # Get major breaks
-  breaks <- scale$get_breaks()
+  # Define major and minor breaks
+  major_breaks <- scale$get_breaks()
+  minor_breaks <- setdiff(scale$get_breaks_minor(), major_breaks)
 
-  # Get minor breaks
-  minor_breaks <- setdiff(scale$get_breaks_minor(), breaks)
+  # Define all breaks
+  breaks <- union(major_breaks, minor_breaks)
+
+  # Indicate which breaks are major
+  is_major <- breaks %in% major_breaks
 
   empty_ticks <- new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
@@ -89,34 +93,15 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
     ticks$.value <- breaks
     ticks$.label <- scale$get_labels(breaks)
 
+    # Make minor breaks have empty labls
+    ticks$.label[!is_major] <- ""
+
     guide$key <- ticks[is.finite(ticks[[aesthetic]]), ]
   }
 
-  if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
-    warn(glue(
-      "axis guide needs appropriate scales: ",
-      glue_collapse(guide$available_aes, ", ", last = " or ")
-    ))
-    guide$minor <- empty_ticks
-  } else if (length(minor_breaks) == 0) {
-    guide$minor <- empty_ticks
-  } else {
-    mapped_minor_breaks <- if (scale$is_discrete()) scale$map(minor_breaks) else minor_breaks
-    minor_ticks <- new_data_frame(setNames(list(mapped_minor_breaks), aesthetic))
-    minor_ticks$.value <- minor_breaks
-    # Make all minor ticks have blank label
-    minor_ticks$.label <- rep("", length(minor_breaks))
-
-    guide$minor <- minor_ticks[is.finite(minor_ticks[[aesthetic]]), ]
-  }
-
   guide$name <- paste0(guide$name, "_", aesthetic)
-  guide$hash <- digest::digest(list(
-    guide$title, guide$name,
-    guide$key$.value, guide$key$.label,
-    guide$minor$.value, guide$minor$.label
-  )
-  )
+  guide$hash <- digest::digest(list(guide$title, guide$key$.value,
+                                    guide$key$.label, guide$name))
   guide
   print(guide)
 }
@@ -128,7 +113,6 @@ guide_gengrob.prism_minor <- function(guide, theme) {
   draw_axis(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label,
-    minor_positions = guide$minor[[aesthetic]],
     axis_position = guide$position,
     theme = theme,
     check.overlap = guide$check.overlap,
