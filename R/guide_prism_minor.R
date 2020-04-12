@@ -128,6 +128,7 @@ guide_gengrob.prism_minor <- function(guide, theme) {
   draw_axis(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label,
+    minor_positions = guide$minor[[aesthetic]],
     axis_position = guide$position,
     theme = theme,
     check.overlap = guide$check.overlap,
