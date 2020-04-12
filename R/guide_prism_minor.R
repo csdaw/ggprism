@@ -35,8 +35,8 @@
 #' p + guides(x = guide_axis(n.dodge = 2), y.sec = guide_axis())
 #'
 #'
-guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
-                       n.dodge = 1, order = 0, position = waiver()) {
+guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
+                              n.dodge = 1, order = 0, position = waiver()) {
   structure(
     list(
       title = title,
@@ -60,7 +60,7 @@ guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
 }
 
 #' @export
-guide_train.axis <- function(guide, scale, aesthetic = NULL) {
+guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
   breaks <- scale$get_breaks()
@@ -93,7 +93,7 @@ guide_train.axis <- function(guide, scale, aesthetic = NULL) {
 }
 
 #' @export
-guide_gengrob.axis <- function(guide, theme) {
+guide_gengrob.prism_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
   draw_axis(
@@ -124,7 +124,7 @@ guide_gengrob.axis <- function(guide, theme) {
 #'
 #' @noRd
 #'
-draw_axis <- function(break_positions, break_labels, axis_position, theme,
+draw_prism_minor <- function(break_positions, break_labels, axis_position, theme,
                       check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
