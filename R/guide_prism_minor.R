@@ -91,10 +91,8 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
     ticks <- new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
-    ticks$.label <- scale$get_labels(breaks)
-
-    # Make minor breaks have empty labls
-    ticks$.label[!is_major] <- ""
+    # Get major break labels and make minor breaks blank
+    ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
 
     guide$key <- ticks[is.finite(ticks[[aesthetic]]), ]
   }
@@ -248,29 +246,25 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   ticks_grob <- exec(
     element_grob, tick_element,
-    !!position_dim := rep(unit(break_positions[breaks_major], "native"), each = 2),
-    !!non_position_dim := rep(
-      grid::unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
-      times = n_breaks
+    !!position_dim := rep(unit(break_positions, "native"), each = 2),
+    !!non_position_dim := grid::unit.c(
+      rep(
+        grid::unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
+        times = n_breaks
+      ),
+      rep(
+        grid::unit.c(non_position_panel + (tick_direction * prism_tick_length), non_position_panel)[tick_coordinate_order],
+        times = n_minor_breaks
+      )
     ),
-    id.lengths = rep(2, times = n_breaks)
-  )
-
-  minor_ticks_grob <- exec(
-    element_grob, prism_tick_element,
-    !!position_dim := rep(unit(break_positions[!breaks_major], "native"), each = 2),
-    !!non_position_dim := rep(
-      grid::unit.c(non_position_panel + (tick_direction * prism_tick_length), non_position_panel)[tick_coordinate_order],
-      times = n_minor_breaks
-    ),
-    id.lengths = rep(2, times = n_minor_breaks)
+    id.lengths = rep(2, times = length(break_positions))
   )
 
   # create gtable
   non_position_sizes <- paste0(non_position_size, "s")
   label_dims <- do.call(grid::unit.c, lapply(label_grobs, measure_labels_non_pos))
-  grobs <- c(list(minor_ticks_grob, ticks_grob), label_grobs)
-  grob_dims <- grid::unit.c(prism_tick_length, tick_length, label_dims)
+  grobs <- c(list(ticks_grob), label_grobs)
+  grob_dims <- grid::unit.c(tick_length, label_dims)
 
   if (labels_first_gtable) {
     grobs <- rev(grobs)
