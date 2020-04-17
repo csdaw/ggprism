@@ -55,19 +55,22 @@ theme_prism_bw <- function(base_size = 12, base_family = "",
       axis.ticks        = element_line(colour = "black", size = half_line / 10),
       # show axes
       axis.line         = element_line(colour = "black", size = half_line / 10),
-      # white background and dark border
+      # white background and no border
       panel.background  = element_rect(fill = "white", colour = NA),
       panel.border      = element_blank(),
-      # make gridlines dark, same contrast with white as in theme_grey
-      panel.grid = element_line(colour = "grey92"),
-      panel.grid.major  = element_blank(),
-      panel.grid.minor  = element_blank(),
-      # contour strips to match panel contour
-      strip.background  = element_rect(fill = "white", colour = "black", size = rel(2)),
+      # remove gridlines
+      panel.grid = element_blank(),
+      # change strip elements (facet labels)
+      strip.background  = element_blank(),
+      strip.text.x = element_text(face = base_fontface, margin = margin(b = half_line / 1.5)),
+      strip.text.y = element_text(face = base_fontface, margin = margin(l = half_line / 1.5)),
       # match legend key to background
       legend.key        = element_blank(),
       # remove legend title by default
       legend.title      = element_blank(),
+
+      # change custom prism theme elements
+      prism.ticks.length = unit(half_line / 2.5, "pt"),
 
       complete = TRUE
     )
