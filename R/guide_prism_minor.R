@@ -66,6 +66,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   # Define major and minor breaks
   major_breaks <- scale$get_breaks()
+  major_breaks <- major_breaks[!is.na(major_breaks)]
   minor_breaks <- setdiff(scale$get_breaks_minor(), major_breaks)
 
   # Define all breaks
@@ -74,7 +75,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   # Indicate which breaks are major
   is_major <- breaks %in% major_breaks
 
-  empty_ticks <- new_data_frame(
+  empty_ticks <- ggplot2:::new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
   )
   names(empty_ticks) <- c(aesthetic, ".value", ".label")
@@ -89,7 +90,8 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
     guide$key <- empty_ticks
   } else {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
-    ticks <- new_data_frame(setNames(list(mapped_breaks), aesthetic))
+
+    ticks <- ggplot2:::new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     # Get major break labels and make minor breaks blank
     ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
