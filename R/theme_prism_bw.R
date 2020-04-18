@@ -36,7 +36,9 @@ theme_prism_bw <- function(base_size = 12, base_family = "",
       # make line endings 'square' instead of 'butt'
       line              = element_line(lineend = "square"),
       # change plot title
-      plot.title        = element_text(face = base_fontface, size = rel(1.2), hjust = 0.5),
+      plot.title        = element_text(face = base_fontface,
+                                       size = rel(1.2), hjust = 0.5,
+                                       margin = margin(b = base_size, unit = "pt")),
       # change axes titles
       axis.title        = element_text(face = base_fontface, size = base_size),
       axis.title.x      = element_text(margin = margin(t = rel(7.5))),
