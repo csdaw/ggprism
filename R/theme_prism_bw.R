@@ -36,7 +36,9 @@ theme_prism_bw <- function(base_size = 12, base_family = "",
       # make line endings 'square' instead of 'butt'
       line              = element_line(lineend = "square"),
       # change plot title
-      plot.title        = element_text(face = base_fontface, size = rel(1.2), hjust = 0.5),
+      plot.title        = element_text(face = base_fontface,
+                                       size = rel(1.2), hjust = 0.5,
+                                       margin = margin(b = base_size, unit = "pt")),
       # change axes titles
       axis.title        = element_text(face = base_fontface, size = base_size),
       axis.title.x      = element_text(margin = margin(t = rel(7.5))),
@@ -44,30 +46,33 @@ theme_prism_bw <- function(base_size = 12, base_family = "",
       # change axis text
       axis.text         = element_text(face = base_fontface, size = rel(0.95), colour = "black"),
       axis.text.x       = element_text(
-        margin = margin(t = rel(4)),
+        margin = margin(t = rel(2)),
         angle = axis_text_angle,
         hjust = ifelse(axis_text_angle %in% c(45, 90, 270), 1, 0.5),
         vjust = ifelse(axis_text_angle %in% c(0, 90, 270), 0.5, 1)
         ),
       axis.text.y       = element_text(margin = margin(r = rel(1.25)), hjust = 1),
       # change axis ticks
-      axis.ticks.length = unit(half_line / 1.5, "pt"),
+      axis.ticks.length = unit(half_line / 1.1, "pt"),
       axis.ticks        = element_line(colour = "black", size = half_line / 10),
       # show axes
       axis.line         = element_line(colour = "black", size = half_line / 10),
-      # white background and dark border
+      # white background and no border
       panel.background  = element_rect(fill = "white", colour = NA),
       panel.border      = element_blank(),
-      # make gridlines dark, same contrast with white as in theme_grey
-      panel.grid = element_line(colour = "grey92"),
-      panel.grid.major  = element_blank(),
-      panel.grid.minor  = element_blank(),
-      # contour strips to match panel contour
-      strip.background  = element_rect(fill = "white", colour = "black", size = rel(2)),
-      # match legend key to background
+      # remove gridlines
+      panel.grid = element_blank(),
+      # change strip elements (facet labels)
+      strip.background  = element_blank(),
+      strip.text.x = element_text(face = base_fontface, margin = margin(b = half_line / 1.5)),
+      strip.text.y = element_text(face = base_fontface, margin = margin(l = half_line / 1.5)),
+      # change legend elements
       legend.key        = element_blank(),
-      # remove legend title by default
       legend.title      = element_blank(),
+      legend.key.width  = unit(base_size * 1.8, "pt"),
+
+      # change custom prism theme elements
+      prism.ticks.length = unit(half_line / 2.5, "pt"),
 
       complete = TRUE
     )
