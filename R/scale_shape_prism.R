@@ -30,7 +30,7 @@ prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
   out
 }
 
-#' Prism shape scales
+#' Prism shape scales (discrete)
 #'
 #' See \code{\link{prism_shape_pal}()} for details.
 #'

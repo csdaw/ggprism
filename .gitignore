@@ -41,3 +41,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 .Rproj.user
+
+# Colour list files
+data-raw/schemes/**/*.clr
