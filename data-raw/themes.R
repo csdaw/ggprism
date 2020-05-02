@@ -10,6 +10,7 @@
 #
 library(readr)
 library(dplyr)
+library(stringr)
 library(purrr)
 library(here)
 
@@ -22,7 +23,7 @@ process_prism_scheme <- function(path) {
   theme <- read_delim(path, delim = " ",
              col_names = c("name", "r", "g", "b", "value")) %>%
     select(name, value) %>%
-    filter(!grepl("^dataSet", name))
+    filter(!str_detect(name, "^dataSet") | str_detect(name, "dataSetLegendColor1"))
 }
 
 

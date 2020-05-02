@@ -35,6 +35,8 @@ autumn_leaves:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#A00000'
 beer_and_ales:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -72,6 +74,8 @@ beer_and_ales:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#A00000'
 black_and_white:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -109,6 +113,8 @@ black_and_white:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 candy_bright:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -146,6 +152,8 @@ candy_bright:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#F3F3F3'
+- name: dataSetLegendColor1
+  value: '#000080'
 candy_soft:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -183,6 +191,8 @@ candy_soft:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#F3F3F3'
+- name: dataSetLegendColor1
+  value: '#0000C0'
 colorblind_safe:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -220,6 +230,8 @@ colorblind_safe:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 colors:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -257,6 +269,28 @@ colors:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
+- name: dataSetLegendColor10
+  value: '#000000'
+- name: dataSetLegendColor11
+  value: '#000000'
+- name: dataSetLegendColor12
+  value: '#000000'
+- name: dataSetLegendColor13
+  value: '#000000'
+- name: dataSetLegendColor14
+  value: '#000000'
+- name: dataSetLegendColor15
+  value: '#000000'
+- name: dataSetLegendColor16
+  value: '#000000'
+- name: dataSetLegendColor17
+  value: '#000000'
+- name: dataSetLegendColor18
+  value: '#000000'
+- name: dataSetLegendColor19
+  value: '#000000'
 diazo:
 - name: pageBackgroundColor
   value: '#0000FF'
@@ -293,6 +327,8 @@ diazo:
 - name: embeddedTablePatternColor
   value: '#FFFFFF'
 - name: embeddedTableFillColor
+  value: '#FFFFFF'
+- name: dataSetLegendColor1
   value: '#FFFFFF'
 earth_tones:
 - name: pageBackgroundColor
@@ -331,6 +367,10 @@ earth_tones:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#383E22'
+- name: dataSetLegendColor10
+  value: '#33362E'
 evergreen:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -368,6 +408,8 @@ evergreen:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#005A00'
 greenwash:
 - name: pageBackgroundColor
   value: '#DFFBA7'
@@ -405,6 +447,10 @@ greenwash:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#512305'
+- name: dataSetLegendColor10
+  value: '#818C5A'
 muted_rainbow:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -442,6 +488,10 @@ muted_rainbow:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#6E1F00'
+- name: dataSetLegendColor10
+  value: '#4269A0'
 office:
 - name: pageBackgroundColor
   value: '#CCD2E0'
@@ -479,6 +529,8 @@ office:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#0000C0'
 purple_passion:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -516,6 +568,8 @@ purple_passion:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#76069A'
 shades_of_gray:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -553,6 +607,8 @@ shades_of_gray:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 summer:
 - name: pageBackgroundColor
   value: '#FFF6B9'
@@ -590,6 +646,10 @@ summer:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#285291'
+- name: dataSetLegendColor10
+  value: '#285C08'
 the_blues:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -627,6 +687,8 @@ the_blues:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#0000C0'
 winter_soft:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -664,6 +726,8 @@ winter_soft:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#0000C0'
 stained_glass:
 - name: pageBackgroundColor
   value: '#000000'
@@ -701,6 +765,8 @@ stained_glass:
   value: '#000000'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#FF0000'
 warm_pastels:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -738,6 +804,8 @@ warm_pastels:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#666699'
 flames:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -775,6 +843,8 @@ flames:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#CC0000'
 floral:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -812,6 +882,14 @@ floral:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
+- name: dataSetLegendColor10
+  value: '#000000'
+- name: dataSetLegendColor11
+  value: '#000000'
+- name: dataSetLegendColor12
+  value: '#000000'
 inferno:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -849,6 +927,8 @@ inferno:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 magma:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -886,6 +966,8 @@ magma:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 mustard_field:
 - name: pageBackgroundColor
   value: '#FFFFE0'
@@ -923,6 +1005,8 @@ mustard_field:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#94641F'
 neon:
 - name: pageBackgroundColor
   value: '#000080'
@@ -960,6 +1044,8 @@ neon:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#F74ED6'
 pastels:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -997,6 +1083,8 @@ pastels:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#666699'
 pearl:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1034,6 +1122,8 @@ pearl:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 plasma:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1071,6 +1161,8 @@ plasma:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 prism_dark:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1108,6 +1200,10 @@ prism_dark:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
+- name: dataSetLegendColor10
+  value: '#000000'
 prism_light:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1145,6 +1241,10 @@ prism_light:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
+- name: dataSetLegendColor10
+  value: '#000000'
 quiet:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1182,6 +1282,8 @@ quiet:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#006666'
 spring:
 - name: pageBackgroundColor
   value: '#B4F99F'
@@ -1219,6 +1321,8 @@ spring:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#CAFFCA'
+- name: dataSetLegendColor1
+  value: '#4169E1'
 starry:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1256,6 +1360,8 @@ starry:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 viridis:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1293,6 +1399,8 @@ viridis:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 waves:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1330,6 +1438,8 @@ waves:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000000'
 blueprint:
 - name: pageBackgroundColor
   value: '#6699CC'
@@ -1366,6 +1476,8 @@ blueprint:
 - name: embeddedTablePatternColor
   value: '#FFFFFF'
 - name: embeddedTableFillColor
+  value: '#FFFFFF'
+- name: dataSetLegendColor1
   value: '#FFFFFF'
 fir:
 - name: pageBackgroundColor
@@ -1404,6 +1516,8 @@ fir:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#336666'
 ocean:
 - name: pageBackgroundColor
   value: '#87CEFA'
@@ -1441,6 +1555,8 @@ ocean:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#666699'
 sunny_garden:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1478,6 +1594,8 @@ sunny_garden:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#33CC00'
 wool_muffler:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1515,6 +1633,8 @@ wool_muffler:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#6699CC'
 warm_and_sunny:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1552,6 +1672,8 @@ warm_and_sunny:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#A00000'
 winter_bright:
 - name: pageBackgroundColor
   value: '#FFFFFF'
@@ -1589,3 +1711,5 @@ winter_bright:
   value: '#FFFFFF'
 - name: embeddedTableFillColor
   value: '#FFFFFF'
+- name: dataSetLegendColor1
+  value: '#000080'
