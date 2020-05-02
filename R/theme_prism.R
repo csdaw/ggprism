@@ -3,6 +3,17 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
                         base_line_size = base_size / 22,
                         base_rect_size = base_size / 22,
                         axis_text_angle = 0) {
+  # Ensure x axis text is at a sensible angle
+  angle <- axis_text_angle[1]
+  if(!angle %in% c(0, 45, 90, 270))
+    stop(sprintf("'axis_text_angle' must be one of [%s]",
+                 paste(c(0, 45, 90, 270), collapse=", ")),
+         ".\nFor other angles, use the guide_axis() function in ggplot2 instead.",
+         call. = FALSE)
+
+  # Get element colours from palette
+  colors <- deframe(ggprism::ggprism_data$themes[[palette]])
+
   # Define half_line for correct relative size of elements
   half_line <- base_size / 2
 
@@ -132,5 +143,5 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
   )
 
   # make sure all elements are set to NULL if not explicitly defined
-  ggplot_global$theme_all_null %+replace% t
+  ggplot2:::ggplot_global$theme_all_null %+replace% t
 }
