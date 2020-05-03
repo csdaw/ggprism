@@ -17,11 +17,11 @@ ggprism_data$themes <- load_themes()
 
 
 load_fill_palettes <- function() {
-  out <- yaml.load_file(here("data-raw", "fill_palettes.yml"))
+  out <- yaml.load_file(here("data-raw", "fill-palettes.yml"))
 
   out
 }
-ggprism_data$fill_palettes <- load_fill_palettes()
+ggprism_data$fill-palettes <- load_fill_palettes()
 
 # build shape palettes
 

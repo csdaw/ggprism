@@ -54,4 +54,4 @@ fill_palettes <- c(fill_palettes, fill_palettes_alt)
 fill_palettes <- fill_palettes[order(names(fill_palettes))]
 
 cat(yaml::as.yaml(fill_palettes),
-    file = here("data-raw", "fill_palettes.yml"))
+    file = here("data-raw", "fill-palettes.yml"))
