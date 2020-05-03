@@ -1,0 +1,10 @@
+name	pch
+circle small	16
+square	15
+triangle	17
+diamond	18
+asterisk	8
+plus	3
+cross	4
+circle plus	10
+square cross	7

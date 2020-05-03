@@ -23,7 +23,7 @@
 #' @export
 prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
   palette <- match.arg(palette)
-  shapes <- ggprism::ggprism_data$shape-palettes[[palette]]
+  shapes <- ggprism::ggprism_data$shape_palettes[[palette]]
 
   out <- manual_pal(shapes[["pch"]])
   attr(out, "max_n") <- nrow(shapes)

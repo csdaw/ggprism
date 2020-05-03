@@ -21,9 +21,15 @@ load_fill_palettes <- function() {
 
   out
 }
-ggprism_data$fill-palettes <- load_fill_palettes()
+ggprism_data$fill_palettes <- load_fill_palettes()
 
-# build shape palettes
+
+load_shape_palettes <- function() {
+  out <- yaml.load_file(here("data-raw", "shape-palettes.yml"))
+
+  map(out, ~ map_dfr(., as_tibble))
+}
+ggprism_data$shape_palettes <- load_shape_palettes()
 
 
 # save to rda

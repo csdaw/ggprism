@@ -1,0 +1,11 @@
+name	pch
+circle filled	21
+square filled	22
+triangle filled	24
+triangle down filled	25
+diamond filled	23
+asterisk	8
+plus	3
+cross	4
+circle plus	10
+square cross	7

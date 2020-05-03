@@ -1,0 +1,69 @@
+complete:
+- name: circle small
+  pch: 16.0
+- name: square
+  pch: 15.0
+- name: triangle
+  pch: 17.0
+- name: diamond
+  pch: 18.0
+- name: circle filled
+  pch: 21.0
+- name: square filled
+  pch: 22.0
+- name: triangle filled
+  pch: 24.0
+- name: triangle down filled
+  pch: 25.0
+- name: diamond filled
+  pch: 23.0
+- name: asterisk
+  pch: 8.0
+- name: plus
+  pch: 3.0
+- name: cross
+  pch: 4.0
+- name: circle plus
+  pch: 10.0
+- name: square cross
+  pch: 7.0
+default:
+- name: circle small
+  pch: 16.0
+- name: square
+  pch: 15.0
+- name: triangle
+  pch: 17.0
+- name: diamond
+  pch: 18.0
+- name: asterisk
+  pch: 8.0
+- name: plus
+  pch: 3.0
+- name: cross
+  pch: 4.0
+- name: circle plus
+  pch: 10.0
+- name: square cross
+  pch: 7.0
+filled:
+- name: circle filled
+  pch: 21.0
+- name: square filled
+  pch: 22.0
+- name: triangle filled
+  pch: 24.0
+- name: triangle down filled
+  pch: 25.0
+- name: diamond filled
+  pch: 23.0
+- name: asterisk
+  pch: 8.0
+- name: plus
+  pch: 3.0
+- name: cross
+  pch: 4.0
+- name: circle plus
+  pch: 10.0
+- name: square cross
+  pch: 7.0
