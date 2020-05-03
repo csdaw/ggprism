@@ -36,9 +36,9 @@ prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
 #'
 #' @inheritParams prism_shape_pal
 #' @inheritParams ggplot2::scale_x_discrete
-#' @family shape
+#' @family shape prism
 #' @example inst/examples/ex-scale_shape_prism.R
 #' @export
 scale_shape_prism <- function(palette = "default", ...) {
-  discrete_scale("shape", "prism", prism_shape_pal(), ...)
+  discrete_scale("shape", "prism", prism_shape_pal(palette = palette), ...)
 }
