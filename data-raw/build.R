@@ -8,20 +8,20 @@ suppressPackageStartupMessages({
 
 ggprism_data <- new_environment()
 
-# build themes
 load_themes <- function() {
   out <- yaml.load_file(here("data-raw", "themes.yml"))
 
   map(out, ~ map_dfr(., as_tibble))
 }
-
 ggprism_data$themes <- load_themes()
 
-# build colour palettes
 
+load_fill_palettes <- function() {
+  out <- yaml.load_file(here("data-raw", "fill_palettes.yml"))
 
-# build fill palettes
-
+  out
+}
+ggprism_data$fill_palettes <- load_fill_palettes()
 
 # build shape palettes
 
