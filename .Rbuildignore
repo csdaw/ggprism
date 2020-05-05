@@ -1,3 +1,5 @@
 ^ggprism\.Rproj$
 ^\.Rproj\.user$
 stuff/
+data-raw/
+README.Rmd
