@@ -35,7 +35,7 @@ prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
 #' See \code{\link{prism_shape_pal}()} for details.
 #'
 #' @inheritParams prism_shape_pal
-#' @param ... Other arguments passed on to \funclink{discrete_scale}.
+#' @inheritDotParams ggplot2::discrete_scale
 #' @family shape prism
 #' @example inst/examples/ex-scale_shape_prism.R
 #' @export

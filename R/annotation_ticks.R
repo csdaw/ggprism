@@ -1,6 +1,27 @@
-# code from teunbrand's answer to https://stackoverflow.com/questions/58485334
-# which is itself a refactored version of hrbrmstr's annotation_ticks function.
-# https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r
+#' Title
+#'
+#' code from teunbrand's answer to https://stackoverflow.com/questions/58485334
+#' which is itself a refactored version of hrbrmstr's annotation_ticks function.
+#' https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r
+#'
+#' @param sides Description.
+#' @param scale Description.
+#' @param scaled Description.
+#' @param outside Description.
+#' @param ticklength Description.
+#' @param colour Description.
+#' @param base_size Description.
+#' @param linetype Description.
+#' @param alpha Description.
+#' @param color Description.
+#' @param ticks_per_base Description.
+#' @param data Description.
+#' @param ... Description.
+#'
+#' @return
+#' @export
+#'
+#' @example inst/examples/ex-annotation_ticks.R
 annotation_ticks <- function(sides = "b",
                              scale = "identity",
                              scaled = TRUE,
@@ -81,6 +102,16 @@ annotation_ticks <- function(sides = "b",
   )
 }
 
+#' Base ggproto classes for ggplot2
+#'
+#' If you are creating a new geom, stat, position, or scale in another package,
+#' you'll need to extend from ggplot2::Geom, ggplot2::Stat, ggplot2::Position, or ggplot2::Scale.
+#'
+#' @seealso \code{\link[ggplot2]{ggplot2-ggproto}}
+#' @usage NULL
+#' @format NULL
+#' @rdname ggplot2-ggproto
+#' @export
 GeomTicks <- ggproto(
   "GeomTicks", Geom,
   extra_params = "",

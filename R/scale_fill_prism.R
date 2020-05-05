@@ -24,7 +24,7 @@ prism_fill_pal <- function(palette = "colors") {
 #' See \code{\link{prism_fill_pal}()} for details.
 #'
 #' @inheritParams prism_fill_pal
-#' @param ... Other arguments passed on to \funclink{discrete_scale}.
+#' @inheritDotParams ggplot2::discrete_scale
 #' @family fill prism
 #' @example inst/examples/ex-scale_fill_prism.R
 #' @export

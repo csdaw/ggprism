@@ -15,6 +15,9 @@ load_themes <- function() {
 }
 ggprism_data$themes <- load_themes()
 
+# include ggplot2 theme_all_null
+ggprism_data$themes[["all_null"]] <- ggplot2:::ggplot_global$theme_all_null
+
 
 load_fill_palettes <- function() {
   out <- yaml.load_file(here("data-raw", "fill-palettes.yml"))

@@ -8,6 +8,17 @@ Authors@R:
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
-License: What license it uses
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.0
+Depends: 
+    R (>= 3.2)
+Imports: 
+    ggplot2 (>= 3.3.0),
+    tibble,
+    scales (>= 0.5.0),
+    rlang (>= 0.3.0),
+    gtable (>= 0.1.1),
+    grid,
+    digest

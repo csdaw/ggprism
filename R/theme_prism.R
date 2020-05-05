@@ -1,18 +1,20 @@
 #' Title
 #'
-#' @param palette
-#' @param base_size
-#' @param base_family
-#' @param base_fontface
-#' @param base_line_size
-#' @param base_rect_size
-#' @param axis_text_angle
-#' @param frame
+#' Description.
+#'
+#' @param palette Description.
+#' @param base_size Description.
+#' @param base_family Description.
+#' @param base_fontface Description.
+#' @param base_line_size Description.
+#' @param base_rect_size Description.
+#' @param axis_text_angle Description.
+#' @param frame Description.
 #'
 #' @return
 #' @export
 #'
-#' @examples
+#' @example inst/examples/ex-theme_prism.R
 theme_prism <- function(palette = "black_and_white", base_size = 12,
                         base_family = "", base_fontface = "bold",
                         base_line_size = base_size / 22,
@@ -176,5 +178,5 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
   )
 
   # make sure all elements are set to NULL if not explicitly defined
-  ggplot2:::ggplot_global$theme_all_null %+replace% t
+  ggprism::ggprism_data$themes[["all_null"]] %+replace% t
 }
