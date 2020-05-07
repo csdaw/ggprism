@@ -30,11 +30,11 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
          call. = FALSE)
 
   # Get element colours from palette
-  if (!palette %in% names(ggprism_data$themes)) {
+  if (!palette %in% names(ggprism::ggprism_data$themes)) {
     stop("The palette ", paste(palette), " does not exist.
          See names(ggprism_data$themes) for valid palette names.")
   }
-  colours <- deframe(ggprism_data$themes[[palette]])
+  colours <- deframe(ggprism::ggprism_data$themes[[palette]])
 
   # Define half_line for correct relative size of elements
   half_line <- base_size / 2

@@ -8,7 +8,7 @@
 #' @export
 #' @example inst/examples/ex-prism_fill_pal.R
 prism_fill_pal <- function(palette = "colors") {
-  allfills <- ggprism::ggprism_data$fill-palettes
+  allfills <- ggprism::ggprism_data$fill_palettes
   if (!palette %in% names(allfills)) {
     stop("The palette ", paste(palette), " does not exist.
          See names(ggprism_data$fill_palettes) for valid palette names.")
