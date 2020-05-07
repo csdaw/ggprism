@@ -4,7 +4,7 @@
 \alias{guide_gengrob.prism_minor}
 \title{Title}
 \usage{
-\method{guide_gengrob}{prism_minor}(guide, theme)
+guide_gengrob.prism_minor(guide, theme)
 }
 \arguments{
 \item{guide}{Description.}

@@ -4,7 +4,7 @@
 \alias{guide_train.prism_minor}
 \title{Title}
 \usage{
-\method{guide_train}{prism_minor}(guide, scale, aesthetic = NULL)
+guide_train.prism_minor(guide, scale, aesthetic = NULL)
 }
 \arguments{
 \item{guide}{Description.}

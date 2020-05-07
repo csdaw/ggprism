@@ -20,8 +20,6 @@
 #'   top-to-bottom), if more than one  guide must be drawn at the same location.
 #' @param position Where this guide should be drawn: one of top, bottom,
 #'   left, or right.
-#' @importFrom digest digest
-#' @importFrom grid unit
 #'
 #' @export
 #'
@@ -142,9 +140,6 @@ guide_gengrob.prism_minor <- function(guide, theme) {
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#' @importFrom ggplot2 calc_element
-#' @importFrom gtable gtable_row gtable_col gtable_width gtable_height
-#' @importFrom grid grobWidth grobHeight gList unit.c viewport
 #' @noRd
 #'
 draw_prism_minor <- function(break_positions, break_labels, breaks_major,
