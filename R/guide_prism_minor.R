@@ -45,19 +45,16 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = N
       # parameter
       available_aes = c("x", "y"),
 
-      name = "axis"
+      name = "prism_minor"
     ),
     class = c("guide", "prism_minor", "axis")
   )
 }
 
-#' Title
+#' Helper methods for guides
 #'
-#' @param guide Description.
-#' @param scale Description.
-#' @param aesthetic Description.
-#'
-#' @return
+#' @export
+#' @rdname guide-helpers
 #' @keywords internal
 guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
@@ -74,7 +71,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   # Indicate which breaks are major
   is_major <- breaks %in% major_breaks
 
-  empty_ticks <- ggplot2:::new_data_frame(
+  empty_ticks <- new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
   )
   names(empty_ticks) <- c(aesthetic, ".value", ".label")
@@ -90,7 +87,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   } else {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
 
-    ticks <- ggplot2:::new_data_frame(setNames(list(mapped_breaks), aesthetic))
+    ticks <- new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     # Get major break labels and make minor breaks blank
     ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
@@ -105,12 +102,8 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   guide
 }
 
-#' Title
-#'
-#' @param guide Description.
-#' @param theme Description.
-#'
-#' @return
+#' @rdname guide-helpers
+#' @export
 guide_gengrob.prism_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
@@ -166,7 +159,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   # override label element parameters for rotation
   if (inherits(label_element, "element_text")) {
-    label_overrides <- ggplot2:::axis_label_element_overrides(axis_position, angle)
+    label_overrides <- axis_label_element_overrides(axis_position, angle)
     # label_overrides is an element_text, but label_element may not be;
     # to merge the two elements, we just copy angle, hjust, and vjust
     # unless their values are NULL
@@ -218,7 +211,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   if (n_breaks == 0) {
     return(
-      ggplot2:::absoluteGrob(
+      absoluteGrob(
         gList(line_grob),
         width = grobWidth(line_grob),
         height = grobHeight(line_grob)
@@ -240,7 +233,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   dodge_indices <- split(seq_len(n_breaks), dodge_pos)
 
   label_grobs <- lapply(dodge_indices, function(indices) {
-    ggplot2:::draw_axis_labels(
+    draw_axis_labels(
       break_positions = break_positions[breaks_major][indices],
       break_labels = break_labels[indices],
       label_element = label_element,
@@ -292,7 +285,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
     just = axis_position_opposite
   )
 
-  ggplot2:::absoluteGrob(
+  absoluteGrob(
     gList(line_grob, gt),
     width = gtable_width(gt),
     height = gtable_height(gt),
