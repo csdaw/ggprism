@@ -8,12 +8,15 @@ Prism colour schemes as ggplot2 themes
 ## Functions
 
 ``` r
-# example plot
+# base ggplot2
 library(ggplot2)
 library(ggprism)
 p <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
   geom_point(aes(shape = state, fill = state), size = 2)
+p
 ```
+
+<img src="man/figures/ex-base-1.png" width="384" />
 
 ### `theme_prism`
 
