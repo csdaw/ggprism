@@ -6,8 +6,56 @@ output: github_document
 
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(collapse = TRUE,
-                      comment = "#>")
+                      comment = "#>", 
+                      echo = TRUE, 
+                      fig.height = 3,
+                      fig.width = 4,
+                      fig.path = "man/figures/",
+                      fig.retina = 2)
 ```
 
 # ggprism
 Prism colour schemes as ggplot2 themes
+
+## Functions
+
+```{r}
+# example plot
+library(ggplot2)
+library(ggprism)
+p <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
+  geom_point(aes(shape = state, fill = state), size = 2)
+```
+
+
+### `theme_prism`
+
+```{r ex-theme}
+p <- p + theme_prism("black_and_white")
+p
+```
+
+### `scale_shape_prism`
+
+```{r ex-shape}
+p <- p + scale_shape_prism("filled")
+p
+```
+
+
+### `scale_fill_prism`
+
+```{r ex-fill}
+p <- p + scale_fill_prism("neon2")
+p
+```
+
+
+### `guide_prism_minor`
+
+```{r ex-minor}
+p <- p + scale_x_continuous(minor_breaks = seq(0, 20, 1), 
+                            guide = "prism_minor")
+p
+```
+
