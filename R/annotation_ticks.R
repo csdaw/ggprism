@@ -18,7 +18,7 @@
 #' @param data Description.
 #' @param ... Description.
 #'
-#' @return
+#' @return Description.
 #' @export
 #'
 #' @example inst/examples/ex-annotation_ticks.R

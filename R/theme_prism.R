@@ -11,7 +11,7 @@
 #' @param axis_text_angle Description.
 #' @param frame Description.
 #'
-#' @return
+#' @return Description
 #' @export
 #'
 #' @example inst/examples/ex-theme_prism.R

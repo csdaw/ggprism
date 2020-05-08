@@ -12,7 +12,7 @@
 #' @importFrom glue glue glue_collapse
 #' @importFrom grid unit grobWidth grobHeight gList unit.c viewport gTree
 #' @importFrom gtable gtable_row gtable_col gtable_width gtable_height
-#' @importFrom rlang exec := %||% warn
+#' @importFrom rlang exec := %||% warn abort
 #' @importFrom scales manual_pal
 #' @importFrom stats setNames
 #' @importFrom tibble deframe

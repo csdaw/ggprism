@@ -48,7 +48,7 @@ annotation_ticks(
 \item{...}{Description.}
 }
 \value{
-
+Description.
 }
 \description{
 code from teunbrand's answer to https://stackoverflow.com/questions/58485334

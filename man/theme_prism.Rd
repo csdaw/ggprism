@@ -33,7 +33,7 @@ theme_prism(
 \item{frame}{Description.}
 }
 \value{
-
+Description
 }
 \description{
 Description.

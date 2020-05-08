@@ -2,6 +2,6 @@
 #'
 #' Description.
 #'
-#' @return
+#' @return Description.
 #'
 "ggprism_data"
