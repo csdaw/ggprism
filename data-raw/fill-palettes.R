@@ -50,6 +50,10 @@ names(fill_palettes_alt) <- paste0(tools::file_path_sans_ext(basename(special_ca
 # combine all fill palettes in a single list
 fill_palettes <- c(fill_palettes, fill_palettes_alt)
 
+# remove neon and replace with neon2
+fill_palettes <- within(fill_palettes, rm("neon"))
+names(fill_palettes) <- gsub("neon2", "neon", names(fill_palettes))
+
 # sort alphabetically
 fill_palettes <- fill_palettes[order(names(fill_palettes))]
 
