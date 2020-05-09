@@ -39,7 +39,7 @@ p
 ### `scale_fill_prism`
 
 ``` r
-p <- p + scale_fill_prism("neon")
+p <- p + scale_fill_prism("pearl")
 p
 ```
 
