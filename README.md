@@ -3,7 +3,10 @@ ggprism
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-Prism colour schemes as ggplot2 themes
+Prism colour schemes as ggplot2 themes.
+
+This R package is a work in progress and is currently undocumented and
+untested.
 
 ## Functions
 
