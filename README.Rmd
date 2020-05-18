@@ -15,7 +15,6 @@ knitr::opts_chunk$set(collapse = TRUE,
                       fig.retina = 2)
 ```
 
-# ggprism
 Prism colour schemes as ggplot2 themes
 
 ## Functions

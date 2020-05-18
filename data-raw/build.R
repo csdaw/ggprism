@@ -26,6 +26,13 @@ load_fill_palettes <- function() {
 }
 ggprism_data$fill_palettes <- load_fill_palettes()
 
+load_colour_palettes <- function() {
+  out <- yaml.load_file(here("data-raw", "colour-palettes.yml"))
+
+  out
+}
+ggprism_data$colour_palettes <- load_colour_palettes()
+
 
 load_shape_palettes <- function() {
   out <- yaml.load_file(here("data-raw", "shape-palettes.yml"))
