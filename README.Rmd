@@ -27,7 +27,7 @@ untested.
 library(ggplot2)
 library(ggprism)
 p <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
-  geom_point(aes(shape = state, fill = state), size = 2)
+  geom_point(aes(shape = state, fill = state, colour = state), size = 2)
 p
 ```
 
@@ -50,16 +50,26 @@ p
 ### `scale_fill_prism`
 
 ```{r ex-fill}
-p <- p + scale_fill_prism("pearl")
+p <- p + scale_fill_prism("prism_light")
 p
 ```
 
+### `scale_colour_prism`
+
+```{r ex-colour}
+# also can use scale_color_prism
+p <- p + scale_colour_prism("prism_light") 
+p
+```
 
 ### `guide_prism_minor`
 
 ```{r ex-minor}
 p <- p + scale_x_continuous(minor_breaks = seq(0, 20, 1), 
-                            guide = "prism_minor")
+                            guide = "prism_minor") + 
+  scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
+                     guide = "prism_minor") + 
+  coord_cartesian(xlim = c(0, 20))
 p
 ```
 

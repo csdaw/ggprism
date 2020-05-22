@@ -33,7 +33,7 @@ prism_color_pal <- prism_colour_pal
 #' @example inst/examples/ex-scale_colour_prism.R
 #' @export
 scale_colour_prism <- function(palette = "colors", ...) {
-  discrete_scale("fill", "prism", prism_fill_pal(palette = palette), ...)
+  discrete_scale("colour", "prism", prism_colour_pal(palette = palette), ...)
 }
 
 #' @export
