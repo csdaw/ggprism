@@ -44,8 +44,27 @@ p3 <- p2 +
   scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
                      guide = "prism_minor")
 
-p3 + labs(subtitle = "After with minor ticks") + 
+p3 + labs(subtitle = "After + minor ticks") + 
   coord_cartesian(xlim = c(0, 20))
 ```
 
 <img src="man/figures/ex-ticks-1.png" width="384" />
+
+``` r
+# After with secondary axes
+# (A bit hacky but it works)
+p4 <- p2 + 
+  scale_x_continuous(minor_breaks = seq(0, 20, 1), 
+                            guide = "prism_minor", 
+                     sec.axis = sec_axis(~ ., guide = "axis")) + 
+  scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
+                     guide = "prism_minor", 
+                     sec.axis = sec_axis(~ ., guide = "axis")) + 
+  annotation_ticks(sides = "tr", type = "minor", outside = TRUE)
+
+# Need to turn off clipping for annotations outside the plot area
+p4 + labs(subtitle = "After + secondary axes") + 
+  coord_cartesian(xlim = c(0, 20), clip = "off")
+```
+
+<img src="man/figures/ex-secondary-1.png" width="480" />
