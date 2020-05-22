@@ -23,6 +23,7 @@
 #'
 #' @example inst/examples/ex-annotation_ticks.R
 annotation_ticks <- function(sides = "b",
+                             type = "both",
                              scale = "identity",
                              scaled = TRUE,
                              outside = FALSE,
@@ -74,6 +75,12 @@ annotation_ticks <- function(sides = "b",
     }
   }
 
+  if (!is.element(type, c("both", "major", "minor"))) {
+    if (length(type) != 1) {
+      stop("Tick type must be one of: both, major, minor")
+    }
+  }
+
   if (outside) {ticklength <- -1 * ticklength} else {ticklength <- ticklength}
 
   delog <- scale %in% "identity"
@@ -89,6 +96,7 @@ annotation_ticks <- function(sides = "b",
     params = list(
       base = base,
       sides = sides,
+      type = type,
       scaled = scaled,
       ticklength = ticklength,
       colour = colour,
@@ -124,6 +132,7 @@ GeomTicks <- ggproto(
                         coord,
                         base = c(10, 10),
                         sides = c("b", "l"),
+                        type = "both",
                         scaled = TRUE,
                         ticklength = unit(0.1, "cm"),
                         ticks_per_base = base - 1,
@@ -134,15 +143,22 @@ GeomTicks <- ggproto(
       if (grepl("[b|t]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: xticks <- panel_params$x.minor
-        if (utils::packageVersion("ggplot2") >= "3.2.1.9000") {
-          x_minor_breaks <- panel_scales$x$break_positions_minor()
+        if (packageVersion("ggplot2") >= "3.2.1.9000") {
           x_major_breaks <- panel_scales$x$break_positions()
+          x_minor_breaks <- setdiff(panel_scales$x$break_positions_minor(), x_major_breaks)
         } else {
-          x_minor_breaks <- panel_scales$x.minor
           x_major_breaks <- panel_scales$x.major
+          x_minor_breaks <- setdiff(panel_scales$x.minor, x_major_breaks)
         }
 
-        xticks <- setdiff(x_minor_breaks, x_major_breaks)
+        if (type == "both") {
+          xticks <- union(x_major_breaks, x_minor_breaks)
+        } else if (type == "major") {
+          xticks <- x_major_breaks
+        } else if (type == "minor") {
+          xticks <- x_minor_breaks
+        }
+
 
         # Make the grobs
         if (grepl("b", sides[s])) {
@@ -186,14 +202,20 @@ GeomTicks <- ggproto(
 
         # for ggplot2 < 3.3.0 use: yticks <- panel_params$y.minor
         if (packageVersion("ggplot2") >= "3.2.1.9000") {
-          y_minor_breaks <- panel_scales$y$break_positions_minor()
           y_major_breaks <- panel_scales$y$break_positions()
+          y_minor_breaks <- setdiff(panel_scales$y$break_positions_minor(), y_major_breaks)
         } else {
-          y_minor_breaks <- panel_scales$y.minor
           y_major_breaks <- panel_scales$y.major
+          y_minor_breaks <- setdiff(panel_scales$y.minor, y_major_breaks)
         }
 
-        yticks <- setdiff(y_minor_breaks, y_major_breaks)
+        if (type == "both") {
+          yticks <- union(y_major_breaks, y_minor_breaks)
+        } else if (type == "major") {
+          yticks <- y_major_breaks
+        } else if (type == "minor") {
+          yticks <- y_minor_breaks
+        }
 
         # Make the grobs
         if (grepl("l", sides[s])) {

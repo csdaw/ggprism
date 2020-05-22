@@ -6,6 +6,7 @@
 \usage{
 annotation_ticks(
   sides = "b",
+  type = "both",
   scale = "identity",
   scaled = TRUE,
   outside = FALSE,

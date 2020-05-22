@@ -10,7 +10,8 @@
 #' guide_gengrob guide_train layer margin PositionIdentity register_theme_elements
 #' rel StatIdentity theme waiver %+replace%
 #' @importFrom glue glue glue_collapse
-#' @importFrom grid gList grobHeight grobWidth gTree unit unit.c viewport
+#' @importFrom grid gList gpar grobHeight grobWidth gTree segmentsGrob
+#' unit unit.c viewport
 #' @importFrom gtable gtable_col gtable_height gtable_row gtable_width
 #' @importFrom rlang abort exec warn := %||%
 #' @importFrom scales manual_pal
