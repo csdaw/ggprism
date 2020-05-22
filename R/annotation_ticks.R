@@ -185,7 +185,7 @@ GeomTicks <- ggproto(
       if (grepl("[l|r]", sides[s])) {
 
         # for ggplot2 < 3.3.0 use: yticks <- panel_params$y.minor
-        if (utils::packageVersion("ggplot2") >= "3.2.1.9000") {
+        if (packageVersion("ggplot2") >= "3.2.1.9000") {
           y_minor_breaks <- panel_scales$y$break_positions_minor()
           y_major_breaks <- panel_scales$y$break_positions()
         } else {

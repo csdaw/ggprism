@@ -71,7 +71,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   # Indicate which breaks are major
   is_major <- breaks %in% major_breaks
 
-  empty_ticks <- new_data_frame(
+  empty_ticks <- .ggint$new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
   )
   names(empty_ticks) <- c(aesthetic, ".value", ".label")
@@ -87,7 +87,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   } else {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
 
-    ticks <- new_data_frame(setNames(list(mapped_breaks), aesthetic))
+    ticks <- .ggint$new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     # Get major break labels and make minor breaks blank
     ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
@@ -159,7 +159,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   # override label element parameters for rotation
   if (inherits(label_element, "element_text")) {
-    label_overrides <- axis_label_element_overrides(axis_position, angle)
+    label_overrides <- .ggint$axis_label_element_overrides(axis_position, angle)
     # label_overrides is an element_text, but label_element may not be;
     # to merge the two elements, we just copy angle, hjust, and vjust
     # unless their values are NULL
@@ -211,7 +211,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   if (n_breaks == 0) {
     return(
-      absoluteGrob(
+      .ggint$absoluteGrob(
         gList(line_grob),
         width = grobWidth(line_grob),
         height = grobHeight(line_grob)
@@ -233,7 +233,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   dodge_indices <- split(seq_len(n_breaks), dodge_pos)
 
   label_grobs <- lapply(dodge_indices, function(indices) {
-    draw_axis_labels(
+    .ggint$draw_axis_labels(
       break_positions = break_positions[breaks_major][indices],
       break_labels = break_labels[indices],
       label_element = label_element,
@@ -285,7 +285,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
     just = axis_position_opposite
   )
 
-  absoluteGrob(
+  .ggint$absoluteGrob(
     gList(line_grob, gt),
     width = gtable_width(gt),
     height = gtable_height(gt),
