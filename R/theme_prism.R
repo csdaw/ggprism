@@ -158,7 +158,7 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
     ),
     plot.title.position = "panel",
     plot.subtitle =      element_text( # font size "regular"
-      hjust = 0, vjust = 1,
+      hjust = 0.5, vjust = 1,
       margin = margin(b = half_line)
     ),
     plot.caption =       element_text( # font size "small"
