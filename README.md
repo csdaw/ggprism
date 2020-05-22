@@ -8,65 +8,44 @@ Prism colour schemes as ggplot2 themes.
 This R package is a work in progress and is currently undocumented and
 untested.
 
-## Functions
+## Examples
 
 ``` r
-# base ggplot2
 library(ggplot2)
 library(ggprism)
-p <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
+
+# Before
+p1 <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
   geom_point(aes(shape = state, fill = state, colour = state), size = 2)
-p
+
+p1 + labs(subtitle = "Before")
 ```
 
-<img src="man/figures/ex-base-1.png" width="384" />
-
-### `theme_prism`
+<img src="man/figures/ex-before-1.png" width="384" />
 
 ``` r
-p <- p + theme_prism("black_and_white")
-p
+# After
+p2 <- p1 + 
+  theme_prism("black_and_white") + 
+  scale_shape_prism("filled") + 
+  scale_fill_prism("prism_light") + 
+  scale_colour_prism("prism_light")
+
+p2 + labs(subtitle = "After")
 ```
 
-<img src="man/figures/ex-theme-1.png" width="384" />
-
-### `scale_shape_prism`
+<img src="man/figures/ex-after-1.png" width="384" />
 
 ``` r
-p <- p + scale_shape_prism("filled")
-p
-```
-
-<img src="man/figures/ex-shape-1.png" width="384" />
-
-### `scale_fill_prism`
-
-``` r
-p <- p + scale_fill_prism("prism_light")
-p
-```
-
-<img src="man/figures/ex-fill-1.png" width="384" />
-
-### `scale_colour_prism`
-
-``` r
-# also can use scale_color_prism
-p <- p + scale_colour_prism("prism_light") 
-p
-```
-
-<img src="man/figures/ex-colour-1.png" width="384" />
-
-### `guide_prism_minor`
-
-``` r
-p <- p + scale_x_continuous(minor_breaks = seq(0, 20, 1), 
+# After with minor ticks
+p3 <- p2 + 
+  scale_x_continuous(minor_breaks = seq(0, 20, 1), 
                             guide = "prism_minor") + 
   scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
-                     guide = "prism_minor") + 
+                     guide = "prism_minor")
+
+p3 + labs(subtitle = "After with minor ticks") + 
   coord_cartesian(xlim = c(0, 20))
-p
 ```
 
-<img src="man/figures/ex-minor-1.png" width="384" />
+<img src="man/figures/ex-ticks-1.png" width="384" />

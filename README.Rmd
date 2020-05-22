@@ -20,56 +20,39 @@ Prism colour schemes as ggplot2 themes.
 This R package is a work in progress and is currently undocumented and 
 untested.
 
-## Functions
+## Examples
 
-```{r ex-base}
-# base ggplot2
+```{r ex-before}
 library(ggplot2)
 library(ggprism)
-p <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
+
+# Before
+p1 <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
   geom_point(aes(shape = state, fill = state, colour = state), size = 2)
-p
+
+p1 + labs(subtitle = "Before")
 ```
 
+```{r ex-after}
+# After
+p2 <- p1 + 
+  theme_prism("black_and_white") + 
+  scale_shape_prism("filled") + 
+  scale_fill_prism("prism_light") + 
+  scale_colour_prism("prism_light")
 
-### `theme_prism`
-
-```{r ex-theme}
-p <- p + theme_prism("black_and_white")
-p
+p2 + labs(subtitle = "After")
 ```
 
-### `scale_shape_prism`
-
-```{r ex-shape}
-p <- p + scale_shape_prism("filled")
-p
-```
-
-
-### `scale_fill_prism`
-
-```{r ex-fill}
-p <- p + scale_fill_prism("prism_light")
-p
-```
-
-### `scale_colour_prism`
-
-```{r ex-colour}
-# also can use scale_color_prism
-p <- p + scale_colour_prism("prism_light") 
-p
-```
-
-### `guide_prism_minor`
-
-```{r ex-minor}
-p <- p + scale_x_continuous(minor_breaks = seq(0, 20, 1), 
+```{r ex-ticks}
+# After with minor ticks
+p3 <- p2 + 
+  scale_x_continuous(minor_breaks = seq(0, 20, 1), 
                             guide = "prism_minor") + 
   scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
-                     guide = "prism_minor") + 
+                     guide = "prism_minor")
+
+p3 + labs(subtitle = "After with minor ticks") + 
   coord_cartesian(xlim = c(0, 20))
-p
 ```
 
