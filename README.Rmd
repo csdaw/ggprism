@@ -24,7 +24,7 @@ undocumented and untested.
 
 Install the development version from github.
 
-```{r}
+```{r, eval=FALSE}
 library("devtools")
 install_github("csdaw/ggprism")
 ```
