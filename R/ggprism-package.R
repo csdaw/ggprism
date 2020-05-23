@@ -17,5 +17,5 @@
 #' @importFrom scales manual_pal
 #' @importFrom stats setNames
 #' @importFrom tibble deframe
-#' @importFrom utils getFromNamespace packageVersion
+#' @importFrom utils getFromNamespace
 NULL

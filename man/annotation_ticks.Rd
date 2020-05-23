@@ -10,10 +10,12 @@ annotation_ticks(
   scale = "identity",
   scaled = TRUE,
   outside = FALSE,
-  ticklength = unit(0.15, "cm"),
+  ticklength = unit(5.5, "pt"),
+  minorlength = unit(2.4, "pt"),
   colour = "black",
   base_size = 12,
   linetype = 1,
+  lineend = "butt",
   alpha = 1,
   color = NULL,
   ticks_per_base = NULL,
@@ -31,6 +33,8 @@ annotation_ticks(
 \item{outside}{Description.}
 
 \item{ticklength}{Description.}
+
+\item{minorlength}{Description.}
 
 \item{colour}{Description.}
 
@@ -52,7 +56,7 @@ annotation_ticks(
 Description.
 }
 \description{
-code from teunbrand's answer to https://stackoverflow.com/questions/58485334
+Code modified from teunbrand's answer to https://stackoverflow.com/questions/58485334
 which is itself a refactored version of hrbrmstr's annotation_ticks function.
 https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r
 }
