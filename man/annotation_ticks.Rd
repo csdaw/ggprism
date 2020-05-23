@@ -10,7 +10,7 @@ annotation_ticks(
   scale = "identity",
   scaled = TRUE,
   outside = FALSE,
-  ticklength = unit(5.5, "pt"),
+  ticklength = unit(4.8, "pt"),
   minorlength = unit(2.4, "pt"),
   colour = "black",
   base_size = 12,

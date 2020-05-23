@@ -9,10 +9,10 @@ theme_prism(
   base_size = 12,
   base_family = "",
   base_fontface = "bold",
-  base_line_size = base_size/22,
-  base_rect_size = base_size/22,
+  base_line_size = base_size/20,
+  base_rect_size = base_size/9,
   axis_text_angle = 0,
-  frame = FALSE
+  border = FALSE
 )
 }
 \arguments{
@@ -30,7 +30,7 @@ theme_prism(
 
 \item{axis_text_angle}{Description.}
 
-\item{frame}{Description.}
+\item{border}{Description.}
 }
 \value{
 Description
