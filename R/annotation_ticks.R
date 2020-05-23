@@ -5,6 +5,7 @@
 #' https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r
 #'
 #' @param sides Description.
+#' @param type Description.
 #' @param scale Description.
 #' @param scaled Description.
 #' @param outside Description.
@@ -13,6 +14,7 @@
 #' @param colour Description.
 #' @param base_size Description.
 #' @param linetype Description.
+#' @param lineend Description.
 #' @param alpha Description.
 #' @param color Description.
 #' @param ticks_per_base Description.

@@ -17,8 +17,17 @@ knitr::opts_chunk$set(collapse = TRUE,
 
 Prism colour schemes as ggplot2 themes.
 
-This R package is a work in progress and is currently undocumented and 
-untested.
+This R package is a work in progress and is currently functional, but is
+undocumented and untested. 
+
+## Install
+
+Install the development version from github.
+
+```{r}
+library("devtools")
+install_github("csdaw/ggprism")
+```
 
 ## Examples
 

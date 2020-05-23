@@ -13,7 +13,7 @@
 #' @importFrom grid gList gpar grobHeight grobWidth gTree segmentsGrob
 #' unit unit.c viewport
 #' @importFrom gtable gtable_col gtable_height gtable_row gtable_width
-#' @importFrom rlang abort exec warn := %||%
+#' @importFrom rlang abort exec is_bool warn := %||%
 #' @importFrom scales manual_pal
 #' @importFrom stats setNames
 #' @importFrom tibble deframe

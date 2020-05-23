@@ -26,6 +26,8 @@ annotation_ticks(
 \arguments{
 \item{sides}{Description.}
 
+\item{type}{Description.}
+
 \item{scale}{Description.}
 
 \item{scaled}{Description.}
@@ -41,6 +43,8 @@ annotation_ticks(
 \item{base_size}{Description.}
 
 \item{linetype}{Description.}
+
+\item{lineend}{Description.}
 
 \item{alpha}{Description.}
 

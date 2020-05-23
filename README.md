@@ -5,8 +5,20 @@ ggprism
 
 Prism colour schemes as ggplot2 themes.
 
-This R package is a work in progress and is currently undocumented and
-untested.
+This R package is a work in progress and is currently functional, but is
+undocumented and untested.
+
+## Install
+
+Install the development version from github.
+
+``` r
+library("devtools")
+#> Loading required package: usethis
+install_github("csdaw/ggprism")
+#> Skipping install of 'ggprism' from a github remote, the SHA1 (a1fc1c76) has not changed since last install.
+#>   Use `force = TRUE` to force installation
+```
 
 ## Examples
 

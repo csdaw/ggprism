@@ -1,5 +1,6 @@
+data-raw/
 ^ggprism\.Rproj$
+^Makefile$
+^README.Rmd$
 ^\.Rproj\.user$
 stuff/
-data-raw/
-README.Rmd

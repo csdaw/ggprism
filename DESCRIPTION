@@ -1,12 +1,12 @@
 Package: ggprism
-Title: What the Package Does (One Line, Title Case)
+Title: GraphPad Prism Inspired Themes and Palettes for ggplot2
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Charlotte",
+           family = "Dawson",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "csdaw@outlook.com",
+           comment = c(ORCID = "0000-0002-7151-5971"))
 Description: What the package does (one paragraph).
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
@@ -18,10 +18,10 @@ Imports:
     digest,
     ggplot2 (>= 3.3.0),
     glue,
-    grid, 
+    grid,
     gtable (>= 0.1.1),
-    rlang (>= 0.3.0), 
+    rlang (>= 0.3.0),
     scales (>= 0.5.0),
     stats,
-    tibble
-
+    tibble,
+    utils
