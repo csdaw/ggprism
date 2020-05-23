@@ -1,3 +1,19 @@
+# Define custom elements upon package load
+.onLoad <- function(libname, pkgname) {
+  register_theme_elements(
+    prism.ticks.length   = unit(2, "pt"),
+    element_tree = list(
+      prism.ticks.length  = el_def("unit"),
+      prism.ticks.length.x = el_def("unit", "prism.ticks.length"),
+      prism.ticks.length.x.top = el_def("unit", "prism.ticks.length.x"),
+      prism.ticks.length.x.bottom = el_def("unit", "prism.ticks.length.x"),
+      prism.ticks.length.y = el_def("unit", "prism.ticks.length"),
+      prism.ticks.length.y.left = el_def("unit", "prism.ticks.length.y"),
+      prism.ticks.length.y.right = el_def("unit", "prism.ticks.length.y")
+    )
+  )
+}
+
 # Copied from teunbrand/ggh4x/R/utils.R
 # Function for grabbing internal function of ggplot2 that are also used here
 .grab_ggplot_internals <- function() {

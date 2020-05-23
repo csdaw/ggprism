@@ -16,7 +16,7 @@
 #'
 #' @example inst/examples/ex-theme_prism.R
 theme_prism <- function(palette = "black_and_white", base_size = 12,
-                        base_family = "", base_fontface = "bold",
+                        base_family = "sans", base_fontface = "bold",
                         base_line_size = base_size / 20,
                         base_rect_size = base_size / 9,
                         axis_text_angle = 0,
@@ -27,24 +27,28 @@ theme_prism <- function(palette = "black_and_white", base_size = 12,
   if(!angle %in% c(0, 45, 90, 270))
     stop(sprintf("'axis_text_angle' must be one of [%s]",
                  paste(c(0, 45, 90, 270), collapse=", ")),
-         ".\nFor other angles, use the guide_axis() function in ggplot2 instead.",
+         ".\nFor other angles, use the guide_axis() function in ggplot2 instead",
          call. = FALSE)
 
   # Get element colours from palette
   if (!palette %in% names(ggprism::ggprism_data$themes)) {
     stop("The palette ", paste(palette), " does not exist.
-         See names(ggprism_data$themes) for valid palette names.")
+         See names(ggprism_data$themes) for valid palette names")
   }
   colours <- deframe(ggprism::ggprism_data$themes[[palette]])
 
   # Draw border or not
-  if(border){
-    panel.border <- element_rect(fill = NA)
-    axis.line <- element_blank()
-  }
-  else{
-    panel.border <- element_blank()
-    axis.line <- element_line()
+  if(!is_bool(border)) {
+    stop("border must be either: TRUE or FALSE")
+  } else {
+    if(border){
+      panel.border <- element_rect(fill = NA)
+      axis.line <- element_blank()
+    }
+    else if (!border) {
+      panel.border <- element_blank()
+      axis.line <- element_line()
+    }
   }
 
   t <- theme(

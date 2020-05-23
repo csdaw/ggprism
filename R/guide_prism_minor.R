@@ -60,15 +60,15 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
 
-  # Define major and minor breaks
+  # define major and minor breaks
   major_breaks <- scale$get_breaks()
   major_breaks <- major_breaks[!is.na(major_breaks)]
   minor_breaks <- setdiff(scale$get_breaks_minor(), major_breaks)
 
-  # Define all breaks
+  # define all breaks
   breaks <- union(major_breaks, minor_breaks)
 
-  # Indicate which breaks are major
+  # indicate which breaks are major
   is_major <- breaks %in% major_breaks
 
   empty_ticks <- .ggint$new_data_frame(
@@ -89,7 +89,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
     ticks <- .ggint$new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
-    # Get major break labels and make minor breaks blank
+    # get major break labels and make minor breaks blank
     ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
 
     guide$key <- ticks[is.finite(ticks[[aesthetic]]), ]
@@ -251,6 +251,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
         times = n_breaks
       ),
       rep(
+        # let minor ticks have a different length from major ticks
         unit.c(non_position_panel + (tick_direction * prism_tick_length), non_position_panel)[tick_coordinate_order],
         times = n_minor_breaks
       )
