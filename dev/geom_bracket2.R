@@ -8,12 +8,38 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                   if(length(params$tip.length) == length(params$xmin)) params$tip.length <- rep(params$tip.length, each=2)
                                   return(params)
                                 },
-                                compute_group = function(data, scales, tip.length) {
+                                compute_group = function(data, scales, tip.length, auto.y) {
                                   yrange <- scales$y$range$range
                                   y.scale.range <- yrange[2] - yrange[1]
                                   xmin <- data$xmin
                                   xmax <- data$xmax
-                                  y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
+                                  # ggpubr y.position (uses y.position specified in arguments)
+
+                                  if(auto.y) {
+                                    print(yrange)
+                                    #y_pos <- scales$y$range$range[2] + y_scale_range * margin_top[i] + y_scale_range * step_increase[i] * (i-1)
+                                    y.position <- yrange[2] + (y.scale.range * data$step.increase) + data$bracket.nudge.y
+                                    #test <- y.position - y.position * tip.length - data$step.increase
+
+                                    #test <- y.position - 0.1 * y.scale.range
+
+
+                                    #test3 <- yrange[2] - y.scale.range * 0.05 + y.scale.range * (data$group - 1) * data$step.increase
+                                    #print(paste("lalala", test3))
+                                    #print(y.position - test)
+                                    #print(y.position)
+                                    #print(test3)
+                                  } else if(!auto.y) {
+                                    print(yrange)
+                                    y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
+                                    test <- y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 1]
+                                    print(y.position - test)
+                                    print(y.position)
+                                    print(test)
+                                    }
+                                  # ggsignif y.position (modified version, does not require y.position to be specified in arguments)
+                                  #y.position <- yrange[2] - y.scale.range * 0.05 + y.scale.range * (data$group-1) * 0.1
+
                                   label <- data$label
                                   if(is.character(xmin)){
                                     xmin <- scales$x$map(xmin)
@@ -26,10 +52,23 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                   }
                                   # Preparing bracket data
                                   data <- dplyr::bind_rows(data, data, data)
+
                                   data$x <- c(xmin, xmin, xmax)
                                   data$xend = c(xmin, xmax, xmax)
-                                  data$y <- c(y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 1], y.position, y.position)
-                                  data$yend <- c(y.position, y.position, y.position-y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 0])
+                                  if (auto.y) {
+                                    print(tip.length[1])
+                                    #test <- y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 1]
+                                    #test2 <- y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 0]
+                                    test <- y.position - y.scale.range * tip.length[seq_len(length(tip.length))%% 2 == 1] * (20 / y.scale.range)
+                                    test2 <- y.position - y.scale.range * tip.length[seq_len(length(tip.length))%% 2 == 0] * (20 / y.scale.range)
+                                    data$y <- c(test, y.position, y.position)
+                                    data$yend <- c(y.position, y.position, test2)
+                                  } else if (!auto.y) {
+                                    print(tip.length)
+                                    data$y <- c(y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 1], y.position, y.position)
+                                    data$yend <- c(y.position, y.position, y.position-y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 0])
+                                  }
+
                                   data$annotation <- rep(label, 3)
                                   data
                                 }
@@ -160,7 +199,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                   ),
                                 # draw_key = function(...){grid::nullGrob()},
                                 # for legend:
-                                draw_key = draw_key_path,
+                                draw_key = ggplot2::draw_key_path,
                                 draw_group = function(data, panel_params, coord, type = "text") {
                                   lab <- as.character(data$annotation)
                                   if(type == "expression"){
@@ -204,7 +243,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          inherit.aes = TRUE,
                          label = NULL, type = c("text", "expression"), y.position = NULL, xmin = NULL, xmax = NULL,
                          step.increase = 0, step.group.by = NULL, tip.length = 0.03, bracket.nudge.y = 0,
-                         size = 0.3, label.size = 3.88, family="", vjust = 0,
+                         size = 0.3, label.size = 3.88, family="", vjust = 0, auto.y = TRUE,
                          ...) {
   type <- match.arg(type)
   data <- build_signif_data(
@@ -220,7 +259,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       type = type,
       tip.length = tip.length,
       size = size, label.size = label.size,
-      family=family, na.rm = na.rm, ...
+      family = family, na.rm = na.rm, auto.y = auto.y, ...
     )
   )
 }
@@ -249,7 +288,7 @@ build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
   add_step_increase <- function(data, step.increase){
     comparisons.number <- 0:(nrow(data)-1)
     step.increase <- step.increase*comparisons.number
-    data <- data %>% mutate(step.increase = !!step.increase)
+    data <- data %>% dplyr::mutate(step.increase = !!step.increase)
     data
   }
   if(is.null(data)){
@@ -260,15 +299,15 @@ build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
       mutate(vjust = !!vjust)
   }
   else{
-    if(!is.null(label)) data <- data %>% mutate(label = !!label)
-    if(!is.null(y.position)) data <- data %>% mutate(y.position = !!y.position)
-    if(!is.null(xmin)) data <- data %>% mutate(xmin = !!xmin)
-    if(!is.null(xmax)) data <- data %>% mutate(xmax = !!xmax)
-    if(!identical(vjust, 0)) data <- data %>% mutate(vjust = !!vjust)
+    if(!is.null(label)) data <- data %>% dplyr::mutate(label = !!label)
+    if(!is.null(y.position)) data <- data %>% dplyr::mutate(y.position = !!y.position)
+    if(!is.null(xmin)) data <- data %>% dplyr::mutate(xmin = !!xmin)
+    if(!is.null(xmax)) data <- data %>% dplyr::mutate(xmax = !!xmax)
+    if(!identical(vjust, 0)) data <- data %>% dplyr::mutate(vjust = !!vjust)
   }
   # add vjust column if doesn't exist
-  if(!("vjust" %in% colnames(data))) data <- data %>% mutate(vjust = !!vjust)
-  if(!("bracket.nudge.y" %in% colnames(data))) data <- data %>% mutate(bracket.nudge.y = !!bracket.nudge.y)
+  if(!("vjust" %in% colnames(data))) data <- data %>% dplyr::mutate(vjust = !!vjust)
+  if(!("bracket.nudge.y" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.nudge.y = !!bracket.nudge.y)
 
   if(is.null(step.group.by)){
     data <- data %>% add_step_increase(step.increase)
@@ -276,11 +315,11 @@ build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
   else{
     data <- data %>%
       dplyr::arrange(!!!syms(c(step.group.by, "y.position"))) %>%
-      group_by(!!!syms(step.group.by)) %>%
+      dplyr::group_by(!!!syms(step.group.by)) %>%
       tidyr::nest() %>%
       dplyr::mutate(step.increase = purrr::map(data, add_step_increase, !!step.increase)) %>%
       dplyr::select(-data) %>%
-      unnest(cols = "step.increase")
+      tidyr::unnest(cols = "step.increase")
   }
   data
 }

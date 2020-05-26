@@ -7,9 +7,11 @@ NULL
 #'@description Add manually p-values to a ggplot, such as box blots, dot plots
 #'  and stripcharts. Frequently asked questions are available on \href{https://www.datanovia.com/en/blog/tag/ggpubr/}{Datanovia ggpubr FAQ page}, for example:
 #'  \itemize{
-#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-adjusted-p-values-to-a-multi-panel-ggplot/}{How to Add Adjusted P-values to a Multi-Panel GGPlot}
-#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-p-values-generated-elsewhere-to-a-ggplot/}{How to Add P-Values Generated Elsewhere to a GGPLOT}
-#'  \item \href{https://www.datanovia.com/en/blog/how-to-create-stacked-bar-plots-with-error-bars-and-p-values/}{How to Create Stacked Bar Plots with Error Bars and P-values}
+#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-adjusted-p-values-to-a-multi-panel-ggplot/}{How to Add Adjusted P-values to a Multi-Panel GGPlot}		#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-adjusted-p-values-to-a-multi-panel-ggplot/}{How to Add Adjusted P-values to a Multi-Panel GGPlot}
+#'  \item \href{https://www.datanovia.com/en/blog/how-to-add-p-values-to-ggplot-facets/}{How to Add P-values to GGPLOT Facets}
+#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-p-values-generated-elsewhere-to-a-ggplot/}{How to Add P-Values Generated Elsewhere to a GGPLOT}		#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-p-values-generated-elsewhere-to-a-ggplot/}{How to Add P-Values Generated Elsewhere to a GGPLOT}
+#'  \item \href{https://www.datanovia.com/en/blog/how-to-add-p-values-onto-a-grouped-ggplot-using-the-ggpubr-r-package/}{How to Add P-Values onto a Grouped GGPLOT using the GGPUBR R Package}
+#'  \item \href{https://www.datanovia.com/en/blog/how-to-create-stacked-bar-plots-with-error-bars-and-p-values/}{How to Create Stacked Bar Plots with Error Bars and P-values}		#'  \item \href{https://www.datanovia.com/en/blog/how-to-create-stacked-bar-plots-with-error-bars-and-p-values/}{How to Create Stacked Bar Plots with Error Bars and P-values}
 #'  }
 #'@inheritParams geom_bracket
 #'@param data a data frame containing statitistical test results. The expected
@@ -110,7 +112,7 @@ stat_pvalue_manual <- function(
   bracket.nudge.y = 0,
   color = "black", linetype = 1, tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
-  hide.ns = FALSE, vjust = 0, position = "identity", ...
+  hide.ns = FALSE, vjust = 0, position = "identity", auto.y = TRUE, ...
 )
 {
   if(is.null(label)){
@@ -149,7 +151,7 @@ stat_pvalue_manual <- function(
 
   # If label is a glue package expression
   if(.contains_curlybracket(label)){
-    data <- data %>% mutate(label = glue(label))
+    data <- data %>% dplyr::mutate(label = glue::glue(label))
     label <- "label"
   }
 
@@ -159,7 +161,7 @@ stat_pvalue_manual <- function(
   if(!(xmin %in% available.variables))
     stop("can't find the xmin variable '", xmin, "' in the data")
 
-  y.position <- .valide_y_position(y.position, data)
+  y.position <- .valide_y_position(y.position, auto.y, data)
   if(is.numeric(y.position)){
     data$y.position <- y.position
     y.position <- "y.position"
@@ -168,7 +170,7 @@ stat_pvalue_manual <- function(
 
   # If xmax is null, pvalue is drawn as text
   if(!is.null(xmax)) {
-    xmax <- data %>% pull(!!xmax)
+    xmax <- data %>% dplyr::pull(!!xmax)
     pvalue.geom <- "bracket"
   }
   else {
@@ -176,7 +178,7 @@ stat_pvalue_manual <- function(
     pvalue.geom <- "text"
   }
   if(!is.null(xmin)){
-    xmin <- data %>% pull(!!xmin)
+    xmin <- data %>% dplyr::pull(!!xmin)
   }
   else{
     xmin <- NA
@@ -187,19 +189,19 @@ stat_pvalue_manual <- function(
   xxmin <- xmin
   data <- data %>%
     dplyr::mutate(
-      label = as.character(data %>% pull(!!label)),
-      y.position = data %>% pull(!!y.position),
+      label = as.character(data %>% dplyr::pull(!!label)),
+      y.position = data %>% dplyr::pull(!!y.position),
       xmin = xxmin,
       xmax = xxmax
     )
   # vjust
   if(is.character(vjust)){
-    vjust <- data %>% pull(!!vjust)
+    vjust <- data %>% dplyr::pull(!!vjust)
   }
   else if(missing(vjust)){
     vjust <- guess_labels_default_vjust(data$label)
   }
-  data <- data %>% mutate(vjust = !!vjust)
+  data <- data %>% dplyr::mutate(vjust = !!vjust)
 
 
   if(pvalue.geom == "bracket"){
@@ -215,7 +217,8 @@ stat_pvalue_manual <- function(
       label.size = label.size, size = bracket.size,
       bracket.nudge.y = bracket.nudge.y, color = color,
       linetype = linetype, step.increase = step.increase,
-      step.group.by = step.group.by, position = position, ...
+      step.group.by = step.group.by, position = position, auto.y = auto.y,
+      ...
     )
   }
   else{
@@ -223,10 +226,10 @@ stat_pvalue_manual <- function(
       ref.group <- unique(data$group1)
       group2 <- NULL
       data <- add_ctr_rows(data, ref.group = ref.group)
-      mapping <- aes(x = xmin, y = y.position, vjust = vjust, label = label, group = group2)
+      mapping <- ggplot2::aes(x = xmin, y = y.position, vjust = vjust, label = label, group = group2)
       if(missing(position) & !missing(x)){
         if (is_grouping_variable(x))
-          position <- position_dodge(0.8)
+          position <- ggplot2::position_dodge(0.8)
       }
     }
     else{
@@ -236,7 +239,7 @@ stat_pvalue_manual <- function(
     if(color %in% colnames(data)) mapping$colour <- rlang::ensym(color)
     else option$color <- color
     option[["mapping"]] <- mapping
-    do.call(geom_text, option)
+    do.call(ggplot2::geom_text, option)
   }
 }
 
@@ -255,7 +258,17 @@ asserttat_group_columns_exists <- function(data){
 }
 
 # get validate p-value y-position
-.valide_y_position <- function(y.position, data){
+.valide_y_position <- function(y.position, auto.y, data){
+  if (is.character(y.position)) {
+    if(!(y.position %in% colnames(data))) {
+      if (!auto.y) {
+        stop("can't find the y.position variable '", y.position, "' in the data. Add specify y.positions or set auto_y = TRUE")
+      } else {
+        # set y.position to a dummy value
+        y.position <- 0
+    }
+    }
+  }
   if(is.numeric(y.position)){
     number.of.test <- nrow(data)
     number.of.ycoord <- length(y.position)
@@ -263,10 +276,6 @@ asserttat_group_columns_exists <- function(data){
 
     if(number.of.ycoord < number.of.test)
       y.position <- rep(y.position, xtimes)
-  }
-  else if(is.character(y.position)){
-    if(!(y.position %in% colnames(data)))
-      stop("can't find the y.position variable '", y.position, "' in the data")
   }
   return(y.position)
 }
@@ -284,8 +293,8 @@ add_ctr_rows <- function(data, ref.group){
   data <- keep_only_tbl_df_classes(data)
   ctr <- data %>%
     dplyr::distinct(xmin, .keep_all = TRUE) %>%
-    mutate(group2 = ref.group) %>%
-    mutate(label = " ")
+    dplyr::mutate(group2 = ref.group) %>%
+    dplyr::mutate(label = " ")
   dplyr::bind_rows(ctr, data)
 }
 
@@ -332,7 +341,7 @@ is_grouping_variable <- function(x){
 contains_signif_stars <- function(data, label.col){
   result <- FALSE
   if(label.col[1] %in% colnames(data)){
-    labels <- data %>% pull(!!label.col)
+    labels <- data %>% dplyr::pull(!!label.col)
     stars <- c("****", "***", "**", "*")
     result <- any(labels %in% stars)
   }
