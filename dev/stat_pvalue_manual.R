@@ -115,18 +115,109 @@ stat_pvalue_manual <- function(
 )
 {
   if(is.null(label)){
+
+    # Guess column to be used as significance labem
+    guess_signif_label_column <- function(data){
+      potential.label <- c(
+        "label", "labels", "p.adj.signif", "p.adj", "padj",
+        "p.signif", "p.value", "pval", "p.val", "p"
+      )
+      res <- intersect(potential.label, colnames(data))
+      if(length(res) > 0){
+        res <- res[1]
+      }
+      else{
+        stop("label is missing")
+      }
+      res
+    }
+
+
     label <- guess_signif_label_column(data)
   }
+
   if(hide.ns){
+    # remove non significant
+    remove_ns <- function(data){
+      columns <- colnames(data)
+      if("p.adj.signif" %in% columns){
+        data <- data[data$p.adj.signif != "ns", ]
+      }
+      else if("p.adj" %in% columns){
+        data <- data[data$p.adj <= 0.05, ]
+      }
+      else if("p.signif" %in% columns){
+        data <- data[data$p.signif != "ns", ]
+      }
+      else if("p" %in% columns){
+        data <- data[data$p <= 0.05, ]
+      }
+      data
+    }
+
     data <- remove_ns(data)
   }
-  data <- asserttat_group_columns_exists(data)
+
+  assertthat_group_columns_exists <- function(data){
+    groups.exist <- all(c("group1", "group2") %in% colnames(data))
+    if(!groups.exist){
+      if(inherits(data, "rstatix_test") & "group" %in% colnames(data)){
+        data$group1 <- "all"
+        data$group2 <- data$group
+      }
+      else{
+        stop("data should contain group1 and group2 columns")
+      }
+    }
+    invisible(data)
+  }
+
+  data <- assertthat_group_columns_exists(data)
+
+  # Returns the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
+  detect_comparison_type <- function(data){
+    ngroup1 <- length(unique(data$group1))
+    ngroup2 <- length(unique(data$group2))
+
+
+    is_null_model <- function(data){
+      group2 <- unique(data$group2)
+      .diff <- setdiff(group2, "null model")
+      length(.diff) == 0
+    }
+
+    if(is_null_model(data)){
+      type <- "one_group"
+    }
+    else if(ngroup1 == 1 & ngroup2 >= 2){
+      type <- "each_vs_ref"
+    }
+    else if(ngroup1 == 1 & ngroup2 == 1){
+      type <- "two_groups"
+    }
+    else if (ngroup1 >= 2 & ngroup2 >= 2){
+      type <- "pairwise"
+    }
+    else if(all(c("group1", "group2") %in% colnames(data))){
+      # filtered data
+      type <- "pairwise"
+    }
+    else{
+      stop("Make sure that group1 and group2 columns exist in the data.")
+    }
+    type
+  }
+
   comparison <- detect_comparison_type(data)
+
+
   all.x.is.missing <- is.null(x) & missing(xmin) & missing(xmax)
+
   if(all(data$group1 == "all") & all.x.is.missing){
     is.grouped <- length(data$group2) > length(unique(data$group2))
     if(!is.grouped) x <- "group2" # labels will be plotted at x = "group2"
   }
+
   # Detect automatically if xmin and xmax exists in the data.
   if(all.x.is.missing){
     if(all(c("xmin", "xmax") %in% colnames(data))){
@@ -134,33 +225,58 @@ stat_pvalue_manual <- function(
       xmax <- "xmax"
     }
   }
+
   # should stay before (!is.null(x))
   if(remove.bracket){
-    group1.length <- unique(data$group1) %>% length()
+    group1.length <- length(unique(data$group1))
     if(group1.length == 1) {
       xmin <- xmax
       xmax <- NULL
     }
   }
+
   # P-value displayed as text (without brackets)
   if(!is.null(x)){
     xmin <- x
     xmax <- NULL
   }
 
+  # Check if a string contains curly bracket
+  .contains_curlybracket <- function(x){
+    grepl("\\{|\\}", x, perl = TRUE)
+  }
+
   # If label is a glue package expression
   if(.contains_curlybracket(label)){
-    data <- data %>% dplyr::mutate(label = glue::glue(label))
+    data$label <- glue::glue(label)
     label <- "label"
   }
 
   available.variables <- colnames(data)
+
   if(!(label %in% available.variables))
     stop("can't find the label variable '", label, "' in the data")
   if(!(xmin %in% available.variables))
     stop("can't find the xmin variable '", xmin, "' in the data")
 
-  y.position <- .valide_y_position(y.position, data)
+  # get validate p-value y-position
+  .valid_y_position <- function(y.position, data){
+    if(is.numeric(y.position)){
+      number.of.test <- nrow(data)
+      number.of.ycoord <- length(y.position)
+      xtimes <- number.of.test / number.of.ycoord
+
+      if(number.of.ycoord < number.of.test)
+        y.position <- rep(y.position, xtimes)
+    }
+    else if(is.character(y.position)){
+      if(!(y.position %in% colnames(data)))
+        stop("can't find the y.position variable '", y.position, "' in the data")
+    }
+    return(y.position)
+  }
+
+  y.position <- .valid_y_position(y.position, data)
   if(is.numeric(y.position)){
     data$y.position <- y.position
     y.position <- "y.position"
@@ -169,7 +285,7 @@ stat_pvalue_manual <- function(
 
   # If xmax is null, pvalue is drawn as text
   if(!is.null(xmax)) {
-    xmax <- data %>% dplyr::pull(!!xmax)
+    xmax <- data[[xmax]]
     pvalue.geom <- "bracket"
   }
   else {
@@ -177,32 +293,46 @@ stat_pvalue_manual <- function(
     pvalue.geom <- "text"
   }
   if(!is.null(xmin)){
-    xmin <- data %>% dplyr::pull(!!xmin)
+    xmin <- data[[xmin]]
   }
   else{
     xmin <- NA
   }
 
   # Build the statistical table for plotting
-  xxmax <-xmax  # so that mutate will avoid re-using an existing xmax in the data
+  xxmax <- xmax  # so that mutate will avoid re-using an existing xmax in the data
   xxmin <- xmin
-  data <- data %>%
-    dplyr::mutate(
-      label = as.character(data %>% dplyr::pull(!!label)),
-      y.position = data %>% dplyr::pull(!!y.position),
-      xmin = xxmin,
-      xmax = xxmax
-    )
+
+  data$label <- as.character(data[[label]])
+  data$y.position <- data[[y.position]]
+  data$xmin <- xxmin
+  data$xmax <- xxmax
+
+  # guess label default vjust
+  guess_label_default_vjust <- function(label){
+    if(label %in% c("****", "***", "**", "*"))
+      vjust <- 0.5
+    else vjust <- 0
+    vjust
+  }
+
+  guess_labels_default_vjust <- function(labels){
+    labels <- mapply(guess_label_default_vjust,
+                     labels, USE.NAMES = FALSE)
+    labels
+  }
+
   # vjust
   if(is.character(vjust)){
-    vjust <- data %>% dplyr::pull(!!vjust)
+    vjust <- data[[vjust]]
   }
   else if(missing(vjust)){
     vjust <- guess_labels_default_vjust(data$label)
   }
-  data <- data %>% dplyr::mutate(vjust = !!vjust)
 
+  data$vjust <- vjust
 
+  # Draw brackets else draw p-values
   if(pvalue.geom == "bracket"){
     if(identical(data$xmin, data$xmax) | remove.bracket){
       # case when ref.group = "all"
@@ -220,13 +350,41 @@ stat_pvalue_manual <- function(
       step.group.by = step.group.by, coord.flip = coord.flip,
       position = position, ...
     )
-  }
-  else{
+
+  } else {
     if(comparison == "each_vs_ref"){
       ref.group <- unique(data$group1)
       group2 <- NULL
+
+      keep_only_tbl_df_classes <- function(x){
+        toremove <- setdiff(class(x), c("tbl_df", "tbl", "data.frame"))
+        if(length(toremove) > 0){
+          class(x) <- setdiff(class(x), toremove)
+        }
+        x
+      }
+
+      # For ctr rows: the comparaison of ctr against itself
+      # useful only when positionning the label of grouped bars
+      add_ctr_rows <- function(data, ref.group){
+        xmin <- NULL
+        data <- keep_only_tbl_df_classes(data)
+
+        ctr <- data[!duplicated(data$xmin), ]
+        ctr$group2 <- ref.group
+        ctr$label <- " "
+
+        rbind(ctr, data)
+      }
+
       data <- add_ctr_rows(data, ref.group = ref.group)
+
       mapping <- ggplot2::aes(x = xmin, y = y.position, vjust = vjust, label = label, group = group2)
+
+      is_grouping_variable <- function(x){
+        !(x %in% c("group1", "group2"))
+      }
+
       if(missing(position) & !missing(x)){
         if (is_grouping_variable(x))
           position <- ggplot2::position_dodge(0.8)
@@ -243,133 +401,13 @@ stat_pvalue_manual <- function(
   }
 }
 
-asserttat_group_columns_exists <- function(data){
-  groups.exist <- all(c("group1", "group2") %in% colnames(data))
-  if(!groups.exist){
-    if(inherits(data, "rstatix_test") & "group" %in% colnames(data)){
-      data$group1 <- "all"
-      data$group2 <- data$group
-    }
-    else{
-      stop("data should contain group1 and group2 columns")
-    }
-  }
-  invisible(data)
-}
-
-# get validate p-value y-position
-.valide_y_position <- function(y.position, data){
-  if(is.numeric(y.position)){
-    number.of.test <- nrow(data)
-    number.of.ycoord <- length(y.position)
-    xtimes <- number.of.test/number.of.ycoord
-
-    if(number.of.ycoord < number.of.test)
-      y.position <- rep(y.position, xtimes)
-  }
-  else if(is.character(y.position)){
-    if(!(y.position %in% colnames(data)))
-      stop("can't find the y.position variable '", y.position, "' in the data")
-  }
-  return(y.position)
-}
-
-
-# Check if a string contains curly bracket
-.contains_curlybracket <- function(x){
-  grepl("\\{|\\}", x, perl = TRUE)
-}
-
-# For ctr rows: the comparaison of ctr against itself
-# useful only when positionning the label of grouped bars
-add_ctr_rows <- function(data, ref.group){
-  xmin <- NULL
-  data <- keep_only_tbl_df_classes(data)
-  ctr <- data %>%
-    dplyr::distinct(xmin, .keep_all = TRUE) %>%
-    dplyr::mutate(group2 = ref.group) %>%
-    dplyr::mutate(label = " ")
-  dplyr::bind_rows(ctr, data)
-}
-
-# Returns the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
-detect_comparison_type <- function(data){
-  ngroup1 <- unique(data$group1) %>% length()
-  ngroup2 <- unique(data$group2) %>% length()
-  if(is_null_model(data)){
-    type = "one_group"
-  }
-  else if(ngroup1 == 1 & ngroup2 >= 2){
-    type = "each_vs_ref"
-  }
-  else if(ngroup1 == 1 & ngroup2 == 1){
-    type = "two_groups"
-  }
-  else if (ngroup1 >= 2 & ngroup2 >= 2){
-    type = "pairwise"
-  }
-  else if(all(c("group1", "group2") %in% colnames(data))){
-    # filtered data
-    type = "pairwise"
-  }
-  else{
-    stop("Make sure that group1 and group2 columns exist in the data.")
-  }
-  type
-}
-
-
-is_null_model <- function(data){
-  group2 <- unique(data$group2)
-  .diff <- setdiff(group2, "null model")
-  length(.diff) == 0
-}
-
-is_grouping_variable <- function(x){
-  !(x %in% c("group1", "group2"))
-}
-
-
-
 # Check if label column contains stars
-contains_signif_stars <- function(data, label.col){
-  result <- FALSE
-  if(label.col[1] %in% colnames(data)){
-    labels <- data %>% dplyr::pull(!!label.col)
-    stars <- c("****", "***", "**", "*")
-    result <- any(labels %in% stars)
-  }
-  result
-}
-
-# guess label default vjust
-guess_label_default_vjust <- function(label){
-  if(label %in% c("****", "***", "**", "*"))
-    vjust <- 0.5
-  else vjust <- 0
-  vjust
-}
-guess_labels_default_vjust <- function(labels){
-  labels %>%
-    purrr::map(guess_label_default_vjust) %>%
-    unlist()
-}
-
-# remove non significant
-remove_ns <- function(data){
-  filter <- dplyr::filter
-  columns <- colnames(data)
-  if("p.adj.signif" %in% columns){
-    data <- data %>% filter(.data$p.adj.signif != "ns")
-  }
-  else if("p.adj" %in% columns){
-    data <- data %>% filter(.data$p.adj <= 0.05)
-  }
-  else if("p.signif" %in% columns){
-    data <- data %>% filter(.data$p.signif != "ns")
-  }
-  else if("p" %in% columns){
-    data <- data %>% filter(.data$p <= 0.05)
-  }
-  data
-}
+# contains_signif_stars <- function(data, label.col){
+#   result <- FALSE
+#   if(label.col[1] %in% colnames(data)){
+#     labels <- data %>% dplyr::pull(!!label.col)
+#     stars <- c("****", "***", "**", "*")
+#     result <- any(labels %in% stars)
+#   }
+#   result
+# }

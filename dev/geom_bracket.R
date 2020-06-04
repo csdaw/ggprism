@@ -183,6 +183,18 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 draw_group = function(data, panel_params, coord, type = "text", coord.flip = FALSE) {
                                   lab <- as.character(data$annotation)
                                   if(type == "expression"){
+
+                                    # Source: https://github.com/tidyverse/ggplot2/issues/2864
+                                    parse_as_expression <- function(text) {
+                                      stopifnot(is.character(text))
+                                      out <- vector("expression", length(text))
+                                      for (i in seq_along(text)) {
+                                        expr <- parse(text = text[[i]])
+                                        out[[i]] <- if (length(expr) == 0) NA else expr[[1]]
+                                      }
+                                      out
+                                    }
+
                                     lab <- parse_as_expression(lab)
                                   }
                                   coords <- coord$transform(data, panel_params)
@@ -235,13 +247,96 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          bracket.shorten = 0, size = 0.3, label.size = 3.88, family="", vjust = 0,
                          coord.flip = FALSE, ...) {
   type <- match.arg(type)
+
+  build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
+                                xmin = NULL, xmax = NULL, step.increase = 0,
+                                bracket.nudge.y = 0, bracket.shorten = 0,
+                                step.group.by = NULL, vjust = 0){
+
+    add_step_increase <- function(data, step.increase){
+      comparisons.number <- 0:(nrow(data)-1)
+      step.increase <- step.increase*comparisons.number
+      data <- data %>% dplyr::mutate(step.increase = !!step.increase)
+      data
+    }
+    if(is.null(data)){
+      data <- data.frame(
+        label = label, y.position = y.position,
+        xmin = xmin, xmax = xmax
+      ) %>%
+        mutate(vjust = !!vjust)
+    }
+    else{
+      if(!is.null(label)) data <- data %>% dplyr::mutate(label = !!label)
+      if(!is.null(y.position)) data <- data %>% dplyr::mutate(y.position = !!y.position)
+      if(!is.null(xmin)) data <- data %>% dplyr::mutate(xmin = !!xmin)
+      if(!is.null(xmax)) data <- data %>% dplyr::mutate(xmax = !!xmax)
+      if(!identical(vjust, 0)) data <- data %>% dplyr::mutate(vjust = !!vjust)
+    }
+    # add vjust column if doesn't exist
+    if(!("vjust" %in% colnames(data))) data <- data %>% dplyr::mutate(vjust = !!vjust)
+    if(!("bracket.nudge.y" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.nudge.y = !!bracket.nudge.y)
+    if(!("bracket.shorten" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.shorten = !!bracket.shorten)
+
+    if(is.null(step.group.by)){
+      data <- data %>% add_step_increase(step.increase)
+    }
+    else{
+      data <- data %>%
+        dplyr::arrange(!!!syms(c(step.group.by, "y.position"))) %>%
+        dplyr::group_by(!!!syms(step.group.by)) %>%
+        tidyr::nest() %>%
+        dplyr::mutate(step.increase = purrr::map(data, add_step_increase, !!step.increase)) %>%
+        dplyr::select(-data) %>%
+        tidyr::unnest(cols = "step.increase")
+    }
+    data
+  }
+
   data <- build_signif_data(
     data = data, label = label, y.position = y.position,
     xmin = xmin, xmax = xmax, step.increase = step.increase,
     bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
     step.group.by = step.group.by, vjust = vjust
   )
+
+  build_signif_mapping <- function(mapping, data){
+    if(is.null(mapping)){
+      # Check if required variables are present in data
+      required.vars <- c("xmin", "xmax", "y.position")
+      missing.required.vars <- setdiff(required.vars, colnames(data))
+      if(length(missing.required.vars) > 0){
+        stop(
+          "Required variables are missing in the data: ",
+          paste(missing.required.vars, collapse = ", ")
+        )
+      }
+      mapping <- ggplot2::aes()
+    }
+    if(is.null(mapping$label)){
+      label.col <- guess_signif_label_column(data)
+      data$label <- data %>% dplyr::pull(!!label.col)
+      mapping$label <- data$label
+    }
+    if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
+    if(is.null(mapping$xmax)) mapping$xmax <- data$xmax
+    if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
+    if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
+    if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
+    if(is.null(mapping$vjust)) mapping$vjust <- data$vjust
+    if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
+    if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
+    if(! "x" %in% names(mapping)){
+      mapping$x <- mapping$xmin
+    }
+    if(! "y" %in% names(mapping)){
+      mapping$y <- mapping$y.position
+    }
+    mapping
+  }
+
   mapping <- build_signif_mapping(mapping, data)
+
   ggplot2::layer(
     stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
@@ -255,111 +350,9 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
 }
 
 
-# Guess column to be used as significance labem
-guess_signif_label_column <- function(data){
-  potential.label <- c(
-    "label", "labels", "p.adj.signif", "p.adj", "padj",
-    "p.signif", "p.value", "pval", "p.val", "p"
-  )
-  res <- intersect(potential.label, colnames(data))
-  if(length(res) > 0){
-    res <- res[1]
-  }
-  else{
-    stop("label is missing")
-  }
-  res
-}
-
-build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
-                              xmin = NULL, xmax = NULL, step.increase = 0,
-                              bracket.nudge.y = 0, bracket.shorten = 0,
-                              step.group.by = NULL, vjust = 0){
-
-  add_step_increase <- function(data, step.increase){
-    comparisons.number <- 0:(nrow(data)-1)
-    step.increase <- step.increase*comparisons.number
-    data <- data %>% dplyr::mutate(step.increase = !!step.increase)
-    data
-  }
-  if(is.null(data)){
-    data <- data.frame(
-      label = label, y.position = y.position,
-      xmin = xmin, xmax = xmax
-    ) %>%
-      mutate(vjust = !!vjust)
-  }
-  else{
-    if(!is.null(label)) data <- data %>% dplyr::mutate(label = !!label)
-    if(!is.null(y.position)) data <- data %>% dplyr::mutate(y.position = !!y.position)
-    if(!is.null(xmin)) data <- data %>% dplyr::mutate(xmin = !!xmin)
-    if(!is.null(xmax)) data <- data %>% dplyr::mutate(xmax = !!xmax)
-    if(!identical(vjust, 0)) data <- data %>% dplyr::mutate(vjust = !!vjust)
-  }
-  # add vjust column if doesn't exist
-  if(!("vjust" %in% colnames(data))) data <- data %>% dplyr::mutate(vjust = !!vjust)
-  if(!("bracket.nudge.y" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.nudge.y = !!bracket.nudge.y)
-  if(!("bracket.shorten" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.shorten = !!bracket.shorten)
-
-  if(is.null(step.group.by)){
-    data <- data %>% add_step_increase(step.increase)
-  }
-  else{
-    data <- data %>%
-      dplyr::arrange(!!!syms(c(step.group.by, "y.position"))) %>%
-      dplyr::group_by(!!!syms(step.group.by)) %>%
-      tidyr::nest() %>%
-      dplyr::mutate(step.increase = purrr::map(data, add_step_increase, !!step.increase)) %>%
-      dplyr::select(-data) %>%
-      tidyr::unnest(cols = "step.increase")
-  }
-  data
-}
 
 
-build_signif_mapping <- function(mapping, data){
-  if(is.null(mapping)){
-    # Check if required variables are present in data
-    required.vars <- c("xmin", "xmax", "y.position")
-    missing.required.vars <- setdiff(required.vars, colnames(data))
-    if(length(missing.required.vars) > 0){
-      stop(
-        "Required variables are missing in the data: ",
-        paste(missing.required.vars, collapse = ", ")
-      )
-    }
-    mapping <- ggplot2::aes()
-  }
-  if(is.null(mapping$label)){
-    label.col <- guess_signif_label_column(data)
-    data$label <- data %>% dplyr::pull(!!label.col)
-    mapping$label <- data$label
-  }
-  if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
-  if(is.null(mapping$xmax)) mapping$xmax <- data$xmax
-  if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
-  if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
-  if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
-  if(is.null(mapping$vjust)) mapping$vjust <- data$vjust
-  if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
-  if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
-  if(! "x" %in% names(mapping)){
-    mapping$x <- mapping$xmin
-  }
-  if(! "y" %in% names(mapping)){
-    mapping$y <- mapping$y.position
-  }
-  mapping
-}
 
 
-# Source: https://github.com/tidyverse/ggplot2/issues/2864
-parse_as_expression <- function(text) {
-  stopifnot(is.character(text))
-  out <- vector("expression", length(text))
-  for (i in seq_along(text)) {
-    expr <- parse(text = text[[i]])
-    out[[i]] <- if (length(expr) == 0) NA else expr[[1]]
-  }
-  out
-}
+
+
