@@ -354,9 +354,15 @@ stat_pvalue_manual <- function(
 
     mapping <- list()
     option <- list()
-    allowed.options <- c("y.position", "tip.length", "label.size",
-                         "step.increase", "bracket.nudge.y", "bracket.shorten",
-                         "coord.flip")
+    allowed.options <- c(
+      # general
+      "x", "y", "color", "colour", "linetype", "fill", "size", "shape", "width",
+      "alpha", "na.rm", "lwd", "pch", "cex", "position", "stat", "geom",
+      "show.legend", "inherit.aes", "fun.args", "fontface",
+      # bracket specific
+      "y.position", "tip.length", "label.size", "step.increase",
+      "bracket.nudge.y", "bracket.shorten", "coord.flip"
+    )
     columns <- colnames(data)
 
     for (key in names(params)) {

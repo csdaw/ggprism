@@ -283,8 +283,8 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     }
     else{
       data <- data %>%
-        dplyr::arrange(!!!syms(c(step.group.by, "y.position"))) %>%
-        dplyr::group_by(!!!syms(step.group.by)) %>%
+        dplyr::arrange(!!!rlang::syms(c(step.group.by, "y.position"))) %>%
+        dplyr::group_by(!!!rlang::syms(step.group.by)) %>%
         tidyr::nest() %>%
         dplyr::mutate(step.increase = purrr::map(data, add_step_increase, !!step.increase)) %>%
         dplyr::select(-data) %>%
@@ -314,6 +314,22 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       mapping <- ggplot2::aes()
     }
     if(is.null(mapping$label)){
+      # Guess column to be used as significance labem
+      guess_signif_label_column <- function(data) {
+        potential.label <- c(
+          "label", "labels", "p.adj.signif", "p.adj", "padj",
+          "p.signif", "p.value", "pval", "p.val", "p"
+        )
+        res <- intersect(potential.label, colnames(data))
+        if(length(res) > 0){
+          res <- res[1]
+        }
+        else{
+          stop("label is missing")
+        }
+        res
+      }
+
       label.col <- guess_signif_label_column(data)
       data$label <- data %>% dplyr::pull(!!label.col)
       mapping$label <- data$label
