@@ -117,7 +117,7 @@ stat_pvalue_manual <- function(
   if(is.null(label)){
 
     # Guess column to be used as significance labem
-    guess_signif_label_column <- function(data){
+    guess_signif_label_column <- function(data) {
       potential.label <- c(
         "label", "labels", "p.adj.signif", "p.adj", "padj",
         "p.signif", "p.value", "pval", "p.val", "p"
@@ -248,7 +248,10 @@ stat_pvalue_manual <- function(
 
   # If label is a glue package expression
   if(.contains_curlybracket(label)){
-    data$label <- glue::glue(label)
+    # move this to importfrom later
+    `%>%` <- magrittr::`%>%`
+
+    data$label <- data %>% glue::glue_data(label)
     label <- "label"
   }
 
@@ -339,17 +342,50 @@ stat_pvalue_manual <- function(
       bracket.size = 0
     }
 
-    geom_exec(
-      geom_bracket, data = data, xmin = "xmin", xmax = "xmax",
-      label = "label", y.position = "y.position", vjust = "vjust",
-      group = 1:nrow(data),  tip.length =  tip.length,
-      label.size = label.size, size = bracket.size,
-      bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
-      color = color,
-      linetype = linetype, step.increase = step.increase,
-      step.group.by = step.group.by, coord.flip = coord.flip,
-      position = position, ...
-    )
+    params <- list(xmin = "xmin", xmax = "xmax", label = "label",
+                   y.position = "y.position", vjust = "vjust",
+                   group = 1:nrow(data), tip.length = tip.length,
+                   label.size = label.size, size = bracket.size,
+                   bracket.nudge.y = bracket.nudge.y,
+                   bracket.shorten = bracket.shorten,
+                   color = color, linetype = linetype,
+                   step.increase = step.increase, step.group.by = step.group.by,
+                   coord.flip = coord.flip, position = position, ...)
+
+    mapping <- list()
+    option <- list()
+    allowed.options <- c("y.position", "tip.length", "label.size",
+                         "step.increase", "bracket.nudge.y", "bracket.shorten",
+                         "coord.flip")
+    columns <- colnames(data)
+
+    for (key in names(params)) {
+      value <- params[[key]]
+      if (is.null(value)) {
+
+      }
+      else if (unlist(value)[1] %in% columns & key %in% allowed.options) {
+        mapping[[key]] <- value
+
+      }
+      else if (key %in% allowed.options) {
+        option[[key]] <- value
+      }
+      else if(key == "step.group.by"){
+        # for geom_bracket, value are variable name.
+        # but this parameter is an option not an aes
+        option[[key]] <- value
+      }
+      # else warnings("Don't know '", key, "'")
+    }
+
+    if (!is.null(position)) option[["position"]] <- position
+
+    option[["data"]] <- data
+
+    option[["mapping"]] <- do.call(ggplot2::aes_string, mapping)
+
+    do.call(geom_bracket, option)
 
   } else {
     if(comparison == "each_vs_ref"){
@@ -400,14 +436,3 @@ stat_pvalue_manual <- function(
     do.call(ggplot2::geom_text, option)
   }
 }
-
-# Check if label column contains stars
-# contains_signif_stars <- function(data, label.col){
-#   result <- FALSE
-#   if(label.col[1] %in% colnames(data)){
-#     labels <- data %>% dplyr::pull(!!label.col)
-#     stars <- c("****", "***", "**", "*")
-#     result <- any(labels %in% stars)
-#   }
-#   result
-# }
