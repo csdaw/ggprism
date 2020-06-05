@@ -32,7 +32,7 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                     tip.length <-  rep(data$tip.length, each=2)
                                   }
                                   # Preparing bracket data
-                                  data <- dplyr::bind_rows(data, data, data)
+                                  data <- rbind(data, data, data)
 
                                   data$x <- c(xmin, xmin, xmax)
                                   data$xend = c(xmin, xmax, xmax)
@@ -256,39 +256,41 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     add_step_increase <- function(data, step.increase){
       comparisons.number <- 0:(nrow(data)-1)
       step.increase <- step.increase*comparisons.number
-      data <- data %>% dplyr::mutate(step.increase = !!step.increase)
+      data$step.increase <- step.increase
       data
     }
     if(is.null(data)){
       data <- data.frame(
         label = label, y.position = y.position,
         xmin = xmin, xmax = xmax
-      ) %>%
-        mutate(vjust = !!vjust)
+      )
+      data$vjust <- vjust
     }
     else{
-      if(!is.null(label)) data <- data %>% dplyr::mutate(label = !!label)
-      if(!is.null(y.position)) data <- data %>% dplyr::mutate(y.position = !!y.position)
-      if(!is.null(xmin)) data <- data %>% dplyr::mutate(xmin = !!xmin)
-      if(!is.null(xmax)) data <- data %>% dplyr::mutate(xmax = !!xmax)
-      if(!identical(vjust, 0)) data <- data %>% dplyr::mutate(vjust = !!vjust)
+      if(!is.null(label)) data$label <- label
+      if(!is.null(y.position)) data$y.position <- y.position
+      if(!is.null(xmin)) data$xmin <- xmin
+      if(!is.null(xmax)) data$xmax <- xmax
+      if(!identical(vjust, 0)) data$vjust <- vjust
     }
     # add vjust column if doesn't exist
-    if(!("vjust" %in% colnames(data))) data <- data %>% dplyr::mutate(vjust = !!vjust)
-    if(!("bracket.nudge.y" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.nudge.y = !!bracket.nudge.y)
-    if(!("bracket.shorten" %in% colnames(data))) data <- data %>% dplyr::mutate(bracket.shorten = !!bracket.shorten)
+    if(!("vjust" %in% colnames(data))) data$vjust <- vjust
+    if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
+    if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
 
     if(is.null(step.group.by)){
-      data <- data %>% add_step_increase(step.increase)
+      data <- add_step_increase(data, step.increase)
     }
     else{
-      data <- data %>%
-        dplyr::arrange(!!!rlang::syms(c(step.group.by, "y.position"))) %>%
-        dplyr::group_by(!!!rlang::syms(step.group.by)) %>%
-        tidyr::nest() %>%
-        dplyr::mutate(step.increase = purrr::map(data, add_step_increase, !!step.increase)) %>%
-        dplyr::select(-data) %>%
-        tidyr::unnest(cols = "step.increase")
+      data <- data[order(data[[step.group.by]], data[["y.position"]]), ]
+
+      data <- by(data,
+                 INDICES = data[[step.group.by]],
+                 FUN = function(x) {
+                   x <- add_step_increase(x, 0.1)
+                   return(x)
+                 }) %>%
+        do.call(rbind, .)
     }
     data
   }
@@ -331,7 +333,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       }
 
       label.col <- guess_signif_label_column(data)
-      data$label <- data %>% dplyr::pull(!!label.col)
+      data$label <- data[[label.col]]
       mapping$label <- data$label
     }
     if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
