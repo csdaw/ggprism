@@ -27,8 +27,8 @@
 #' # example
 #'
 #'
-guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
-                              n.dodge = 1, order = 0, position = waiver()) {
+guide_offset_minor <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
+                               n.dodge = 1, order = 0, position = waiver()) {
   structure(
     list(
       title = title,
@@ -45,9 +45,9 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = N
       # parameter
       available_aes = c("x", "y"),
 
-      name = "prism_minor"
+      name = "offset_minor"
     ),
-    class = c("guide", "prism_minor", "axis")
+    class = c("guide", "offset_minor", "axis")
   )
 }
 
@@ -56,7 +56,7 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = N
 #' @export
 #' @rdname guide-helpers
 #' @keywords internal
-guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
+guide_train.offset_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
 
@@ -71,15 +71,15 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   # indicate which breaks are major
   is_major <- breaks %in% major_breaks
 
-  empty_ticks <- .ggint$new_data_frame(
+  empty_ticks <- ggplot2:::new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
   )
   names(empty_ticks) <- c(aesthetic, ".value", ".label")
 
   if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
-    warn(glue(
+    warn(glue::glue(
       "axis guide needs appropriate scales: ",
-      glue_collapse(guide$available_aes, ", ", last = " or ")
+      glue::glue_collapse(guide$available_aes, ", ", last = " or ")
     ))
     guide$key <- empty_ticks
   } else if (length(breaks) == 0) {
@@ -87,7 +87,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   } else {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
 
-    ticks <- .ggint$new_data_frame(setNames(list(mapped_breaks), aesthetic))
+    ticks <- ggplot2:::new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     # get major break labels and make minor breaks blank
     ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
@@ -97,17 +97,17 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   guide$name <- paste0(guide$name, "_", aesthetic)
   guide$is_major <- is_major
-  guide$hash <- digest(list(guide$title, guide$key$.value,
-                            guide$key$.label, guide$name, guide$is_major))
+  guide$hash <- digest::digest(list(guide$title, guide$key$.value,
+                                    guide$key$.label, guide$name, guide$is_major))
   guide
 }
 
 #' @rdname guide-helpers
 #' @export
-guide_gengrob.prism_minor <- function(guide, theme) {
+guide_gengrob.offset_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
-  draw_prism_minor(
+  draw_offset_minor(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label[guide$is_major],
     breaks_major = guide$is_major,
@@ -135,7 +135,7 @@ guide_gengrob.prism_minor <- function(guide, theme) {
 #'   useful for displaying labels that would otherwise overlap.
 #' @noRd
 #'
-draw_prism_minor <- function(break_positions, break_labels, breaks_major,
+draw_offset_minor <- function(break_positions, break_labels, breaks_major,
                              axis_position, theme,
                              check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 
@@ -159,7 +159,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   # override label element parameters for rotation
   if (inherits(label_element, "element_text")) {
-    label_overrides <- .ggint$axis_label_element_overrides(axis_position, angle)
+    label_overrides <- ggplot2:::axis_label_element_overrides(axis_position, angle)
     # label_overrides is an element_text, but label_element may not be;
     # to merge the two elements, we just copy angle, hjust, and vjust
     # unless their values are NULL
@@ -181,9 +181,9 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   non_position_dim <- if (is_vertical) "x" else "y"
   position_size <- if (is_vertical) "height" else "width"
   non_position_size <- if (is_vertical) "width" else "height"
-  gtable_element <- if (is_vertical) gtable_row else gtable_col
-  measure_gtable <- if (is_vertical) gtable_width else gtable_height
-  measure_labels_non_pos <- if (is_vertical) grobWidth else grobHeight
+  gtable_element <- if (is_vertical) gtable::gtable_row else gtable::gtable_col
+  measure_gtable <- if (is_vertical) gtable::gtable_width else gtable::gtable_height
+  measure_labels_non_pos <- if (is_vertical) grid::grobWidth else grid::grobHeight
 
   # conditionally set parameters that depend on which side of the panel
   # the axis is on
@@ -203,18 +203,19 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   axis_position_opposite <- unname(opposite_positions[axis_position])
 
   # draw elements
-  line_grob <- exec(
+  line_grob <- rlang::exec(
     element_grob, line_element,
-    !!position_dim := unit(c(0, 1), "npc"),
-    !!non_position_dim := unit.c(non_position_panel, non_position_panel)
+    !!position_dim := unit(c(min(break_positions),
+                             max(break_positions)), "npc"),
+    !!non_position_dim := grid::unit.c(non_position_panel, non_position_panel)
   )
 
   if (n_breaks == 0) {
     return(
-      .ggint$absoluteGrob(
+      ggplot2:::absoluteGrob(
         gList(line_grob),
-        width = grobWidth(line_grob),
-        height = grobHeight(line_grob)
+        width = grid::grobWidth(line_grob),
+        height = grid::grobHeight(line_grob)
       )
     )
   }
@@ -233,7 +234,7 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   dodge_indices <- split(seq_len(n_breaks), dodge_pos)
 
   label_grobs <- lapply(dodge_indices, function(indices) {
-    .ggint$draw_axis_labels(
+    ggplot2:::draw_axis_labels(
       break_positions = break_positions[breaks_major][indices],
       break_labels = break_labels[indices],
       label_element = label_element,
@@ -242,17 +243,17 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
     )
   })
 
-  ticks_grob <- exec(
+  ticks_grob <- rlang::exec(
     element_grob, tick_element,
     !!position_dim := rep(unit(break_positions, "native"), each = 2),
-    !!non_position_dim := unit.c(
+    !!non_position_dim := grid::unit.c(
       rep(
-        unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
+        grid::unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
         times = n_breaks
       ),
       rep(
         # let minor ticks have a different length from major ticks
-        unit.c(non_position_panel + (tick_direction * prism_tick_length), non_position_panel)[tick_coordinate_order],
+        grid::unit.c(non_position_panel + (tick_direction * prism_tick_length), non_position_panel)[tick_coordinate_order],
         times = n_minor_breaks
       )
     ),
@@ -261,16 +262,16 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
 
   # create gtable
   non_position_sizes <- paste0(non_position_size, "s")
-  label_dims <- do.call(unit.c, lapply(label_grobs, measure_labels_non_pos))
+  label_dims <- do.call(grid::unit.c, lapply(label_grobs, measure_labels_non_pos))
   grobs <- c(list(ticks_grob), label_grobs)
-  grob_dims <- unit.c(tick_length, label_dims)
+  grob_dims <- grid::unit.c(tick_length, label_dims)
 
   if (labels_first_gtable) {
     grobs <- rev(grobs)
     grob_dims <- rev(grob_dims)
   }
 
-  gt <- exec(
+  gt <- rlang::exec(
     gtable_element,
     name = "axis",
     grobs = grobs,
@@ -279,17 +280,17 @@ draw_prism_minor <- function(break_positions, break_labels, breaks_major,
   )
 
   # create viewport
-  justvp <- exec(
-    viewport,
+  justvp <- rlang::exec(
+    grid::viewport,
     !!non_position_dim := non_position_panel,
     !!non_position_size := measure_gtable(gt),
     just = axis_position_opposite
   )
 
-  .ggint$absoluteGrob(
-    gList(line_grob, gt),
-    width = gtable_width(gt),
-    height = gtable_height(gt),
+  ggplot2:::absoluteGrob(
+    grid::gList(line_grob, gt),
+    width = gtable::gtable_width(gt),
+    height = gtable::gtable_height(gt),
     vp = justvp
   )
 }

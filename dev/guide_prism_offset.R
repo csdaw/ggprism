@@ -188,13 +188,11 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
   opposite_positions <- c("top" = "bottom", "bottom" = "top", "right" = "left", "left" = "right")
   axis_position_opposite <- unname(opposite_positions[axis_position])
 
-  print(break_positions)
-
   # draw elements
   line_grob <- rlang::exec(
     element_grob, line_element,
-    !!position_dim := unit(c(break_positions[1],
-                             break_positions[length(break_positions)]), "npc"),
+    !!position_dim := unit(c(min(break_positions),
+                             max(break_positions)), "npc"),
     !!non_position_dim := grid::unit.c(non_position_panel, non_position_panel)
   )
 
