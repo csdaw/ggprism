@@ -1,3 +1,4 @@
+`%||%` <- rlang::`%||%`
 
 #' Axis guide
 #'
@@ -36,8 +37,8 @@
 #' p + guides(x = guide_axis(n.dodge = 2), y.sec = guide_axis())
 #'
 #'
-guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                       order = 0, position = waiver()) {
+guide_prism_offset <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
+                               order = 0, position = waiver()) {
   structure(
     list(
       title = title,
@@ -54,34 +55,34 @@ guide_axis <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.
       # parameter
       available_aes = c("x", "y"),
 
-      name = "axis"
+      name = "prism_offset"
     ),
-    class = c("guide", "axis")
+    class = c("guide", "prism_offset", "axis")
   )
 }
 
 #' @export
-guide_train.axis <- function(guide, scale, aesthetic = NULL) {
+guide_train.prism_offset <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
   breaks <- scale$get_breaks()
 
-  empty_ticks <- new_data_frame(
+  empty_ticks <- ggplot2:::new_data_frame(
     list(aesthetic = numeric(0), .value = numeric(0), .label = character(0))
   )
   names(empty_ticks) <- c(aesthetic, ".value", ".label")
 
   if (length(intersect(scale$aesthetics, guide$available_aes)) == 0) {
-    warn(glue(
+    warn(glue::glue(
       "axis guide needs appropriate scales: ",
-      glue_collapse(guide$available_aes, ", ", last = " or ")
+      glue::glue_collapse(guide$available_aes, ", ", last = " or ")
     ))
     guide$key <- empty_ticks
   } else if (length(breaks) == 0) {
     guide$key <- empty_ticks
   } else {
     mapped_breaks <- if (scale$is_discrete()) scale$map(breaks) else breaks
-    ticks <- new_data_frame(setNames(list(mapped_breaks), aesthetic))
+    ticks <- ggplot2:::new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     ticks$.label <- scale$get_labels(breaks)
 
@@ -94,49 +95,10 @@ guide_train.axis <- function(guide, scale, aesthetic = NULL) {
 }
 
 #' @export
-guide_transform.axis <- function(guide, coord, panel_params) {
-  if (is.null(guide$position) || nrow(guide$key) == 0) {
-    return(guide)
-  }
-
-  aesthetics <- names(guide$key)[!grepl("^\\.", names(guide$key))]
-
-  if (all(c("x", "y") %in% aesthetics)) {
-    guide$key <- coord$transform(guide$key, panel_params)
-  } else {
-    other_aesthetic <- setdiff(c("x", "y"), aesthetics)
-    override_value <- if (guide$position %in% c("bottom", "left")) -Inf else Inf
-    guide$key[[other_aesthetic]] <- override_value
-
-    guide$key <- coord$transform(guide$key, panel_params)
-
-    warn_for_guide_position(guide)
-  }
-
-  guide
-}
-
-# discards the new guide with a warning
-#' @export
-guide_merge.axis <- function(guide, new_guide) {
-  if (!inherits(new_guide, "guide_none")) {
-    warn("guide_axis(): Discarding guide on merge. Do you have more than one guide with the same position?")
-  }
-
-  guide
-}
-
-# axis guides don't care which geometry uses these aesthetics
-#' @export
-guide_geom.axis <- function(guide, layers, default_mapping) {
-  guide
-}
-
-#' @export
-guide_gengrob.axis <- function(guide, theme) {
+guide_gengrob.prism_offset <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
-  draw_axis(
+  draw_prism_offset(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label,
     axis_position = guide$position,
@@ -165,8 +127,8 @@ guide_gengrob.axis <- function(guide, theme) {
 #'
 #' @noRd
 #'
-draw_axis <- function(break_positions, break_labels, axis_position, theme,
-                      check.overlap = FALSE, angle = NULL, n.dodge = 1) {
+draw_prism_offset <- function(break_positions, break_labels, axis_position, theme,
+                              check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
   aesthetic <- if (axis_position %in% c("top", "bottom")) "x" else "y"
@@ -184,7 +146,7 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
 
   # override label element parameters for rotation
   if (inherits(label_element, "element_text")) {
-    label_overrides <- axis_label_element_overrides(axis_position, angle)
+    label_overrides <- ggplot2:::axis_label_element_overrides(axis_position, angle)
     # label_overrides is an element_text, but label_element may not be;
     # to merge the two elements, we just copy angle, hjust, and vjust
     # unless their values are NULL
@@ -206,9 +168,9 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
   non_position_dim <- if (is_vertical) "x" else "y"
   position_size <- if (is_vertical) "height" else "width"
   non_position_size <- if (is_vertical) "width" else "height"
-  gtable_element <- if (is_vertical) gtable_row else gtable_col
-  measure_gtable <- if (is_vertical) gtable_width else gtable_height
-  measure_labels_non_pos <- if (is_vertical) grobWidth else grobHeight
+  gtable_element <- if (is_vertical) gtable::gtable_row else gtable::gtable_col
+  measure_gtable <- if (is_vertical) gtable::gtable_width else gtable::gtable_height
+  measure_labels_non_pos <- if (is_vertical) grid::grobWidth else grid::grobHeight
 
   # conditionally set parameters that depend on which side of the panel
   # the axis is on
@@ -226,19 +188,22 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
   opposite_positions <- c("top" = "bottom", "bottom" = "top", "right" = "left", "left" = "right")
   axis_position_opposite <- unname(opposite_positions[axis_position])
 
+  print(break_positions)
+
   # draw elements
-  line_grob <- exec(
+  line_grob <- rlang::exec(
     element_grob, line_element,
-    !!position_dim := unit(c(0, 1), "npc"),
-    !!non_position_dim := unit.c(non_position_panel, non_position_panel)
+    !!position_dim := unit(c(break_positions[1],
+                             break_positions[length(break_positions)]), "npc"),
+    !!non_position_dim := grid::unit.c(non_position_panel, non_position_panel)
   )
 
   if (n_breaks == 0) {
     return(
-      absoluteGrob(
-        gList(line_grob),
-        width = grobWidth(line_grob),
-        height = grobHeight(line_grob)
+      ggplot2:::absoluteGrob(
+        grid::gList(line_grob),
+        width = grid::grobWidth(line_grob),
+        height = grid::grobHeight(line_grob)
       )
     )
   }
@@ -257,7 +222,7 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
   dodge_indices <- split(seq_len(n_breaks), dodge_pos)
 
   label_grobs <- lapply(dodge_indices, function(indices) {
-    draw_axis_labels(
+    ggplot2:::draw_axis_labels(
       break_positions = break_positions[indices],
       break_labels = break_labels[indices],
       label_element = label_element,
@@ -266,11 +231,11 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
     )
   })
 
-  ticks_grob <- exec(
+  ticks_grob <- rlang::exec(
     element_grob, tick_element,
     !!position_dim := rep(unit(break_positions, "native"), each = 2),
     !!non_position_dim := rep(
-      unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
+      grid::unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
       times = n_breaks
     ),
     id.lengths = rep(2, times = n_breaks)
@@ -278,16 +243,16 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
 
   # create gtable
   non_position_sizes <- paste0(non_position_size, "s")
-  label_dims <- do.call(unit.c, lapply(label_grobs, measure_labels_non_pos))
+  label_dims <- do.call(grid::unit.c, lapply(label_grobs, measure_labels_non_pos))
   grobs <- c(list(ticks_grob), label_grobs)
-  grob_dims <- unit.c(tick_length, label_dims)
+  grob_dims <- grid::unit.c(tick_length, label_dims)
 
   if (labels_first_gtable) {
     grobs <- rev(grobs)
     grob_dims <- rev(grob_dims)
   }
 
-  gt <- exec(
+  gt <- rlang::exec(
     gtable_element,
     name = "axis",
     grobs = grobs,
@@ -296,141 +261,17 @@ draw_axis <- function(break_positions, break_labels, axis_position, theme,
   )
 
   # create viewport
-  justvp <- exec(
-    viewport,
+  justvp <- rlang::exec(
+    grid::viewport,
     !!non_position_dim := non_position_panel,
     !!non_position_size := measure_gtable(gt),
     just = axis_position_opposite
   )
 
-  absoluteGrob(
-    gList(line_grob, gt),
-    width = gtable_width(gt),
-    height = gtable_height(gt),
+  ggplot2:::absoluteGrob(
+    grid::gList(line_grob, gt),
+    width = gtable::gtable_width(gt),
+    height = gtable::gtable_height(gt),
     vp = justvp
   )
-}
-
-draw_axis_labels <- function(break_positions, break_labels, label_element, is_vertical,
-                             check.overlap = FALSE) {
-
-  position_dim <- if (is_vertical) "y" else "x"
-  label_margin_name <- if (is_vertical) "margin_x" else "margin_y"
-
-  n_breaks <- length(break_positions)
-  break_positions <- unit(break_positions, "native")
-
-  if (check.overlap) {
-    priority <- axis_label_priority(n_breaks)
-    break_labels <- break_labels[priority]
-    break_positions <- break_positions[priority]
-  }
-
-  labels_grob <- exec(
-    element_grob, label_element,
-    !!position_dim := break_positions,
-    !!label_margin_name := TRUE,
-    label = break_labels,
-    check.overlap = check.overlap
-  )
-}
-
-#' Determine the label priority for a given number of labels
-#'
-#' @param n The number of labels
-#'
-#' @return The vector `seq_len(n)` arranged such that the
-#'   first, last, and middle elements are recursively
-#'   placed at the beginning of the vector.
-#' @noRd
-#'
-axis_label_priority <- function(n) {
-  if (n <= 0) {
-    return(numeric(0))
-  }
-
-  c(1, n, axis_label_priority_between(1, n))
-}
-
-axis_label_priority_between <- function(x, y) {
-  n <- y - x + 1
-  if (n <= 2) {
-    return(numeric(0))
-  }
-
-  mid <- x - 1 + (n + 1) %/% 2
-  c(
-    mid,
-    axis_label_priority_between(x, mid),
-    axis_label_priority_between(mid, y)
-  )
-}
-
-#' Override axis text angle and alignment
-#'
-#' @param axis_position One of bottom, left, top, or right
-#' @param angle The text angle, or NULL to override nothing
-#'
-#' @return An [element_text()] that contains parameters that should be
-#'   overridden from the user- or theme-supplied element.
-#' @noRd
-#'
-axis_label_element_overrides <- function(axis_position, angle = NULL) {
-  if (is.null(angle)) {
-    return(element_text(angle = NULL, hjust = NULL, vjust = NULL))
-  }
-
-  # it is not worth the effort to align upside-down labels properly
-  if (angle > 90 || angle < -90) {
-    abort("`angle` must be between 90 and -90")
-  }
-
-  if (axis_position == "bottom") {
-    element_text(
-      angle = angle,
-      hjust = if (angle > 0) 1 else if (angle < 0) 0 else 0.5,
-      vjust = if (abs(angle) == 90) 0.5 else 1
-    )
-  } else if (axis_position == "left") {
-    element_text(
-      angle = angle,
-      hjust = if (abs(angle) == 90) 0.5 else 1,
-      vjust = if (angle > 0) 0 else if (angle < 0) 1 else 0.5,
-    )
-  } else if (axis_position == "top") {
-    element_text(
-      angle = angle,
-      hjust = if (angle > 0) 0 else if (angle < 0) 1 else 0.5,
-      vjust = if (abs(angle) == 90) 0.5 else 0
-    )
-  } else if (axis_position == "right") {
-    element_text(
-      angle = angle,
-      hjust = if (abs(angle) == 90) 0.5 else 0,
-      vjust = if (angle > 0) 1 else if (angle < 0) 0 else 0.5,
-    )
-  } else {
-    abort(glue("Unrecognized position: '{axis_position}'"))
-  }
-}
-
-warn_for_guide_position <- function(guide) {
-  if (empty(guide$key) || nrow(guide$key) == 1) {
-    return()
-  }
-
-  # this is trying to catch when a user specifies a position perpendicular
-  # to the direction of the axis (e.g., a "y" axis on "top")
-
-  if (guide$position %in% c("top", "bottom")) {
-    position_aes <- "x"
-  } else if(guide$position %in% c("left", "right")) {
-    position_aes <- "y"
-  } else {
-    return()
-  }
-
-  if (length(unique(guide$key[[position_aes]])) == 1) {
-    warn("Position guide is perpendicular to the intended axis. Did you mean to specify a different guide `position`?")
-  }
 }
