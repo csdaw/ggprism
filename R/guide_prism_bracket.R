@@ -16,14 +16,16 @@
 #'   top-to-bottom), if more than one  guide must be drawn at the same location.
 #' @param position Where this guide should be drawn: one of top, bottom,
 #'   left, or right.
+#' @param bracket_width Description.
+#' @param outside Description.
 #'
 #' @export
 #'
 #' @examples
 #' #
 #'
-guide_prism_offset <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                               order = 0, position = waiver()) {
+guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
+                                order = 0, position = waiver(), bracket_width = 0.1, outside = TRUE) {
   structure(
     list(
       title = title,
@@ -40,24 +42,30 @@ guide_prism_offset <- function(title = waiver(), check.overlap = FALSE, angle = 
       # parameter
       available_aes = c("x", "y"),
 
-      name = "prism_offset"
+      # custom
+      bracket_width = bracket_width,
+      outside = outside,
+
+      name = "prism_bracket"
     ),
-    class = c("guide", "prism_offset", "axis")
+    class = c("guide", "prism_bracket", "axis")
   )
 }
 
 #' @export
-guide_gengrob.prism_offset <- function(guide, theme) {
+guide_gengrob.prism_bracket <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
-  draw_prism_offset(
+  draw_prism_bracket(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label,
     axis_position = guide$position,
     theme = theme,
     check.overlap = guide$check.overlap,
     angle = guide$angle,
-    n.dodge = guide$n.dodge
+    n.dodge = guide$n.dodge,
+    bracket_width = guide$bracket_width,
+    outside = guide$outside
   )
 }
 
@@ -79,8 +87,9 @@ guide_gengrob.prism_offset <- function(guide, theme) {
 #'
 #' @noRd
 #'
-draw_prism_offset <- function(break_positions, break_labels, axis_position, theme,
-                              check.overlap = FALSE, angle = NULL, n.dodge = 1) {
+draw_prism_bracket <- function(break_positions, break_labels, axis_position, theme,
+                               check.overlap = FALSE, angle = NULL, n.dodge = 1,
+                               bracket_width = 0.1, outside = TRUE) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
   aesthetic <- if (axis_position %in% c("top", "bottom")) "x" else "y"
@@ -141,19 +150,37 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
   axis_position_opposite <- unname(opposite_positions[axis_position])
 
   # draw elements
-  line_grob <- exec(
+  half_bracket <- bracket_width / 2
+
+  lines_grob <- exec(
     element_grob, line_element,
-    !!position_dim := unit(c(min(break_positions),
-                             max(break_positions)), "npc"),
-    !!non_position_dim := unit.c(non_position_panel, non_position_panel)
+    !!position_dim := unit.c(
+      unit(
+        sort(c(break_positions - half_bracket,
+               break_positions + half_bracket)), "native"
+      )
+    ),
+    !!non_position_dim := if (outside) {
+      rep(
+        unit.c(non_position_panel, non_position_panel),
+        times = n_breaks
+      )
+    } else {
+      rep(
+        unit.c(non_position_panel + (tick_direction * tick_length),
+               non_position_panel + (tick_direction * tick_length)),
+        times = n_breaks
+      )
+    },
+    id.lengths = rep(2, times = n_breaks)
   )
 
   if (n_breaks == 0) {
     return(
       .ggint$absoluteGrob(
-        gList(line_grob),
-        width = grobWidth(line_grob),
-        height = grobHeight(line_grob)
+        gList(lines_grob),
+        width = grobWidth(lines_grob),
+        height = grobHeight(lines_grob)
       )
     )
   }
@@ -183,12 +210,15 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
 
   ticks_grob <- exec(
     element_grob, tick_element,
-    !!position_dim := rep(unit(break_positions, "native"), each = 2),
+    !!position_dim := unit.c(
+      rep(unit(break_positions - half_bracket, "native"), each = 2),
+      rep(unit(break_positions + half_bracket, "native"), each = 2)
+    ),
     !!non_position_dim := rep(
       unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
-      times = n_breaks
+      times = n_breaks * 2
     ),
-    id.lengths = rep(2, times = n_breaks)
+    id.lengths = rep(2, times = n_breaks * 2)
   )
 
   # create gtable
@@ -219,7 +249,7 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
   )
 
   .ggint$absoluteGrob(
-    gList(line_grob, gt),
+    gList(lines_grob, gt),
     width = gtable_width(gt),
     height = gtable_height(gt),
     vp = justvp
