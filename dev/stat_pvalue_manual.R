@@ -108,7 +108,7 @@ stat_pvalue_manual <- function(
   xmin = "group1", xmax = "group2", x = NULL,
   label.size = 3.88, bracket.size = 0.3,
   bracket.nudge.y = 0, bracket.shorten = 0,
-  color = "black", linetype = 1, tip.length = 0.03,
+  colour = "black", linetype = 1, tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
   hide.ns = FALSE, vjust = 0, coord.flip = FALSE,
   position = "identity", ...
@@ -285,7 +285,6 @@ stat_pvalue_manual <- function(
     y.position <- "y.position"
   }
 
-
   # If xmax is null, pvalue is drawn as text
   if(!is.null(xmax)) {
     xmax <- data[[xmax]]
@@ -348,7 +347,7 @@ stat_pvalue_manual <- function(
                    label.size = label.size, bracket.size = bracket.size,
                    bracket.nudge.y = bracket.nudge.y,
                    bracket.shorten = bracket.shorten,
-                   color = color, linetype = linetype,
+                   colour = colour, linetype = linetype,
                    step.increase = step.increase, step.group.by = step.group.by,
                    coord.flip = coord.flip, position = position, ...)
 
@@ -356,9 +355,9 @@ stat_pvalue_manual <- function(
     option <- list()
     allowed.options <- c(
       # general
-      "x", "y", "color", "colour", "linetype", "fill", "shape", "width",
+      "x", "y", "colour", "linetype", "fill", "shape", "width",
       "alpha", "na.rm", "lwd", "pch", "cex", "position", "stat", "geom",
-      "show.legend", "inherit.aes", "fun.args", "fontface", "family",
+      "show.legend", "inherit.aes", "fontface", "family",
       # bracket specific
       "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
       "bracket.nudge.y", "bracket.shorten", "coord.flip"
@@ -381,6 +380,10 @@ stat_pvalue_manual <- function(
         # for geom_bracket, value are variable name.
         # but this parameter is an option not an aes
         option[[key]] <- value
+      }
+      else if(key == "color"){
+        # set color to colour
+        option[["colour"]] <- value
       }
       # else warnings("Don't know '", key, "'")
     }
