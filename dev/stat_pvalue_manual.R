@@ -32,7 +32,7 @@ NULL
 #'  as a simple text.
 #'@param x x position of the p-value. Should be used only when you want plot the
 #'  p-value as text (without brackets).
-#'@param size,label.size size of label text.
+#'@param label.size size of label text.
 #'@param bracket.size Width of the lines of the bracket.
 #'@param color text and line color. Can be variable name in the data for coloring by groups.
 #'@param linetype linetype. Can be variable name in the data for changing linetype by groups.
@@ -106,7 +106,7 @@ NULL
 stat_pvalue_manual <- function(
   data, label = NULL, y.position = "y.position",
   xmin = "group1", xmax = "group2", x = NULL,
-  size = 3.88, label.size = size, bracket.size = 0.3,
+  label.size = 3.88, bracket.size = 0.3,
   bracket.nudge.y = 0, bracket.shorten = 0,
   color = "black", linetype = 1, tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
@@ -345,7 +345,7 @@ stat_pvalue_manual <- function(
     params <- list(xmin = "xmin", xmax = "xmax", label = "label",
                    y.position = "y.position", vjust = "vjust",
                    group = 1:nrow(data), tip.length = tip.length,
-                   label.size = label.size, size = bracket.size,
+                   label.size = label.size, bracket.size = bracket.size,
                    bracket.nudge.y = bracket.nudge.y,
                    bracket.shorten = bracket.shorten,
                    color = color, linetype = linetype,
@@ -356,11 +356,11 @@ stat_pvalue_manual <- function(
     option <- list()
     allowed.options <- c(
       # general
-      "x", "y", "color", "colour", "linetype", "fill", "size", "shape", "width",
+      "x", "y", "color", "colour", "linetype", "fill", "shape", "width",
       "alpha", "na.rm", "lwd", "pch", "cex", "position", "stat", "geom",
-      "show.legend", "inherit.aes", "fun.args", "fontface",
+      "show.legend", "inherit.aes", "fun.args", "fontface", "family",
       # bracket specific
-      "y.position", "tip.length", "label.size", "step.increase",
+      "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
       "bracket.nudge.y", "bracket.shorten", "coord.flip"
     )
     columns <- colnames(data)
