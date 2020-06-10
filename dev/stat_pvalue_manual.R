@@ -107,7 +107,7 @@ stat_pvalue_manual <- function(
   data, label = NULL, y.position = "y.position",
   xmin = "group1", xmax = "group2", x = NULL,
   label.size = 3.88, bracket.size = 0.3,
-  bracket.nudge.y = 0, bracket.shorten = 0,
+  bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = "black",
   colour = "black", linetype = 1, tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
   hide.ns = FALSE, vjust = 0, coord.flip = FALSE,
@@ -346,7 +346,7 @@ stat_pvalue_manual <- function(
                    group = 1:nrow(data), tip.length = tip.length,
                    label.size = label.size, bracket.size = bracket.size,
                    bracket.nudge.y = bracket.nudge.y,
-                   bracket.shorten = bracket.shorten,
+                   bracket.shorten = bracket.shorten, bracket.colour = bracket.colour,
                    colour = colour, linetype = linetype,
                    step.increase = step.increase, step.group.by = step.group.by,
                    coord.flip = coord.flip, position = position, ...)
@@ -360,7 +360,7 @@ stat_pvalue_manual <- function(
       "show.legend", "inherit.aes", "fontface", "family",
       # bracket specific
       "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
-      "bracket.nudge.y", "bracket.shorten", "coord.flip"
+      "bracket.nudge.y", "bracket.shorten", "coord.flip", "bracket.colour"
     )
     columns <- colnames(data)
 
@@ -384,6 +384,10 @@ stat_pvalue_manual <- function(
       else if(key == "color"){
         # set color to colour
         option[["colour"]] <- value
+      }
+      else if(key == "bracket.color") {
+        # set bracket.color to bracket.colour
+        option[["bracket.colour"]] <- value
       }
       # else warnings("Don't know '", key, "'")
     }

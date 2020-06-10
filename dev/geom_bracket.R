@@ -170,8 +170,8 @@ stat_bracket <- function(mapping = NULL, data = NULL,
 
 GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 required_aes = c("x", "xend", "y", "yend", "annotation"),
-                                default_aes = ggplot2::aes(
-                                  shape = 19, colour = "black", label.size = 3.88, angle = NULL, hjust = 0.5,
+                                default_aes = ggplot2::aes(bracket.colour = "black",
+                                  colour = "black", label.size = 3.88, angle = NULL, hjust = 0.5,
                                   vjust = 0, alpha = NA, family = "", fontface = 1, linetype=1, bracket.size = 0.3,
                                   xmin = NULL, xmax = NULL, label = NULL, y.position = NULL, step.increase = 0,
                                   bracket.nudge.y = 0, # Added to avoid aesthetics warning
@@ -227,7 +227,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                       default.units = "native",
                                       coords$xend, coords$yend,
                                       gp = grid::gpar(
-                                        col = scales::alpha(coords$colour, coords$alpha),
+                                        col = scales::alpha(coords$bracket.colour, coords$alpha),
                                         lty = coords$linetype,
                                         lwd = coords$bracket.size * ggplot2::.pt
                                       )
