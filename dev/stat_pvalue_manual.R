@@ -355,8 +355,8 @@ stat_pvalue_manual <- function(
     option <- list()
     allowed.options <- c(
       # general
-      "x", "y", "colour", "linetype", "fill", "shape", "width",
-      "alpha", "na.rm", "lwd", "pch", "cex", "position", "stat", "geom",
+      "x", "colour", "linetype",
+      "alpha", "na.rm", "position",
       "show.legend", "inherit.aes", "fontface", "family",
       # bracket specific
       "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
