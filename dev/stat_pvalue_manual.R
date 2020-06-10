@@ -106,7 +106,7 @@ stat_pvalue_manual <- function(
   label.size = 3.2,
 
   bracket.size = 0.6,
-  bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = "black",
+  bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = NULL,
   colour = "black", tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
   hide.ns = FALSE, coord.flip = FALSE,
@@ -356,14 +356,6 @@ stat_pvalue_manual <- function(
         # but this parameter is an option not an aes
         option[[key]] <- value
       }
-      else if(key == "color"){
-        # set color to colour
-        option[["colour"]] <- value
-      }
-      else if(key == "bracket.color") {
-        # set bracket.color to bracket.colour
-        option[["bracket.colour"]] <- value
-      }
       # else warnings("Don't know '", key, "'")
     }
 
@@ -418,7 +410,7 @@ stat_pvalue_manual <- function(
       mapping <- aes(x = xmin, y = y.position, label = label)
     }
     option <- list(data = data, size = label.size, position = position, ...)
-    if(colour %in% colnames(data)) mapping$color <- rlang::ensym(colour)
+    if(colour %in% colnames(data)) mapping$colour <- rlang::ensym(colour)
     else option$colour <- colour
     option[["mapping"]] <- mapping
     do.call(ggplot2::geom_text, option)

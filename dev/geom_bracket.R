@@ -168,7 +168,7 @@ stat_bracket <- function(mapping = NULL, data = NULL,
 
 GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 required_aes = c("x", "xend", "y", "yend", "annotation"),
-                                default_aes = ggplot2::aes(bracket.colour = "black", lineend = "square",
+                                default_aes = ggplot2::aes(bracket.colour = NULL, lineend = "square",
                                   colour = "black", label.size = 3.2, angle = NULL, hjust = 0.5,
                                   vjust = 0, alpha = NA, fontfamily = "", fontface = 1, linetype=1, bracket.size = 0.6,
                                   xmin = NULL, xmax = NULL, label = NULL, y.position = NULL, step.increase = 0,
@@ -196,6 +196,8 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                     lab <- parse_as_expression(lab)
                                   }
                                   coords <- coord$transform(data, panel_params)
+                                  print(coords$bracket.colour)
+                                  print(all(!is.null(coords$bracket.colour)))
                                   label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
                                   label.y <- max(c(coords$y, coords$yend)) + 0.01
                                   label.angle <- coords$angle
@@ -225,7 +227,12 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                       default.units = "native",
                                       coords$xend, coords$yend,
                                       gp = grid::gpar(
-                                        col = scales::alpha(coords$bracket.colour, coords$alpha),
+                                        col = if (all(!is.null(coords$bracket.colour))) {
+                                          scales::alpha(coords$bracket.colour, coords$alpha)
+                                        } else {
+                                          scales::alpha(coords$colour, coords$alpha)
+                                          }
+                                        ,
                                         lty = coords$linetype,
                                         lwd = coords$bracket.size * ggplot2::.pt,
                                         lineend = coords$lineend
@@ -242,7 +249,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          inherit.aes = TRUE,
                          label = NULL, type = c("text", "expression"), y.position = NULL, xmin = NULL, xmax = NULL,
                          step.increase = 0, step.group.by = NULL, tip.length = 0.03, bracket.nudge.y = 0,
-                         bracket.shorten = 0, bracket.size = 0.6, label.size = 3.2,
+                         bracket.shorten = 0, bracket.size = 0.6, label.size = 3.2, bracket.colour = NULL,
                          coord.flip = FALSE, ...) {
   type <- match.arg(type)
 
@@ -294,7 +301,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     data = data, label = label, y.position = y.position,
     xmin = xmin, xmax = xmax, step.increase = step.increase,
     bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
-    step.group.by = step.group.by,
+    step.group.by = step.group.by
   )
 
   build_signif_mapping <- function(mapping, data){
