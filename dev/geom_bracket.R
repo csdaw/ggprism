@@ -144,7 +144,7 @@ stat_bracket <- function(mapping = NULL, data = NULL,
                          label = NULL, type = c("text", "expression"), y.position=NULL, xmin = NULL, xmax = NULL,
                          step.increase = 0, step.group.by = NULL,  tip.length = 0.03,
                          bracket.nudge.y = 0, bracket.shorten = 0,
-                         bracket.size = 0.6, label.size = 3.2,
+                         bracket.size = 0.6, label.size = 3.2, bracket.colour,
                          ...) {
   if(! is.null(data) & ! is.null(mapping)){
     if(! "x" %in% names(data)) mapping$x <- 1
@@ -160,7 +160,7 @@ stat_bracket <- function(mapping = NULL, data = NULL,
       step.increase=step.increase, bracket.nudge.y = bracket.nudge.y,
       bracket.shorten = bracket.shorten,
       step.group.by = step.group.by,
-      tip.length=tip.length, bracket.size=bracket.size, label.size=label.size,
+      tip.length=tip.length, bracket.size=bracket.size, label.size=label.size, bracket.colour,
       na.rm = na.rm, ...)
   )
 }
@@ -196,8 +196,6 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                     lab <- parse_as_expression(lab)
                                   }
                                   coords <- coord$transform(data, panel_params)
-                                  print(coords$bracket.colour)
-                                  print(all(!is.null(coords$bracket.colour)))
                                   label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
                                   label.y <- max(c(coords$y, coords$yend)) + 0.01
                                   label.angle <- coords$angle
@@ -227,7 +225,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                       default.units = "native",
                                       coords$xend, coords$yend,
                                       gp = grid::gpar(
-                                        col = if (all(!is.null(coords$bracket.colour))) {
+                                        col = if (all(!is.na(coords$bracket.colour))) {
                                           scales::alpha(coords$bracket.colour, coords$alpha)
                                         } else {
                                           scales::alpha(coords$colour, coords$alpha)
@@ -256,7 +254,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
   build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
                                 xmin = NULL, xmax = NULL, step.increase = 0,
                                 bracket.nudge.y = 0, bracket.shorten = 0,
-                                step.group.by = NULL){
+                                step.group.by = NULL, bracket.colour = NULL){
 
     add_step_increase <- function(data, step.increase){
       comparisons.number <- 0:(nrow(data)-1)
@@ -275,10 +273,12 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       if(!is.null(y.position)) data$y.position <- y.position
       if(!is.null(xmin)) data$xmin <- xmin
       if(!is.null(xmax)) data$xmax <- xmax
+      if(!is.null(bracket.colour)) data$bracket.colour <- bracket.colour
     }
     # add columns if they don't exist
     if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
     if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
+    if(!("bracket.colour" %in% colnames(data))) data$bracket.colour <- NA
 
     if(is.null(step.group.by)){
       data <- add_step_increase(data, step.increase)
@@ -301,7 +301,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     data = data, label = label, y.position = y.position,
     xmin = xmin, xmax = xmax, step.increase = step.increase,
     bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
-    step.group.by = step.group.by
+    step.group.by = step.group.by, bracket.colour
   )
 
   build_signif_mapping <- function(mapping, data){
@@ -344,6 +344,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
     if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
     if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
+    if(is.null(mapping$bracket.colour)) mapping$bracket.colour <- data$bracket.colour
     if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
     if(! "x" %in% names(mapping)){
       mapping$x <- mapping$xmin
