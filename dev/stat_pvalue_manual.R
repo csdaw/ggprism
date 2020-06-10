@@ -104,7 +104,6 @@ stat_pvalue_manual <- function(
   data, label = NULL, y.position = "y.position",
   xmin = "group1", xmax = "group2", x = NULL,
   label.size = 3.2,
-
   bracket.size = 0.6,
   bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = NULL,
   colour = "black", tip.length = 0.03,
@@ -329,13 +328,15 @@ stat_pvalue_manual <- function(
     mapping <- list()
     option <- list()
     allowed.options <- c(
-      # general
-      "x", "colour", "linetype", "lineend", "hjust", "vjust",
-      "alpha", "na.rm", "position",
-      "show.legend", "inherit.aes", "fontface", "fontfamily",
-      # bracket specific
-      "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
-      "bracket.nudge.y", "bracket.shorten", "coord.flip", "bracket.colour"
+      # function arguments
+      "y.position", "x", "label.size", "bracket.size", "bracket.nudge.y",
+      "bracket.shorten", "bracket.colour", "colour", "tip.length",
+      "step.increase", "coord.flip", "position",
+      # extra aesthetics
+      "hjust", "vjust", "linetype", "lineend",
+      "fontface", "fontfamily", "alpha",
+      # ggplot2 arguments
+      "show.legend", "inherit.aes", "na.rm"
     )
     columns <- colnames(data)
 
@@ -355,6 +356,12 @@ stat_pvalue_manual <- function(
         # for geom_bracket, value are variable name.
         # but this parameter is an option not an aes
         option[[key]] <- value
+      }
+      else if(key == "color") {
+        option[["colour"]] <- value
+      }
+      else if(key == "bracket.color") {
+        option[["bracket.colour"]] <- value
       }
       # else warnings("Don't know '", key, "'")
     }
