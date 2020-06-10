@@ -34,8 +34,7 @@ NULL
 #'  p-value as text (without brackets).
 #'@param label.size size of label text.
 #'@param bracket.size Width of the lines of the bracket.
-#'@param color text and line color. Can be variable name in the data for coloring by groups.
-#'@param linetype linetype. Can be variable name in the data for changing linetype by groups.
+#'@param color text and line color. Can be variable name in the data for coloring by groups.x
 #'@param tip.length numeric vector with the fraction of total height that the
 #'  bar goes down to indicate the precise column. Default is 0.03.
 #'@param remove.bracket logical, if \code{TRUE}, brackets are removed from the
@@ -44,8 +43,6 @@ NULL
 #'@param hide.ns logical value. If TRUE, hide ns symbol when displaying
 #'  significance levels. Filter is done by checking the column
 #'  \code{p.adj.signif}, \code{p.signif}, \code{p.adj} and \code{p}.
-#'@param vjust move the text up or down relative to the bracket. Can be also a
-#'  column name available in the data.
 #'@param position position adjustment, either as a string, or the result of a
 #'  call to a position adjustment function.
 #'@param ... other arguments passed to the function \code{geom_bracket()} or
@@ -106,11 +103,13 @@ NULL
 stat_pvalue_manual <- function(
   data, label = NULL, y.position = "y.position",
   xmin = "group1", xmax = "group2", x = NULL,
-  label.size = 3.88, bracket.size = 0.3,
+  label.size = 3.2,
+
+  bracket.size = 0.6,
   bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = "black",
-  colour = "black", linetype = 1, tip.length = 0.03,
+  colour = "black", tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
-  hide.ns = FALSE, vjust = 0, coord.flip = FALSE,
+  hide.ns = FALSE, coord.flip = FALSE,
   position = "identity", ...
 )
 {
@@ -310,30 +309,6 @@ stat_pvalue_manual <- function(
   data$xmin <- xxmin
   data$xmax <- xxmax
 
-  # guess label default vjust
-  guess_label_default_vjust <- function(label){
-    if(label %in% c("****", "***", "**", "*"))
-      vjust <- 0.5
-    else vjust <- 0
-    vjust
-  }
-
-  guess_labels_default_vjust <- function(labels){
-    labels <- mapply(guess_label_default_vjust,
-                     labels, USE.NAMES = FALSE)
-    labels
-  }
-
-  # vjust
-  if(is.character(vjust)){
-    vjust <- data[[vjust]]
-  }
-  else if(missing(vjust)){
-    vjust <- guess_labels_default_vjust(data$label)
-  }
-
-  data$vjust <- vjust
-
   # Draw brackets else draw p-values
   if(pvalue.geom == "bracket"){
     if(identical(data$xmin, data$xmax) | remove.bracket){
@@ -342,12 +317,12 @@ stat_pvalue_manual <- function(
     }
 
     params <- list(xmin = "xmin", xmax = "xmax", label = "label",
-                   y.position = "y.position", vjust = "vjust",
+                   y.position = "y.position",
                    group = 1:nrow(data), tip.length = tip.length,
                    label.size = label.size, bracket.size = bracket.size,
                    bracket.nudge.y = bracket.nudge.y,
                    bracket.shorten = bracket.shorten, bracket.colour = bracket.colour,
-                   colour = colour, linetype = linetype,
+                   colour = colour,
                    step.increase = step.increase, step.group.by = step.group.by,
                    coord.flip = coord.flip, position = position, ...)
 
@@ -355,9 +330,9 @@ stat_pvalue_manual <- function(
     option <- list()
     allowed.options <- c(
       # general
-      "x", "colour", "linetype",
+      "x", "colour", "linetype", "lineend", "hjust", "vjust",
       "alpha", "na.rm", "position",
-      "show.legend", "inherit.aes", "fontface", "family",
+      "show.legend", "inherit.aes", "fontface", "fontfamily",
       # bracket specific
       "y.position", "tip.length", "label.size", "bracket.size", "step.increase",
       "bracket.nudge.y", "bracket.shorten", "coord.flip", "bracket.colour"
@@ -428,7 +403,7 @@ stat_pvalue_manual <- function(
 
       data <- add_ctr_rows(data, ref.group = ref.group)
 
-      mapping <- ggplot2::aes(x = xmin, y = y.position, vjust = vjust, label = label, group = group2)
+      mapping <- ggplot2::aes(x = xmin, y = y.position, label = label, group = group2)
 
       is_grouping_variable <- function(x){
         !(x %in% c("group1", "group2"))
@@ -440,11 +415,11 @@ stat_pvalue_manual <- function(
       }
     }
     else{
-      mapping <- aes(x = xmin, y = y.position, vjust = vjust, label = label)
+      mapping <- aes(x = xmin, y = y.position, label = label)
     }
     option <- list(data = data, size = label.size, position = position, ...)
-    if(color %in% colnames(data)) mapping$colour <- rlang::ensym(color)
-    else option$color <- color
+    if(colour %in% colnames(data)) mapping$color <- rlang::ensym(colour)
+    else option$colour <- colour
     option[["mapping"]] <- mapping
     do.call(ggplot2::geom_text, option)
   }

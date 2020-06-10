@@ -58,8 +58,6 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
 #' @param y.position numeric vector with the y positions of the brackets
 #' @param bracket.size change the width of the lines of the bracket
 #' @param label.size change the size of the label text
-#' @param family change the font used for the text
-#' @param vjust move the text up or down relative to the bracket
 #' @param step.increase numeric vector with the increase in fraction of total
 #'   height for every additional comparison to minimize overlap.
 #' @param bracket.nudge.y Vertical adjustment to nudge brackets by. Useful to
@@ -80,7 +78,7 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
 #'   \code{coord.flip = TRUE}.
 #' @param ... other arguments passed on to \code{\link{layer}}. These are often
 #'   aesthetics, used to set an aesthetic to a fixed value, like \code{color =
-#'   "red"} or \code{family = "mono"}. They may also be parameters to the paired
+#'   "red"} or \code{fontfamily = "mono"}. They may also be parameters to the paired
 #'   geom/stat.
 #' @inheritParams ggplot2::layer
 #' @examples
@@ -146,7 +144,7 @@ stat_bracket <- function(mapping = NULL, data = NULL,
                          label = NULL, type = c("text", "expression"), y.position=NULL, xmin = NULL, xmax = NULL,
                          step.increase = 0, step.group.by = NULL,  tip.length = 0.03,
                          bracket.nudge.y = 0, bracket.shorten = 0,
-                         bracket.size = 0.3, label.size = 3.88, family="", vjust = 0,
+                         bracket.size = 0.6, label.size = 3.2,
                          ...) {
   if(! is.null(data) & ! is.null(mapping)){
     if(! "x" %in% names(data)) mapping$x <- 1
@@ -163,16 +161,16 @@ stat_bracket <- function(mapping = NULL, data = NULL,
       bracket.shorten = bracket.shorten,
       step.group.by = step.group.by,
       tip.length=tip.length, bracket.size=bracket.size, label.size=label.size,
-      family=family, vjust=vjust, na.rm = na.rm, ...)
+      na.rm = na.rm, ...)
   )
 }
 
 
 GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 required_aes = c("x", "xend", "y", "yend", "annotation"),
-                                default_aes = ggplot2::aes(bracket.colour = "black",
-                                  colour = "black", label.size = 3.88, angle = NULL, hjust = 0.5,
-                                  vjust = 0, alpha = NA, family = "", fontface = 1, linetype=1, bracket.size = 0.3,
+                                default_aes = ggplot2::aes(bracket.colour = "black", lineend = "square",
+                                  colour = "black", label.size = 3.2, angle = NULL, hjust = 0.5,
+                                  vjust = 0, alpha = NA, fontfamily = "", fontface = 1, linetype=1, bracket.size = 0.6,
                                   xmin = NULL, xmax = NULL, label = NULL, y.position = NULL, step.increase = 0,
                                   bracket.nudge.y = 0, # Added to avoid aesthetics warning
                                   bracket.shorten = 0
@@ -218,7 +216,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                       gp = grid::gpar(
                                         col = scales::alpha(coords$colour, coords$alpha),
                                         fontsize = coords$label.size * ggplot2::.pt,
-                                        fontfamily = coords$family,
+                                        fontfamily = coords$fontfamily,
                                         fontface = coords$fontface
                                       )
                                     ),
@@ -229,7 +227,8 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                       gp = grid::gpar(
                                         col = scales::alpha(coords$bracket.colour, coords$alpha),
                                         lty = coords$linetype,
-                                        lwd = coords$bracket.size * ggplot2::.pt
+                                        lwd = coords$bracket.size * ggplot2::.pt,
+                                        lineend = coords$lineend
                                       )
                                     )
                                   )
@@ -243,14 +242,14 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          inherit.aes = TRUE,
                          label = NULL, type = c("text", "expression"), y.position = NULL, xmin = NULL, xmax = NULL,
                          step.increase = 0, step.group.by = NULL, tip.length = 0.03, bracket.nudge.y = 0,
-                         bracket.shorten = 0, bracket.size = 0.3, label.size = 3.88, family="", vjust = 0,
+                         bracket.shorten = 0, bracket.size = 0.6, label.size = 3.2,
                          coord.flip = FALSE, ...) {
   type <- match.arg(type)
 
   build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
                                 xmin = NULL, xmax = NULL, step.increase = 0,
                                 bracket.nudge.y = 0, bracket.shorten = 0,
-                                step.group.by = NULL, vjust = 0){
+                                step.group.by = NULL){
 
     add_step_increase <- function(data, step.increase){
       comparisons.number <- 0:(nrow(data)-1)
@@ -263,17 +262,14 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
         label = label, y.position = y.position,
         xmin = xmin, xmax = xmax
       )
-      data$vjust <- vjust
     }
     else{
       if(!is.null(label)) data$label <- label
       if(!is.null(y.position)) data$y.position <- y.position
       if(!is.null(xmin)) data$xmin <- xmin
       if(!is.null(xmax)) data$xmax <- xmax
-      if(!identical(vjust, 0)) data$vjust <- vjust
     }
-    # add vjust column if doesn't exist
-    if(!("vjust" %in% colnames(data))) data$vjust <- vjust
+    # add columns if they don't exist
     if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
     if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
 
@@ -298,7 +294,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     data = data, label = label, y.position = y.position,
     xmin = xmin, xmax = xmax, step.increase = step.increase,
     bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
-    step.group.by = step.group.by, vjust = vjust
+    step.group.by = step.group.by,
   )
 
   build_signif_mapping <- function(mapping, data){
@@ -340,7 +336,6 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
     if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
     if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
-    if(is.null(mapping$vjust)) mapping$vjust <- data$vjust
     if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
     if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
     if(! "x" %in% names(mapping)){
@@ -361,7 +356,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       type = type,
       tip.length = tip.length,
       bracket.size = bracket.size, label.size = label.size,
-      family=family, na.rm = na.rm, coord.flip = coord.flip, ...
+      na.rm = na.rm, coord.flip = coord.flip, ...
     )
   )
 }
