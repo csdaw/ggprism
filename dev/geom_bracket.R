@@ -170,7 +170,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 required_aes = c("x", "xend", "y", "yend", "annotation"),
                                 default_aes = ggplot2::aes(bracket.colour = NULL, lineend = "square",
                                   colour = "black", label.size = 3.2, angle = NULL, hjust = 0.5,
-                                  vjust = 0, alpha = NA, fontfamily = "", fontface = 1, linetype=1, bracket.size = 0.6,
+                                  vjust = NULL, alpha = NA, fontfamily = "", fontface = 1, linetype=1, bracket.size = 0.6,
                                   xmin = NULL, xmax = NULL, label = NULL, y.position = NULL, step.increase = 0,
                                   bracket.nudge.y = 0, # Added to avoid aesthetics warning
                                   bracket.shorten = 0
@@ -195,7 +195,17 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
 
                                     lab <- parse_as_expression(lab)
                                   }
+
                                   coords <- coord$transform(data, panel_params)
+
+                                  if(is.null(coords$vjust)) {
+                                    if(lab[1] %in% c("****", "***", "**", "*")) {
+                                      coords$vjust <- 0.5
+                                    } else {
+                                      coords$vjust <- 0
+                                    }
+                                  }
+
                                   label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
                                   label.y <- max(c(coords$y, coords$yend)) + 0.01
                                   label.angle <- coords$angle
@@ -207,7 +217,7 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                   if(is.null(label.angle)) label.angle <- 0
                                   grid::gList(
                                     grid::textGrob(
-                                      label = lab,
+                                      label = lab[1],
                                       x = label.x,
                                       y = label.y,
                                       default.units = "native",
