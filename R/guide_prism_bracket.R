@@ -25,7 +25,7 @@
 #' #
 #'
 guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                                order = 0, position = waiver(), bracket_width = 0.1, outside = TRUE) {
+                                order = 0, position = waiver(), bracket_width = NULL, outside = TRUE) {
   structure(
     list(
       title = title,
@@ -89,7 +89,7 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 #'
 draw_prism_bracket <- function(break_positions, break_labels, axis_position, theme,
                                check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                               bracket_width = 0.1, outside = TRUE) {
+                               bracket_width = NULL, outside = TRUE) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
   aesthetic <- if (axis_position %in% c("top", "bottom")) "x" else "y"
@@ -148,6 +148,17 @@ draw_prism_bracket <- function(break_positions, break_labels, axis_position, the
   n_breaks <- length(break_positions)
   opposite_positions <- c("top" = "bottom", "bottom" = "top", "right" = "left", "left" = "right")
   axis_position_opposite <- unname(opposite_positions[axis_position])
+
+  # autocalculate bracket width based on number of breaks if missing
+  # best for discrete axes, bad for continuous axes
+  if (is.null(bracket_width)) {
+    if (n_breaks == 1) {
+      bracket_width <- 0.75
+    }
+    else if (n_breaks > 1) {
+      bracket_width <- (0.8 + 0.01 * n_breaks) / n_breaks
+    }
+  }
 
   # draw elements
   half_bracket <- bracket_width / 2
