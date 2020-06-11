@@ -114,7 +114,7 @@ stat_pvalue_manual <- function(
 {
   if(is.null(label)){
 
-    # Guess column to be used as significance labem
+    # Guess column to be used as significance label
     guess_signif_label_column <- function(data) {
       potential.label <- c(
         "label", "labels", "p.adj.signif", "p.adj", "padj",
@@ -177,14 +177,7 @@ stat_pvalue_manual <- function(
     ngroup1 <- length(unique(data$group1))
     ngroup2 <- length(unique(data$group2))
 
-
-    is_null_model <- function(data){
-      group2 <- unique(data$group2)
-      .diff <- setdiff(group2, "null model")
-      length(.diff) == 0
-    }
-
-    if(is_null_model(data)){
+    if(length(setdiff(unique(data$group2), "null model")) == 0){
       type <- "one_group"
     }
     else if(ngroup1 == 1 & ngroup2 >= 2){
@@ -198,7 +191,8 @@ stat_pvalue_manual <- function(
     }
     else if(all(c("group1", "group2") %in% colnames(data))){
       # filtered data
-      type <- "pairwise"
+      # type <- "pairwise"
+      stop("If you see this message, raise a github issue.")
     }
     else{
       stop("Make sure that group1 and group2 columns exist in the data.")
@@ -239,13 +233,8 @@ stat_pvalue_manual <- function(
     xmax <- NULL
   }
 
-  # Check if a string contains curly bracket
-  .contains_curlybracket <- function(x){
-    grepl("\\{|\\}", x, perl = TRUE)
-  }
-
   # If label is a glue package expression
-  if(.contains_curlybracket(label)){
+  if(grepl("\\{|\\}", label, perl = TRUE)){
     # move this to importfrom later
     `%>%` <- magrittr::`%>%`
 
@@ -292,6 +281,7 @@ stat_pvalue_manual <- function(
     xmax <- NA
     pvalue.geom <- "text"
   }
+
   if(!is.null(xmin)){
     xmin <- data[[xmin]]
   }
@@ -300,13 +290,13 @@ stat_pvalue_manual <- function(
   }
 
   # Build the statistical table for plotting
-  xxmax <- xmax  # so that mutate will avoid re-using an existing xmax in the data
-  xxmin <- xmin
+  new_xmax <- xmax  # so that mutate will avoid re-using an existing xmax in the data
+  new_xmin <- xmin
 
   data$label <- as.character(data[[label]])
   data$y.position <- data[[y.position]]
-  data$xmin <- xxmin
-  data$xmax <- xxmax
+  data$xmin <- new_xmin
+  data$xmax <- new_xmax
 
   # Draw brackets else draw p-values
   if(pvalue.geom == "bracket"){
@@ -338,6 +328,9 @@ stat_pvalue_manual <- function(
       # ggplot2 arguments
       "show.legend", "inherit.aes", "na.rm"
     )
+
+    alt.spelling <- c("color", "bracket.color")
+
     columns <- colnames(data)
 
     for (key in names(params)) {
@@ -347,7 +340,10 @@ stat_pvalue_manual <- function(
       }
       else if (unlist(value)[1] %in% columns & key %in% allowed.options) {
         mapping[[key]] <- value
-
+      }
+      else if (key %in% alt.spelling) {
+        new.key <- ggplot2:::standardise_aes_names(key)
+        option[[new.key]] <- value
       }
       else if (key %in% allowed.options) {
         option[[key]] <- value
@@ -357,16 +353,11 @@ stat_pvalue_manual <- function(
         # but this parameter is an option not an aes
         option[[key]] <- value
       }
-      else if(key == "color") {
-        option[["colour"]] <- value
-      }
-      else if(key == "bracket.color") {
-        option[["bracket.colour"]] <- value
-      }
       # else warnings("Don't know '", key, "'")
     }
 
     if (!is.null(position)) option[["position"]] <- position
+
 
     option[["data"]] <- data
 
@@ -404,12 +395,8 @@ stat_pvalue_manual <- function(
 
       mapping <- ggplot2::aes(x = xmin, y = y.position, label = label, group = group2)
 
-      is_grouping_variable <- function(x){
-        !(x %in% c("group1", "group2"))
-      }
-
       if(missing(position) & !missing(x)){
-        if (is_grouping_variable(x))
+        if (!(x %in% c("group1", "group2")))
           position <- ggplot2::position_dodge(0.8)
       }
     }
@@ -417,9 +404,18 @@ stat_pvalue_manual <- function(
       mapping <- aes(x = xmin, y = y.position, label = label)
     }
     option <- list(data = data, size = label.size, position = position, ...)
+
     if(colour %in% colnames(data)) mapping$colour <- rlang::ensym(colour)
     else option$colour <- colour
+
+    if("color" %in% names(option)) {
+      option$colour <- option[["color"]]
+      option[["color"]] <- NULL
+      }
+
     option[["mapping"]] <- mapping
+
     do.call(ggplot2::geom_text, option)
   }
 }
+
