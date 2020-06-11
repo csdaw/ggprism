@@ -106,7 +106,7 @@ stat_pvalue_manual <- function(
   label.size = 3.2,
   bracket.size = 0.6,
   bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = NULL,
-  colour = "black", tip.length = 0.03,
+  colour = NULL, color = NULL, tip.length = 0.03,
   remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
   hide.ns = FALSE, coord.flip = FALSE,
   position = "identity", ...
@@ -311,7 +311,7 @@ stat_pvalue_manual <- function(
                    label.size = label.size, bracket.size = bracket.size,
                    bracket.nudge.y = bracket.nudge.y,
                    bracket.shorten = bracket.shorten, bracket.colour = bracket.colour,
-                   colour = colour,
+                   colour = colour, color = color,
                    step.increase = step.increase, step.group.by = step.group.by,
                    coord.flip = coord.flip, position = position, ...)
 
@@ -320,7 +320,7 @@ stat_pvalue_manual <- function(
     allowed.options <- c(
       # function arguments
       "y.position", "x", "label.size", "bracket.size", "bracket.nudge.y",
-      "bracket.shorten", "bracket.colour", "colour", "tip.length",
+      "bracket.shorten", "bracket.colour", "colour", "color", "tip.length",
       "step.increase", "coord.flip", "position",
       # extra aesthetics
       "hjust", "vjust", "linetype", "lineend",
@@ -328,8 +328,6 @@ stat_pvalue_manual <- function(
       # ggplot2 arguments
       "show.legend", "inherit.aes", "na.rm"
     )
-
-    alt.spelling <- c("color", "bracket.color")
 
     columns <- colnames(data)
 
@@ -340,10 +338,6 @@ stat_pvalue_manual <- function(
       }
       else if (unlist(value)[1] %in% columns & key %in% allowed.options) {
         mapping[[key]] <- value
-      }
-      else if (key %in% alt.spelling) {
-        new.key <- ggplot2:::standardise_aes_names(key)
-        option[[new.key]] <- value
       }
       else if (key %in% allowed.options) {
         option[[key]] <- value
@@ -405,13 +399,20 @@ stat_pvalue_manual <- function(
     }
     option <- list(data = data, size = label.size, position = position, ...)
 
-    if(colour %in% colnames(data)) mapping$colour <- rlang::ensym(colour)
-    else option$colour <- colour
-
-    if("color" %in% names(option)) {
-      option$colour <- option[["color"]]
-      option[["color"]] <- NULL
+    if(!missing(color)) {
+      if(color %in% colnames(data)) {
+        mapping$colour <- rlang::ensym(color)
+      } else {
+        option$colour <- color
       }
+    }
+    if(!missing(colour)) {
+      if(colour %in% colnames(data)) {
+        mapping$colour <- rlang::ensym(colour)
+      } else {
+        option$colour <- colour
+      }
+    }
 
     option[["mapping"]] <- mapping
 
