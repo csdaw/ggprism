@@ -112,104 +112,41 @@ stat_pvalue_manual <- function(
   position = "identity", ...
 )
 {
+  # if label is missing, guess the column to use for significance label
   if(is.null(label)){
-
-    # Guess column to be used as significance label
-    guess_signif_label_column <- function(data) {
-      potential.label <- c(
-        "label", "labels", "p.adj.signif", "p.adj", "padj",
-        "p.signif", "p.value", "pval", "p.val", "p"
-      )
-      res <- intersect(potential.label, colnames(data))
-      if(length(res) > 0){
-        res <- res[1]
-      }
-      else{
-        stop("label is missing")
-      }
-      res
-    }
-
-
     label <- guess_signif_label_column(data)
   }
 
-  # If label is a glue package expression
+  # if label is a glue package expression, parse it
   if(grepl("\\{|\\}", label, perl = TRUE)){
-    # move this to importfrom later
-    `%>%` <- magrittr::`%>%`
-
-    data$label <- data %>% glue::glue_data(label)
+    data$label <- glue::glue_data(data, label)
     label <- "label"
   }
 
+  # check that xmin and label columns are in data
   if(!(label %in% colnames(data)))
     stop("can't find the label variable '", label, "' in the data")
   if(!(xmin %in% colnames(data)))
     stop("can't find the xmin variable '", xmin, "' in the data")
 
+  # filter out non-significant results if required
   if(hide.ns){
-    # remove non significant
-    remove_ns <- function(data){
-      columns <- colnames(data)
-      if("p.adj.signif" %in% columns){
-        data <- data[data$p.adj.signif != "ns", ]
-      }
-      else if("p.adj" %in% columns){
-        data <- data[data$p.adj <= 0.05, ]
-      }
-      else if("p.signif" %in% columns){
-        data <- data[data$p.signif != "ns", ]
-      }
-      else if("p" %in% columns){
-        data <- data[data$p <= 0.05, ]
-      }
-      data
-    }
-
     data <- remove_ns(data)
   }
 
-  # Returns the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
-  detect_comparison_type <- function(data){
-
-    ngroup1 <- length(unique(data[[xmin]]))
-
-    if(!is.null(xmax)) {
-      ngroup2 <- length(unique(data$group2))
-
-      if(length(setdiff(unique(data$group2), "null model")) == 0){
-        type <- "one_group"
-      }
-      else if(ngroup1 == 1 & ngroup2 >= 2){
-        type <- "each_vs_ref"
-      }
-      else if(ngroup1 == 1 & ngroup2 == 1){
-        type <- "two_groups"
-      }
-      else if (ngroup1 >= 2 & ngroup2 >= 2){
-        type <- "pairwise"
-      }
-      else{
-        stop("Make sure that xmin and xmax columns exist in the data.")
-      }
-    } else {
-      if(ngroup1 >= 2) {
-        type = "two_groups"
-      }
-    }
-    type
-  }
-
+  # determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
   comparison <- detect_comparison_type(data)
 
+  # check if defined in function call: x, xmin, max
   all.x.is.missing <- is.null(x) & missing(xmin) & missing(xmax)
 
+  # plot labels at x = max if conditions are met
   if(all(data[[xmin]] == "all") & all.x.is.missing){
     is.grouped <- length(data[[xmax]]) > length(unique(data[[xmax]]))
-    if(!is.grouped) x <- xmax # plot labels at x = "group2" by default
+    if(!is.grouped) x <- xmax
   }
 
+  # check for remove.bracket
   # should stay before (!is.null(x))
   if(remove.bracket){
     xmin.length <- length(unique(data[[xmin]]))
@@ -219,36 +156,21 @@ stat_pvalue_manual <- function(
     }
   }
 
-  # P-value displayed as text (without brackets)
+  # only for p-value displayed as text (without brackets)
   if(!is.null(x)){
     xmin <- x
     xmax <- NULL
   }
 
   # validate p-value y position
-  .valid_y_position <- function(y.position, data){
-    if(is.numeric(y.position)){
-      number.of.test <- nrow(data)
-      number.of.ycoord <- length(y.position)
-      xtimes <- number.of.test / number.of.ycoord
+  y.position <- validate_y_position(y.position, data)
 
-      if(number.of.ycoord < number.of.test)
-        y.position <- rep(y.position, xtimes)
-    }
-    else if(is.character(y.position)){
-      if(!(y.position %in% colnames(data)))
-        stop("can't find the y.position variable '", y.position, "' in the data")
-    }
-    return(y.position)
-  }
-
-  y.position <- .valid_y_position(y.position, data)
   if(is.numeric(y.position)){
     data$y.position <- y.position
     y.position <- "y.position"
   }
 
-  # If xmax is null, pvalue is drawn as text
+  # if xmax is null, p-value is drawn as text, otherwise draw brackets
   if(!is.null(xmax)) {
     xmax <- data[[xmax]]
     pvalue.geom <- "bracket"
@@ -258,7 +180,7 @@ stat_pvalue_manual <- function(
     pvalue.geom <- "text"
   }
 
-  # Build the statistical table for plotting
+  # build the statistical table for plotting
   new_xmax <- xmax  # avoid re-using an existing xmax in the data
   new_xmin <- data[[xmin]]
 
@@ -267,10 +189,9 @@ stat_pvalue_manual <- function(
   data$xmin <- new_xmin
   data$xmax <- new_xmax
 
-  # Draw brackets else draw p-values
+  # draw brackets else draw p-value text
   if(pvalue.geom == "bracket"){
     if(identical(data$xmin, data$xmax) | remove.bracket){
-      # case when ref.group = "all"
       bracket.size = 0
     }
 
@@ -303,7 +224,7 @@ stat_pvalue_manual <- function(
     for (key in names(params)) {
       value <- params[[key]]
       if (is.null(value)) {
-
+        # do nothing
       }
       else if (unlist(value)[1] %in% columns & key %in% allowed.options) {
         mapping[[key]] <- value
@@ -312,15 +233,13 @@ stat_pvalue_manual <- function(
         option[[key]] <- value
       }
       else if(key == "step.group.by"){
-        # for geom_bracket, value are variable name.
+        # for geom_bracket, value are variable name
         # but this parameter is an option not an aes
         option[[key]] <- value
       }
-      # else warnings("Don't know '", key, "'")
     }
 
     if (!is.null(position)) option[["position"]] <- position
-
 
     option[["data"]] <- data
 
@@ -333,33 +252,12 @@ stat_pvalue_manual <- function(
       ref.group <- unique(data$group1)
       group2 <- NULL
 
-      keep_only_tbl_df_classes <- function(x){
-        toremove <- setdiff(class(x), c("tbl_df", "tbl", "data.frame"))
-        if(length(toremove) > 0){
-          class(x) <- setdiff(class(x), toremove)
-        }
-        x
-      }
-
-      # For ctr rows: the comparaison of ctr against itself
-      # useful only when positionning the label of grouped bars
-      add_ctr_rows <- function(data, ref.group){
-        xmin <- NULL
-        data <- keep_only_tbl_df_classes(data)
-
-        ctr <- data[!duplicated(data$xmin), ]
-        ctr$group2 <- ref.group
-        ctr$label <- " "
-
-        rbind(ctr, data)
-      }
-
+      # Add data rows used only for positioning the labels for grouped bars
       data <- add_ctr_rows(data, ref.group = ref.group)
 
       mapping <- ggplot2::aes(x = xmin, y = y.position, label = label, group = group2)
 
       if(missing(position) & !missing(x)){
-        if (!(x %in% c("group1", "group2")))
           position <- ggplot2::position_dodge(0.8)
       }
     }
@@ -388,4 +286,5 @@ stat_pvalue_manual <- function(
     do.call(ggplot2::geom_text, option)
   }
 }
+
 
