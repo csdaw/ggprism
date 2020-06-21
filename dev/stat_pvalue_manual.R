@@ -134,6 +134,20 @@ stat_pvalue_manual <- function(
     label <- guess_signif_label_column(data)
   }
 
+  # If label is a glue package expression
+  if(grepl("\\{|\\}", label, perl = TRUE)){
+    # move this to importfrom later
+    `%>%` <- magrittr::`%>%`
+
+    data$label <- data %>% glue::glue_data(label)
+    label <- "label"
+  }
+
+  if(!(label %in% colnames(data)))
+    stop("can't find the label variable '", label, "' in the data")
+  if(!(xmin %in% colnames(data)))
+    stop("can't find the xmin variable '", xmin, "' in the data")
+
   if(hide.ns){
     # remove non significant
     remove_ns <- function(data){
@@ -156,72 +170,50 @@ stat_pvalue_manual <- function(
     data <- remove_ns(data)
   }
 
-  assertthat_group_columns_exists <- function(data){
-    groups.exist <- all(c("group1", "group2") %in% colnames(data))
-    if(!groups.exist){
-      if(inherits(data, "rstatix_test") & "group" %in% colnames(data)){
-        data$group1 <- "all"
-        data$group2 <- data$group
-      }
-      else{
-        stop("data should contain group1 and group2 columns")
-      }
-    }
-    invisible(data)
-  }
-
-  data <- assertthat_group_columns_exists(data)
-
   # Returns the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
   detect_comparison_type <- function(data){
-    ngroup1 <- length(unique(data$group1))
-    ngroup2 <- length(unique(data$group2))
 
-    if(length(setdiff(unique(data$group2), "null model")) == 0){
-      type <- "one_group"
-    }
-    else if(ngroup1 == 1 & ngroup2 >= 2){
-      type <- "each_vs_ref"
-    }
-    else if(ngroup1 == 1 & ngroup2 == 1){
-      type <- "two_groups"
-    }
-    else if (ngroup1 >= 2 & ngroup2 >= 2){
-      type <- "pairwise"
-    }
-    else if(all(c("group1", "group2") %in% colnames(data))){
-      # filtered data
-      # type <- "pairwise"
-      stop("If you see this message, raise a github issue.")
-    }
-    else{
-      stop("Make sure that group1 and group2 columns exist in the data.")
+    ngroup1 <- length(unique(data[[xmin]]))
+
+    if(!is.null(xmax)) {
+      ngroup2 <- length(unique(data$group2))
+
+      if(length(setdiff(unique(data$group2), "null model")) == 0){
+        type <- "one_group"
+      }
+      else if(ngroup1 == 1 & ngroup2 >= 2){
+        type <- "each_vs_ref"
+      }
+      else if(ngroup1 == 1 & ngroup2 == 1){
+        type <- "two_groups"
+      }
+      else if (ngroup1 >= 2 & ngroup2 >= 2){
+        type <- "pairwise"
+      }
+      else{
+        stop("Make sure that xmin and xmax columns exist in the data.")
+      }
+    } else {
+      if(ngroup1 >= 2) {
+        type = "two_groups"
+      }
     }
     type
   }
 
   comparison <- detect_comparison_type(data)
 
-
   all.x.is.missing <- is.null(x) & missing(xmin) & missing(xmax)
 
-  if(all(data$group1 == "all") & all.x.is.missing){
-    is.grouped <- length(data$group2) > length(unique(data$group2))
-    if(!is.grouped) x <- "group2" # labels will be plotted at x = "group2"
-  }
-
-  # Detect automatically if xmin and xmax exists in the data.
-  if(all.x.is.missing){
-    if(all(c("xmin", "xmax") %in% colnames(data))){
-      xmin <- "xmin"
-      xmax <- "xmax"
-    }
+  if(all(data[[xmin]] == "all") & all.x.is.missing){
+    is.grouped <- length(data[[xmax]]) > length(unique(data[[xmax]]))
+    if(!is.grouped) x <- xmax # plot labels at x = "group2" by default
   }
 
   # should stay before (!is.null(x))
   if(remove.bracket){
-    group1.length <- length(unique(data$group1))
-    if(group1.length == 1) {
+    xmin.length <- length(unique(data[[xmin]]))
+    if(xmin.length == 1) {
       xmin <- xmax
       xmax <- NULL
     }
@@ -233,23 +225,7 @@ stat_pvalue_manual <- function(
     xmax <- NULL
   }
 
-  # If label is a glue package expression
-  if(grepl("\\{|\\}", label, perl = TRUE)){
-    # move this to importfrom later
-    `%>%` <- magrittr::`%>%`
-
-    data$label <- data %>% glue::glue_data(label)
-    label <- "label"
-  }
-
-  available.variables <- colnames(data)
-
-  if(!(label %in% available.variables))
-    stop("can't find the label variable '", label, "' in the data")
-  if(!(xmin %in% available.variables))
-    stop("can't find the xmin variable '", xmin, "' in the data")
-
-  # get validate p-value y-position
+  # validate p-value y position
   .valid_y_position <- function(y.position, data){
     if(is.numeric(y.position)){
       number.of.test <- nrow(data)
@@ -282,16 +258,9 @@ stat_pvalue_manual <- function(
     pvalue.geom <- "text"
   }
 
-  if(!is.null(xmin)){
-    xmin <- data[[xmin]]
-  }
-  else{
-    xmin <- NA
-  }
-
   # Build the statistical table for plotting
-  new_xmax <- xmax  # so that mutate will avoid re-using an existing xmax in the data
-  new_xmin <- xmin
+  new_xmax <- xmax  # avoid re-using an existing xmax in the data
+  new_xmin <- data[[xmin]]
 
   data$label <- as.character(data[[label]])
   data$y.position <- data[[y.position]]
