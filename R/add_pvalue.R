@@ -29,15 +29,15 @@
 #' @examples
 #' #
 #'
-stat_pvalue_manual <- function(data,
-                               label = NULL, xmin = "group1", xmax = "group2",
-                               x = NULL, y.position = "y.position",
-                               label.size = 3.2,  colour = NULL, color = NULL,
-                               tip.length = 0.03, bracket.size = 0.6,
-                               bracket.colour = NULL, bracket.shorten = 0,
-                               bracket.nudge.y = 0, step.increase = 0,
-                               step.group.by = NULL, remove.bracket = FALSE,
-                               coord.flip = FALSE, position = "identity", ...) {
+add_pvalue <- function(data,
+                       label = NULL, xmin = "group1", xmax = "group2",
+                       x = NULL, y.position = "y.position",
+                       label.size = 3.2,  colour = NULL, color = NULL,
+                       tip.length = 0.03, bracket.size = 0.6,
+                       bracket.colour = NULL, bracket.shorten = 0,
+                       bracket.nudge.y = 0, step.increase = 0,
+                       step.group.by = NULL, remove.bracket = FALSE,
+                       coord.flip = FALSE, position = "identity", ...) {
   # if label is missing, guess the column to use for significance label
   if (is.null(label)) {
     label <- guess_signif_label_column(data)
@@ -45,7 +45,7 @@ stat_pvalue_manual <- function(data,
 
   # if label is a glue package expression, parse it
   if (grepl("\\{|\\}", label, perl = TRUE)) {
-    data$label <- glue::glue_data(data, label)
+    data$label <- glue_data(data, label)
     label <- "label"
   }
 
@@ -195,7 +195,7 @@ stat_pvalue_manual <- function(data,
 
     option[["data"]] <- data
 
-    option[["mapping"]] <- do.call(ggplot2::aes_string, mapping)
+    option[["mapping"]] <- do.call(aes_string, mapping)
 
     do.call(geom_bracket, option)
 
@@ -207,11 +207,11 @@ stat_pvalue_manual <- function(data,
       # Add data rows used only for positioning the labels for grouped bars
       data <- add_ctr_rows(data, ref.group = ref.group)
 
-      mapping <- ggplot2::aes(x = xmin, y = y.position,
-                              label = label, group = group2)
+      mapping <- aes(x = xmin, y = y.position,
+                     label = label, group = group2)
 
       if (missing(position) & !missing(x)) {
-        position <- ggplot2::position_dodge(width = 0.8)
+        position <- position_dodge(width = 0.8)
       }
     } else {
       mapping <- aes(x = xmin, y = y.position, label = label)
@@ -221,7 +221,7 @@ stat_pvalue_manual <- function(data,
 
     if (!missing(color)) {
       if (color %in% colnames(data)) {
-        mapping$colour <- rlang::ensym(color)
+        mapping$colour <- ensym(color)
       } else {
         option$colour <- color
       }
@@ -229,7 +229,7 @@ stat_pvalue_manual <- function(data,
 
     if (!missing(colour)) {
       if (colour %in% colnames(data)) {
-        mapping$colour <- rlang::ensym(colour)
+        mapping$colour <- ensym(colour)
       } else {
         option$colour <- colour
       }
@@ -237,7 +237,7 @@ stat_pvalue_manual <- function(data,
 
     option[["mapping"]] <- mapping
 
-    do.call(ggplot2::geom_text, option)
+    do.call(geom_text, option)
   }
 }
 

@@ -46,7 +46,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                                 label = NULL, xmin = NULL, xmax = NULL,
                                 y.position = NULL, bracket.colour = NULL,
                                 bracket.shorten = 0, bracket.nudge.y = 0,
-                                step.increase = 0, step.group.by = NULL, ) {
+                                step.increase = 0, step.group.by = NULL) {
 
     if (is.null(data)) {
       data <- data.frame(
@@ -102,7 +102,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
           paste(missing.required.vars, collapse = ", ")
         )
       }
-      mapping <- ggplot2::aes()
+      mapping <- aes()
     }
 
     if (is.null(mapping$label)) {
@@ -130,7 +130,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
 
   mapping <- build_signif_mapping(mapping, data)
 
-  ggplot2::layer(
+  layer(
     stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
@@ -141,134 +141,134 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
   )
 }
 
-StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
-                                required_aes = c("x", "y", "group"),
-                                setup_params = function(data, params) {
-                                  if (length(params$tip.length) == 1) {
-                                    params$tip.length <- rep(
-                                      params$tip.length,
-                                      max(length(params$xmin), 1) * 2
-                                    )
-                                  }
-                                  if (length(params$tip.length) == length(params$xmin)) {
-                                    params$tip.length <- rep(
-                                      params$tip.length,
-                                      each=2)
-                                    }
-                                  return(params)
-                                },
-                                compute_group = function(data, scales, tip.length) {
-                                  yrange <- scales$y$range$range
-                                  y.scale.range <- yrange[2] - yrange[1]
-                                  bracket.shorten <- data$bracket.shorten / 2
+StatBracket <- ggproto("StatBracket", Stat,
+                       required_aes = c("x", "y", "group"),
+                       setup_params = function(data, params) {
+                         if (length(params$tip.length) == 1) {
+                           params$tip.length <- rep(
+                             params$tip.length,
+                             max(length(params$xmin), 1) * 2
+                           )
+                         }
+                         if (length(params$tip.length) == length(params$xmin)) {
+                           params$tip.length <- rep(
+                             params$tip.length,
+                             each=2)
+                         }
+                         return(params)
+                       },
+                       compute_group = function(data, scales, tip.length) {
+                         yrange <- scales$y$range$range
+                         y.scale.range <- yrange[2] - yrange[1]
+                         bracket.shorten <- data$bracket.shorten / 2
 
-                                  xmin <- data$xmin + bracket.shorten
-                                  xmax <- data$xmax - bracket.shorten
+                         xmin <- data$xmin + bracket.shorten
+                         xmax <- data$xmax - bracket.shorten
 
-                                  y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
+                         y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
 
-                                  label <- data$label
+                         label <- data$label
 
-                                  if (is.character(xmin)) {
-                                    xmin <- scales$x$map(xmin)
-                                  }
-                                  if (is.character(xmax)) {
-                                    xmax <- scales$x$map(xmax)
-                                  }
-                                  if ("tip.length" %in% colnames(data)) {
-                                    tip.length <-  rep(data$tip.length, each=2)
-                                  }
-                                  # Prepare bracket data
-                                  data <- rbind(data, data, data)
+                         if (is.character(xmin)) {
+                           xmin <- scales$x$map(xmin)
+                         }
+                         if (is.character(xmax)) {
+                           xmax <- scales$x$map(xmax)
+                         }
+                         if ("tip.length" %in% colnames(data)) {
+                           tip.length <-  rep(data$tip.length, each=2)
+                         }
+                         # Prepare bracket data
+                         data <- rbind(data, data, data)
 
-                                  data$x <- c(xmin, xmin, xmax)
-                                  data$xend = c(xmin, xmax, xmax)
-                                  data$y <- c(
-                                    y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 1],
-                                    y.position,
-                                    y.position)
-                                  data$yend <- c(
-                                    y.position,
-                                    y.position,
-                                    y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 0])
-                                  data$annotation <- rep(label, 3)
-                                  data
-                                }
+                         data$x <- c(xmin, xmin, xmax)
+                         data$xend = c(xmin, xmax, xmax)
+                         data$y <- c(
+                           y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 1],
+                           y.position,
+                           y.position)
+                         data$yend <- c(
+                           y.position,
+                           y.position,
+                           y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 0])
+                         data$annotation <- rep(label, 3)
+                         data
+                       }
 )
 
-GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
-                                required_aes = c("x", "xend", "y", "yend", "annotation"),
-                                default_aes = ggplot2::aes(
-                                  label = NULL, xmin = NULL, xmax = NULL,
-                                  y.position = NULL,
-                                  label.size = 3.2, colour = "black",
-                                  angle = NULL, hjust = 0.5, vjust = NULL,
-                                  alpha = NA, fontfamily = "", fontface = 1,
-                                  bracket.size = 0.6, bracket.colour = NULL,
-                                  linetype=1, lineend = "square",
-                                  bracket.shorten = 0, bracket.nudge.y = 0,
-                                  step.increase = 0
-                                ),
-                                draw_key = ggplot2::draw_key_path,
-                                draw_group = function(data, panel_params,
-                                                      coord, type = "text",
-                                                      coord.flip = FALSE) {
-                                  lab <- as.character(data$annotation)
-                                  if (type == "expression") {
-                                    lab <- parse_as_expression(lab)
-                                  }
+GeomBracket <- ggproto("GeomBracket", Geom,
+                       required_aes = c("x", "xend", "y", "yend", "annotation"),
+                       default_aes = aes(
+                         label = NULL, xmin = NULL, xmax = NULL,
+                         y.position = NULL,
+                         label.size = 3.2, colour = "black",
+                         angle = NULL, hjust = 0.5, vjust = NULL,
+                         alpha = NA, fontfamily = "", fontface = 1,
+                         bracket.size = 0.6, bracket.colour = NULL,
+                         linetype=1, lineend = "square",
+                         bracket.shorten = 0, bracket.nudge.y = 0,
+                         step.increase = 0
+                       ),
+                       draw_key = draw_key_path,
+                       draw_group = function(data, panel_params,
+                                             coord, type = "text",
+                                             coord.flip = FALSE) {
+                         lab <- as.character(data$annotation)
+                         if (type == "expression") {
+                           lab <- parse_as_expression(lab)
+                         }
 
-                                  coords <- coord$transform(data, panel_params)
+                         coords <- coord$transform(data, panel_params)
 
-                                  if (is.null(coords$vjust)) {
-                                    if (lab[1] %in% c("****", "***", "**", "*")) {
-                                      coords$vjust <- 0.5
-                                    } else {
-                                      coords$vjust <- 0
-                                    }
-                                  }
+                         if (is.null(coords$vjust)) {
+                           if (lab[1] %in% c("****", "***", "**", "*")) {
+                             coords$vjust <- 0.5
+                           } else {
+                             coords$vjust <- 0
+                           }
+                         }
 
-                                  label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
-                                  label.y <- max(c(coords$y, coords$yend)) + 0.01
-                                  label.angle <- coords$angle
-                                  if (coord.flip) {
-                                    label.y <- mean(c(coords$y[1], tail(coords$yend, n = 1)))
-                                    label.x <- max(c(coords$x, coords$xend)) + 0.01
-                                    if (is.null(label.angle)) label.angle <- -90
-                                  }
-                                  if (is.null(label.angle)) label.angle <- 0
+                         label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
+                         label.y <- max(c(coords$y, coords$yend)) + 0.01
+                         label.angle <- coords$angle
+                         if (coord.flip) {
+                           label.y <- mean(c(coords$y[1], tail(coords$yend, n = 1)))
+                           label.x <- max(c(coords$x, coords$xend)) + 0.01
+                           if (is.null(label.angle)) label.angle <- -90
+                         }
+                         if (is.null(label.angle)) label.angle <- 0
 
-                                  grid::gList(
-                                    grid::textGrob(
-                                      label = lab[1],
-                                      x = label.x,
-                                      y = label.y,
-                                      default.units = "native",
-                                      hjust = coords$hjust, vjust = coords$vjust,
-                                      rot = label.angle,
-                                      gp = grid::gpar(
-                                        col = scales::alpha(coords$colour, coords$alpha),
-                                        fontsize = coords$label.size * ggplot2::.pt,
-                                        fontfamily = coords$fontfamily,
-                                        fontface = coords$fontface
-                                      )
-                                    ),
-                                    grid::segmentsGrob(
-                                      coords$x, coords$y,
-                                      default.units = "native",
-                                      coords$xend, coords$yend,
-                                      gp = grid::gpar(
-                                        col = if (all(!is.na(coords$bracket.colour))) {
-                                          scales::alpha(coords$bracket.colour, coords$alpha)
-                                        } else {
-                                          scales::alpha(coords$colour, coords$alpha)
-                                          }
-                                        ,
-                                        lty = coords$linetype,
-                                        lwd = coords$bracket.size * ggplot2::.pt,
-                                        lineend = coords$lineend
-                                      )
-                                    )
-                                  )
-                                }
+                         gList(
+                           textGrob(
+                             label = lab[1],
+                             x = label.x,
+                             y = label.y,
+                             default.units = "native",
+                             hjust = coords$hjust, vjust = coords$vjust,
+                             rot = label.angle,
+                             gp = gpar(
+                               col = alpha(coords$colour, coords$alpha),
+                               fontsize = coords$label.size * .pt,
+                               fontfamily = coords$fontfamily,
+                               fontface = coords$fontface
+                             )
+                           ),
+                           segmentsGrob(
+                             coords$x, coords$y,
+                             default.units = "native",
+                             coords$xend, coords$yend,
+                             gp = gpar(
+                               col = if (all(!is.na(coords$bracket.colour))) {
+                                 alpha(coords$bracket.colour, coords$alpha)
+                               } else {
+                                 alpha(coords$colour, coords$alpha)
+                               }
+                               ,
+                               lty = coords$linetype,
+                               lwd = coords$bracket.size * .pt,
+                               lineend = coords$lineend
+                             )
+                           )
+                         )
+                       }
 )
