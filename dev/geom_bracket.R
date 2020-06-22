@@ -1,5 +1,163 @@
-#' @include utilities.R
-NULL
+#' Title
+#'
+#' Description.
+#'
+#' @param mapping Description.
+#' @param data Description.
+#' @param stat Description.
+#' @param position Description.
+#' @param na.rm Description.
+#' @param show.legend Description.
+#' @param inherit.aes Description.
+#' @param label Description.
+#' @param type Description.
+#' @param xmin Description.
+#' @param xmax Description.
+#' @param y.position Description.
+#' @param label.size Description.
+#' @param tip.length Description.
+#' @param bracket.size Description.
+#' @param bracket.colour Description.
+#' @param bracket.shorten Description.
+#' @param bracket.nudge.y Description.
+#' @param step.increase Description.
+#' @param step.group.by Description.
+#' @param coord.flip Description.
+#' @param ... Description.
+#'
+#' @return Description.
+#' @export
+#'
+#' @examples
+#' #
+#'
+geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
+                         position = "identity", na.rm = FALSE,
+                         show.legend = NA, inherit.aes = TRUE,
+                         label = NULL, type = c("text", "expression"),
+                         xmin = NULL, xmax = NULL, y.position = NULL,
+                         label.size = 3.2, tip.length = 0.03, bracket.size = 0.6,
+                         bracket.colour = NULL, bracket.shorten = 0,
+                         bracket.nudge.y = 0, step.increase = 0,
+                         step.group.by = NULL, coord.flip = FALSE, ...) {
+  type <- match.arg(type)
+
+  build_signif_data <- function(data = NULL, label = NULL, xmin = NULL, xmax = NULL,
+                                y.position = NULL, bracket.colour = NULL,
+                                bracket.shorten = 0, bracket.nudge.y = 0,
+                                step.increase = 0, step.group.by = NULL, ){
+
+    add_step_increase <- function(data, step.increase){
+      comparisons.number <- 0:(nrow(data)-1)
+      step.increase <- step.increase*comparisons.number
+      data$step.increase <- step.increase
+      data
+    }
+    if(is.null(data)){
+      data <- data.frame(
+        label = label, y.position = y.position,
+        xmin = xmin, xmax = xmax
+      )
+    }
+    else{
+      if(!is.null(label)) data$label <- label
+      if(!is.null(y.position)) data$y.position <- y.position
+      if(!is.null(xmin)) data$xmin <- xmin
+      if(!is.null(xmax)) data$xmax <- xmax
+      if(!is.null(bracket.colour)) data$bracket.colour <- bracket.colour
+    }
+    # add columns if they don't exist
+    if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
+    if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
+    if(!("bracket.colour" %in% colnames(data))) data$bracket.colour <- NA
+
+    if(is.null(step.group.by)){
+      data <- add_step_increase(data, step.increase)
+    }
+    else{
+      data <- data[order(data[[step.group.by]], data[["y.position"]]), ]
+
+      data <- by(data,
+                 INDICES = data[[step.group.by]],
+                 FUN = function(x) {
+                   x <- add_step_increase(x, 0.1)
+                   return(x)
+                 }) %>%
+        do.call(rbind, .)
+    }
+    data
+  }
+
+  data <- build_signif_data(
+    data = data, label = label, xmin = xmin, xmax = xmax,
+    y.position = y.position, bracket.colour = bracket.colour,
+    bracket.shorten = bracket.shorten, bracket.nudge.y = bracket.nudge.y,
+    step.increase = step.increase, step.group.by = step.group.by
+  )
+
+  build_signif_mapping <- function(mapping, data){
+    if(is.null(mapping)){
+      # Check if required variables are present in data
+      required.vars <- c("xmin", "xmax", "y.position")
+      missing.required.vars <- setdiff(required.vars, colnames(data))
+      if(length(missing.required.vars) > 0){
+        stop(
+          "Required variables are missing in the data: ",
+          paste(missing.required.vars, collapse = ", ")
+        )
+      }
+      mapping <- ggplot2::aes()
+    }
+    if(is.null(mapping$label)){
+      # Guess column to be used as significance labem
+      guess_signif_label_column <- function(data) {
+        potential.label <- c(
+          "label", "labels", "p.adj.signif", "p.adj", "padj",
+          "p.signif", "p.value", "pval", "p.val", "p"
+        )
+        res <- intersect(potential.label, colnames(data))
+        if(length(res) > 0){
+          res <- res[1]
+        }
+        else{
+          stop("label is missing")
+        }
+        res
+      }
+
+      label.col <- guess_signif_label_column(data)
+      data$label <- data[[label.col]]
+      mapping$label <- data$label
+    }
+    if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
+    if(is.null(mapping$xmax)) mapping$xmax <- data$xmax
+    if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
+    if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
+    if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
+    if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
+    if(is.null(mapping$bracket.colour)) mapping$bracket.colour <- data$bracket.colour
+    if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
+    if(! "x" %in% names(mapping)){
+      mapping$x <- mapping$xmin
+    }
+    if(! "y" %in% names(mapping)){
+      mapping$y <- mapping$y.position
+    }
+    mapping
+  }
+
+  mapping <- build_signif_mapping(mapping, data)
+
+  ggplot2::layer(
+    stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(
+      type = type, label.size = label.size,
+      tip.length = tip.length, bracket.size = bracket.size,
+      na.rm = na.rm, coord.flip = coord.flip, ...
+    )
+  )
+}
 
 StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                 required_aes = c("x", "y", "group"),
@@ -43,137 +201,18 @@ StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                 }
 )
 
-
-#' Add Brackets with Labels to a GGPlot
-#' @description add brackets with label annotation to a ggplot. Helpers for
-#'   adding p-value or significance levels to a plot.
-#' @param label character vector with alternative label, if not null test is
-#'   ignored
-#' @param type the label type. Can be one of "text" and "expression" (for
-#'   parsing plotmath expression).
-#' @param xmin numeric vector with the positions of the left sides of the
-#'   brackets
-#' @param xmax numeric vector with the positions of the right sides of the
-#'   brackets
-#' @param y.position numeric vector with the y positions of the brackets
-#' @param bracket.size change the width of the lines of the bracket
-#' @param label.size change the size of the label text
-#' @param step.increase numeric vector with the increase in fraction of total
-#'   height for every additional comparison to minimize overlap.
-#' @param bracket.nudge.y Vertical adjustment to nudge brackets by. Useful to
-#'   move up or move down the bracket. If positive value, brackets will be moved
-#'   up; if negative value, brackets are moved down.
-#' @param bracket.shorten a small numeric value in [0-1] for shortening the
-#'   width of the bracket.
-#' @param step.group.by a variable name for grouping brackets before adding
-#'   step.increase. Useful to group bracket by facet panel.
-#' @param tip.length numeric vector with the fraction of total height that the
-#'   bar goes down to indicate the precise column
-#' @param na.rm If \code{FALSE} (the default), removes missing values with a
-#'   warning.  If \code{TRUE} silently removes missing values.
-#' @param coord.flip logical. If \code{TRUE}, flip x and y coordinates so that
-#'   horizontal becomes vertical, and vertical, horizontal. When adding the
-#'   p-values to a horizontal ggplot (generated using
-#'   \code{\link[ggplot2]{coord_flip}()}), you need to specify the option
-#'   \code{coord.flip = TRUE}.
-#' @param ... other arguments passed on to \code{\link{layer}}. These are often
-#'   aesthetics, used to set an aesthetic to a fixed value, like \code{color =
-#'   "red"} or \code{fontfamily = "mono"}. They may also be parameters to the paired
-#'   geom/stat.
-#' @inheritParams ggplot2::layer
-#' @examples
-#' df <- ToothGrowth
-#' df$dose <- factor(df$dose)
-#'
-#' # Add bracket with labels
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     xmin = "0.5", xmax = "1", y.position = 30,
-#'     label = "t-test, p < 0.05"
-#'   )
-#'
-#' # Customize bracket tip.length tip.length
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     xmin = "0.5", xmax = "1", y.position = 30,
-#'     label = "t-test, p < 0.05", tip.length = c(0.2, 0.02)
-#'   )
-#'
-#' #Using plotmath expression
-#' ggboxplot(df, x = "dose", y = "len") +
-#'  geom_bracket(
-#'    xmin = "0.5", xmax = "1", y.position = 30,
-#'    label = "list(~italic(p)<=0.001)", type = "expression",
-#'    tip.length = c(0.2, 0.02)
-#'  )
-#'
-#' # Specify multiple brackets manually
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     xmin = c("0.5", "1"), xmax = c("1", "2"),
-#'     y.position = c(30, 35), label = c("***", "**"),
-#'     tip.length = 0.01
-#'   )
-#'
-#' # Compute statistical tests and add p-values
-#' stat.test <- compare_means(len ~ dose, ToothGrowth, method = "t.test")
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     aes(xmin = group1, xmax = group2, label = signif(p, 2)),
-#'     data = stat.test, y.position = 35
-#'   )
-#'
-#' # Increase step length between brackets
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     aes(xmin = group1, xmax = group2, label = signif(p, 2)),
-#'     data = stat.test, y.position = 35, step.increase = 0.1
-#'   )
-#'
-#' # Or specify the positions of each comparison
-#' ggboxplot(df, x = "dose", y = "len") +
-#'   geom_bracket(
-#'     aes(xmin = group1, xmax = group2, label = signif(p, 2)),
-#'     data = stat.test, y.position = c(32, 35, 38)
-#'    )
-#' @rdname geom_bracket
-#' @export
-stat_bracket <- function(mapping = NULL, data = NULL,
-                         position = "identity", na.rm = FALSE, show.legend = NA,
-                         inherit.aes = TRUE,
-                         label = NULL, type = c("text", "expression"), y.position=NULL, xmin = NULL, xmax = NULL,
-                         step.increase = 0, step.group.by = NULL,  tip.length = 0.03,
-                         bracket.nudge.y = 0, bracket.shorten = 0,
-                         bracket.size = 0.6, label.size = 3.2, bracket.colour,
-                         ...) {
-  if(! is.null(data) & ! is.null(mapping)){
-    if(! "x" %in% names(data)) mapping$x <- 1
-    if(! "y" %in% names(data)) mapping$y <- 1
-  }
-  type <- match.arg(type)
-  ggplot2::layer(
-    stat = StatBracket, data = data, mapping = mapping, geom = "bracket",
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(
-      label=label, type = type,
-      y.position=y.position,xmin=xmin, xmax=xmax,
-      step.increase=step.increase, bracket.nudge.y = bracket.nudge.y,
-      bracket.shorten = bracket.shorten,
-      step.group.by = step.group.by,
-      tip.length=tip.length, bracket.size=bracket.size, label.size=label.size, bracket.colour,
-      na.rm = na.rm, ...)
-  )
-}
-
-
 GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 required_aes = c("x", "xend", "y", "yend", "annotation"),
-                                default_aes = ggplot2::aes(bracket.colour = NULL, lineend = "square",
-                                  colour = "black", label.size = 3.2, angle = NULL, hjust = 0.5,
-                                  vjust = NULL, alpha = NA, fontfamily = "", fontface = 1, linetype=1, bracket.size = 0.6,
-                                  xmin = NULL, xmax = NULL, label = NULL, y.position = NULL, step.increase = 0,
-                                  bracket.nudge.y = 0, # Added to avoid aesthetics warning
-                                  bracket.shorten = 0
+                                default_aes = ggplot2::aes(
+                                  label = NULL, xmin = NULL, xmax = NULL,
+                                  y.position = NULL,
+                                  label.size = 3.2, colour = "black",
+                                  angle = NULL, hjust = 0.5, vjust = NULL,
+                                  alpha = NA, fontfamily = "", fontface = 1,
+                                  bracket.size = 0.6, bracket.colour = NULL,
+                                  linetype=1, lineend = "square",
+                                  bracket.shorten = 0, bracket.nudge.y = 0,
+                                  step.increase = 0
                                 ),
                                 # draw_key = function(...){grid::nullGrob()},
                                 # for legend:
@@ -250,134 +289,6 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                 }
 )
 
-#' @rdname geom_bracket
-#' @export
-geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
-                         position = "identity", na.rm = FALSE, show.legend = NA,
-                         inherit.aes = TRUE,
-                         label = NULL, type = c("text", "expression"), y.position = NULL, xmin = NULL, xmax = NULL,
-                         step.increase = 0, step.group.by = NULL, tip.length = 0.03, bracket.nudge.y = 0,
-                         bracket.shorten = 0, bracket.size = 0.6, label.size = 3.2, bracket.colour = NULL,
-                         coord.flip = FALSE, ...) {
-  type <- match.arg(type)
-
-  build_signif_data <- function(data = NULL, label = NULL, y.position = NULL,
-                                xmin = NULL, xmax = NULL, step.increase = 0,
-                                bracket.nudge.y = 0, bracket.shorten = 0,
-                                step.group.by = NULL, bracket.colour = NULL){
-
-    add_step_increase <- function(data, step.increase){
-      comparisons.number <- 0:(nrow(data)-1)
-      step.increase <- step.increase*comparisons.number
-      data$step.increase <- step.increase
-      data
-    }
-    if(is.null(data)){
-      data <- data.frame(
-        label = label, y.position = y.position,
-        xmin = xmin, xmax = xmax
-      )
-    }
-    else{
-      if(!is.null(label)) data$label <- label
-      if(!is.null(y.position)) data$y.position <- y.position
-      if(!is.null(xmin)) data$xmin <- xmin
-      if(!is.null(xmax)) data$xmax <- xmax
-      if(!is.null(bracket.colour)) data$bracket.colour <- bracket.colour
-    }
-    # add columns if they don't exist
-    if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
-    if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
-    if(!("bracket.colour" %in% colnames(data))) data$bracket.colour <- NA
-
-    if(is.null(step.group.by)){
-      data <- add_step_increase(data, step.increase)
-    }
-    else{
-      data <- data[order(data[[step.group.by]], data[["y.position"]]), ]
-
-      data <- by(data,
-                 INDICES = data[[step.group.by]],
-                 FUN = function(x) {
-                   x <- add_step_increase(x, 0.1)
-                   return(x)
-                 }) %>%
-        do.call(rbind, .)
-    }
-    data
-  }
-
-  data <- build_signif_data(
-    data = data, label = label, y.position = y.position,
-    xmin = xmin, xmax = xmax, step.increase = step.increase,
-    bracket.nudge.y = bracket.nudge.y, bracket.shorten = bracket.shorten,
-    step.group.by = step.group.by, bracket.colour
-  )
-
-  build_signif_mapping <- function(mapping, data){
-    if(is.null(mapping)){
-      # Check if required variables are present in data
-      required.vars <- c("xmin", "xmax", "y.position")
-      missing.required.vars <- setdiff(required.vars, colnames(data))
-      if(length(missing.required.vars) > 0){
-        stop(
-          "Required variables are missing in the data: ",
-          paste(missing.required.vars, collapse = ", ")
-        )
-      }
-      mapping <- ggplot2::aes()
-    }
-    if(is.null(mapping$label)){
-      # Guess column to be used as significance labem
-      guess_signif_label_column <- function(data) {
-        potential.label <- c(
-          "label", "labels", "p.adj.signif", "p.adj", "padj",
-          "p.signif", "p.value", "pval", "p.val", "p"
-        )
-        res <- intersect(potential.label, colnames(data))
-        if(length(res) > 0){
-          res <- res[1]
-        }
-        else{
-          stop("label is missing")
-        }
-        res
-      }
-
-      label.col <- guess_signif_label_column(data)
-      data$label <- data[[label.col]]
-      mapping$label <- data$label
-    }
-    if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
-    if(is.null(mapping$xmax)) mapping$xmax <- data$xmax
-    if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
-    if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
-    if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
-    if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
-    if(is.null(mapping$bracket.colour)) mapping$bracket.colour <- data$bracket.colour
-    if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
-    if(! "x" %in% names(mapping)){
-      mapping$x <- mapping$xmin
-    }
-    if(! "y" %in% names(mapping)){
-      mapping$y <- mapping$y.position
-    }
-    mapping
-  }
-
-  mapping <- build_signif_mapping(mapping, data)
-
-  ggplot2::layer(
-    stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(
-      type = type,
-      tip.length = tip.length,
-      bracket.size = bracket.size, label.size = label.size,
-      na.rm = na.rm, coord.flip = coord.flip, ...
-    )
-  )
-}
 
 
 
