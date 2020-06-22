@@ -52,24 +52,6 @@ guess_signif_label_column <- function(data) {
   res
 }
 
-# Filter out non-significant results if required
-remove_ns <- function(data){
-  columns <- colnames(data)
-  if("p.adj.signif" %in% columns){
-    data <- data[data$p.adj.signif != "ns", ]
-  }
-  else if("p.adj" %in% columns){
-    data <- data[data$p.adj <= 0.05, ]
-  }
-  else if("p.signif" %in% columns){
-    data <- data[data$p.signif != "ns", ]
-  }
-  else if("p" %in% columns){
-    data <- data[data$p <= 0.05, ]
-  }
-  data
-}
-
 # Validate p-value y position
 validate_y_position <- function(y.position, data){
   if(is.numeric(y.position)){

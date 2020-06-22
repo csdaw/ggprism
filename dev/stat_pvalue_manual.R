@@ -19,7 +19,6 @@
 #' @param step.increase Description.
 #' @param step.group.by Description.
 #' @param remove.bracket Description.
-#' @param hide.ns Description.
 #' @param coord.flip Description.
 #' @param position Description.
 #' @param ... Description.
@@ -36,7 +35,7 @@ stat_pvalue_manual <- function(
   label.size = 3.2,  colour = NULL, color = NULL,
   tip.length = 0.03, bracket.size = 0.6, bracket.colour = NULL,
   bracket.shorten = 0, bracket.nudge.y = 0, step.increase = 0,
-  step.group.by = NULL, remove.bracket = FALSE, hide.ns = FALSE,
+  step.group.by = NULL, remove.bracket = FALSE,
   coord.flip = FALSE, position = "identity", ...
 )
 {
@@ -56,13 +55,6 @@ stat_pvalue_manual <- function(
     stop("can't find the label variable '", label, "' in the data")
   if(!(xmin %in% colnames(data)))
     stop("can't find the xmin variable '", xmin, "' in the data")
-
-  # filter out non-significant results if required
-  if(hide.ns){
-    data <- remove_ns(data)
-  }
-
-
 
   # check if defined in function call: x, xmin, max
   all.x.is.missing <- is.null(x) & missing(xmin) & missing(xmax)
