@@ -29,31 +29,30 @@
 #' @examples
 #' #
 #'
-stat_pvalue_manual <- function(
-  data, label = NULL, xmin = "group1", xmax = "group2",
-  x = NULL, y.position = "y.position",
-  label.size = 3.2,  colour = NULL, color = NULL,
-  tip.length = 0.03, bracket.size = 0.6, bracket.colour = NULL,
-  bracket.shorten = 0, bracket.nudge.y = 0, step.increase = 0,
-  step.group.by = NULL, remove.bracket = FALSE,
-  coord.flip = FALSE, position = "identity", ...
-)
-{
+stat_pvalue_manual <- function(data,
+                               label = NULL, xmin = "group1", xmax = "group2",
+                               x = NULL, y.position = "y.position",
+                               label.size = 3.2,  colour = NULL, color = NULL,
+                               tip.length = 0.03, bracket.size = 0.6,
+                               bracket.colour = NULL, bracket.shorten = 0,
+                               bracket.nudge.y = 0, step.increase = 0,
+                               step.group.by = NULL, remove.bracket = FALSE,
+                               coord.flip = FALSE, position = "identity", ...) {
   # if label is missing, guess the column to use for significance label
-  if(is.null(label)){
+  if (is.null(label)) {
     label <- guess_signif_label_column(data)
   }
 
   # if label is a glue package expression, parse it
-  if(grepl("\\{|\\}", label, perl = TRUE)){
+  if (grepl("\\{|\\}", label, perl = TRUE)) {
     data$label <- glue::glue_data(data, label)
     label <- "label"
   }
 
   # check that xmin and label columns are in data
-  if(!(label %in% colnames(data)))
+  if (!(label %in% colnames(data)))
     stop("can't find the label variable '", label, "' in the data")
-  if(!(xmin %in% colnames(data)))
+  if (!(xmin %in% colnames(data)))
     stop("can't find the xmin variable '", xmin, "' in the data")
 
   # check if defined in function call: x, xmin, max
@@ -61,16 +60,16 @@ stat_pvalue_manual <- function(
 
   # plot labels at x = max if conditions are met
   # uses default xmin = "group1" and xmax = "group2"
-  if(all(data[[xmin]] == "all") & all.x.is.missing){
+  if (all(data[[xmin]] == "all") & all.x.is.missing) {
     is.grouped <- length(data[[xmax]]) > length(unique(data[[xmax]]))
-    if(!is.grouped) x <- xmax
+    if (!is.grouped) x <- xmax
   }
 
   # check for remove.bracket
   # should stay before (!is.null(x))
-  if(remove.bracket){
+  if (remove.bracket) {
     xmin.length <- length(unique(data[[xmin]]))
-    if(xmin.length == 1) {
+    if (xmin.length == 1) {
       xmin <- xmax
       xmax <- NULL
     }
@@ -80,22 +79,21 @@ stat_pvalue_manual <- function(
   # should stay before (!is.null(x))
   ngroup1 <- length(unique(data[[xmin]]))
 
-  if(!is.null(xmax)) {
+  if (!is.null(xmax)) {
     ngroup2 <- length(unique(data[[xmax]]))
 
-    if(length(setdiff(unique(data[[xmax]]), "null model")) == 0){
+    if (length(setdiff(unique(data[[xmax]]), "null model")) == 0) {
       comparison <- "one_group"
     }
-    else if(ngroup1 == 1 & ngroup2 >= 2){
+    else if (ngroup1 == 1 & ngroup2 >= 2) {
       comparison <- "each_vs_ref"
     }
-    else if(ngroup1 == 1 & ngroup2 == 1){
+    else if (ngroup1 == 1 & ngroup2 == 1) {
       comparison <- "two_groups"
     }
-    else if (ngroup1 >= 2 & ngroup2 >= 2){
+    else if (ngroup1 >= 2 & ngroup2 >= 2) {
       comparison <- "pairwise"
-    }
-    else{
+    } else {
       stop("Make sure that xmin and xmax columns exist in the data.")
     }
   } else {
@@ -105,7 +103,7 @@ stat_pvalue_manual <- function(
   }
 
   # only for p-value displayed as text (without brackets)
-  if(!is.null(x)){
+  if (!is.null(x)) {
     xmin <- x
     xmax <- NULL
   }
@@ -113,17 +111,16 @@ stat_pvalue_manual <- function(
   # validate p-value y position
   y.position <- validate_y_position(y.position, data)
 
-  if(is.numeric(y.position)){
+  if (is.numeric(y.position)) {
     data$y.position <- y.position
     y.position <- "y.position"
   }
 
   # if xmax is null, p-value is drawn as text, otherwise draw brackets
-  if(!is.null(xmax)) {
+  if (!is.null(xmax)) {
     xmax <- data[[xmax]]
     pvalue.geom <- "bracket"
-  }
-  else {
+  } else {
     xmax <- NA
     pvalue.geom <- "text"
   }
@@ -139,21 +136,23 @@ stat_pvalue_manual <- function(
   data$xmax <- new_xmax
 
   # draw brackets else draw p-value text
-  if(pvalue.geom == "bracket"){
-    if(identical(data$xmin, data$xmax) | remove.bracket){
+  if (pvalue.geom == "bracket") {
+    if (identical(data$xmin, data$xmax) | remove.bracket) {
       bracket.size = 0
     }
 
-    params <- list(group = 1:nrow(data),
-                   label = "label", xmin = "xmin", xmax = "xmax",
-                   y.position = "y.position", label.size = label.size,
-                   colour = colour, color = color,
-                   tip.length = tip.length, bracket.size = bracket.size,
-                   bracket.colour = bracket.colour,
-                   bracket.shorten = bracket.shorten,
-                   bracket.nudge.y = bracket.nudge.y,
-                   step.increase = step.increase, step.group.by = step.group.by,
-                   coord.flip = coord.flip, position = position, ...)
+    params <- list(
+      group = 1:nrow(data),
+      label = "label", xmin = "xmin", xmax = "xmax",
+      y.position = "y.position", label.size = label.size,
+      colour = colour, color = color,
+      tip.length = tip.length, bracket.size = bracket.size,
+      bracket.colour = bracket.colour,
+      bracket.shorten = bracket.shorten,
+      bracket.nudge.y = bracket.nudge.y,
+      step.increase = step.increase, step.group.by = step.group.by,
+      coord.flip = coord.flip, position = position, ...
+    )
 
     mapping <- list()
     option <- list()
@@ -182,11 +181,12 @@ stat_pvalue_manual <- function(
       else if (key %in% allowed.options) {
         option[[key]] <- value
       }
-      else if(key == "step.group.by"){
+      else if (key == "step.group.by") {
         # for geom_bracket, value are variable name
         # but this parameter is an option not an aes
         option[[key]] <- value
-      } else if (key == "bracket.color" & missing(bracket.colour)) {
+      }
+      else if (key == "bracket.color" & missing(bracket.colour)) {
         option[["bracket.colour"]] <- value
       }
     }
@@ -200,7 +200,7 @@ stat_pvalue_manual <- function(
     do.call(geom_bracket, option)
 
   } else {
-    if(comparison == "each_vs_ref"){
+    if (comparison == "each_vs_ref") {
       ref.group <- unique(data[[xmin]])
       group2 <- NULL
 
@@ -210,24 +210,25 @@ stat_pvalue_manual <- function(
       mapping <- ggplot2::aes(x = xmin, y = y.position,
                               label = label, group = group2)
 
-      if(missing(position) & !missing(x)){
-          position <- ggplot2::position_dodge(width = 0.8)
+      if (missing(position) & !missing(x)) {
+        position <- ggplot2::position_dodge(width = 0.8)
       }
-    }
-    else{
+    } else {
       mapping <- aes(x = xmin, y = y.position, label = label)
     }
+
     option <- list(data = data, size = label.size, position = position, ...)
 
-    if(!missing(color)) {
-      if(color %in% colnames(data)) {
+    if (!missing(color)) {
+      if (color %in% colnames(data)) {
         mapping$colour <- rlang::ensym(color)
       } else {
         option$colour <- color
       }
     }
-    if(!missing(colour)) {
-      if(colour %in% colnames(data)) {
+
+    if (!missing(colour)) {
+      if (colour %in% colnames(data)) {
         mapping$colour <- rlang::ensym(colour)
       } else {
         option$colour <- colour

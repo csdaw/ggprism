@@ -42,48 +42,44 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          step.group.by = NULL, coord.flip = FALSE, ...) {
   type <- match.arg(type)
 
-  build_signif_data <- function(data = NULL, label = NULL, xmin = NULL, xmax = NULL,
+  build_signif_data <- function(data = NULL,
+                                label = NULL, xmin = NULL, xmax = NULL,
                                 y.position = NULL, bracket.colour = NULL,
                                 bracket.shorten = 0, bracket.nudge.y = 0,
-                                step.increase = 0, step.group.by = NULL, ){
+                                step.increase = 0, step.group.by = NULL, ) {
 
-    add_step_increase <- function(data, step.increase){
-      comparisons.number <- 0:(nrow(data)-1)
-      step.increase <- step.increase*comparisons.number
-      data$step.increase <- step.increase
-      data
-    }
-    if(is.null(data)){
+    if (is.null(data)) {
       data <- data.frame(
-        label = label, y.position = y.position,
-        xmin = xmin, xmax = xmax
+        label = label, xmin = xmin, xmax = xmax,
+        y.position = y.position
       )
+    } else {
+      if (!is.null(label)) data$label <- label
+      if (!is.null(y.position)) data$y.position <- y.position
+      if (!is.null(xmin)) data$xmin <- xmin
+      if (!is.null(xmax)) data$xmax <- xmax
+      if (!is.null(bracket.colour)) data$bracket.colour <- bracket.colour
     }
-    else{
-      if(!is.null(label)) data$label <- label
-      if(!is.null(y.position)) data$y.position <- y.position
-      if(!is.null(xmin)) data$xmin <- xmin
-      if(!is.null(xmax)) data$xmax <- xmax
-      if(!is.null(bracket.colour)) data$bracket.colour <- bracket.colour
-    }
-    # add columns if they don't exist
-    if(!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
-    if(!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
-    if(!("bracket.colour" %in% colnames(data))) data$bracket.colour <- NA
 
-    if(is.null(step.group.by)){
+    # add columns if they don't exist
+    if (!("bracket.nudge.y" %in% colnames(data))) data$bracket.nudge.y <- bracket.nudge.y
+    if (!("bracket.shorten" %in% colnames(data))) data$bracket.shorten <- bracket.shorten
+    if (!("bracket.colour" %in% colnames(data))) data$bracket.colour <- NA
+
+    if (is.null(step.group.by)) {
       data <- add_step_increase(data, step.increase)
-    }
-    else{
+    } else {
       data <- data[order(data[[step.group.by]], data[["y.position"]]), ]
 
-      data <- by(data,
-                 INDICES = data[[step.group.by]],
-                 FUN = function(x) {
-                   x <- add_step_increase(x, 0.1)
-                   return(x)
-                 }) %>%
-        do.call(rbind, .)
+      data <- by(
+        data,
+        INDICES = data[[step.group.by]],
+        FUN = function(x) {
+          x <- add_step_increase(x, 0.1)
+          return(x)
+        }
+      )
+      data <- do.call(rbind, data)
     }
     data
   }
@@ -95,12 +91,12 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     step.increase = step.increase, step.group.by = step.group.by
   )
 
-  build_signif_mapping <- function(mapping, data){
-    if(is.null(mapping)){
+  build_signif_mapping <- function(mapping, data) {
+    if (is.null(mapping)) {
       # Check if required variables are present in data
       required.vars <- c("xmin", "xmax", "y.position")
       missing.required.vars <- setdiff(required.vars, colnames(data))
-      if(length(missing.required.vars) > 0){
+      if (length(missing.required.vars) > 0) {
         stop(
           "Required variables are missing in the data: ",
           paste(missing.required.vars, collapse = ", ")
@@ -108,39 +104,25 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
       }
       mapping <- ggplot2::aes()
     }
-    if(is.null(mapping$label)){
-      # Guess column to be used as significance labem
-      guess_signif_label_column <- function(data) {
-        potential.label <- c(
-          "label", "labels", "p.adj.signif", "p.adj", "padj",
-          "p.signif", "p.value", "pval", "p.val", "p"
-        )
-        res <- intersect(potential.label, colnames(data))
-        if(length(res) > 0){
-          res <- res[1]
-        }
-        else{
-          stop("label is missing")
-        }
-        res
-      }
 
+    if (is.null(mapping$label)) {
       label.col <- guess_signif_label_column(data)
       data$label <- data[[label.col]]
       mapping$label <- data$label
     }
-    if(is.null(mapping$xmin)) mapping$xmin <- data$xmin
-    if(is.null(mapping$xmax)) mapping$xmax <- data$xmax
-    if(is.null(mapping$y.position)) mapping$y.position <- data$y.position
-    if(is.null(mapping$group)) mapping$group <- 1:nrow(data)
-    if(is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
-    if(is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
-    if(is.null(mapping$bracket.colour)) mapping$bracket.colour <- data$bracket.colour
-    if(is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
-    if(! "x" %in% names(mapping)){
+
+    if (is.null(mapping$xmin)) mapping$xmin <- data$xmin
+    if (is.null(mapping$xmax)) mapping$xmax <- data$xmax
+    if (is.null(mapping$y.position)) mapping$y.position <- data$y.position
+    if (is.null(mapping$group)) mapping$group <- 1:nrow(data)
+    if (is.null(mapping$step.increase)) mapping$step.increase <- data$step.increase
+    if (is.null(mapping$bracket.nudge.y)) mapping$bracket.nudge.y <- data$bracket.nudge.y
+    if (is.null(mapping$bracket.colour)) mapping$bracket.colour <- data$bracket.colour
+    if (is.null(mapping$bracket.shorten)) mapping$bracket.shorten <- data$bracket.shorten
+    if (!"x" %in% names(mapping)) {
       mapping$x <- mapping$xmin
     }
-    if(! "y" %in% names(mapping)){
+    if (!"y" %in% names(mapping)) {
       mapping$y <- mapping$y.position
     }
     mapping
@@ -162,40 +144,53 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
 StatBracket <- ggplot2::ggproto("StatBracket", ggplot2::Stat,
                                 required_aes = c("x", "y", "group"),
                                 setup_params = function(data, params) {
-                                  if(length(params$tip.length) == 1) params$tip.length <- rep(params$tip.length, max(length(params$xmin), 1) * 2)
-                                  if(length(params$tip.length) == length(params$xmin)) params$tip.length <- rep(params$tip.length, each=2)
+                                  if (length(params$tip.length) == 1) {
+                                    params$tip.length <- rep(
+                                      params$tip.length,
+                                      max(length(params$xmin), 1) * 2
+                                    )
+                                  }
+                                  if (length(params$tip.length) == length(params$xmin)) {
+                                    params$tip.length <- rep(
+                                      params$tip.length,
+                                      each=2)
+                                    }
                                   return(params)
                                 },
                                 compute_group = function(data, scales, tip.length) {
                                   yrange <- scales$y$range$range
                                   y.scale.range <- yrange[2] - yrange[1]
-                                  bracket.shorten <- data$bracket.shorten/2
+                                  bracket.shorten <- data$bracket.shorten / 2
 
                                   xmin <- data$xmin + bracket.shorten
                                   xmax <- data$xmax - bracket.shorten
 
-                                  # ggpubr y.position (uses y.position specified in arguments)
                                   y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
-                                  # ggsignif y.position (modified version, does not require y.position to be specified in arguments)
-                                  #y.position <- yrange[2] - y.scale.range * 0.05 + y.scale.range * (data$group-1) * 0.1
 
                                   label <- data$label
-                                  if(is.character(xmin)){
+
+                                  if (is.character(xmin)) {
                                     xmin <- scales$x$map(xmin)
                                   }
-                                  if(is.character(xmax)){
+                                  if (is.character(xmax)) {
                                     xmax <- scales$x$map(xmax)
                                   }
-                                  if("tip.length" %in% colnames(data)){
+                                  if ("tip.length" %in% colnames(data)) {
                                     tip.length <-  rep(data$tip.length, each=2)
                                   }
-                                  # Preparing bracket data
+                                  # Prepare bracket data
                                   data <- rbind(data, data, data)
 
                                   data$x <- c(xmin, xmin, xmax)
                                   data$xend = c(xmin, xmax, xmax)
-                                  data$y <- c(y.position - y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 1], y.position, y.position)
-                                  data$yend <- c(y.position, y.position, y.position-y.scale.range*tip.length[seq_len(length(tip.length))%% 2 == 0])
+                                  data$y <- c(
+                                    y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 1],
+                                    y.position,
+                                    y.position)
+                                  data$yend <- c(
+                                    y.position,
+                                    y.position,
+                                    y.position - y.scale.range * tip.length[seq_len(length(tip.length)) %% 2 == 0])
                                   data$annotation <- rep(label, 3)
                                   data
                                 }
@@ -214,31 +209,19 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                   bracket.shorten = 0, bracket.nudge.y = 0,
                                   step.increase = 0
                                 ),
-                                # draw_key = function(...){grid::nullGrob()},
-                                # for legend:
                                 draw_key = ggplot2::draw_key_path,
-                                draw_group = function(data, panel_params, coord, type = "text", coord.flip = FALSE) {
+                                draw_group = function(data, panel_params,
+                                                      coord, type = "text",
+                                                      coord.flip = FALSE) {
                                   lab <- as.character(data$annotation)
-                                  if(type == "expression"){
-
-                                    # Source: https://github.com/tidyverse/ggplot2/issues/2864
-                                    parse_as_expression <- function(text) {
-                                      stopifnot(is.character(text))
-                                      out <- vector("expression", length(text))
-                                      for (i in seq_along(text)) {
-                                        expr <- parse(text = text[[i]])
-                                        out[[i]] <- if (length(expr) == 0) NA else expr[[1]]
-                                      }
-                                      out
-                                    }
-
+                                  if (type == "expression") {
                                     lab <- parse_as_expression(lab)
                                   }
 
                                   coords <- coord$transform(data, panel_params)
 
-                                  if(is.null(coords$vjust)) {
-                                    if(lab[1] %in% c("****", "***", "**", "*")) {
+                                  if (is.null(coords$vjust)) {
+                                    if (lab[1] %in% c("****", "***", "**", "*")) {
                                       coords$vjust <- 0.5
                                     } else {
                                       coords$vjust <- 0
@@ -248,12 +231,13 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                   label.x <- mean(c(coords$x[1], tail(coords$xend, n = 1)))
                                   label.y <- max(c(coords$y, coords$yend)) + 0.01
                                   label.angle <- coords$angle
-                                  if(coord.flip) {
+                                  if (coord.flip) {
                                     label.y <- mean(c(coords$y[1], tail(coords$yend, n = 1)))
                                     label.x <- max(c(coords$x, coords$xend)) + 0.01
-                                    if(is.null(label.angle)) label.angle <- -90
+                                    if (is.null(label.angle)) label.angle <- -90
                                   }
-                                  if(is.null(label.angle)) label.angle <- 0
+                                  if (is.null(label.angle)) label.angle <- 0
+
                                   grid::gList(
                                     grid::textGrob(
                                       label = lab[1],
@@ -288,12 +272,3 @@ GeomBracket <- ggplot2::ggproto("GeomBracket", ggplot2::Geom,
                                   )
                                 }
 )
-
-
-
-
-
-
-
-
-
