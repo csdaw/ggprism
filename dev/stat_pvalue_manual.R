@@ -1,115 +1,43 @@
-#' @include utilities.R geom_bracket.R
-#' @importFrom dplyr pull
-#' @importFrom glue glue
-NULL
-#'Add Manually P-values to a ggplot
+#' Title
 #'
-#'@description Add manually p-values to a ggplot, such as box blots, dot plots
-#'  and stripcharts. Frequently asked questions are available on \href{https://www.datanovia.com/en/blog/tag/ggpubr/}{Datanovia ggpubr FAQ page}, for example:
-#'  \itemize{
-#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-adjusted-p-values-to-a-multi-panel-ggplot/}{How to Add Adjusted P-values to a Multi-Panel GGPlot}
-#'  \item \href{https://www.datanovia.com/en/blog/ggpubr-how-to-add-p-values-generated-elsewhere-to-a-ggplot/}{How to Add P-Values Generated Elsewhere to a GGPLOT}
-#'  \item \href{https://www.datanovia.com/en/blog/how-to-create-stacked-bar-plots-with-error-bars-and-p-values/}{How to Create Stacked Bar Plots with Error Bars and P-values}
-#'  }
-#'@inheritParams geom_bracket
-#'@param data a data frame containing statitistical test results. The expected
-#'  default format should contain the following columns: \code{group1 | group2 |
-#'  p | y.position | etc}. \code{group1} and \code{group2} are the groups that
-#'  have been compared. \code{p} is the resulting p-value. \code{y.position} is
-#'  the y coordinates of the p-values in the plot.
-#'@param label the column containing the label (e.g.: label = "p" or label =
-#'  "p.adj"), where \code{p} is the p-value. Can be also an expression that can
-#'  be formatted by the \code{\link[glue]{glue}()} package. For example, when
-#'  specifying label = "t-test, p = \{p\}", the expression \{p\} will be
-#'  replaced by its value.
-#'@param y.position column containing the coordinates (in data units) to be used
-#'  for absolute positioning of the label. Default value is "y.position". Can be
-#'  also a numeric vector.
-#'@param xmin column containing the position of the left sides of the brackets.
-#'  Default value is "group1".
-#'@param xmax  (optional) column containing the position of the right sides of
-#'  the brackets. Default value is "group2". If NULL, the p-values are plotted
-#'  as a simple text.
-#'@param x x position of the p-value. Should be used only when you want plot the
-#'  p-value as text (without brackets).
-#'@param label.size size of label text.
-#'@param bracket.size Width of the lines of the bracket.
-#'@param color text and line color. Can be variable name in the data for coloring by groups.x
-#'@param tip.length numeric vector with the fraction of total height that the
-#'  bar goes down to indicate the precise column. Default is 0.03.
-#'@param remove.bracket logical, if \code{TRUE}, brackets are removed from the
-#'  plot. Considered only in the situation, where comparisons are performed
-#'  against reference group or against "all".
-#'@param hide.ns logical value. If TRUE, hide ns symbol when displaying
-#'  significance levels. Filter is done by checking the column
-#'  \code{p.adj.signif}, \code{p.signif}, \code{p.adj} and \code{p}.
-#'@param position position adjustment, either as a string, or the result of a
-#'  call to a position adjustment function.
-#'@param ... other arguments passed to the function \code{geom_bracket()} or
-#'  \code{geom_text()}
-#'@seealso \code{\link{stat_compare_means}}
-#'@examples
+#' Description.
 #'
-#'# T-test
-#'stat.test <- compare_means(
-#'  len ~ dose, data = ToothGrowth,
-#'  method = "t.test"
-#')
-#'stat.test
+#' @param data Description.
+#' @param label Description.
+#' @param xmin Description.
+#' @param xmax Description.
+#' @param x Description.
+#' @param y.position Description.
+#' @param label.size Description.
+#' @param colour Description.
+#' @param color Description.
+#' @param tip.length Description.
+#' @param bracket.size Description.
+#' @param bracket.colour Description.
+#' @param bracket.shorten Description.
+#' @param bracket.nudge.y Description.
+#' @param step.increase Description.
+#' @param step.group.by Description.
+#' @param remove.bracket Description.
+#' @param hide.ns Description.
+#' @param coord.flip Description.
+#' @param position Description.
+#' @param ... Description.
 #'
-#'# Create a simple box plot
-#'p <- ggboxplot(ToothGrowth, x = "dose", y = "len")
-#'p
+#' @return Description.
+#' @export
 #'
-#'# Perform a t-test between groups
-#'stat.test <- compare_means(
-#'  len ~ dose, data = ToothGrowth,
-#'  method = "t.test"
-#')
-#'stat.test
+#' @examples
+#' #
 #'
-#'# Add manually p-values from stat.test data
-#'# First specify the y.position of each comparison
-#'stat.test <- stat.test %>%
-#'  mutate(y.position = c(29, 35, 39))
-#'p + stat_pvalue_manual(stat.test, label = "p.adj")
-#'
-#'# Customize the label with glue expression
-#'# (https://github.com/tidyverse/glue)
-#'p + stat_pvalue_manual(stat.test, label = "p = {p.adj}")
-#'
-#'
-#' # Grouped bar plots
-#' #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#' ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-#' # Comparisons against reference
-#' stat.test <- compare_means(
-#'   len ~ dose, data = ToothGrowth, group.by = "supp",
-#'   method = "t.test", ref.group = "0.5"
-#' )
-#' stat.test
-#' # Plot
-#' bp <- ggbarplot(ToothGrowth, x = "supp", y = "len",
-#'                 fill = "dose", palette = "jco",
-#'                 add = "mean_sd", add.params = list(group = "dose"),
-#'                 position = position_dodge(0.8))
-#' bp + stat_pvalue_manual(
-#'   stat.test, x = "supp", y.position = 33,
-#'   label = "p.signif",
-#'   position = position_dodge(0.8)
-#' )
-#'
-#'@export
 stat_pvalue_manual <- function(
-  data, label = NULL, y.position = "y.position",
-  xmin = "group1", xmax = "group2", x = NULL,
-  label.size = 3.2,
-  bracket.size = 0.6,
-  bracket.nudge.y = 0, bracket.shorten = 0, bracket.colour = NULL,
-  colour = NULL, color = NULL, tip.length = 0.03,
-  remove.bracket = FALSE, step.increase = 0, step.group.by = NULL,
-  hide.ns = FALSE, coord.flip = FALSE,
-  position = "identity", ...
+  data, label = NULL, xmin = "group1", xmax = "group2",
+  x = NULL, y.position = "y.position",
+  label.size = 3.2,  colour = NULL, color = NULL,
+  tip.length = 0.03, bracket.size = 0.6, bracket.colour = NULL,
+  bracket.shorten = 0, bracket.nudge.y = 0, step.increase = 0,
+  step.group.by = NULL, remove.bracket = FALSE, hide.ns = FALSE,
+  coord.flip = FALSE, position = "identity", ...
 )
 {
   # if label is missing, guess the column to use for significance label
@@ -134,13 +62,13 @@ stat_pvalue_manual <- function(
     data <- remove_ns(data)
   }
 
-  # determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
-  comparison <- detect_comparison_type(data)
+
 
   # check if defined in function call: x, xmin, max
   all.x.is.missing <- is.null(x) & missing(xmin) & missing(xmax)
 
   # plot labels at x = max if conditions are met
+  # uses default xmin = "group1" and xmax = "group2"
   if(all(data[[xmin]] == "all") & all.x.is.missing){
     is.grouped <- length(data[[xmax]]) > length(unique(data[[xmax]]))
     if(!is.grouped) x <- xmax
@@ -153,6 +81,34 @@ stat_pvalue_manual <- function(
     if(xmin.length == 1) {
       xmin <- xmax
       xmax <- NULL
+    }
+  }
+
+  # determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
+  # should stay before (!is.null(x))
+  ngroup1 <- length(unique(data[[xmin]]))
+
+  if(!is.null(xmax)) {
+    ngroup2 <- length(unique(data[[xmax]]))
+
+    if(length(setdiff(unique(data[[xmax]]), "null model")) == 0){
+      comparison <- "one_group"
+    }
+    else if(ngroup1 == 1 & ngroup2 >= 2){
+      comparison <- "each_vs_ref"
+    }
+    else if(ngroup1 == 1 & ngroup2 == 1){
+      comparison <- "two_groups"
+    }
+    else if (ngroup1 >= 2 & ngroup2 >= 2){
+      comparison <- "pairwise"
+    }
+    else{
+      stop("Make sure that xmin and xmax columns exist in the data.")
+    }
+  } else {
+    if(ngroup1 >= 2) {
+      comparison <- "two_groups"
     }
   }
 
@@ -181,7 +137,8 @@ stat_pvalue_manual <- function(
   }
 
   # build the statistical table for plotting
-  new_xmax <- xmax  # avoid re-using an existing xmax in the data
+  # avoid re-using an existing xmin or xmax column in the data
+  new_xmax <- xmax
   new_xmin <- data[[xmin]]
 
   data$label <- as.character(data[[label]])
@@ -195,13 +152,14 @@ stat_pvalue_manual <- function(
       bracket.size = 0
     }
 
-    params <- list(xmin = "xmin", xmax = "xmax", label = "label",
-                   y.position = "y.position",
-                   group = 1:nrow(data), tip.length = tip.length,
-                   label.size = label.size, bracket.size = bracket.size,
-                   bracket.nudge.y = bracket.nudge.y,
-                   bracket.shorten = bracket.shorten, bracket.colour = bracket.colour,
+    params <- list(group = 1:nrow(data),
+                   label = "label", xmin = "xmin", xmax = "xmax",
+                   y.position = "y.position", label.size = label.size,
                    colour = colour, color = color,
+                   tip.length = tip.length, bracket.size = bracket.size,
+                   bracket.colour = bracket.colour,
+                   bracket.shorten = bracket.shorten,
+                   bracket.nudge.y = bracket.nudge.y,
                    step.increase = step.increase, step.group.by = step.group.by,
                    coord.flip = coord.flip, position = position, ...)
 
@@ -209,8 +167,8 @@ stat_pvalue_manual <- function(
     option <- list()
     allowed.options <- c(
       # function arguments
-      "y.position", "x", "label.size", "bracket.size", "bracket.nudge.y",
-      "bracket.shorten", "bracket.colour", "colour", "color", "tip.length",
+      "y.position", "x", "label.size", "colour", "color", "tip.length",
+      "bracket.size","bracket.colour", "bracket.shorten", "bracket.nudge.y",
       "step.increase", "coord.flip", "position",
       # extra aesthetics
       "hjust", "vjust", "linetype", "lineend",
@@ -236,6 +194,8 @@ stat_pvalue_manual <- function(
         # for geom_bracket, value are variable name
         # but this parameter is an option not an aes
         option[[key]] <- value
+      } else if (key == "bracket.color" & missing(bracket.colour)) {
+        option[["bracket.colour"]] <- value
       }
     }
 
@@ -249,16 +209,17 @@ stat_pvalue_manual <- function(
 
   } else {
     if(comparison == "each_vs_ref"){
-      ref.group <- unique(data$group1)
+      ref.group <- unique(data[[xmin]])
       group2 <- NULL
 
       # Add data rows used only for positioning the labels for grouped bars
       data <- add_ctr_rows(data, ref.group = ref.group)
 
-      mapping <- ggplot2::aes(x = xmin, y = y.position, label = label, group = group2)
+      mapping <- ggplot2::aes(x = xmin, y = y.position,
+                              label = label, group = group2)
 
       if(missing(position) & !missing(x)){
-          position <- ggplot2::position_dodge(0.8)
+          position <- ggplot2::position_dodge(width = 0.8)
       }
     }
     else{

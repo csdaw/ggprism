@@ -34,7 +34,7 @@
 # Store the needed ggplot internals here
 .ggint <- .grab_ggplot_internals()
 
-#### Functions for stat_pvalue_manual ------------------------------------------
+#### Helper functions for stat_pvalue_manual -----------------------------------
 
 # Guess the column to be used as the significance labels
 guess_signif_label_column <- function(data) {
@@ -68,38 +68,6 @@ remove_ns <- function(data){
     data <- data[data$p <= 0.05, ]
   }
   data
-}
-
-
-# Determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
-detect_comparison_type <- function(data){
-
-  ngroup1 <- length(unique(data[[xmin]]))
-
-  if(!is.null(xmax)) {
-    ngroup2 <- length(unique(data$group2))
-
-    if(length(setdiff(unique(data$group2), "null model")) == 0){
-      type <- "one_group"
-    }
-    else if(ngroup1 == 1 & ngroup2 >= 2){
-      type <- "each_vs_ref"
-    }
-    else if(ngroup1 == 1 & ngroup2 == 1){
-      type <- "two_groups"
-    }
-    else if (ngroup1 >= 2 & ngroup2 >= 2){
-      type <- "pairwise"
-    }
-    else{
-      stop("Make sure that xmin and xmax columns exist in the data.")
-    }
-  } else {
-    if(ngroup1 >= 2) {
-      type = "two_groups"
-    }
-  }
-  type
 }
 
 # Validate p-value y position
