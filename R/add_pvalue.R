@@ -97,13 +97,20 @@ add_pvalue <- function(data,
       stop("Make sure that xmin and xmax columns exist in the data.")
     }
   } else {
-    if(ngroup1 >= 2) {
+    if(ngroup1 >= 1) {
       comparison <- "two_groups"
     }
   }
 
   # only for p-value displayed as text (without brackets)
   if (!is.null(x)) {
+    x <- validate_x_position(x, data)
+
+    if (is.numeric(x)) {
+      data$x <- x
+      x <- "x"
+    }
+
     xmin <- x
     xmax <- NULL
   }

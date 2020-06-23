@@ -50,6 +50,22 @@ guess_signif_label_column <- function(data) {
   res
 }
 
+# Validate p-value x position
+validate_x_position <- function(x, data) {
+  if (is.numeric(x)) {
+    number.of.test <- nrow(data)
+    number.of.xcoord <- length(x)
+    xtimes <- number.of.test / number.of.xcoord
+
+    if (number.of.xcoord < number.of.test) x <- rep(x, xtimes)
+
+  } else if (is.character(x)) {
+    if (!(x %in% colnames(data)))
+      stop("can't find the x variable '", x, "' in the data")
+  }
+  return(x)
+}
+
 # Validate p-value y position
 validate_y_position <- function(y.position, data) {
   if (is.numeric(y.position)) {
