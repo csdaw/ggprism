@@ -75,7 +75,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
         data,
         INDICES = data[[step.group.by]],
         FUN = function(x) {
-          x <- add_step_increase(x, 0.1)
+          x <- add_step_increase(x, step.increase)
           return(x)
         }
       )
