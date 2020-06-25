@@ -1,36 +1,3 @@
-#' Title
-#'
-#' Description.
-#'
-#' @param mapping Description.
-#' @param data Description.
-#' @param stat Description.
-#' @param position Description.
-#' @param na.rm Description.
-#' @param show.legend Description.
-#' @param inherit.aes Description.
-#' @param label Description.
-#' @param type Description.
-#' @param xmin Description.
-#' @param xmax Description.
-#' @param y.position Description.
-#' @param label.size Description.
-#' @param tip.length Description.
-#' @param bracket.size Description.
-#' @param bracket.colour Description.
-#' @param bracket.shorten Description.
-#' @param bracket.nudge.y Description.
-#' @param step.increase Description.
-#' @param step.group.by Description.
-#' @param coord.flip Description.
-#' @param ... Description.
-#'
-#' @return Description.
-#' @export
-#'
-#' @examples
-#' #
-#'
 geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          position = "identity", na.rm = FALSE,
                          show.legend = NA, inherit.aes = TRUE,
