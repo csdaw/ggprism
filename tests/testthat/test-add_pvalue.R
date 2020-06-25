@@ -136,11 +136,6 @@ test_that("colour or color can be changed manually", {
   expect_equal(g1, g2)
 })
 
-test_that("warning occurs if colour and color are set", {
-  expect_warning(base.tg1 + add_pvalue(two.means, colour = "red", color = "black"),
-                 "Duplicated aesthetics after name standardisation: colour")
-})
-
 test_that("colour can be set by grouping variable", {
   g1 <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp")
   g2 <- base.tg3 + add_pvalue(pairwise.grouped, color = "supp")
@@ -214,13 +209,15 @@ test_that("bracket.nudge.y works", {
 })
 
 test_that("step.increase works", {
-  g <- base.tg3 + add_pvalue(pairwise.grouped, step.increase = 0.2, step.group.by = "supp")
+  g <- base.tg3 + add_pvalue(pairwise.grouped, step.increase = 0.2,
+                             step.group.by = "supp")
 
   expect_length(layer_grob(g), 1)
 })
 
 test_that("step.group.by works", {
-  g <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp", step.group.by = "supp")
+  g <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp",
+                             step.group.by = "supp")
 
   expect_length(layer_grob(g), 1)
 })
@@ -311,15 +308,38 @@ test_that("colour can be set by grouping variable", {
 })
 
 test_that("coord.flip works (no brackets)", {
-  g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE, remove.bracket = TRUE) +
+  g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
+                             remove.bracket = TRUE) +
     coord_flip()
 
   expect_length(layer_grob(g), 1)
 })
 
 test_that("changing label angle works (no brackets)", {
-  g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE, remove.bracket = TRUE, angle = 90) +
+  g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
+                             remove.bracket = TRUE, angle = 90) +
     coord_flip()
 
   expect_length(layer_grob(g), 1)
+})
+
+#### Sanity checks -------------------------------------------------------------
+
+test_that("warning occurs if colour and color are set", {
+  expect_warning(base.tg1 + add_pvalue(two.means, colour = "red", color = "black"),
+                 "Duplicated aesthetics after name standardisation: colour")
+})
+
+test_that("warning occurs if bracket.colour and bracket.color are set", {
+  expect_warning(base.tg1 + add_pvalue(two.means, bracket.colour = "blue",
+                                       bracket.color = "red"),
+                 "Use bracket.colour or bracket.color but not both.")
+})
+
+test_that("specific xmin, xmax works even if group1 and group2 are in the data", {
+  colnames(two.means)[1:2] <- c("apple", "banana")
+  two.means$group1 <- 111
+  two.means$group2 <- 222
+
+  expect_silent(base.tg1 + add_pvalue(two.means, xmin = "apple", xmax = "banana"))
 })

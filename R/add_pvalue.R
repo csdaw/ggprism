@@ -193,8 +193,12 @@ add_pvalue <- function(data,
         # but this parameter is an option not an aes
         option[[key]] <- value
       }
-      else if (key == "bracket.color" & missing(bracket.colour)) {
-        option[["bracket.colour"]] <- value
+      else if (key == "bracket.color") {
+        if (missing(bracket.colour)) {
+          option[["bracket.colour"]] <- value
+        } else {
+          warn("Use bracket.colour or bracket.color but not both.")
+        }
       }
     }
 
