@@ -25,3 +25,5 @@ Imports:
     stats,
     tibble,
     utils
+Suggests: 
+    testthat (>= 2.1.0)
