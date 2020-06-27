@@ -2,7 +2,7 @@
 % Please edit documentation in R/guide_offset_minor.R
 \name{guide_offset_minor}
 \alias{guide_offset_minor}
-\title{Axis guide}
+\title{Offset axis guide with minor ticks}
 \usage{
 guide_offset_minor(
   title = waiver(),
@@ -15,15 +15,15 @@ guide_offset_minor(
 }
 \arguments{
 \item{title}{A character string or expression indicating a title of guide.
-If `NULL`, the title is not shown. By default
-([waiver()]), the name of the scale object or the name
-specified in [labs()] is used for the title.}
+If \code{NULL}, the title is not shown. By default
+(\code{\link[ggplot2:waiver]{waiver()}}), the name of the scale object or the name
+specified in \code{\link[ggplot2:labs]{labs()}} is used for the title.}
 
 \item{check.overlap}{silently remove overlapping labels,
 (recursively) prioritizing the first, last, and middle labels.}
 
-\item{angle}{Compared to setting the angle in [theme()] / [element_text()],
-this also uses some heuristics to automatically pick the `hjust` and `vjust` that
+\item{angle}{Compared to setting the angle in \code{\link[ggplot2:theme]{theme()}} / \code{\link[ggplot2:element_text]{element_text()}},
+this also uses some heuristics to automatically pick the \code{hjust} and \code{vjust} that
 you probably want.}
 
 \item{n.dodge}{The number of rows (for vertical axes) or columns (for
@@ -37,12 +37,20 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 left, or right.}
 }
 \description{
-Axis guides are the visual representation of position scales like those
-created with [scale_(x|y)_continuous()][scale_x_continuous()] and
-[scale_(x|y)_discrete()][scale_x_discrete()].
+This guide draws the axis only as wide as the outermost tick marks,
+similar to offset axes from Prism. It also adds minor ticks.
+}
+\details{
+Control the length of the axis by adjusting the \code{breaks} argument in
+\code{scale_(x|y)_continuous()} or \code{scale_(x|y)_discrete()}. Similarly,
+the number of minor ticks can be changed using the \code{minor_breaks}
+argument.
+
+Control the length of minor ticks by setting \code{prism.ticks.length} to
+a \code{unit} object using \code{\link[ggplot2]{theme}},
+for example: \code{prism.ticks.length = unit(2, "pt")}. The major tick
+lengths are adjusted using the standard \code{axis.ticks.length}.
 }
 \examples{
 # example
-
-
 }

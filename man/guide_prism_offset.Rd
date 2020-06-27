@@ -2,7 +2,7 @@
 % Please edit documentation in R/guide_prism_offset.R
 \name{guide_prism_offset}
 \alias{guide_prism_offset}
-\title{Axis guide}
+\title{Offset axis guide}
 \usage{
 guide_prism_offset(
   title = waiver(),
@@ -14,13 +14,16 @@ guide_prism_offset(
 )
 }
 \arguments{
-\item{title}{Description.}
+\item{title}{A character string or expression indicating a title of guide.
+If \code{NULL}, the title is not shown. By default
+(\code{\link[ggplot2:waiver]{waiver()}}), the name of the scale object or the name
+specified in \code{\link[ggplot2:labs]{labs()}} is used for the title.}
 
 \item{check.overlap}{silently remove overlapping labels,
 (recursively) prioritizing the first, last, and middle labels.}
 
-\item{angle}{Compared to setting the angle in [theme()] / [element_text()],
-this also uses some heuristics to automatically pick the `hjust` and `vjust` that
+\item{angle}{Compared to setting the angle in \code{\link[ggplot2:theme]{theme()}} / \code{\link[ggplot2:element_text]{element_text()}},
+this also uses some heuristics to automatically pick the \code{hjust} and \code{vjust} that
 you probably want.}
 
 \item{n.dodge}{The number of rows (for vertical axes) or columns (for
@@ -34,11 +37,13 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 left, or right.}
 }
 \description{
-Axis guides are the visual representation of position scales like those
-created with [scale_(x|y)_continuous()][scale_x_continuous()] and
-[scale_(x|y)_discrete()][scale_x_discrete()].
+This guide draws the axis only as wide as the outermost tick marks,
+similar to offset axes from Prism.
+}
+\details{
+Control the length of the axis by adjusting the \code{breaks} argument in
+\code{scale_(x|y)_continuous()} or \code{scale_(x|y)_discrete()}.
 }
 \examples{
-#
-
+# example
 }

@@ -1,31 +1,24 @@
-#' Axis guide
+#' Axis guide with brackets
 #'
-#' Axis guides are the visual representation of position scales like those
-#' created with [scale_(x|y)_continuous()][scale_x_continuous()] and
-#' [scale_(x|y)_discrete()][scale_x_discrete()].
-#' @param title Description.
-#' @param check.overlap silently remove overlapping labels,
-#'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
-#' @param n.dodge The number of rows (for vertical axes) or columns (for
-#'   horizontal axes) that should be used to render the labels. This is
-#'   useful for displaying labels that would otherwise overlap.
-#' @param order Used to determine the order of the guides (left-to-right,
-#'   top-to-bottom), if more than one  guide must be drawn at the same location.
-#' @param position Where this guide should be drawn: one of top, bottom,
-#'   left, or right.
-#' @param bracket_width Description.
-#' @param outside Description.
+#' This guide turns the axis into brackets drawn around each axis label.
+#'
+#' The number of brackets can be adjusted using the \code{breaks}
+#' argument in \code{scale_(x|y)_continuous()} or \code{scale_(x|y)_discrete()}.
+#'
+#' @inheritParams ggplot2::guide_axis
+#' @param bracket_width \code{numeric}. Controls the width of the bracket. Try
+#' values between 0 and 1.
+#' @param outside \code{logical}. Default is \code{TRUE} and brackets point
+#' outwards. If \code{FALSE} the bracket crossbar is moved so the ticks appear
+#' to point inwards towards the plotting area.
+#'
+#' @example inst/examples/ex-guide_prism_bracket.R
 #'
 #' @export
-#'
-#' @examples
-#' #
-#'
-guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                                order = 0, position = waiver(), bracket_width = NULL, outside = TRUE) {
+guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
+                                angle = NULL, n.dodge = 1, order = 0,
+                                position = waiver(), bracket_width = NULL,
+                                outside = TRUE) {
   structure(
     list(
       title = title,
@@ -46,12 +39,13 @@ guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE, angle =
       bracket_width = bracket_width,
       outside = outside,
 
-      name = "prism_bracket"
+      name = "axis"
     ),
     class = c("guide", "prism_bracket", "axis")
   )
 }
 
+#' @rdname guide-helpers
 #' @export
 guide_gengrob.prism_bracket <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -70,26 +64,27 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 }
 
 
-#' Grob for axes
+#' Grob for bracket axes
 #'
-#' @param break_position position of ticks
-#' @param break_labels labels at ticks
+#' @param break_position position of bracket center and labels
+#' @param break_labels labels between ticks
 #' @param axis_position position of axis (top, bottom, left or right)
-#' @param theme A complete [theme()] object
+#' @param theme A complete \code{\link[ggplot2]{theme}} object
 #' @param check.overlap silently remove overlapping labels,
 #'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
+#' @param angle Compared to setting the angle in
+#'   \code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
+#'   this also uses some heuristics to automatically pick the \code{hjust} and
+#'   \code{vjust} that you probably want.
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#'
 #' @noRd
 #'
-draw_prism_bracket <- function(break_positions, break_labels, axis_position, theme,
-                               check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                               bracket_width = NULL, outside = TRUE) {
+draw_prism_bracket <- function(break_positions, break_labels, axis_position,
+                               theme,check.overlap = FALSE, angle = NULL,
+                               n.dodge = 1, bracket_width = NULL,
+                               outside = TRUE) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
   aesthetic <- if (axis_position %in% c("top", "bottom")) "x" else "y"
@@ -142,11 +137,12 @@ draw_prism_bracket <- function(break_positions, break_labels, axis_position, the
   tick_coordinate_order <- if (is_second) c(2, 1) else c(1, 2)
 
   # conditionally set the gtable ordering
-  labels_first_gtable <- axis_position %in% c("left", "top") # refers to position in gtable
+  labels_first_gtable <- axis_position %in% c("left", "top") # position in gtable
 
   # set common parameters
   n_breaks <- length(break_positions)
-  opposite_positions <- c("top" = "bottom", "bottom" = "top", "right" = "left", "left" = "right")
+  opposite_positions <- c("top" = "bottom", "bottom" = "top",
+                          "right" = "left", "left" = "right")
   axis_position_opposite <- unname(opposite_positions[axis_position])
 
   # autocalculate bracket width based on number of breaks if missing
@@ -226,7 +222,8 @@ draw_prism_bracket <- function(break_positions, break_labels, axis_position, the
       rep(unit(break_positions + half_bracket, "native"), each = 2)
     ),
     !!non_position_dim := rep(
-      unit.c(non_position_panel + (tick_direction * tick_length), non_position_panel)[tick_coordinate_order],
+      unit.c(non_position_panel + (tick_direction * tick_length),
+             non_position_panel)[tick_coordinate_order],
       times = n_breaks * 2
     ),
     id.lengths = rep(2, times = n_breaks * 2)

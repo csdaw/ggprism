@@ -1,29 +1,19 @@
-#' Axis guide
+#' Offset axis guide
 #'
-#' Axis guides are the visual representation of position scales like those
-#' created with [scale_(x|y)_continuous()][scale_x_continuous()] and
-#' [scale_(x|y)_discrete()][scale_x_discrete()].
-#' @param title Description.
-#' @param check.overlap silently remove overlapping labels,
-#'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
-#' @param n.dodge The number of rows (for vertical axes) or columns (for
-#'   horizontal axes) that should be used to render the labels. This is
-#'   useful for displaying labels that would otherwise overlap.
-#' @param order Used to determine the order of the guides (left-to-right,
-#'   top-to-bottom), if more than one  guide must be drawn at the same location.
-#' @param position Where this guide should be drawn: one of top, bottom,
-#'   left, or right.
+#' This guide draws the axis only as wide as the outermost tick marks,
+#' similar to offset axes from Prism.
+#'
+#' Control the length of the axis by adjusting the \code{breaks} argument in
+#' \code{scale_(x|y)_continuous()} or \code{scale_(x|y)_discrete()}.
+#'
+#' @inheritParams ggplot2::guide_axis
+#'
+#' @example inst/examples/ex-guide_prism_offset.R
 #'
 #' @export
-#'
-#' @examples
-#' #
-#'
-guide_prism_offset <- function(title = waiver(), check.overlap = FALSE, angle = NULL, n.dodge = 1,
-                               order = 0, position = waiver()) {
+guide_prism_offset <- function(title = waiver(), check.overlap = FALSE,
+                               angle = NULL, n.dodge = 1, order = 0,
+                               position = waiver()) {
   structure(
     list(
       title = title,
@@ -40,12 +30,13 @@ guide_prism_offset <- function(title = waiver(), check.overlap = FALSE, angle = 
       # parameter
       available_aes = c("x", "y"),
 
-      name = "prism_offset"
+      name = "axis"
     ),
     class = c("guide", "prism_offset", "axis")
   )
 }
 
+#' @rdname guide-helpers
 #' @export
 guide_gengrob.prism_offset <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -62,21 +53,21 @@ guide_gengrob.prism_offset <- function(guide, theme) {
 }
 
 
-#' Grob for axes
+#' Grob for offset axes
 #'
 #' @param break_position position of ticks
 #' @param break_labels labels at ticks
 #' @param axis_position position of axis (top, bottom, left or right)
-#' @param theme A complete [theme()] object
+#' @param theme A complete \code{\link[ggplot2]{theme}} object
 #' @param check.overlap silently remove overlapping labels,
 #'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
+#' @param angle Compared to setting the angle in
+#'   \code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
+#'   this also uses some heuristics to automatically pick the \code{hjust} and
+#'   \code{vjust} that you probably want.
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#'
 #' @noRd
 #'
 draw_prism_offset <- function(break_positions, break_labels, axis_position, theme,

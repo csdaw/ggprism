@@ -1,34 +1,23 @@
-#' Axis guide
+#' Axis guide with minor ticks
 #'
-#' Axis guides are the visual representation of position scales like those
-#' created with [scale_(x|y)_continuous()][scale_x_continuous()] and
-#' [scale_(x|y)_discrete()][scale_x_discrete()].
+#' This guide is like the standard \code{\link[ggplot2]{guide_axis}}, but
+#' with minor ticks.
 #'
-#' @param title A character string or expression indicating a title of guide.
-#'   If `NULL`, the title is not shown. By default
-#'   ([waiver()]), the name of the scale object or the name
-#'   specified in [labs()] is used for the title.
-#' @param check.overlap silently remove overlapping labels,
-#'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
-#' @param n.dodge The number of rows (for vertical axes) or columns (for
-#'   horizontal axes) that should be used to render the labels. This is
-#'   useful for displaying labels that would otherwise overlap.
-#' @param order Used to determine the order of the guides (left-to-right,
-#'   top-to-bottom), if more than one  guide must be drawn at the same location.
-#' @param position Where this guide should be drawn: one of top, bottom,
-#'   left, or right.
+#' The number of minor ticks can be changed using the \code{minor_breaks}
+#' argument. Control the length of minor ticks by setting
+#' \code{prism.ticks.length} to a \code{unit} object using
+#' \code{\link[ggplot2]{theme}}, for example:
+#' \code{prism.ticks.length = unit(2, "pt")}. The major tick lengths
+#' are adjusted using the standard \code{axis.ticks.length}.
+#'
+#' @inheritParams ggplot2::guide_axis
+#'
+#' @example inst/examples/ex-guide_prism_minor.R
 #'
 #' @export
-#'
-#' @examples
-#' # example
-#'
-#'
-guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = NULL,
-                              n.dodge = 1, order = 0, position = waiver()) {
+guide_prism_minor <- function(title = waiver(), check.overlap = FALSE,
+                              angle = NULL, n.dodge = 1, order = 0,
+                              position = waiver()) {
   structure(
     list(
       title = title,
@@ -45,7 +34,7 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE, angle = N
       # parameter
       available_aes = c("x", "y"),
 
-      name = "prism_minor"
+      name = "axis"
     ),
     class = c("guide", "prism_minor", "axis")
   )
@@ -90,7 +79,8 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
     ticks <- .ggint$new_data_frame(setNames(list(mapped_breaks), aesthetic))
     ticks$.value <- breaks
     # get major break labels and make minor breaks blank
-    ticks$.label <- c(scale$get_labels(major_breaks), rep("", times = length(minor_breaks)))
+    ticks$.label <- c(scale$get_labels(major_breaks),
+                      rep("", times = length(minor_breaks)))
 
     guide$key <- ticks[is.finite(ticks[[aesthetic]]), ]
   }
@@ -119,17 +109,19 @@ guide_gengrob.prism_minor <- function(guide, theme) {
   )
 }
 
-#' Grob for axes
+#' Grob for axes with minor ticks
 #'
 #' @param break_position position of ticks
 #' @param break_labels labels at ticks
+#' @param breaks_major logical vector indicating major ticks versus minor ticks
 #' @param axis_position position of axis (top, bottom, left or right)
-#' @param theme A complete [theme()] object
+#' @param theme A complete \code{\link[ggplot2]{theme}} object
 #' @param check.overlap silently remove overlapping labels,
 #'   (recursively) prioritizing the first, last, and middle labels.
-#' @param angle Compared to setting the angle in [theme()] / [element_text()],
-#'   this also uses some heuristics to automatically pick the `hjust` and `vjust` that
-#'   you probably want.
+#' @param angle Compared to setting the angle in
+#'   \code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
+#'   this also uses some heuristics to automatically pick the \code{hjust} and
+#'   \code{vjust} that you probably want.
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
