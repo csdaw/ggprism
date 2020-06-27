@@ -18,9 +18,9 @@
 #' @example inst/examples/ex-guide_offset_minor.R
 #'
 #' @export
-guide_offset_minor <- function(title = waiver(), check.overlap = FALSE,
-                               angle = NULL, n.dodge = 1, order = 0,
-                               position = waiver()) {
+guide_prism_offset_minor <- function(title = waiver(), check.overlap = FALSE,
+                                     angle = NULL, n.dodge = 1, order = 0,
+                                     position = waiver()) {
   structure(
     list(
       title = title,
@@ -39,13 +39,13 @@ guide_offset_minor <- function(title = waiver(), check.overlap = FALSE,
 
       name = "axis"
     ),
-    class = c("guide", "offset_minor", "axis")
+    class = c("guide", "prism_offset_minor", "axis")
   )
 }
 
 #' @rdname guide-helpers
 #' @export
-guide_train.offset_minor <- function(guide, scale, aesthetic = NULL) {
+guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
 
@@ -94,10 +94,10 @@ guide_train.offset_minor <- function(guide, scale, aesthetic = NULL) {
 
 #' @rdname guide-helpers
 #' @export
-guide_gengrob.offset_minor <- function(guide, theme) {
+guide_gengrob.prism_offset_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
 
-  draw_offset_minor(
+  draw_prism_offset_minor(
     break_positions = guide$key[[aesthetic]],
     break_labels = guide$key$.label[guide$is_major],
     breaks_major = guide$is_major,
@@ -127,9 +127,9 @@ guide_gengrob.offset_minor <- function(guide, theme) {
 #'   useful for displaying labels that would otherwise overlap.
 #' @noRd
 #'
-draw_offset_minor <- function(break_positions, break_labels, breaks_major,
-                              axis_position, theme,
-                              check.overlap = FALSE, angle = NULL, n.dodge = 1) {
+draw_prism_offset_minor <- function(break_positions, break_labels, breaks_major,
+                                    axis_position, theme,
+                                    check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
   aesthetic <- if (axis_position %in% c("top", "bottom")) "x" else "y"
