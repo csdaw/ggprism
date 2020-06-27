@@ -18,7 +18,7 @@
 theme_prism <- function(palette = "black_and_white", base_size = 12,
                         base_family = "sans", base_fontface = "bold",
                         base_line_size = base_size / 20,
-                        base_rect_size = base_size / 9,
+                        base_rect_size = base_size / 20,
                         axis_text_angle = 0,
                         border = FALSE) {
 
