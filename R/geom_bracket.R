@@ -1,4 +1,3 @@
-#' @rdname add_pvalue
 geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          position = "identity", na.rm = FALSE,
                          show.legend = NA, inherit.aes = TRUE,
@@ -109,12 +108,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
   )
 }
 
-#' ggproto classes for ggprism
-#'
-#' @usage NULL
-#' @format NULL
 #' @rdname ggprism-ggproto
-#' @keywords internal
 #' @export
 StatBracket <- ggproto("StatBracket", Stat,
                        required_aes = c("x", "y", "group"),
@@ -171,12 +165,7 @@ StatBracket <- ggproto("StatBracket", Stat,
                        }
 )
 
-#' ggproto classes for ggprism
-#'
-#' @usage NULL
-#' @format NULL
 #' @rdname ggprism-ggproto
-#' @keywords internal
 #' @export
 GeomBracket <- ggproto("GeomBracket", Geom,
                        required_aes = c("x", "xend", "y", "yend", "annotation"),
