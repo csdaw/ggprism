@@ -5,7 +5,7 @@
 #'
 #' The number of minor ticks can be changed using the \code{minor_breaks}
 #' argument. Control the length of minor ticks by setting
-#' \code{prism.ticks.length} to a \code{unit} object using
+#' \code{prism.ticks.length} to a \code{\link[grid]{unit}} object using
 #' \code{\link[ggplot2]{theme}}, for example:
 #' \code{prism.ticks.length = unit(2, "pt")}. The major tick lengths
 #' are adjusted using the standard \code{axis.ticks.length}.
@@ -40,11 +40,8 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' Helper methods for guides
-#'
+#' @noRd
 #' @export
-#' @rdname guide-helpers
-#' @keywords internal
 guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
 
   aesthetic <- aesthetic %||% scale$aesthetics[1]
@@ -92,7 +89,7 @@ guide_train.prism_minor <- function(guide, scale, aesthetic = NULL) {
   guide
 }
 
-#' @rdname guide-helpers
+#' @noRd
 #' @export
 guide_gengrob.prism_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -126,7 +123,6 @@ guide_gengrob.prism_minor <- function(guide, theme) {
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
 #' @noRd
-#'
 draw_prism_minor <- function(break_positions, break_labels, breaks_major,
                              axis_position, theme,
                              check.overlap = FALSE, angle = NULL, n.dodge = 1) {

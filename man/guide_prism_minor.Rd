@@ -43,7 +43,7 @@ with minor ticks.
 \details{
 The number of minor ticks can be changed using the \code{minor_breaks}
 argument. Control the length of minor ticks by setting
-\code{prism.ticks.length} to a \code{unit} object using
+\code{prism.ticks.length} to a \code{\link[grid]{unit}} object using
 \code{\link[ggplot2]{theme}}, for example:
 \code{prism.ticks.length = unit(2, "pt")}. The major tick lengths
 are adjusted using the standard \code{axis.ticks.length}.

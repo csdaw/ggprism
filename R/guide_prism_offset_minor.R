@@ -9,13 +9,13 @@
 #' argument.
 #'
 #' Control the length of minor ticks by setting \code{prism.ticks.length} to
-#' a \code{unit} object using \code{\link[ggplot2]{theme}},
+#' a \code{\link[grid]{unit}} object using \code{\link[ggplot2]{theme}},
 #' for example: \code{prism.ticks.length = unit(2, "pt")}. The major tick
 #' lengths are adjusted using the standard \code{axis.ticks.length}.
 #'
 #' @inheritParams ggplot2::guide_axis
 #'
-#' @example inst/examples/ex-guide_offset_minor.R
+#' @example inst/examples/ex-guide_prism_offset_minor.R
 #'
 #' @export
 guide_prism_offset_minor <- function(title = waiver(), check.overlap = FALSE,
@@ -43,7 +43,7 @@ guide_prism_offset_minor <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' @rdname guide-helpers
+#' @noRd
 #' @export
 guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
 
@@ -92,7 +92,7 @@ guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
   guide
 }
 
-#' @rdname guide-helpers
+#' @noRd
 #' @export
 guide_gengrob.prism_offset_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -126,7 +126,6 @@ guide_gengrob.prism_offset_minor <- function(guide, theme) {
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
 #' @noRd
-#'
 draw_prism_offset_minor <- function(break_positions, break_labels, breaks_major,
                                     axis_position, theme,
                                     check.overlap = FALSE, angle = NULL, n.dodge = 1) {

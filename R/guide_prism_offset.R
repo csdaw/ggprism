@@ -36,7 +36,7 @@ guide_prism_offset <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' @rdname guide-helpers
+#' @noRd
 #' @export
 guide_gengrob.prism_offset <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -69,7 +69,6 @@ guide_gengrob.prism_offset <- function(guide, theme) {
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
 #' @noRd
-#'
 draw_prism_offset <- function(break_positions, break_labels, axis_position, theme,
                               check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 
