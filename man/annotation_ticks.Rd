@@ -2,7 +2,14 @@
 % Please edit documentation in R/annotation_ticks.R
 \name{annotation_ticks}
 \alias{annotation_ticks}
-\title{Title}
+\title{Add ticks as ggplot annotation}
+\source{
+The code is a slightly modified version of the answer to this
+\href{https://stackoverflow.com/questions/58485334}{Stack Overflow} question,
+which is itself a refactored version of this
+\href{https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r}{\code{annotation_ticks}}
+function.
+}
 \usage{
 annotation_ticks(
   sides = "b",
@@ -10,59 +17,65 @@ annotation_ticks(
   scale = "identity",
   scaled = TRUE,
   outside = FALSE,
-  ticklength = unit(4.8, "pt"),
-  minorlength = unit(2.4, "pt"),
+  tick.length = unit(4.8, "pt"),
+  minor.length = unit(2.4, "pt"),
+  size = 0.6,
   colour = "black",
-  base_size = 12,
+  color = NULL,
   linetype = 1,
   lineend = "butt",
   alpha = 1,
-  color = NULL,
-  ticks_per_base = NULL,
-  data = data.frame(x = NA),
-  ...
+  data = data.frame(x = NA)
 )
 }
 \arguments{
-\item{sides}{Description.}
+\item{sides}{\code{string}. Indicates which sides of the plot should ticks
+appear. Can be any of \code{"trbl"}, for top, right, bottom, left.}
 
-\item{type}{Description.}
+\item{type}{\code{string}. Types of ticks that appear. One of
+\code{"major"}, \code{"minor"}, or \code{"both"}. Control number of ticks
+by controlling the \code{breaks} and \code{minor_breaks} arguments in the
+various \code{scale_(x|y)_} functions.}
 
-\item{scale}{Description.}
+\item{scale}{\code{string} or \code{character vector}. Type of scale to be
+used for each side, for example \code{"identity"} or \code{"log10"}. If
+length is 1 then the scale will be used for all \code{sides}. If longer than
+1 the length must match the number of \code{sides} specified.}
 
-\item{scaled}{Description.}
+\item{scaled}{\code{logical}. Is the data already scaled? Should be
+\code{TRUE} (default) if data is already transformed with \code{log10()} or
+when using \code{scale_y_log10()}. Should be \code{FALSE} when using
+\code{coord_trans(y = "log10")}.}
 
-\item{outside}{Description.}
+\item{outside}{\code{logical}. Should the ticks point outside of the plotting
+area? If \code{TRUE} clipping must be turned off.}
 
-\item{ticklength}{Description.}
+\item{tick.length}{a \code{\link[grid]{unit}} object specifying the length
+of major ticks.}
 
-\item{minorlength}{Description.}
+\item{minor.length}{a \code{\link[grid]{unit}} object specifying the length
+of mminor ticks.}
 
-\item{colour}{Description.}
+\item{size}{\code{numeric}. Linewidth of ticks.}
 
-\item{base_size}{Description.}
+\item{colour, color}{\code{string}. Colour of ticks.}
 
-\item{linetype}{Description.}
+\item{linetype}{\code{string} or \code{numeric}. Linetype of tick marks.}
 
-\item{lineend}{Description.}
+\item{lineend}{\code{string}. Lineend of ticks. One of \code{"square"}
+(default), \code{"butt"}, or \code{"round"}.}
 
-\item{alpha}{Description.}
+\item{alpha}{\code{numeric}. Transparency of ticks.}
 
-\item{color}{Description.}
-
-\item{ticks_per_base}{Description.}
-
-\item{data}{Description.}
-
-\item{...}{Description.}
-}
-\value{
-Description.
+\item{data}{\code{data.frame}. Use this argument to control the appearance of
+ticks on different facets. Pass a data.frame containing the levels from the
+faceting variable you want to annotate specifically.
+See \href{https://stackoverflow.com/questions/20128582}{here} for an example.}
 }
 \description{
-Code modified from teunbrand's answer to https://stackoverflow.com/questions/58485334
-which is itself a refactored version of hrbrmstr's annotation_ticks function.
-https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r
+This is an annotation function to add tick marks (major, minor, or both) to
+a ggplot. Clipping must be turned off if the ticks are to appear outside the
+plotting area, for example with: \code{coord_cartesian(clip = "off")}.
 }
 \examples{
 # example goes here
