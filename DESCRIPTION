@@ -33,5 +33,6 @@ Imports:
     utils
 Suggests: 
     ggbeeswarm,
+    patchwork,
     rstatix,
     testthat (>= 2.1.0)

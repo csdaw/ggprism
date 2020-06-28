@@ -3,10 +3,12 @@ ggprism
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-Prism colour schemes as ggplot2 themes.
+The `ggprism` package provides various themes, palettes, and other
+useful functions to customise ggplots and give them the ‘GraphPad Prism’
+look.
 
-This R package is a work in progress and is currently functional, but is
-undocumented and untested.
+This package is currently still in development. It is fully functional
+but usage examples and vignettes have not yet been written.
 
 ## Install
 
@@ -17,87 +19,32 @@ library("devtools")
 install_github("csdaw/ggprism")
 ```
 
-## Examples
+## Example
 
 ``` r
 library(ggplot2)
 library(ggprism)
 
+# Plot
+p <- ggplot(CO2, aes(x = Treatment, y = uptake)) + 
+  geom_jitter(aes(colour = Type, shape = Type), width = 0.1) + 
+  stat_summary(fun = "mean", geom = "crossbar", width = 0.3, size = 0.3) + 
+  theme(legend.position = c(0.15, 0.1))
+
 # Before
-p1 <- ggplot(midwest, aes(x=percprof, y=poptotal)) +
-  geom_point(aes(shape = state, fill = state, colour = state), size = 2)
+p + scale_y_continuous(limits = c(0, 55)) + 
+  labs(subtitle = "ggplot2") 
 
-p1 + labs(subtitle = "Before")
-```
-
-<img src="man/figures/ex-before-1.png" width="384" />
-
-``` r
 # After
-p2 <- p1 + 
-  theme_prism("black_and_white") + 
-  scale_shape_prism("filled") + 
-  scale_fill_prism("prism_light") + 
-  scale_colour_prism("prism_light")
+stat.table <- rstatix::t_test(CO2, uptake ~ Treatment)
 
-p2 + labs(subtitle = "After")
+p + scale_y_continuous(limits = c(0, 50), guide = "prism_offset") +
+  add_pvalue(stat.table, y.position = 50, tip.length = c(0.03, 0.1)) +
+  theme_prism() + 
+  scale_colour_prism() + 
+  scale_shape_prism() +
+  theme(legend.position = c(0.15, 0.1)) + 
+  labs(subtitle = "ggplot2 + ggprism")
 ```
 
-<img src="man/figures/ex-after-1.png" width="384" />
-
-``` r
-# After with offset axes
-p3 <- p2 + 
-  scale_x_continuous(guide = "prism_offset") + 
-  scale_y_continuous(guide = "prism_offset")
-
-p3 + labs(subtitle = "After + offset axes") + 
-  coord_cartesian(xlim = c(0, 20))
-```
-
-<img src="man/figures/ex-offset-1.png" width="384" />
-
-``` r
-# After with minor ticks
-p4 <- p2 + 
-  scale_x_continuous(minor_breaks = seq(0, 20, 1), 
-                            guide = "prism_minor") + 
-  scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
-                     guide = "prism_minor")
-
-p4 + labs(subtitle = "After + minor ticks") + 
-  coord_cartesian(xlim = c(0, 20))
-```
-
-<img src="man/figures/ex-ticks-1.png" width="384" />
-
-``` r
-# After with offset axis and minor ticks
-p5 <- p2 + 
-  scale_x_continuous(guide = "offset_minor") + 
-  scale_y_continuous(guide = "offset_minor")
-
-p5 + labs(subtitle = "After + offset minor axes") + 
-  coord_cartesian(xlim = c(0, 20))
-```
-
-<img src="man/figures/ex-offsetminor-1.png" width="384" />
-
-``` r
-# After with secondary axes
-# (A bit hacky but it works)
-p6 <- p2 + 
-  scale_x_continuous(minor_breaks = seq(0, 20, 1), 
-                            guide = "prism_minor", 
-                     sec.axis = sec_axis(~ ., guide = "axis")) + 
-  scale_y_continuous(minor_breaks = seq(0, 5e6, 0.5e6), 
-                     guide = "prism_minor", 
-                     sec.axis = sec_axis(~ ., guide = "axis")) + 
-  annotation_ticks(sides = "tr", type = "minor", outside = TRUE)
-
-# Need to turn off clipping for annotations outside the plot area
-p6 + labs(subtitle = "After + secondary axes") + 
-  coord_cartesian(xlim = c(0, 20), clip = "off")
-```
-
-<img src="man/figures/ex-secondary-1.png" width="480" />
+<img src="man/figures/example-1.png" width="400" /><img src="man/figures/example-2.png" width="400" />
