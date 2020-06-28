@@ -1,5 +1,4 @@
 ---
-title: "ggprism"
 output: github_document
 ---
 
@@ -16,8 +15,10 @@ knitr::opts_chunk$set(collapse = TRUE,
                       fig.path = "man/figures/")
 ```
 
-The `ggprism` package provides various themes, palettes, and other useful 
-functions to customise ggplots and give them the 'GraphPad Prism' look.
+# ggprism <img src="man/figures/ggprism_logo.png" align = "right" width = "150" />
+
+The ggprism package provides various themes, palettes, and other useful 
+functions to customise ggplots and give them the _'GraphPad Prism'_ look.
 
 This package is currently still in development. It is fully functional but
 usage examples and vignettes have not yet been written.

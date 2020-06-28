@@ -1,10 +1,10 @@
-ggprism
-================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-The `ggprism` package provides various themes, palettes, and other
-useful functions to customise ggplots and give them the ‘GraphPad Prism’
+# ggprism <img src="man/figures/ggprism_logo.png" align = "right" width = "150" />
+
+The ggprism package provides various themes, palettes, and other useful
+functions to customise ggplots and give them the *‘GraphPad Prism’*
 look.
 
 This package is currently still in development. It is fully functional
