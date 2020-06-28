@@ -2,7 +2,9 @@
 
 S3method(guide_gengrob,prism_minor)
 S3method(guide_train,prism_minor)
+export(GeomBracket)
 export(GeomTicks)
+export(StatBracket)
 export(add_pvalue)
 export(annotation_ticks)
 export(guide_prism_minor)
