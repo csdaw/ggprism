@@ -1,9 +1,6 @@
-#' ggprism
-#'
-#' Description.
-#'
-#' @name ggprism
-#' @docType package
+#' @keywords internal
+"_PACKAGE"
+
 #' @importFrom digest digest
 #' @importFrom ggplot2 aes calc_element discrete_scale el_def element_blank
 #' element_grob element_line element_rect element_text Geom ggplot ggproto
