@@ -2,12 +2,16 @@
 % Please edit documentation in R/scale_fill_prism.R
 \name{scale_fill_prism}
 \alias{scale_fill_prism}
+\alias{prism_fill_pal}
 \title{Prism fill scales (discrete)}
 \usage{
 scale_fill_prism(palette = "colors", ...)
+
+prism_fill_pal(palette = "colors")
 }
 \arguments{
-\item{palette}{string. Palette name, see names(ggprism_data$fill_palettes)
+\item{palette}{\code{string}. Palette name, see
+\code{lengths(ggprism_data$fill_palettes)}
 for valid palette names.}
 
 \item{...}{
@@ -37,8 +41,14 @@ transformation object
 \item A function that takes the breaks as input and returns labels
 as output
 }}
-    \item{\code{limits}}{A character vector that defines possible values of the scale
-and their order.}
+    \item{\code{limits}}{One of:
+\itemize{
+\item \code{NULL} to use the default scale values
+\item A character vector that defines possible values of the scale and their
+order
+\item A function that accepts the existing (automatic) values and returns
+new ones
+}}
     \item{\code{expand}}{For position scales, a vector of range expansion constants used to add some
 padding around the data to ensure that they are placed some distance
 away from the axes. Use the convenience function \code{\link[ggplot2:expansion]{expansion()}}
@@ -48,8 +58,8 @@ expand the scale by 5\% on each side for continuous variables, and by
     \item{\code{na.translate}}{Unlike continuous scales, discrete scales can easily show
 missing values, and do so by default. If you want to remove missing values
 from a discrete scale, specify \code{na.translate = FALSE}.}
-    \item{\code{na.value}}{If \code{na.translate = TRUE}, what value aesthetic
-value should missing be displayed as? Does not apply to position scales
+    \item{\code{na.value}}{If \code{na.translate = TRUE}, what aesthetic value should the
+missing values be displayed as? Does not apply to position scales
 where \code{NA} is always placed at the far right.}
     \item{\code{drop}}{Should unused factor levels be omitted from the scale?
 The default, \code{TRUE}, uses the levels that appear in the data;
@@ -62,9 +72,10 @@ The default, \code{TRUE}, uses the levels that appear in the data;
   }}
 }
 \description{
-See \code{\link{prism_fill_pal}()} for details.
+A collection of discrete fill scales that use palettes which mirror the
+colour schemes available in GraphPad Prism.
 }
 \examples{
 # need to write an example
+# need to write an example
 }
-\concept{fill prism}

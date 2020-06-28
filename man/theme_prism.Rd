@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme_prism.R
 \name{theme_prism}
 \alias{theme_prism}
-\title{Title}
+\title{Prism themes}
 \usage{
 theme_prism(
   palette = "black_and_white",
@@ -10,33 +10,34 @@ theme_prism(
   base_family = "sans",
   base_fontface = "bold",
   base_line_size = base_size/20,
-  base_rect_size = base_size/9,
+  base_rect_size = base_size/20,
   axis_text_angle = 0,
   border = FALSE
 )
 }
 \arguments{
-\item{palette}{Description.}
+\item{palette}{\code{string}. Palette name, use
+\code{names(ggprism_data$themes)} to show all valid palette names.}
 
-\item{base_size}{Description.}
+\item{base_size}{\code{numeric}. Base font size, given in \code{"pt"}.}
 
-\item{base_family}{Description.}
+\item{base_family}{\code{string}. Base font family, default is \code{"sans"}.}
 
-\item{base_fontface}{Description.}
+\item{base_fontface}{\code{string}. Base font face, default is \code{"bold"}.}
 
-\item{base_line_size}{Description.}
+\item{base_line_size}{\code{numeric}. Base linewidth for line elements}
 
-\item{base_rect_size}{Description.}
+\item{base_rect_size}{\code{numeric}. Base linewidth for rect elements}
 
-\item{axis_text_angle}{Description.}
+\item{axis_text_angle}{\code{integer}. Angle of axis text in degrees.
+One of: \code{0, 45, 90, 270}.}
 
-\item{border}{Description.}
-}
-\value{
-Description
+\item{border}{\code{logical}. Should a border be drawn around the plot?
+Clipping will occur unless \code{clip = "off"}.}
 }
 \description{
-Description.
+A collection of ggplot2 themes that use palettes which mirror the
+colour schemes available in GraphPad Prism.
 }
 \examples{
 # example goes here

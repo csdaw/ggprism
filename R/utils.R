@@ -14,7 +14,7 @@
   )
 }
 
-# Copied from teunbrand/ggh4x/R/utils.R
+# Copied from https://github.com/teunbrand/ggh4x/tree/master/R/utils.R
 # Function for grabbing internal function of ggplot2 that are also used here
 .grab_ggplot_internals <- function() {
   objects <- c(

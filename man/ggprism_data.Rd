@@ -3,17 +3,14 @@
 \docType{data}
 \name{ggprism_data}
 \alias{ggprism_data}
-\title{Title}
+\title{Palettes and theme data for ggprism}
 \format{
 An object of class \code{list} of length 4.
 }
 \usage{
 ggprism_data
 }
-\value{
-Description.
-}
 \description{
-Description.
+This list object contains the values used in ggprism themes and palettes.
 }
 \keyword{datasets}

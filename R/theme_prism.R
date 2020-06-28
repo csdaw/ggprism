@@ -1,20 +1,23 @@
-#' Title
+#' Prism themes
 #'
-#' Description.
+#' A collection of ggplot2 themes that use palettes which mirror the
+#' colour schemes available in GraphPad Prism.
 #'
-#' @param palette Description.
-#' @param base_size Description.
-#' @param base_family Description.
-#' @param base_fontface Description.
-#' @param base_line_size Description.
-#' @param base_rect_size Description.
-#' @param axis_text_angle Description.
-#' @param border Description.
-#'
-#' @return Description
-#' @export
+#' @param palette \code{string}. Palette name, use
+#' \code{names(ggprism_data$themes)} to show all valid palette names.
+#' @param base_size \code{numeric}. Base font size, given in \code{"pt"}.
+#' @param base_family \code{string}. Base font family, default is \code{"sans"}.
+#' @param base_fontface \code{string}. Base font face, default is \code{"bold"}.
+#' @param base_line_size \code{numeric}. Base linewidth for line elements
+#' @param base_rect_size \code{numeric}. Base linewidth for rect elements
+#' @param axis_text_angle \code{integer}. Angle of axis text in degrees.
+#' One of: \code{0, 45, 90, 270}.
+#' @param border \code{logical}. Should a border be drawn around the plot?
+#' Clipping will occur unless \code{clip = "off"}.
 #'
 #' @example inst/examples/ex-theme_prism.R
+#'
+#' @export
 theme_prism <- function(palette = "black_and_white", base_size = 12,
                         base_family = "sans", base_fontface = "bold",
                         base_line_size = base_size / 20,

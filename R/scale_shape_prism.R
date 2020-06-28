@@ -1,24 +1,30 @@
-#' Prism shape palettes (discrete)
+#' Prism shape scales (discrete)
 #'
-#' Shape palettes used by
-#' \href{https://www.graphpad.com}{GraphPad Prism}
+#' Shape scales that approximate those used in GraphPad Prism.
+#' No unicode characters are used, only the default symbols available in R.
 #'
-#' The complete palette is not exact but approximates
-#' the shape palette from Prism using only the default symbols
-#' available in R. No unicode characters are used.
-#'
-#' The default palette supports up to 9 values. It does not use
+#' The \code{default} palette supports up to 9 values. It does not use
 #' any symbols with a fill.
 #'
-#' The filled palette supports up to 10 values. The first 5 symbols
+#' The \code{filled} palette supports up to 10 values. The first 5 symbols
 #' have a fill.
 #'
-#' The complete palette supports up to 14 values. Symbols 5 to 9
+#' The \code{complete} palette supports up to 14 values. Symbols 5 to 9
 #' have a fill.
 #'
-#' @param palette string. Palette name, one of: default, filled,
-#' or complete.
-#' @family shape
+#' @param palette \code{string}. Palette name, one of: \code{default},
+#' \code{filled}, or \code{complete}.
+#' @inheritDotParams ggplot2::discrete_scale
+#'
+#' @example inst/examples/ex-scale_shape_prism.R
+#'
+#' @export
+scale_shape_prism <- function(palette = "default", ...) {
+  discrete_scale("shape", "prism", prism_shape_pal(palette = palette), ...)
+}
+
+#' @rdname scale_shape_prism
+#' @inheritParams scale_shape_prism
 #' @example inst/examples/ex-prism_shape_pal.R
 #' @export
 prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
@@ -28,17 +34,4 @@ prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
   out <- manual_pal(shapes[["pch"]])
   attr(out, "max_n") <- nrow(shapes)
   out
-}
-
-#' Prism shape scales (discrete)
-#'
-#' See \code{\link{prism_shape_pal}()} for details.
-#'
-#' @inheritParams prism_shape_pal
-#' @inheritDotParams ggplot2::discrete_scale
-#' @family shape prism
-#' @example inst/examples/ex-scale_shape_prism.R
-#' @export
-scale_shape_prism <- function(palette = "default", ...) {
-  discrete_scale("shape", "prism", prism_shape_pal(palette = palette), ...)
 }

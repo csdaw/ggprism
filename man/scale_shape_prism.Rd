@@ -2,13 +2,16 @@
 % Please edit documentation in R/scale_shape_prism.R
 \name{scale_shape_prism}
 \alias{scale_shape_prism}
+\alias{prism_shape_pal}
 \title{Prism shape scales (discrete)}
 \usage{
 scale_shape_prism(palette = "default", ...)
+
+prism_shape_pal(palette = c("default", "filled", "complete"))
 }
 \arguments{
-\item{palette}{string. Palette name, one of: default, filled,
-or complete.}
+\item{palette}{\code{string}. Palette name, one of: \code{default},
+\code{filled}, or \code{complete}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale}}
@@ -37,8 +40,14 @@ transformation object
 \item A function that takes the breaks as input and returns labels
 as output
 }}
-    \item{\code{limits}}{A character vector that defines possible values of the scale
-and their order.}
+    \item{\code{limits}}{One of:
+\itemize{
+\item \code{NULL} to use the default scale values
+\item A character vector that defines possible values of the scale and their
+order
+\item A function that accepts the existing (automatic) values and returns
+new ones
+}}
     \item{\code{expand}}{For position scales, a vector of range expansion constants used to add some
 padding around the data to ensure that they are placed some distance
 away from the axes. Use the convenience function \code{\link[ggplot2:expansion]{expansion()}}
@@ -48,8 +57,8 @@ expand the scale by 5\% on each side for continuous variables, and by
     \item{\code{na.translate}}{Unlike continuous scales, discrete scales can easily show
 missing values, and do so by default. If you want to remove missing values
 from a discrete scale, specify \code{na.translate = FALSE}.}
-    \item{\code{na.value}}{If \code{na.translate = TRUE}, what value aesthetic
-value should missing be displayed as? Does not apply to position scales
+    \item{\code{na.value}}{If \code{na.translate = TRUE}, what aesthetic value should the
+missing values be displayed as? Does not apply to position scales
 where \code{NA} is always placed at the far right.}
     \item{\code{drop}}{Should unused factor levels be omitted from the scale?
 The default, \code{TRUE}, uses the levels that appear in the data;
@@ -62,7 +71,18 @@ The default, \code{TRUE}, uses the levels that appear in the data;
   }}
 }
 \description{
-See \code{\link{prism_shape_pal}()} for details.
+Shape scales that approximate those used in GraphPad Prism.
+No unicode characters are used, only the default symbols available in R.
+}
+\details{
+The \code{default} palette supports up to 9 values. It does not use
+any symbols with a fill.
+
+The \code{filled} palette supports up to 10 values. The first 5 symbols
+have a fill.
+
+The \code{complete} palette supports up to 14 values. Symbols 5 to 9
+have a fill.
 }
 \examples{
 library("ggplot2")
@@ -70,5 +90,5 @@ library("ggplot2")
 p <- ggplot(mtcars, aes(x = wt, y = mpg, shape = factor(carb))) +
   geom_point(size = 3)
 p + ggprism::scale_shape_prism()
+# need to write an example
 }
-\concept{shape prism}

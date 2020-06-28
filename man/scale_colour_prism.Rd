@@ -3,15 +3,22 @@
 \name{scale_colour_prism}
 \alias{scale_colour_prism}
 \alias{scale_color_prism}
+\alias{prism_colour_pal}
+\alias{prism_color_pal}
 \title{Prism colour scales (discrete)}
 \usage{
 scale_colour_prism(palette = "colors", ...)
 
 scale_color_prism(palette = "colors", ...)
+
+prism_colour_pal(palette = "colors")
+
+prism_color_pal(palette = "colors")
 }
 \arguments{
-\item{palette}{string. Palette name, see names(ggprism_data$colour_palettes)
-for valid palette names.}
+\item{palette}{\code{string}. Palette name, use
+\code{lengths(ggprism_data$colour_palettes)} to show all valid palette names
+and their number of values each palette supports.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale}}
@@ -40,8 +47,14 @@ transformation object
 \item A function that takes the breaks as input and returns labels
 as output
 }}
-    \item{\code{limits}}{A character vector that defines possible values of the scale
-and their order.}
+    \item{\code{limits}}{One of:
+\itemize{
+\item \code{NULL} to use the default scale values
+\item A character vector that defines possible values of the scale and their
+order
+\item A function that accepts the existing (automatic) values and returns
+new ones
+}}
     \item{\code{expand}}{For position scales, a vector of range expansion constants used to add some
 padding around the data to ensure that they are placed some distance
 away from the axes. Use the convenience function \code{\link[ggplot2:expansion]{expansion()}}
@@ -51,8 +64,8 @@ expand the scale by 5\% on each side for continuous variables, and by
     \item{\code{na.translate}}{Unlike continuous scales, discrete scales can easily show
 missing values, and do so by default. If you want to remove missing values
 from a discrete scale, specify \code{na.translate = FALSE}.}
-    \item{\code{na.value}}{If \code{na.translate = TRUE}, what value aesthetic
-value should missing be displayed as? Does not apply to position scales
+    \item{\code{na.value}}{If \code{na.translate = TRUE}, what aesthetic value should the
+missing values be displayed as? Does not apply to position scales
 where \code{NA} is always placed at the far right.}
     \item{\code{drop}}{Should unused factor levels be omitted from the scale?
 The default, \code{TRUE}, uses the levels that appear in the data;
@@ -65,13 +78,10 @@ The default, \code{TRUE}, uses the levels that appear in the data;
   }}
 }
 \description{
-See \code{\link{prism_fill_pal}()} for details.
+A collection of discrete colour scales that use palettes which mirror the
+colour schemes available in GraphPad Prism.
 }
 \examples{
 # example goes here
+# example goes here
 }
-\seealso{
-Other colour prism: 
-\code{\link{prism_colour_pal}()}
-}
-\concept{colour prism}
