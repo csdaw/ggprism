@@ -16,7 +16,8 @@
 #' @references Matsushita, R, Nishimura, T. Trehalose
 #' metabolism confers developmental robustness and stability in
 #' \emph{Drosophila} by regulating glucose homeostasis. Commun Biol 3, 170
-#' (2020). \href{https://doi.org/10.1038/s42003-020-0889-1}
+#' (2020). doi:
+#' \href{https://doi.org/10.1038/s42003-020-0889-1}{10.1038/s42003-020-0889-1}
 #'
 #' @keywords datasets
 "wings"

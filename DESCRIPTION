@@ -1,5 +1,5 @@
 Package: ggprism
-Title: GraphPad Prism Inspired Themes and Palettes for ggplot2
+Title: ggplot2 extension inspired by GraphPad Prism
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Charlotte",
@@ -7,7 +7,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = "csdaw@outlook.com",
            comment = c(ORCID = "0000-0002-7151-5971"))
-Description: What the package does (one paragraph).
+Description: This package provides various themes, palettes, and other functions
+    that are used to customise ggplots to look like they were made in GraphPad 
+    Prism. The 'Prism-look' is achieved by \code{theme_prism()} and 
+    \code{scale_fill|colour_prism()} which include all of the Prism colour 
+    schemes as palettes. Several axis guides are included which mirror those
+    available in the 'Frame and Origin' tab of Prism. P-values and significance
+    brackets can be added to plots using \code{add_pvalue()}.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -26,4 +32,6 @@ Imports:
     tibble,
     utils
 Suggests: 
+    ggbeeswarm,
+    rstatix,
     testthat (>= 2.1.0)
