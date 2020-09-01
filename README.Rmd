@@ -4,18 +4,24 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(collapse = TRUE,
-                      comment = "#>", 
-                      echo = TRUE, 
-                      dpi = 150,
-                      fig.width = 5,
-                      out.width = 400,
-                      fig.show = "hold",
-                      fig.path = "man/figures/")
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 120,
+  fig.width = 6,
+  out.width = 400,
+  fig.path = "man/figures/README-"
+)
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggprism)
+library(ggnewscale)
 ```
 
-# ggprism <img src="man/figures/ggprism_logo.png" align = "right" width = "150" />
+# ggprism <img src="man/figures/ggprism_logo.png" align = "right" height = "138.5" />
 
 The ggprism package provides various themes, palettes, and other useful 
 functions to customise ggplots and give them the _'GraphPad Prism'_ look.
@@ -28,34 +34,83 @@ usage examples and vignettes have not yet been written.
 Install the development version from github.
 
 ```{r, eval=FALSE}
-library("devtools")
-install_github("csdaw/ggprism")
+remotes::install_github("csdaw/ggprism")
 ```
 
 ## Example
 
-```{r example}
-library(ggplot2)
-library(ggprism)
+Recreates the figure from [this page](https://www.graphpad.com/scientific-software/prism/).
 
-# Plot
-p <- ggplot(CO2, aes(x = Treatment, y = uptake)) + 
-  geom_jitter(aes(colour = Type, shape = Type), width = 0.1) + 
-  stat_summary(fun = "mean", geom = "crossbar", width = 0.3, size = 0.3) + 
-  theme(legend.position = c(0.15, 0.1))
+```{r ex, echo=FALSE}
+df <- data.frame(
+  agonist = c(1e-10, 1e-8, 3e-8, 1e-7, 3e-7, 1e-6, 3e-6, 1e-5, 3e-5, 1e-4, 3e-4),
+  ctr1 = c(0, 11, 125, 190, 258, 322, 354, 348, NA, 412, NA),
+  ctr2 = c(3, 33, 141, 218, 289, 353, 359, 298, NA, 378, NA),
+  ctr3 = c(2, 25, 160, 196, 345, 328, 369, 372, NA, 399, NA),
+  trt1 = c(3, NA, 11, 52, 80, 171, 289, 272, 359, 352, 389),
+  trt2 = c(5, NA, 25, 55, 77, 195, 230, 333, 306, 320, 338), 
+  trt3 = c(4, NA, 28, 61, 44, 246, 243, 310, 297, 365, NA)
+) %>% 
+  mutate(log.agonist = log10(agonist)) %>% 
+  pivot_longer(
+    c(-agonist, -log.agonist), 
+    names_pattern = "(.{3})([0-9])", names_to = c("treatment", "rep")
+  ) %>% 
+  filter(!is.na(value))
+
+dr_eq <- y ~ min + ((max - min) / (1 + 10^(ec50 - (x))))
 
 # Before
-p + scale_y_continuous(limits = c(0, 55)) + 
-  labs(subtitle = "ggplot2") 
+ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment)) + 
+  geom_point() + 
+  geom_smooth(method = "nls", formula = dr_eq, se = FALSE,
+              method.args = list(start = list(min = 1.67, max = 397, ec50 = -7))) + 
+  scale_x_continuous(
+    limits = c(-10, -3), breaks = -10:-3,
+    minor_breaks = log10(rep(1:9, 7)*(10^rep(-10:-4, each = 9)))
+  ) + 
+  scale_y_continuous(limits = c(-100, 500), breaks = seq(-100, 500, 100)) + 
+  theme_grey(base_size = 11) +
+  scale_colour_discrete(labels = c("No inhibitor", "Inhibitor")) + 
+  scale_shape_discrete(labels = c("No inhibitor", "Inhibitor")) +
+  theme(axis.title.y = element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0.05, 0.95)) + 
+  labs(x = "[Agonist], M")
 
 # After
-stat.table <- rstatix::t_test(CO2, uptake ~ Treatment)
+exp_bold <- function(lab) {
+  do.call(
+    expression,
+    lapply(paste(lab), function(x) bquote(bold("10"^.(x))))
+  )
+}
 
-p + scale_y_continuous(limits = c(0, 50), guide = "prism_offset") +
-  add_pvalue(stat.table, y.position = 50, tip.length = c(0.03, 0.1)) +
-  theme_prism() + 
-  scale_colour_prism() + 
-  scale_shape_prism() +
-  theme(legend.position = c(0.15, 0.1)) + 
-  labs(subtitle = "ggplot2 + ggprism")
+ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) + 
+  geom_smooth(aes(colour = treatment),
+              method = "nls", formula = dr_eq, se = FALSE,
+              method.args = list(start = list(min = 1.67, max = 397, ec50 = -7))) + 
+  scale_colour_manual(labels = c("No inhibitor", "Inhibitor"),
+                      values = c("#00167B", "#9FA3FE")) +
+  scale_x_continuous(
+    limits = c(-10, -3), breaks = -10:-3,
+    minor_breaks = log10(rep(1:9, 7)*(10^rep(-10:-4, each = 9))),
+    labels = exp_bold,
+    guide = "prism_offset_minor"
+  ) + 
+  scale_y_continuous(
+    limits = c(-100, 500), breaks = seq(-100, 500, 100),
+    guide = "prism_offset"
+  ) + 
+  new_scale_colour() + 
+  geom_point(aes(colour = treatment), size = 3) + 
+  theme_prism("winter_bright", base_size = 16, base_line_size = 1.2) + 
+  scale_colour_prism("winter_bright", labels = c("No inhibitor", "Inhibitor")) + 
+  scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
+  theme(axis.title.y = element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.05, 0.95),
+        legend.justification = c(0.05, 0.95)) + 
+  labs(x = "[Agonist], M")
 ```
