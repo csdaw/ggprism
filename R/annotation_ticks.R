@@ -7,7 +7,7 @@
 #' @source The code is a slightly modified version of the answer to this
 #' [Stack Overflow](https://stackoverflow.com/questions/58485334) question,
 #' which is itself a refactored version of this
-#' [annotation_ticks](https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r)
+#' [`annotation_ticks()`](https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r)
 #' function.
 #'
 #' @param sides `string`. Indicates which sides of the plot should ticks
@@ -16,20 +16,12 @@
 #' `"major"`, `"minor"`, or `"both"`. Control number of ticks
 #' by controlling the `breaks` and `minor_breaks` arguments in the
 #' various ggplot2 `scale_(x|y)_` functions.
-#' @param scale `string` or `character vector`. Type of scale to be
-#' used for each side, for example `"identity"` or `"log10"`. If
-#' length is 1 then the scale will be used for all `sides`. If longer than
-#' 1 the length must match the number of `sides` specified.
-#' @param scaled `logical`. Is the data already scaled? Should be
-#' `TRUE` (default) if data is already transformed with `log10()` or
-#' when using `scale_y_log10()`. Should be `FALSE` when using
-#' `coord_trans(y = "log10")`.
 #' @param outside `logical`. Should the ticks point outside of the plotting
 #' area? If `TRUE` clipping must be turned off.
 #' @param tick.length a \code{\link[grid]{unit}} object specifying the length
 #' of major ticks.
 #' @param minor.length a \code{\link[grid]{unit}} object specifying the length
-#' of mminor ticks.
+#' of minor ticks.
 #' @param size `numeric`. Linewidth of ticks.
 #' @param colour,color `string`. Colour of ticks.
 #' @param linetype `string` or `numeric`. Linetype of tick marks.
@@ -46,8 +38,6 @@
 #' @export
 annotation_ticks <- function(sides = "b",
                              type = "both",
-                             scale = "identity",
-                             scaled = TRUE,
                              outside = FALSE,
                              tick.length = unit(4.8, "pt"),
                              minor.length = unit(2.4, "pt"),
@@ -72,19 +62,6 @@ annotation_ticks <- function(sides = "b",
   # split sides to character vector
   sides <- strsplit(sides, "")[[1]]
 
-  if (length(sides) != length(scale)) {
-    if (length(scale) == 1) {
-      scale <- rep(scale, length(sides))
-    } else {
-      stop("Number of scales does not match the number of sides")
-    }
-  }
-
-  base <- sapply(scale,
-                 function(x) switch(x, "identity" = 10,
-                                    "log10" = 10, "log" = exp(1)),
-                 USE.NAMES = FALSE)
-
   if (!type %in% c("both", "major", "minor")) {
     stop("Type must be one of: both, major, minor")
   }
@@ -97,8 +74,6 @@ annotation_ticks <- function(sides = "b",
     minor.length <- minor.length
   }
 
-  delog <- scale %in% "identity"
-
   layer(
     data = data,
     mapping = NULL,
@@ -108,18 +83,15 @@ annotation_ticks <- function(sides = "b",
     show.legend = FALSE,
     inherit.aes = FALSE,
     params = list(
-      base = base,
       sides = sides,
       type = type,
-      scaled = scaled,
       tick.length = tick.length,
       minor.length = minor.length,
       size = size,
       colour = colour,
       linetype = linetype,
       lineend = lineend,
-      alpha = alpha,
-      delog = delog
+      alpha = alpha
     )
   )
 }
@@ -137,13 +109,10 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                      draw_panel = function(data,
                                            panel_scales,
                                            coord,
-                                           base = c(10, 10),
                                            sides = c("b", "l"),
                                            type = c("both", "major", "minor"),
-                                           scaled = TRUE,
                                            tick.length = unit(4.8, "pt"),
-                                           minor.length = unit(2.4, "pt"),
-                                           delog = c(x = TRUE, y = TRUE)) {
+                                           minor.length = unit(2.4, "pt")) {
                        ticks <- list()
 
                        for (s in 1:length(sides)) {
