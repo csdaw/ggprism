@@ -11,6 +11,7 @@ An object of class \code{list} of length 4.
 ggprism_data
 }
 \description{
-This list object contains the values used in ggprism themes and palettes.
+This list object contains the strings and values used in
+ggprism themes and palettes.
 }
 \keyword{datasets}

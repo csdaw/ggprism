@@ -43,7 +43,7 @@ guide_prism_offset_minor <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' @noRd
+#' @keywords internal
 #' @export
 guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
 
@@ -92,7 +92,7 @@ guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
   guide
 }
 
-#' @noRd
+#' @keywords internal
 #' @export
 guide_gengrob.prism_offset_minor <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -111,7 +111,7 @@ guide_gengrob.prism_offset_minor <- function(guide, theme) {
 
 #' Grob for offset axes with minor ticks
 #'
-#' @param break_position position of ticks
+#' @param break_positions position of ticks
 #' @param break_labels labels at ticks
 #' @param breaks_major logical vector indicating major ticks versus minor ticks
 #' @param axis_position position of axis (top, bottom, left or right)
@@ -125,7 +125,7 @@ guide_gengrob.prism_offset_minor <- function(guide, theme) {
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#' @noRd
+#' @keywords internal
 draw_prism_offset_minor <- function(break_positions, break_labels, breaks_major,
                                     axis_position, theme,
                                     check.overlap = FALSE, angle = NULL, n.dodge = 1) {

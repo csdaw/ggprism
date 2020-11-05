@@ -36,7 +36,7 @@ guide_prism_offset <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' @noRd
+#' @keywords internal
 #' @export
 guide_gengrob.prism_offset <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -55,7 +55,7 @@ guide_gengrob.prism_offset <- function(guide, theme) {
 
 #' Grob for offset axes
 #'
-#' @param break_position position of ticks
+#' @param break_positions position of ticks
 #' @param break_labels labels at ticks
 #' @param axis_position position of axis (top, bottom, left or right)
 #' @param theme A complete \code{\link[ggplot2]{theme}} object
@@ -68,7 +68,7 @@ guide_gengrob.prism_offset <- function(guide, theme) {
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#' @noRd
+#' @keywords internal
 draw_prism_offset <- function(break_positions, break_labels, axis_position, theme,
                               check.overlap = FALSE, angle = NULL, n.dodge = 1) {
 

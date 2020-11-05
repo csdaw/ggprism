@@ -19,5 +19,4 @@ GeomBracket
 \description{
 ggproto classes for ggprism
 }
-\keyword{datasets}
 \keyword{internal}

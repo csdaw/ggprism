@@ -45,7 +45,7 @@ guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
   )
 }
 
-#' @noRd
+#' @keywords internal
 #' @export
 guide_gengrob.prism_bracket <- function(guide, theme) {
   aesthetic <- names(guide$key)[!grepl("^\\.", names(guide$key))][1]
@@ -66,11 +66,13 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 
 #' Grob for bracket axes
 #'
-#' @param break_position position of bracket center and labels
-#' @param break_labels labels between ticks
-#' @param axis_position position of axis (top, bottom, left or right)
+#' @description Grob for bracket axes.
+#'
+#' @param break_positions Position of bracket center and labels
+#' @param break_labels Labels between ticks
+#' @param axis_position Position of axis (top, bottom, left or right)
 #' @param theme A complete \code{\link[ggplot2]{theme}} object
-#' @param check.overlap silently remove overlapping labels,
+#' @param check.overlap Silently remove overlapping labels,
 #'   (recursively) prioritizing the first, last, and middle labels.
 #' @param angle Compared to setting the angle in
 #'   \code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
@@ -79,9 +81,14 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#' @noRd
+#' @param bracket_width `numeric`. Controls the width of the bracket. Try
+#' values between 0 and 1.
+#' @param outside `logical`. Default is `TRUE` and brackets point
+#' outwards. If `FALSE` the bracket crossbar is moved so the ticks appear
+#' to point inwards towards the plotting area.
+#' @keywords internal
 draw_prism_bracket <- function(break_positions, break_labels, axis_position,
-                               theme,check.overlap = FALSE, angle = NULL,
+                               theme, check.overlap = FALSE, angle = NULL,
                                n.dodge = 1, bracket_width = NULL,
                                outside = TRUE) {
 

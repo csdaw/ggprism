@@ -108,6 +108,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
   )
 }
 
+#' @keywords internal
 #' @rdname ggprism-ggproto
 #' @export
 StatBracket <- ggproto("StatBracket", Stat,
@@ -165,6 +166,7 @@ StatBracket <- ggproto("StatBracket", Stat,
                        }
 )
 
+#' @keywords internal
 #' @rdname ggprism-ggproto
 #' @export
 GeomBracket <- ggproto("GeomBracket", Geom,
