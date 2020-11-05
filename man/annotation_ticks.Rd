@@ -5,9 +5,9 @@
 \title{Add ticks as ggplot annotation}
 \source{
 The code is a slightly modified version of the answer to this
-\href{https://stackoverflow.com/questions/58485334}{Stack Overflow} question,
+[Stack Overflow](https://stackoverflow.com/questions/58485334) question,
 which is itself a refactored version of this
-\href{https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r}{\code{annotation_ticks}}
+[annotation_ticks](https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r)
 function.
 }
 \usage{
@@ -29,26 +29,26 @@ annotation_ticks(
 )
 }
 \arguments{
-\item{sides}{\code{string}. Indicates which sides of the plot should ticks
-appear. Can be any of \code{"trbl"}, for top, right, bottom, left.}
+\item{sides}{`string`. Indicates which sides of the plot should ticks
+appear. Can be any of `"trbl"`, for top, right, bottom, left.}
 
-\item{type}{\code{string}. Types of ticks that appear. One of
-\code{"major"}, \code{"minor"}, or \code{"both"}. Control number of ticks
-by controlling the \code{breaks} and \code{minor_breaks} arguments in the
-various \code{scale_(x|y)_} functions.}
+\item{type}{`string`. Types of ticks that appear. One of
+`"major"`, `"minor"`, or `"both"`. Control number of ticks
+by controlling the `breaks` and `minor_breaks` arguments in the
+various ggplot2 `scale_(x|y)_` functions.}
 
-\item{scale}{\code{string} or \code{character vector}. Type of scale to be
-used for each side, for example \code{"identity"} or \code{"log10"}. If
-length is 1 then the scale will be used for all \code{sides}. If longer than
-1 the length must match the number of \code{sides} specified.}
+\item{scale}{`string` or `character vector`. Type of scale to be
+used for each side, for example `"identity"` or `"log10"`. If
+length is 1 then the scale will be used for all `sides`. If longer than
+1 the length must match the number of `sides` specified.}
 
-\item{scaled}{\code{logical}. Is the data already scaled? Should be
-\code{TRUE} (default) if data is already transformed with \code{log10()} or
-when using \code{scale_y_log10()}. Should be \code{FALSE} when using
-\code{coord_trans(y = "log10")}.}
+\item{scaled}{`logical`. Is the data already scaled? Should be
+`TRUE` (default) if data is already transformed with `log10()` or
+when using `scale_y_log10()`. Should be `FALSE` when using
+`coord_trans(y = "log10")`.}
 
-\item{outside}{\code{logical}. Should the ticks point outside of the plotting
-area? If \code{TRUE} clipping must be turned off.}
+\item{outside}{`logical`. Should the ticks point outside of the plotting
+area? If `TRUE` clipping must be turned off.}
 
 \item{tick.length}{a \code{\link[grid]{unit}} object specifying the length
 of major ticks.}
@@ -56,26 +56,26 @@ of major ticks.}
 \item{minor.length}{a \code{\link[grid]{unit}} object specifying the length
 of mminor ticks.}
 
-\item{size}{\code{numeric}. Linewidth of ticks.}
+\item{size}{`numeric`. Linewidth of ticks.}
 
-\item{colour, color}{\code{string}. Colour of ticks.}
+\item{colour, color}{`string`. Colour of ticks.}
 
-\item{linetype}{\code{string} or \code{numeric}. Linetype of tick marks.}
+\item{linetype}{`string` or `numeric`. Linetype of tick marks.}
 
-\item{lineend}{\code{string}. Lineend of ticks. One of \code{"square"}
-(default), \code{"butt"}, or \code{"round"}.}
+\item{lineend}{`string`. Lineend of ticks. One of `"square"`
+(default), `"butt"`, or `"round"`.}
 
-\item{alpha}{\code{numeric}. Transparency of ticks.}
+\item{alpha}{`numeric`. Transparency of ticks.}
 
-\item{data}{\code{data.frame}. Use this argument to control the appearance of
+\item{data}{`data.frame`. Use this argument to control the appearance of
 ticks on different facets. Pass a data.frame containing the levels from the
 faceting variable you want to annotate specifically.
-See \href{https://stackoverflow.com/questions/20128582}{here} for an example.}
+See [here](https://stackoverflow.com/questions/20128582) for an example.}
 }
 \description{
 This is an annotation function to add tick marks (major, minor, or both) to
 a ggplot. Clipping must be turned off if the ticks are to appear outside the
-plotting area, for example with: \code{coord_cartesian(clip = "off")}.
+plotting area, for example with: `coord_cartesian(clip = "off")`.
 }
 \examples{
 # example goes here

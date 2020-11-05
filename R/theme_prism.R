@@ -3,17 +3,17 @@
 #' A collection of ggplot2 themes that use palettes which mirror the
 #' colour schemes available in GraphPad Prism.
 #'
-#' @param palette \code{string}. Palette name, use
-#' \code{names(ggprism_data$themes)} to show all valid palette names.
-#' @param base_size \code{numeric}. Base font size, given in \code{"pt"}.
-#' @param base_family \code{string}. Base font family, default is \code{"sans"}.
-#' @param base_fontface \code{string}. Base font face, default is \code{"bold"}.
-#' @param base_line_size \code{numeric}. Base linewidth for line elements
-#' @param base_rect_size \code{numeric}. Base linewidth for rect elements
-#' @param axis_text_angle \code{integer}. Angle of axis text in degrees.
-#' One of: \code{0, 45, 90, 270}.
-#' @param border \code{logical}. Should a border be drawn around the plot?
-#' Clipping will occur unless \code{clip = "off"}.
+#' @param palette `string`. Palette name, use
+#' `names(ggprism_data$themes)` to show all valid palette names.
+#' @param base_size `numeric`. Base font size, given in `"pt"`.
+#' @param base_family `string`. Base font family, default is `"sans"`.
+#' @param base_fontface `string`. Base font face, default is `"bold"`.
+#' @param base_line_size `numeric`. Base linewidth for line elements
+#' @param base_rect_size `numeric`. Base linewidth for rect elements
+#' @param axis_text_angle `integer`. Angle of axis text in degrees.
+#' One of: `0, 45, 90, 270`.
+#' @param border `logical`. Should a border be drawn around the plot?
+#' Clipping will occur unless e.g. `coord_cartesian(clip = "off")` is used.
 #'
 #' @example inst/examples/ex-theme_prism.R
 #'

@@ -16,8 +16,8 @@ prism_colour_pal(palette = "colors")
 prism_color_pal(palette = "colors")
 }
 \arguments{
-\item{palette}{\code{string}. Palette name, use
-\code{lengths(ggprism_data$colour_palettes)} to show all valid palette names
+\item{palette}{`string`. Palette name, use
+`lengths(ggprism_data$colour_palettes)` to show all valid palette names
 and their number of values each palette supports.}
 
 \item{...}{

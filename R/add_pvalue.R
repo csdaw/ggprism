@@ -2,84 +2,84 @@
 #'
 #' @description Add p-values with or without brackets to a ggplot.
 #'
-#' See \strong{here} or the examples section below for examples of how to use.
+#' See **here** or the examples section below for examples of how to use.
 #'
-#' \code{add_pvalue} is a refactored version of
-#' \code{stat_pvalue_manual} from
-#' \href{https://github.com/kassambara/ggpubr}{kassambara/ggpubr}, altered to
+#' `add_pvalue` is a refactored version of
+#' `stat_pvalue_manual` from
+#' [kassambara/ggpubr](https://github.com/kassambara/ggpubr), altered to
 #' have less dependencies, and more flexibility with input format and
-#' aesthetics. Any examples using \code{stat_pvalue_manual} found on
-#' \href{https://www.datanovia.com/en/?s=p-value&search-type=default}{Datanovia}
-#' will also work with \code{add_pvalue}.
+#' aesthetics. Any examples using `stat_pvalue_manual` found on
+#' [Datanovia](https://www.datanovia.com/en/?s=p-value&search-type=default)
+#' will also work with `add_pvalue`.
 #'
-#' @param data A \code{data.frame} with the statistics to plot. Default format
-#' has the following columns: \code{group1 | group2 | p.adj | y.position | etc}.
-#' \code{group1} and \code{group2} are the two groups that were compared.
-#' \code{p.adj} is the adjusted p-value. \code{y.position} is the y coordinate
+#' @param data A `data.frame` with the statistics to plot. Default format
+#' has the following columns: `group1 | group2 | p.adj | y.position | etc`.
+#' `group1` and `group2` are the two groups that were compared.
+#' `p.adj` is the adjusted p-value. `y.position` is the y coordinate
 #' that specifies where on the plot the p-value should go. The column names
 #' can differ from the default as long as their are specified when calling
 #' the function.
-#' @param label \code{string}. Name of column in \code{data} that
-#' contains the text to plot (e.g. \code{label = "p.adj"}).
+#' @param label `string`. Name of column in `data` that
+#' contains the text to plot (e.g. `label = "p.adj"`).
 #' Can also be an expression that can be formatted by
-#' \code{\link[glue]{glue}} (e.g. \code{label = "p = {p.adj}"}).
-#' @param xmin \code{string}. Name of column in \code{data}  that
+#' \code{\link[glue]{glue}} (e.g. `label = "p = {p.adj}"`).
+#' @param xmin `string`. Name of column in `data`  that
 #' contains the position of the left side of the brackets.
-#' Default is \code{"group1"}.
-#' @param xmax Optional. \code{string}. Name of column in \code{data} that
+#' Default is `"group1"`.
+#' @param xmax Optional. `string`. Name of column in `data` that
 #' contains the position of the right side of the brackets.
-#' Default is \code{"group2"}. If \code{NULL}, the p-values are plotted as
+#' Default is `"group2"`. If `NULL`, the p-values are plotted as
 #' text only.
-#' @param x \code{string} or \code{numeric}. x coordinate of the p-value text.
+#' @param x `string` or `numeric`. x coordinate of the p-value text.
 #' Only use when plotting p-value as text only (no brackets).
-#' @param y.position \code{string}. Name of column in
-#' \code{data} containing the y coordinates (\code{numeric}) of each p-value to
+#' @param y.position `string`. Name of column in
+#' \code{data} containing the y coordinates (`numeric`) of each p-value to
 #' be plotted. Can also be a single number to plot all p-values at the same
-#' height or a \code{numeric} vector that will override \code{data}.
-#' @param label.size \code{numeric}. Size of text.
-#' @param colour,color \code{string}. Colour of text.
-#' @param tip.length \code{numeric} vector. Length of bracket tips.
-#' Use \code{0} to remove tips.
-#' @param bracket.size \code{numeric}. Linewidth of bracket.
-#' @param bracket.colour \code{string}. Colour of bracket. Default is \code{NULL}
+#' height or a `numeric` vector that will override `data`.
+#' @param label.size `numeric`. Size of text.
+#' @param colour,color `string`. Colour of text.
+#' @param tip.length `numeric` vector. Length of bracket tips.
+#' Use `0` to remove tips.
+#' @param bracket.size `numeric`. Linewidth of bracket.
+#' @param bracket.colour `string`. Colour of bracket. Default is `NULL`
 #' which causes brackets to inherit the colour of the text.
-#' @param bracket.shorten \code{numeric}. Shortens the brackets slightly to
+#' @param bracket.shorten `numeric`. Shortens the brackets slightly to
 #' allow them to be plotted side-by-side at the same y position.
-#' @param bracket.nudge.y \code{numeric}. Changes the y position of
+#' @param bracket.nudge.y `numeric`. Changes the y position of
 #' p-values. Useful for slightly adjusting p-values if the text is cut off.
-#' @param step.increase \code{numeric}. Changes the space between brackets.
-#' @param step.group.by \code{string}. Variable to group brackets by.
-#' @param remove.bracket \code{logical}. If \code{TRUE} all brackets are
+#' @param step.increase `numeric`. Changes the space between brackets.
+#' @param step.group.by `string`. Variable to group brackets by.
+#' @param remove.bracket `logical`. If `TRUE` all brackets are
 #' removed and p-value is shown as text only.
-#' @param coord.flip \code{logical}. If \code{TRUE} p-values are rotated by
+#' @param coord.flip `logical`. If `TRUE` p-values are rotated by
 #' 90 degrees. Should be used with \code{\link[ggplot2]{coord_flip}}
-#' @param position \code{string} or call to position function such as
+#' @param position `string` or call to position function such as
 #' \code{\link[ggplot2]{position_dodge}}. Typically used for adjusting x
 #' position of p-values to be in line with dodged data.
 #' @param ... Additional aesthetics or arguments passed to
 #' \code{\link[ggplot2]{layer}}. See below for allowed values.
 #'
 #' @section Allowed ... values:
-#' \code{add_pvalue} understands the following additional aesthetics or arguments:
+#' `add_pvalue` understands the following additional aesthetics or arguments:
 #'
 #' \describe{
-#'   \item{\code{fontface}}{\code{string}. Fontface of text (e.g. \code{"bold"}).}
-#'   \item{\code{fontfamily}}{\code{string}. Fontfamily of text (e.g. \code{"Arial"}).}
-#'   \item{\code{hjust}}{\code{numeric}. Horizontal justification of text.}
-#'   \item{\code{vjust}}{\code{numeric}. Vertical justification of text.}
-#'   \item{\code{alpha}}{\code{numeric}. Transparency of text and/or brackets.}
-#'   \item{\code{linetype}}{\code{string} or \code{numeric}. Linetype of brackets
-#'    (e.g. \code{"dashed"}).}
-#'   \item{\code{lineend}}{\code{string}. Lineend of brackets (e.g. \code{"butt"}).}
-#'   \item{\code{na.rm}}{\code{logical}. If \code{FALSE} (default), removes
-#'   missing values with a warning. If \code{TRUE} silently removes missing
+#'   \item{`fontface`}{`string`. Fontface of text (e.g. `"bold"`).}
+#'   \item{`fontfamily`}{`string`. Fontfamily of text (e.g. `"Arial"`).}
+#'   \item{`hjust`}{`numeric`. Horizontal justification of text.}
+#'   \item{`vjust`}{`numeric`. Vertical justification of text.}
+#'   \item{`alpha`}{`numeric`. Transparency of text and/or brackets.}
+#'   \item{`linetype`}{`string` or `numeric`. Linetype of brackets
+#'    (e.g. `"dashed"`).}
+#'   \item{`lineend`}{`string`. Lineend of brackets (e.g. `"butt"`).}
+#'   \item{`na.rm`}{`logical`. If `FALSE` (default), removes
+#'   missing values with a warning. If `TRUE` silently removes missing
 #'   values.}
-#'   \item{\code{show.legend}}{\code{logical}. Should this layer be included in
-#'   the legends? If \code{NA} (default), include if any aesthetics are mapped.
-#'   If \code{FALSE}, never include or if \code{TRUE}, always include. It can
-#'   also be a named \code{logical} vector to finely select the aesthetics to
+#'   \item{`show.legend`}{`logical`. Should this layer be included in
+#'   the legends? If `NA` (default), include if any aesthetics are mapped.
+#'   If `FALSE`, never include or if `TRUE`, always include. It can
+#'   also be a named `logical` vector to finely select the aesthetics to
 #'   display.}
-#'   \item{\code{inherit.aes}}{\code{logical}. If \code{FALSE}, overrides the
+#'   \item{`inherit.aes`}{`logical`. If `FALSE`, overrides the
 #'   default aesthetics, rather than combining with them.}
 #' }
 #'

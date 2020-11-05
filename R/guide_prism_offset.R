@@ -3,8 +3,8 @@
 #' This guide draws the axis only as wide as the outermost tick marks,
 #' similar to offset axes from Prism.
 #'
-#' Control the length of the axis by adjusting the \code{breaks} argument in
-#' \code{scale_(x|y)_continuous()} or \code{scale_(x|y)_discrete()}.
+#' Control the length of the axis by adjusting the `breaks` argument in
+#' `scale_(x|y)_continuous()` or `scale_(x|y)_discrete()`.
 #'
 #' @inheritParams ggplot2::guide_axis
 #'

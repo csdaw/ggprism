@@ -3,8 +3,8 @@
 #' A collection of discrete colour scales that use palettes which mirror the
 #' colour schemes available in GraphPad Prism.
 #'
-#' @param palette \code{string}. Palette name, use
-#' \code{lengths(ggprism_data$colour_palettes)} to show all valid palette names
+#' @param palette `string`. Palette name, use
+#' `lengths(ggprism_data$colour_palettes)` to show all valid palette names
 #' and their number of values each palette supports.
 #' @inheritDotParams ggplot2::discrete_scale
 #'

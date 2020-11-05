@@ -10,8 +10,8 @@ scale_shape_prism(palette = "default", ...)
 prism_shape_pal(palette = c("default", "filled", "complete"))
 }
 \arguments{
-\item{palette}{\code{string}. Palette name, one of: \code{default},
-\code{filled}, or \code{complete}.}
+\item{palette}{`string`. Palette name, one of: `default`,
+`filled`, or `complete`.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale}}
@@ -75,13 +75,13 @@ Shape scales that approximate those used in GraphPad Prism.
 No unicode characters are used, only the default symbols available in R.
 }
 \details{
-The \code{default} palette supports up to 9 values. It does not use
+The `default` palette supports up to 9 values. It does not use
 any symbols with a fill.
 
-The \code{filled} palette supports up to 10 values. The first 5 symbols
+The `filled` palette supports up to 10 values. The first 5 symbols
 have a fill.
 
-The \code{complete} palette supports up to 14 values. Symbols 5 to 9
+The `complete` palette supports up to 14 values. Symbols 5 to 9
 have a fill.
 }
 \examples{
