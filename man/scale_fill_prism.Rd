@@ -10,8 +10,8 @@ scale_fill_prism(palette = "colors", ...)
 prism_fill_pal(palette = "colors")
 }
 \arguments{
-\item{palette}{`string`. Palette name, see
-`lengths(ggprism_data$fill_palettes)`
+\item{palette}{\code{string}. Palette name, see
+\code{lengths(ggprism_data$fill_palettes)}
 for valid palette names.}
 
 \item{...}{

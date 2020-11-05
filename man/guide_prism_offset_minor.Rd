@@ -41,15 +41,15 @@ This guide draws the axis only as wide as the outermost tick marks,
 similar to offset axes from Prism. It also adds minor ticks.
 }
 \details{
-Control the length of the axis by adjusting the `breaks` argument in
-`scale_(x|y)_continuous()` or `scale_(x|y)_discrete()`. Similarly,
-the number of minor ticks can be changed using the `minor_breaks`
+Control the length of the axis by adjusting the \code{breaks} argument in
+\verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}. Similarly,
+the number of minor ticks can be changed using the \code{minor_breaks}
 argument.
 
-Control the length of minor ticks by setting `prism.ticks.length` to
+Control the length of minor ticks by setting \code{prism.ticks.length} to
 a \code{\link[grid]{unit}} object using \code{\link[ggplot2]{theme}},
-for example: `prism.ticks.length = unit(2, "pt")`. The major tick
-lengths are adjusted using the standard `axis.ticks.length`.
+for example: \code{prism.ticks.length = unit(2, "pt")}. The major tick
+lengths are adjusted using the standard \code{axis.ticks.length}.
 }
 \examples{
 # example

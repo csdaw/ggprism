@@ -41,12 +41,12 @@ This guide is like the standard \code{\link[ggplot2]{guide_axis}}, but
 with minor ticks.
 }
 \details{
-The number of minor ticks can be changed using the `minor_breaks`
+The number of minor ticks can be changed using the \code{minor_breaks}
 argument. Control the length of minor ticks by setting
-`prism.ticks.length` to a \code{\link[grid]{unit}} object using
+\code{prism.ticks.length} to a \code{\link[grid]{unit}} object using
 \code{\link[ggplot2]{theme}}, for example:
-`prism.ticks.length = unit(2, "pt")`. The major tick lengths
-are adjusted using the standard `axis.ticks.length`.
+\code{prism.ticks.length = unit(2, "pt")}. The major tick lengths
+are adjusted using the standard \code{axis.ticks.length}.
 }
 \examples{
 # example

@@ -38,19 +38,19 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 \item{position}{Where this guide should be drawn: one of top, bottom,
 left, or right.}
 
-\item{bracket_width}{`numeric`. Controls the width of the bracket. Try
+\item{bracket_width}{\code{numeric}. Controls the width of the bracket. Try
 values between 0 and 1.}
 
-\item{outside}{`logical`. Default is `TRUE` and brackets point
-outwards. If `FALSE` the bracket crossbar is moved so the ticks appear
+\item{outside}{\code{logical}. Default is \code{TRUE} and brackets point
+outwards. If \code{FALSE} the bracket crossbar is moved so the ticks appear
 to point inwards towards the plotting area.}
 }
 \description{
 This guide turns the axis into brackets drawn around each axis label.
 }
 \details{
-The number of brackets can be adjusted using the `breaks`
-argument in `scale_(x|y)_continuous()` or `scale_(x|y)_discrete()`.
+The number of brackets can be adjusted using the \code{breaks}
+argument in \verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 }
 \examples{
 # example

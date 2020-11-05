@@ -41,8 +41,8 @@ This guide draws the axis only as wide as the outermost tick marks,
 similar to offset axes from Prism.
 }
 \details{
-Control the length of the axis by adjusting the `breaks` argument in
-`scale_(x|y)_continuous()` or `scale_(x|y)_discrete()`.
+Control the length of the axis by adjusting the \code{breaks} argument in
+\verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 }
 \examples{
 # example

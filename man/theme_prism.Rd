@@ -16,24 +16,24 @@ theme_prism(
 )
 }
 \arguments{
-\item{palette}{`string`. Palette name, use
-`names(ggprism_data$themes)` to show all valid palette names.}
+\item{palette}{\code{string}. Palette name, use
+\code{names(ggprism_data$themes)} to show all valid palette names.}
 
-\item{base_size}{`numeric`. Base font size, given in `"pt"`.}
+\item{base_size}{\code{numeric}. Base font size, given in \code{"pt"}.}
 
-\item{base_family}{`string`. Base font family, default is `"sans"`.}
+\item{base_family}{\code{string}. Base font family, default is \code{"sans"}.}
 
-\item{base_fontface}{`string`. Base font face, default is `"bold"`.}
+\item{base_fontface}{\code{string}. Base font face, default is \code{"bold"}.}
 
-\item{base_line_size}{`numeric`. Base linewidth for line elements}
+\item{base_line_size}{\code{numeric}. Base linewidth for line elements}
 
-\item{base_rect_size}{`numeric`. Base linewidth for rect elements}
+\item{base_rect_size}{\code{numeric}. Base linewidth for rect elements}
 
-\item{axis_text_angle}{`integer`. Angle of axis text in degrees.
-One of: `0, 45, 90, 270`.}
+\item{axis_text_angle}{\code{integer}. Angle of axis text in degrees.
+One of: \verb{0, 45, 90, 270}.}
 
-\item{border}{`logical`. Should a border be drawn around the plot?
-Clipping will occur unless e.g. `coord_cartesian(clip = "off")` is used.}
+\item{border}{\code{logical}. Should a border be drawn around the plot?
+Clipping will occur unless e.g. \code{coord_cartesian(clip = "off")} is used.}
 }
 \description{
 A collection of ggplot2 themes that use palettes which mirror the
