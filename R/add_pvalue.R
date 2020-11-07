@@ -83,11 +83,9 @@
 #'   default aesthetics, rather than combining with them.}
 #' }
 #'
+#' @example inst/examples/ex-add_pvalue.R
+#'
 #' @export
-#'
-#' @examples
-#' #
-#'
 add_pvalue <- function(data,
                        label = NULL, xmin = "group1", xmax = "group2",
                        x = NULL, y.position = "y.position",
