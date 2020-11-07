@@ -52,6 +52,10 @@ guide_train.prism_offset_minor <- function(guide, scale, aesthetic = NULL) {
   # define major and minor breaks
   major_breaks <- scale$get_breaks()
   major_breaks <- major_breaks[!is.na(major_breaks)]
+
+  if (is.null(scale$minor_breaks)) {
+    stop("No minor breaks exist, guide_prism_offset_minor needs minor breaks to work")
+  }
   minor_breaks <- setdiff(scale$get_breaks_minor(), major_breaks)
 
   # define all breaks
