@@ -16,9 +16,9 @@ grab_axis <- function(plot, side = "b") {
 }
 
 #### Tests ---------------------------------------------------------------------
-# test that guide_prism_minor defaults work
+# test that guide_prism_offset_minor defaults work
 g1 <- p + scale_y_continuous(guide = "axis")
-g2 <- p + scale_y_continuous(guide = "prism_minor")
+g2 <- p + scale_y_continuous(guide = "prism_offset_minor")
 
 expect_silent(ggplotGrob(g1))
 expect_silent(ggplotGrob(g2))
@@ -28,10 +28,10 @@ test <- grab_axis(g2, side = "l")
 
 expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[2]]$y) * 2) + 2)
 
-# test that guide_prism_minor works with coord flip
+# test that guide_prism_offset_minor works with coord flip
 g1 <- p + scale_y_continuous(guide = "axis") +
   coord_flip()
-g2 <- p + scale_y_continuous(guide = "prism_minor") +
+g2 <- p + scale_y_continuous(guide = "prism_offset_minor") +
   coord_flip()
 
 expect_silent(ggplotGrob(g1))
@@ -43,7 +43,7 @@ test <- grab_axis(g2, side = "b")
 expect_equal(length(test$grobs[[1]]$x), (length(control$grobs[[1]]$x) * 2) + 2)
 
 # test that prism.ticks.length theme element works
-g <- p + scale_y_continuous(guide = "prism_minor") +
+g <- p + scale_y_continuous(guide = "prism_offset_minor") +
   theme(prism.ticks.length = unit(20, "pt"))
 
 expect_silent(ggplotGrob(g))
@@ -54,8 +54,8 @@ test <- grab_axis(g, side = "l")
 expect_equal(test$grobs[[2]]$x[13], control)
 
 # test that guide_prism_minor produces error with no minor breaks
-g1 <- p + scale_x_discrete(guide = "prism_minor")
-g2 <- p + scale_y_continuous(guide = "prism_minor", minor_breaks = NULL)
+g1 <- p + scale_x_discrete(guide = "prism_offset_minor")
+g2 <- p + scale_y_continuous(guide = "prism_offset_minor", minor_breaks = NULL)
 
 expect_error(ggplotGrob(g1))
 expect_error(ggplotGrob(g2))
