@@ -306,3 +306,9 @@ two.means.copy$group1 <- 111
 two.means.copy$group2 <- 222
 
 expect_silent(base.tg1 + add_pvalue(two.means.copy, xmin = "apple", xmax = "banana"))
+
+# test that error occurs if xmin column specified is missing from data
+expect_error(base.tg1 + add_pvalue(two.means, xmin = "apple"))
+
+# test that error occurs if label column specified is missing from data
+expect_error(base.tg1 + add_pvalue(two.means, label = "apple"))

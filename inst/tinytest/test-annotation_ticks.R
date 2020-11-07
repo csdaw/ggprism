@@ -57,3 +57,7 @@ g <- p + annotation_ticks(
 expect_silent(ggplotGrob(g))
 expect_identical(g$layers[[2]]$geom_params$tick.length, unit(20, "pt"))
 expect_identical(g$layers[[2]]$geom_params$minor.length, unit(10, "pt"))
+
+#### Sanity checks -------------------------------------------------------------
+# test that warning occurs if both colour and color are set
+expect_warning(p + annotation_ticks(colour = "red", color = "blue"))

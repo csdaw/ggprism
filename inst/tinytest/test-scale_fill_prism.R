@@ -23,3 +23,6 @@ expect_equal(attr(p1, "max_n"), 20)
 
 # test that prism_fill_pal produces a valid hex colour
 expect_true(grepl("^#[a-zA-Z0-9]{6}$", p1(1)))
+
+# test that error occurs if palette does not exist
+expect_error(p + scale_fill_prism(palette = "banana"))
