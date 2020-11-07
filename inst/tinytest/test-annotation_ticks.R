@@ -10,12 +10,12 @@ p <- ggplot(msleep, aes(bodywt, brainwt)) + geom_point(na.rm = TRUE)
 # test that the function with default arguments works
 g <- p + annotation_ticks()
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that the function recognises the sides argument
 g <- p + annotation_ticks(sides = "trbl")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 expect_equal(length(layer_grob(g, 2L)[[1]]$children), 4)
 
 expect_error(p + annotation_ticks(sides = "banana"))
@@ -25,9 +25,9 @@ g1 <- p + annotation_ticks(type = "both")
 g2 <- p + annotation_ticks(type = "major")
 g3 <- p + annotation_ticks(type = "minor")
 
-expect_equal(length(layer_grob(g1)), 1)
-expect_equal(length(layer_grob(g2)), 1)
-expect_equal(length(layer_grob(g3)), 1)
+expect_silent(ggplotGrob(g1))
+expect_silent(ggplotGrob(g2))
+expect_silent(ggplotGrob(g3))
 
 expect_equal(length(layer_grob(g1, 2L)[[1]]$children[[1]]$x0), 8)
 expect_equal(length(layer_grob(g2, 2L)[[1]]$children[[1]]$x0), 5)
@@ -39,7 +39,7 @@ expect_error(p + annotation_ticks(type = "banana"))
 g <- p + annotation_ticks(outside = TRUE) +
   coord_cartesian(clip = "off")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 ticks <- layer_grob(g, 2L)[[1]]$children[[1]]$y1
 lapply(
@@ -54,6 +54,6 @@ g <- p + annotation_ticks(
   minor.length = unit(10, "pt")
 )
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 expect_identical(g$layers[[2]]$geom_params$tick.length, unit(20, "pt"))
 expect_identical(g$layers[[2]]$geom_params$minor.length, unit(10, "pt"))

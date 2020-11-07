@@ -90,26 +90,26 @@ expect_equal(class(g$layers[[2]]$geom), c("GeomBracket", "Geom", "ggproto", "gg"
 # test that label can be glue expression
 g <- base.tg1 + add_pvalue(two.means, label = "p = {p}")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test_that label can be column with any name
 two.means$custom.label <- "ns"
 g <- base.tg1 + add_pvalue(two.means, label = "custom.label")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test_that xmin and xmax can be column with any name
 colnames(two.means)[1:2] <- c("apple", "banana")
 g <- base.tg1 + add_pvalue(two.means, xmin = "apple", xmax = "banana")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 colnames(two.means)[1:2] <- c("group1", "group2") # change them back
 
 # test_that y.position can be column with any name
 colnames(two.means)[4] <- "orange"
 g <- base.tg1 + add_pvalue(two.means, y.position = "orange")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 colnames(two.means)[4] <- "y.position" # change it back
 
 # test that label.size can be adjusted
@@ -141,12 +141,12 @@ expect_identical(
 # test that tip.length can be negative
 g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = -0.01)
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test_that tip.length can be zero
 g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = 0)
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that bracket.size can be adjusted
 g1 <- base.tg1 + add_pvalue(two.means, bracket.size = 3) # all at once
@@ -184,36 +184,37 @@ expect_equal(g1, g2)
 # test that bracket.nudge.y works
 g <- base.tg3 + add_pvalue(pairwise.grouped, bracket.nudge.y = 10)
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test_that step.increase works
 g <- base.tg3 + add_pvalue(pairwise.grouped, step.increase = 0.2,
                            step.group.by = "supp")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test_that("step.group.by works", {
 g <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp",
                            step.group.by = "supp")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that coord.flip works
 g <- base.tg2 + add_pvalue(pairwise, coord.flip = TRUE) +
   coord_flip()
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that comparison against basemean works
 g <- base.tg2 + add_pvalue(each.vs.basemean)
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that add_pvalue works with facets using grouped data and free scales
 base.facet <- base.tg1 + facet_wrap(~ dose, scales = "free")
 g <- base.facet + add_pvalue(two.means.grouped1) # must have dose column
 
 expect_equal(length(layer_grob(g)), 3)
+expect_silent(ggplotGrob(g))
 
 gt <- ggplotGrob(g)
 gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
@@ -225,6 +226,7 @@ base.facet <- base.tg1 + facet_grid(group ~ dose)
 g <- base.facet + add_pvalue(two.means.grouped2) # must have group, dose columns
 
 expect_equal(length(layer_grob(g)), 6)
+expect_silent(ggplotGrob(g))
 
 gt <- ggplotGrob(g)
 gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
@@ -236,6 +238,7 @@ base.facet <- base.tg3 + facet_wrap(~ supp)
 g <- base.facet + add_pvalue(pairwise.grouped)
 
 expect_equal(length(layer_grob(g)), 2)
+expect_silent(ggplotGrob(g))
 
 gt <- ggplotGrob(g)
 gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
@@ -252,12 +255,12 @@ expect_equal(class(g$layers[[2]]$geom), c("GeomText", "Geom", "ggproto", "gg"))
 # test that comparison against null works
 g <- base.tg2 + add_pvalue(one.mean, x = "dose")
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that manual xmax = NULL works
 g <- base.tg3 + add_pvalue(two.means.grouped1, xmin = "dose", xmax = NULL)
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that colour or color can be changed manually (no brackets)
 g1 <- base.tg2 + add_pvalue(one.mean, x = "dose", colour = "blue")
@@ -276,14 +279,14 @@ g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
                            remove.bracket = TRUE) +
   coord_flip()
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 # test that changing label angle works (no brackets)
 g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
                            remove.bracket = TRUE, angle = 90) +
   coord_flip()
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
 
 #### Sanity checks -------------------------------------------------------------
 

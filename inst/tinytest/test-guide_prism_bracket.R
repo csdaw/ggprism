@@ -21,8 +21,8 @@ grab_axis <- function(plot, side = "b") {
 g1 <- p + scale_x_discrete(guide = "axis")
 g2 <- p + scale_x_discrete(guide = "prism_bracket")
 
-expect_equal(length(layer_grob(g1)), 1)
-expect_equal(length(layer_grob(g2)), 1)
+expect_silent(ggplotGrob(g1))
+expect_silent(ggplotGrob(g2))
 
 control <- grab_axis(g1, side = "b")
 test <- grab_axis(g2, side = "b")
@@ -35,8 +35,8 @@ g1 <- p + scale_x_discrete(guide = "axis") +
 g2 <- p + scale_x_discrete(guide = "prism_bracket") +
   coord_flip()
 
-expect_equal(length(layer_grob(g1)), 1)
-expect_equal(length(layer_grob(g2)), 1)
+expect_silent(ggplotGrob(g1))
+expect_silent(ggplotGrob(g2))
 
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
@@ -47,8 +47,8 @@ expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[1]]$x) * 2)
 g1 <- p + scale_y_continuous(guide = "axis")
 g2 <- p + scale_y_continuous(guide = "prism_bracket")
 
-expect_equal(length(layer_grob(g1)), 1)
-expect_equal(length(layer_grob(g2)), 1)
+expect_silent(ggplotGrob(g1))
+expect_silent(ggplotGrob(g2))
 
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
@@ -59,8 +59,8 @@ p + scale_x_discrete(position = "right", guide = "prism_bracket")
 g1 <- p + scale_x_discrete(guide = "prism_bracket")
 g2 <- p + scale_x_discrete(guide = guide_prism_bracket(bracket_width = (0.8 + 0.01 * 3) / 3))
 
-expect_equal(length(layer_grob(g1)), 1)
-expect_equal(length(layer_grob(g2)), 1)
+expect_silent(ggplotGrob(g1))
+expect_silent(ggplotGrob(g2))
 
 control <- grab_axis(g1, side = "b")
 test <- grab_axis(g2, side = "b")
@@ -73,4 +73,4 @@ expect_equal(control$grobs[[1]]$x, test$grobs[[1]]$x)
 # test that bracket direction can be adjusted
 g <- p + scale_x_discrete(guide = guide_prism_bracket(outside = FALSE))
 
-expect_equal(length(layer_grob(g)), 1)
+expect_silent(ggplotGrob(g))
