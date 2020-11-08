@@ -12,7 +12,7 @@ draw_prism_bracket(
   check.overlap = FALSE,
   angle = NULL,
   n.dodge = 1,
-  bracket_width = NULL,
+  width = NULL,
   outside = TRUE
 )
 }
@@ -37,7 +37,7 @@ this also uses some heuristics to automatically pick the \code{hjust} and
 horizontal axes) that should be used to render the labels. This is
 useful for displaying labels that would otherwise overlap.}
 
-\item{bracket_width}{\code{numeric}. Controls the width of the bracket. Try
+\item{width}{\code{numeric}. Controls the width of the bracket. Try
 values between 0 and 1.}
 
 \item{outside}{\code{logical}. Default is \code{TRUE} and brackets point

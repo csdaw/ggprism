@@ -11,7 +11,7 @@ guide_prism_bracket(
   n.dodge = 1,
   order = 0,
   position = waiver(),
-  bracket_width = NULL,
+  width = NULL,
   outside = TRUE
 )
 }
@@ -38,7 +38,7 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 \item{position}{Where this guide should be drawn: one of top, bottom,
 left, or right.}
 
-\item{bracket_width}{\code{numeric}. Controls the width of the bracket. Try
+\item{width}{\code{numeric}. Controls the width of the bracket. Try
 values between 0 and 1.}
 
 \item{outside}{\code{logical}. Default is \code{TRUE} and brackets point
@@ -53,5 +53,28 @@ The number of brackets can be adjusted using the \code{breaks}
 argument in \verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 }
 \examples{
-# example
+## base plot
+base <- ggplot(mpg, aes(x = as.factor(cyl), y = hwy)) +
+  geom_jitter(width = 0.2) +
+  theme_prism()
+
+## use brackets on x axis
+# if not specified, the width of the brackets is guessed
+base + scale_x_discrete(guide = "prism_bracket")
+
+## works with coord_flip
+base + scale_x_discrete(guide = "prism_bracket") +
+  coord_flip()
+
+## adjust bracket width
+base + scale_x_discrete(guide = guide_prism_bracket(width = 0.12))
+
+## make brackets point inward
+base + scale_x_discrete(guide = guide_prism_bracket(width = 0.12, outside = FALSE))
+
+## change colour with the usual axis.line, axis.ticks, axis.text elements
+base + scale_x_discrete(guide = guide_prism_bracket(width = 0.12, outside = FALSE)) +
+  theme(axis.line.x = element_line(colour = "red"),
+        axis.ticks.x = element_line(colour = "blue"),
+        axis.text.x = element_text(colour = "green"))
 }

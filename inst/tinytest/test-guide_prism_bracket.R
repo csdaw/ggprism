@@ -57,7 +57,7 @@ p + scale_x_discrete(position = "right", guide = "prism_bracket")
 
 # test that bracket width can be adjusted or left missing
 g1 <- p + scale_x_discrete(guide = "prism_bracket")
-g2 <- p + scale_x_discrete(guide = guide_prism_bracket(bracket_width = (0.8 + 0.01 * 3) / 3))
+g2 <- p + scale_x_discrete(guide = guide_prism_bracket(width = (0.8 + 0.01 * 3) / 3))
 
 expect_silent(ggplotGrob(g1))
 expect_silent(ggplotGrob(g2))

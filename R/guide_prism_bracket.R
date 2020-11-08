@@ -6,7 +6,7 @@
 #' argument in `scale_(x|y)_continuous()` or `scale_(x|y)_discrete()`.
 #'
 #' @inheritParams ggplot2::guide_axis
-#' @param bracket_width `numeric`. Controls the width of the bracket. Try
+#' @param width `numeric`. Controls the width of the bracket. Try
 #' values between 0 and 1.
 #' @param outside `logical`. Default is `TRUE` and brackets point
 #' outwards. If `FALSE` the bracket crossbar is moved so the ticks appear
@@ -17,7 +17,7 @@
 #' @export
 guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
                                 angle = NULL, n.dodge = 1, order = 0,
-                                position = waiver(), bracket_width = NULL,
+                                position = waiver(), width = NULL,
                                 outside = TRUE) {
   structure(
     list(
@@ -36,7 +36,7 @@ guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
       available_aes = c("x", "y"),
 
       # custom
-      bracket_width = bracket_width,
+      width = width,
       outside = outside,
 
       name = "axis"
@@ -58,7 +58,7 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
     check.overlap = guide$check.overlap,
     angle = guide$angle,
     n.dodge = guide$n.dodge,
-    bracket_width = guide$bracket_width,
+    width = guide$width,
     outside = guide$outside
   )
 }
@@ -81,7 +81,7 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.
-#' @param bracket_width `numeric`. Controls the width of the bracket. Try
+#' @param width `numeric`. Controls the width of the bracket. Try
 #' values between 0 and 1.
 #' @param outside `logical`. Default is `TRUE` and brackets point
 #' outwards. If `FALSE` the bracket crossbar is moved so the ticks appear
@@ -89,7 +89,7 @@ guide_gengrob.prism_bracket <- function(guide, theme) {
 #' @keywords internal
 draw_prism_bracket <- function(break_positions, break_labels, axis_position,
                                theme, check.overlap = FALSE, angle = NULL,
-                               n.dodge = 1, bracket_width = NULL,
+                               n.dodge = 1, width = NULL,
                                outside = TRUE) {
 
   axis_position <- match.arg(axis_position, c("top", "bottom", "right", "left"))
@@ -153,17 +153,17 @@ draw_prism_bracket <- function(break_positions, break_labels, axis_position,
 
   # autocalculate bracket width based on number of breaks if missing
   # best for discrete axes, bad for continuous axes
-  if (is.null(bracket_width)) {
+  if (is.null(width)) {
     if (n_breaks == 1) {
-      bracket_width <- 0.75
+      width <- 0.75
     }
     else if (n_breaks > 1) {
-      bracket_width <- (0.8 + 0.01 * n_breaks) / n_breaks
+      width <- (0.8 + 0.01 * n_breaks) / n_breaks
     }
   }
 
   # draw elements
-  half_bracket <- bracket_width / 2
+  half_bracket <- width / 2
 
   lines_grob <- exec(
     element_grob, line_element,
