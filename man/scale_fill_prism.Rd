@@ -2,12 +2,9 @@
 % Please edit documentation in R/scale_fill_prism.R
 \name{scale_fill_prism}
 \alias{scale_fill_prism}
-\alias{prism_fill_pal}
 \title{Prism fill scales (discrete)}
 \usage{
 scale_fill_prism(palette = "colors", ...)
-
-prism_fill_pal(palette = "colors")
 }
 \arguments{
 \item{palette}{\code{string}. Palette name, see
@@ -76,6 +73,5 @@ A collection of discrete fill scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
-# need to write an example
 # need to write an example
 }

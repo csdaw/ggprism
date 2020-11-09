@@ -22,16 +22,3 @@
 scale_shape_prism <- function(palette = "default", ...) {
   discrete_scale("shape", "prism", prism_shape_pal(palette = palette), ...)
 }
-
-#' @rdname scale_shape_prism
-#' @inheritParams scale_shape_prism
-#' @example inst/examples/ex-prism_shape_pal.R
-#' @export
-prism_shape_pal <- function(palette = c("default", "filled", "complete")) {
-  palette <- match.arg(palette)
-  shapes <- ggprism::ggprism_data$shape_palettes[[palette]]
-
-  out <- manual_pal(shapes[["pch"]])
-  attr(out, "max_n") <- nrow(shapes)
-  out
-}

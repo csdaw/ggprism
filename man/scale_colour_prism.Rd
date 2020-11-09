@@ -3,17 +3,11 @@
 \name{scale_colour_prism}
 \alias{scale_colour_prism}
 \alias{scale_color_prism}
-\alias{prism_colour_pal}
-\alias{prism_color_pal}
 \title{Prism colour scales (discrete)}
 \usage{
 scale_colour_prism(palette = "colors", ...)
 
 scale_color_prism(palette = "colors", ...)
-
-prism_colour_pal(palette = "colors")
-
-prism_color_pal(palette = "colors")
 }
 \arguments{
 \item{palette}{\code{string}. Palette name, use
@@ -82,6 +76,5 @@ A collection of discrete colour scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
-# example goes here
 # example goes here
 }

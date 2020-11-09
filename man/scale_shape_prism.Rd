@@ -2,12 +2,9 @@
 % Please edit documentation in R/scale_shape_prism.R
 \name{scale_shape_prism}
 \alias{scale_shape_prism}
-\alias{prism_shape_pal}
 \title{Prism shape scales (discrete)}
 \usage{
 scale_shape_prism(palette = "default", ...)
-
-prism_shape_pal(palette = c("default", "filled", "complete"))
 }
 \arguments{
 \item{palette}{\code{string}. Palette name, one of: \code{default},
@@ -90,5 +87,4 @@ library("ggplot2")
 p <- ggplot(mtcars, aes(x = wt, y = mpg, shape = factor(carb))) +
   geom_point(size = 3)
 p + ggprism::scale_shape_prism()
-# need to write an example
 }
