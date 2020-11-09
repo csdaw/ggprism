@@ -40,6 +40,8 @@ A collection of ggplot2 themes that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mpg, aes(x = displ, y = cty, colour = class)) +
   geom_point()

@@ -45,6 +45,8 @@ Control the length of the axis by adjusting the \code{breaks} argument in
 \verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +

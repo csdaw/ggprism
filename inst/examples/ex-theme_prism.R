@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mpg, aes(x = displ, y = cty, colour = class)) +
   geom_point()

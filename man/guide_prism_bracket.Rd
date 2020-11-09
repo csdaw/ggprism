@@ -53,6 +53,8 @@ The number of brackets can be adjusted using the \code{breaks}
 argument in \verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mpg, aes(x = as.factor(cyl), y = hwy)) +
   geom_jitter(width = 0.2) +

@@ -49,6 +49,8 @@ argument. Control the length of minor ticks by setting
 are adjusted using the standard \code{axis.ticks.length}.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point()

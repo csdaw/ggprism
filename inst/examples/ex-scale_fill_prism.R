@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
   geom_density(alpha = 0.75)

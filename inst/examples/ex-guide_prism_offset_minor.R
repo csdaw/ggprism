@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +

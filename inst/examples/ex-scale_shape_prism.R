@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## base plots
 base <- ggplot(mtcars, aes(x = wt, y = mpg,
                            shape = factor(cyl))) +

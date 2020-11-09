@@ -16,6 +16,8 @@ A collection of fill palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
+library(ggplot2)
+
 ## list all available fill palettes and their lengths
 lengths(ggprism_data$fill_palettes)
 

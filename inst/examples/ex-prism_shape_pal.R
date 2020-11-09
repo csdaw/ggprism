@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## list all available shape
 ggprism_data$shape_palettes
 

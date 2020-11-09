@@ -133,6 +133,8 @@ default aesthetics, rather than combining with them.}
 }
 
 \examples{
+library(ggplot2)
+
 ## we will use the ToothGrowth dataset for all examples
 tg <- ToothGrowth
 tg$dose <- as.factor(tg$dose)

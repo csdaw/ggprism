@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mpg, aes(x = as.factor(cyl), y = hwy)) +
   geom_jitter(width = 0.2) +

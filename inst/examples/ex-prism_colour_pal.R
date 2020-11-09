@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## list all available colour palettes and their lengths
 lengths(ggprism_data$colour_palettes)
 

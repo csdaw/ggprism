@@ -68,6 +68,7 @@ plotting area, for example with: \code{coord_cartesian(clip = "off")}.
 \examples{
 ## Generally it is better to use the guide_prism_minor function.
 ## However annotation_ticks is useful in a few specific situations.
+library(ggplot2)
 
 ## easily put ticks without labels around a plot with a border
 ggplot(mtcars, aes(x = mpg, y = disp)) +

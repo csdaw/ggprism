@@ -73,6 +73,8 @@ A collection of discrete colour scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl))) +
   geom_point(size = 3)

@@ -52,6 +52,8 @@ for example: \code{prism.ticks.length = unit(2, "pt")}. The major tick
 lengths are adjusted using the standard \code{axis.ticks.length}.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +

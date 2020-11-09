@@ -70,6 +70,8 @@ A collection of discrete fill scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
+library(ggplot2)
+
 ## base plot
 base <- ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
   geom_density(alpha = 0.75)

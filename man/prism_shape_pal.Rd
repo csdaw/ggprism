@@ -25,6 +25,8 @@ The \code{complete} palette supports up to 14 values. Symbols 5 to 9
 have a fill.
 }
 \examples{
+library(ggplot2)
+
 ## list all available shape
 ggprism_data$shape_palettes
 
