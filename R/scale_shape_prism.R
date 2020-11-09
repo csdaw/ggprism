@@ -14,7 +14,7 @@
 #'
 #' @param palette `string`. Palette name, one of: `default`,
 #' `filled`, or `complete`.
-#' @inheritDotParams ggplot2::discrete_scale
+#' @inheritDotParams ggplot2::discrete_scale -aesthetics -scale_name
 #'
 #' @example inst/examples/ex-scale_shape_prism.R
 #'

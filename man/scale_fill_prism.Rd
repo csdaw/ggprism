@@ -14,9 +14,6 @@ for valid palette names.}
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale}}
   \describe{
-    \item{\code{aesthetics}}{The names of the aesthetics that this scale works with.}
-    \item{\code{scale_name}}{The name of the scale that should be used for error messages
-associated with this scale.}
     \item{\code{name}}{The name of the scale. Used as the axis or legend title. If
 \code{waiver()}, the default, the name of the scale is taken from the first
 mapping used for that aesthetic. If \code{NULL}, the legend title will be
@@ -73,5 +70,63 @@ A collection of discrete fill scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.
 }
 \examples{
-# need to write an example
+## base plot
+base <- ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
+  geom_density(alpha = 0.75)
+
+## works pretty much the same as ggplot2 scale_fill_manual
+base +
+  scale_fill_prism(palette = "candy_bright")
+
+## try combining the ggprism colour and fill scales
+base2 <- ggplot(mtcars, aes(x = mpg, fill = factor(cyl), colour = factor(cyl))) +
+  geom_density(alpha = 0.75)
+
+base2 +
+  scale_fill_prism(palette = "floral") +
+  scale_colour_prism(palette = "floral")
+
+## change fill scale title in legend
+base +
+  scale_fill_prism(
+    palette = "candy_bright",
+    name = "Cylinders"
+  )
+
+## change fill labels in legend
+base +
+  scale_fill_prism(
+    palette = "candy_bright",
+    name = "Cylinders",
+    label = c("4 cyl", "6 cyl", "8 cyl")
+  )
+
+## change colour labels in legend with a function
+base +
+  scale_fill_prism(
+    palette = "candy_bright",
+    name = "Cylinders",
+    label = function(x) paste(x, "cyl")
+  )
+
+## change order of colours in legend
+base +
+  scale_fill_prism(
+    palette = "candy_bright",
+    name = "Cylinders",
+    label = function(x) paste(x, "cyl"),
+    breaks = c(8, 4, 6)
+  )
+
+## to change which colour is assigned to which cyl
+## you need to change the factor levels in the underlying data
+base <- ggplot(mtcars, aes(x = mpg,
+                           fill = factor(cyl, levels = c(6, 4, 8)))) +
+  geom_density(alpha = 0.75)
+
+base +
+  scale_fill_prism(
+    palette = "candy_bright",
+    name = "Cylinders"
+  )
 }

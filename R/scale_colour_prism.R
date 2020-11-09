@@ -6,7 +6,7 @@
 #' @param palette `string`. Palette name, use
 #' `lengths(ggprism_data$colour_palettes)` to show all valid palette names
 #' and their number of values each palette supports.
-#' @inheritDotParams ggplot2::discrete_scale
+#' @inheritDotParams ggplot2::discrete_scale -aesthetics -scale_name
 #'
 #' @example inst/examples/ex-scale_colour_prism.R
 #'

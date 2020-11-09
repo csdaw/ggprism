@@ -6,7 +6,7 @@
 #' @param palette `string`. Palette name, see
 #' `lengths(ggprism_data$fill_palettes)`
 #' for valid palette names.
-#' @inheritDotParams ggplot2::discrete_scale
+#' @inheritDotParams ggplot2::discrete_scale -aesthetics -scale_name
 #'
 #' @example inst/examples/ex-scale_fill_prism.R
 #'
