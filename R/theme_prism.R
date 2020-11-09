@@ -18,10 +18,10 @@
 #' @example inst/examples/ex-theme_prism.R
 #'
 #' @export
-theme_prism <- function(palette = "black_and_white", base_size = 12,
+theme_prism <- function(palette = "black_and_white", base_size = 14,
                         base_family = "sans", base_fontface = "bold",
-                        base_line_size = base_size / 20,
-                        base_rect_size = base_size / 20,
+                        base_line_size = base_size / 14,
+                        base_rect_size = base_size / 14,
                         axis_text_angle = 0,
                         border = FALSE) {
 
