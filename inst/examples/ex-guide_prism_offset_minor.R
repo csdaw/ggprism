@@ -1,6 +1,7 @@
 ## base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point()
+  geom_point() +
+  theme(axis.line = element_line(colour = "black"))
 
 ## add minor ticks to x and y axes
 base +
@@ -11,8 +12,11 @@ base +
   scale_y_continuous(
     limits = c(10, 35),
     guide = "prism_offset_minor"
-  ) +
-  theme(axis.line = element_line(colour = "black"))
+  )
+
+## you can also use the guides function to add minor ticks
+base +
+  guides(x = "prism_offset_minor", y = "prism_offset_minor")
 
 ## adjust number of minor ticks by adjusting minor breaks
 base +
@@ -25,8 +29,7 @@ base +
     limits = c(10, 35),
     minor_breaks = seq(10, 35, 1.25),
     guide = "prism_offset_minor"
-  ) +
-  theme(axis.line = element_line(colour = "black"))
+  )
 
 ## adjust the length of major ticks with the usual axis.ticks.length element
 base +
@@ -41,7 +44,6 @@ base +
     guide = "prism_offset_minor"
   ) +
   theme(
-    axis.line = element_line(colour = "black"),
     axis.ticks.length = unit(10, "pt")
   )
 
@@ -58,7 +60,6 @@ base +
     guide = "prism_offset_minor"
   ) +
   theme(
-    axis.line = element_line(colour = "black"),
     axis.ticks.length = unit(10, "pt"),
     prism.ticks.length = unit(5, "pt")
   )
@@ -70,3 +71,22 @@ ggplot(msleep, aes(bodywt, brainwt)) +
                 minor_breaks = rep(1:9, 4)*(10^rep(0:3, each = 9)),
                 guide = "prism_offset_minor") +
   theme(axis.line = element_line(colour = "black"))
+
+## change colour and tick length with the usual elements
+base +
+  scale_x_continuous(
+    limits = c(0, 6),
+    minor_breaks = seq(0, 6, 0.5),
+    guide = "prism_offset_minor"
+  ) +
+  scale_y_continuous(
+    limits = c(10, 35),
+    minor_breaks = seq(10, 35, 1.25),
+    guide = "prism_offset_minor"
+  ) +
+  theme(
+    axis.ticks.length = unit(10, "pt"),
+    prism.ticks.length = unit(5, "pt"),
+    axis.ticks = element_line(colour = "red"),
+    axis.line = element_line(colour = "blue")
+  )

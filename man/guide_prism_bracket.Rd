@@ -56,11 +56,14 @@ argument in \verb{scale_(x|y)_continuous()} or \verb{scale_(x|y)_discrete()}.
 ## base plot
 base <- ggplot(mpg, aes(x = as.factor(cyl), y = hwy)) +
   geom_jitter(width = 0.2) +
-  theme_prism()
+  theme(axis.line = element_line(colour = "black"))
 
 ## use brackets on x axis
 # if not specified, the width of the brackets is guessed
 base + scale_x_discrete(guide = "prism_bracket")
+
+# you can add brackets using the guide function as well
+base + guides(x = "prism_bracket")
 
 ## works with coord_flip
 base + scale_x_discrete(guide = "prism_bracket") +

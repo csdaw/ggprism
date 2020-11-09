@@ -64,6 +64,10 @@ base +
     guide = "prism_minor"
   )
 
+## you can also use the guides function to add minor ticks
+base +
+  guides(x = "prism_minor", y = "prism_minor")
+
 ## adjust number of minor ticks by adjusting minor breaks
 base +
   scale_x_continuous(
@@ -116,4 +120,22 @@ ggplot(msleep, aes(bodywt, brainwt)) +
   scale_x_log10(limits = c(1e0, 1e4),
                 minor_breaks = rep(1:9, 4)*(10^rep(0:3, each = 9)),
                 guide = "prism_minor")
+
+## change colour with the usual axis.ticks element
+base +
+  scale_x_continuous(
+    limits = c(0, 6),
+    minor_breaks = seq(0, 6, 0.5),
+    guide = "prism_minor"
+  ) +
+  scale_y_continuous(
+    limits = c(10, 35),
+    minor_breaks = seq(10, 35, 1.25),
+    guide = "prism_minor"
+  ) +
+  theme(
+    axis.ticks.length = unit(10, "pt"),
+    prism.ticks.length = unit(5, "pt"),
+    axis.ticks = element_line(colour = "red")
+  )
 }
