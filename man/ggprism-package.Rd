@@ -4,7 +4,7 @@
 \name{ggprism-package}
 \alias{ggprism}
 \alias{ggprism-package}
-\title{ggprism: ggplot2 extension inspired by GraphPad Prism}
+\title{ggprism: A ggplot2 extension inspired by GraphPad Prism}
 \description{
 This package provides various themes, palettes, and other functions
     that are used to customise ggplots to look like they were made in GraphPad 

@@ -1,6 +1,7 @@
 Package: ggprism
-Title: ggplot2 extension inspired by GraphPad Prism
+Title: A ggplot2 extension inspired by GraphPad Prism
 Version: 0.0.0.9000
+Date: 2020-11-09
 Authors@R: 
     person(given = "Charlotte",
            family = "Dawson",

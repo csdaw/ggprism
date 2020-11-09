@@ -6,6 +6,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
+  echo = FALSE,
   collapse = TRUE,
   comment = "#>",
   dpi = 120,
@@ -21,27 +22,74 @@ library(ggprism)
 library(ggnewscale)
 ```
 
-# ggprism <img src="man/figures/ggprism_logo.png" align = "right" height = "138.5" />
+# ggprism <img src="man/figures/ggprism_logo.png" align = "right" width = "150" />
 
-The ggprism package provides various themes, palettes, and other useful 
+The `ggprism` package provides various themes, palettes, and other useful 
 functions to customise ggplots and give them the _'GraphPad Prism'_ look.
-
-This package is currently still in development. It is fully functional but
-usage examples and vignettes have not yet been written.
 
 ## Install
 
 Install the development version from github.
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 remotes::install_github("csdaw/ggprism")
 ```
 
-## Example
+## How to Use
 
-Recreates the figure from [this page](https://www.graphpad.com/scientific-software/prism/).
+See the Getting Started page for a quick overview of `ggprism` features.
+Detailed examples and instructions can be found below and on the `ggprism` website.
 
-```{r ex, echo=FALSE}
+```{r, echo=TRUE}
+tg <- ToothGrowth
+tg$dose <- as.factor(tg$dose)
+
+base <- ggplot(tg, aes(x = dose, y = len, colour = dose, fill = dose)) + 
+  geom_violin(trim = FALSE) + 
+  geom_boxplot(width = 0.2, colour = "black") + 
+  scale_y_continuous(limits = c(-5, 40))
+```
+
+```{r ex, echo=TRUE, fig.show='hold'}
+base
+
+base + 
+  scale_color_prism("floral") + 
+  scale_fill_prism("floral") + 
+  theme_prism(base_size = 16) + 
+  guides(y = "prism_minor") + 
+  theme(legend.position = "none")
+```
+
+## Feedback and Contributions
+
+Any feedback, issues, suggestions, and contributions are welcome and should be 
+shared via `Github` [issues](https://github.com/csdaw/ggprism/issues). Bug reports
+should be submitted with a 
+minimal reproducible example, e.g. using the 
+[`reprex`](https://reprex.tidyverse.org) package. 
+
+Pull requests for contributions should be made against the `dev` branch. 
+Some ways to contribute might include:
+
+- Updates and corrections to documentation.
+- Examples and vignettes for existing functions
+- Bug fixes
+- New functions with associated documentation, examples, and tests
+
+## Cite
+
+Charlotte Dawson (`r format(Sys.Date(), "%Y")`), 
+_ggprism: A ggplot2 extension inspired by GraphPad Prism_. R package version
+`r getNamespaceVersion("ggprism")`, <https://csdaw.github.io/ggprism/>.
+
+## More Examples
+
+Recreates [this figure](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png)
+from the GraphPad Prism website. See this vignette for the source code and 
+step-by-step instructions.
+
+```{r}
 df <- data.frame(
   agonist = c(1e-10, 1e-8, 3e-8, 1e-7, 3e-7, 1e-6, 3e-6, 1e-5, 3e-5, 1e-4, 3e-4),
   ctr1 = c(0, 11, 125, 190, 258, 322, 354, 348, NA, 412, NA),
@@ -59,7 +107,9 @@ df <- data.frame(
   filter(!is.na(value))
 
 dr_eq <- y ~ min + ((max - min) / (1 + 10^(ec50 - (x))))
+```
 
+```{r ex2}
 # Before
 ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment)) + 
   geom_point() + 
@@ -105,7 +155,7 @@ ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) +
   ) + 
   new_scale_colour() + 
   geom_point(aes(colour = treatment), size = 3) + 
-  theme_prism("winter_bright", base_size = 16, base_line_size = 1.2) + 
+  theme_prism("winter_bright", base_size = 16) + 
   scale_colour_prism("winter_bright", labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
   theme(axis.title.y = element_blank(),
@@ -113,4 +163,142 @@ ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) +
         legend.position = c(0.05, 0.95),
         legend.justification = c(0.05, 0.95)) + 
   labs(x = "[Agonist], M")
+```
+
+Recreates Figure 2B from [this paper](https://doi.org/10.1038/s42003-020-0889-1), 
+which was originally created using GraphPad Prism. See this vignette for the 
+source code and step-by-step instructions.
+
+```{r}
+df2 <- wings %>%
+  mutate(measure = stringr::str_to_title(measure))
+
+wings.pvals <- df2 %>%
+  group_by(sex, measure) %>%
+  rstatix::t_test(percent.change ~ genotype, p.adjust.method = "BH", var.equal = TRUE, ref.group = "Tps1MIC/+") %>%
+  rstatix::add_x_position(x = "measure", dodge = 0.9) %>%
+  mutate(label = c("***", "*", "P = 0.26", "***", "***", "P = 0.65"))
+```
+
+```{r ex3}
+# Before
+ggplot(df2, aes(
+  x = factor(measure, levels = c("Wing.size", "Cell.size", "Cell.number")),
+  y = percent.change)
+) +
+  ggbeeswarm::geom_beeswarm(
+    aes(fill = genotype),
+    dodge.width = 0.9, 
+    #spacing = 1.6, 
+    shape = 21
+  ) +
+  scale_y_continuous(
+    limits = c(-20, 12),
+    expand = c(0, 0),
+    breaks = seq(-20, 10, 5)
+  ) +
+  scale_x_discrete(
+    labels = function(x) stringr::str_wrap(gsub("\\.", " ", x), width = 5)
+  ) +
+  facet_wrap(
+    ~ sex, 
+    scales = "free",
+    labeller = labeller(sex = c(male = "\u2642", female = "\u2640"))
+  ) +
+  scale_fill_manual(
+    values = c("#026FEE", "#87FFFF"), 
+    labels = c(expression("Tps"*1^italic("MIC")~"/ +"), expression("Tps"*1^italic("MIC")))
+  ) +
+  labs(y = "% change") +
+  theme(
+    legend.position = "bottom",
+    axis.title.x = element_blank(),
+    strip.text = element_text(size = 14),
+    legend.spacing.x = unit(0, "pt"),
+    legend.text = element_text(margin = margin(r = 20))
+  ) +
+  geom_hline(yintercept = 0, linetype = 2, size = 0.3) +
+  stat_summary(
+    geom = "crossbar",
+    aes(fill = genotype),
+    fun = mean,
+    position = position_dodge(0.9),
+    colour = "red",
+    size = 0.4, width = 0.7,
+    show.legend = FALSE
+  ) +
+  geom_text(
+    data = data.frame(
+      sex = factor("female", levels = c("male", "female")), 
+      measure = "Cell.number", 
+      percent.change = -18.5, 
+      lab = "(n = 10)"
+    ), 
+    aes(label = lab)
+  ) +
+  guides(fill = guide_legend(override.aes = list(size=3)))
+
+# After
+ggplot(df2, aes(
+  x = factor(measure, levels = c("Wing.size", "Cell.size", "Cell.number")),
+  y = percent.change)
+) +
+  ggbeeswarm::geom_beeswarm(
+    aes(fill = genotype),
+    dodge.width = 0.9, 
+    #spacing = 1.6, 
+    shape = 21
+  ) +
+  scale_y_continuous(
+    limits = c(-20, 12),
+    expand = c(0, 0),
+    breaks = seq(-20, 10, 5),
+    guide = "prism_offset"
+  ) +
+  scale_x_discrete(
+    guide = guide_prism_bracket(width = 0.15), 
+    labels = function(x) stringr::str_wrap(gsub("\\.", " ", x), width = 5)
+  ) +
+  facet_wrap(
+    ~ sex, 
+    scales = "free",
+    labeller = labeller(sex = c(male = "\u2642", female = "\u2640"))
+  ) +
+  theme_prism(base_fontface = "plain", base_line_size = 0.7, base_family = "Arial") +
+  scale_fill_manual(
+    values = c("#026FEE", "#87FFFF"), 
+    labels = c(expression("Tps"*1^italic("MIC")~"/ +"), expression("Tps"*1^italic("MIC")))
+  ) +
+  labs(y = "% change") +
+  theme(
+    legend.position = "bottom",
+    axis.title.x = element_blank(),
+    strip.text = element_text(size = 14),
+    legend.spacing.x = unit(0, "pt"),
+    legend.text = element_text(margin = margin(r = 20))
+  ) +
+  geom_hline(yintercept = 0, linetype = 2, size = 0.3) +
+  stat_summary(
+    geom = "crossbar",
+    aes(fill = genotype),
+    fun = mean,
+    position = position_dodge(0.9),
+    colour = "red",
+    size = 0.4, width = 0.7,
+    show.legend = FALSE
+  ) +
+  add_pvalue(
+    wings.pvals, y = 10, xmin = "xmin", xmax = "xmax", tip.length = 0, 
+    fontface = "italic", lineend = "round", bracket.size = 0.5
+  ) +
+  geom_text(
+    data = data.frame(
+      sex = factor("female", levels = c("male", "female")), 
+      measure = "Cell.number", 
+      percent.change = -18.5, 
+      lab = "(n = 10)"
+    ), 
+    aes(label = lab)
+  ) +
+  guides(fill = guide_legend(override.aes = list(size=3)))
 ```
