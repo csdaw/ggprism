@@ -7,6 +7,8 @@
 
 [![R build
 status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://codecov.io/gh/csdaw/ggprism?branch=master)
 <!-- badges: end -->
 
 The `ggprism` package provides various themes, palettes, and other

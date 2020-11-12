@@ -5,3 +5,4 @@ data-raw/
 ^\.Rproj\.user$
 stuff/
 ^\.github$
+^codecov\.yml$
