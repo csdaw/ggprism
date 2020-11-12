@@ -3,6 +3,12 @@
 
 # ggprism <img src="man/figures/ggprism_logo.png" align = "right" width = "150" />
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
+<!-- badges: end -->
+
 The `ggprism` package provides various themes, palettes, and other
 useful functions to customise ggplots and give them the *‘GraphPad
 Prism’* look.
@@ -55,7 +61,7 @@ submitted with a minimal reproducible example, e.g. using the
 Pull requests for contributions should be made against the `dev` branch.
 Some ways to contribute might include:
 
--   Updates and corrections to documentation.
+-   Updates and corrections to documentation
 -   Examples and vignettes for existing functions
 -   Bug fixes
 -   New functions with associated documentation, examples, and tests
