@@ -1,32 +1,16 @@
 library(ggplot2)
 
-## base plots
+## list all available shape palettes
+ggprism_data$shape_palettes
+
+## define a base plot
 base <- ggplot(mtcars, aes(x = wt, y = mpg,
                            shape = factor(cyl))) +
   geom_point(size = 3)
 
-base2 <- ggplot(mtcars, aes(x = wt, y = mpg,
-                            shape = factor(cyl),
-                            colour = factor(cyl))) +
-  geom_point(size = 3)
-
-base3 <- ggplot(mtcars, aes(x = wt, y = mpg,
-                            shape = factor(cyl),
-                            fill = factor(cyl))) +
-  geom_point(size = 3, colour = "black")
-
 ## works pretty much the same as ggplot2 scale_colour_manual
 base +
-  scale_shape_prism(palette = "default")
-
-base +
   scale_shape_prism(palette = "complete")
-
-base2 +
-  scale_shape_prism(palette = "default")
-
-base3 +
-  scale_shape_prism(palette = "filled")
 
 ## change shape scale title in legend
 base +
@@ -71,3 +55,19 @@ base +
     palette = "default",
     name = "Cylinders"
   )
+
+## see all the shapes in a specific palette
+# define a function for convenience
+show_shapes <- function(palette) {
+  df_shapes <- ggprism_data$shape_palettes[[palette]][, -1]
+  df_shapes$pch_f <- factor(df_shapes$pch, levels = df_shapes$pch)
+
+  ggplot(df_shapes, aes(x = 0, y = 0, shape = pch)) +
+    geom_point(aes(shape = pch), size = 5, fill = 'red') +
+    scale_shape_identity() +
+    facet_wrap(~ pch_f) +
+    theme_void()
+}
+
+# show the shapes in the palette "complete"
+show_shapes("complete")
