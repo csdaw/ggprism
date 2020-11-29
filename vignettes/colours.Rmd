@@ -5,7 +5,7 @@ output:
     fig_width: 6
     fig_height: 4
 vignette: >
-  %\VignetteIndexEntry{Colour, fill, and shape palettes}
+  %\VignetteIndexEntry{Colour, Fill, and Shape Palettes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

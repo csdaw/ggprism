@@ -1,5 +1,5 @@
 ---
-title: "All ggprism Palettes"
+title: "All `ggprism` Palettes"
 author: "Charlotte Dawson"
 date: "`r Sys.Date()`"
 output: 
@@ -7,12 +7,12 @@ output:
     fig_width: 6
     fig_height: 4
 vignette: >
-  %\VignetteIndexEntry{All `ggprism` palettes}
+  %\VignetteIndexEntry{All `ggprism` Palettes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup}
+```{r setup, include=FALSE}
 library(ggplot2)
 library(ggprism)
 ```
@@ -20,8 +20,7 @@ library(ggprism)
 ```{r, echo=FALSE}
 themes <- names(ggprism_data$themes)[-length(ggprism_data$themes)]
 
-lapply(
-  themes, 
-  function(x) preview_theme(palette = x)
-)
+for (i in themes) {
+  print(preview_theme(i))
+}
 ```

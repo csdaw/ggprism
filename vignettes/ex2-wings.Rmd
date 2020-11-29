@@ -1,11 +1,11 @@
 ---
-title: "Ex 2: Published Data on Fly Wings"
+title: "Ex 2: Real Life Data"
 output: 
   rmarkdown::html_vignette:
     fig_width: 6
     fig_height: 4
 vignette: >
-  %\VignetteIndexEntry{Ex 2: Published Data on Fly Wings}
+  %\VignetteIndexEntry{Ex 2: Real Life Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

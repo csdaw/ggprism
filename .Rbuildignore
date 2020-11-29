@@ -6,3 +6,6 @@ data-raw/
 stuff/
 ^\.github$
 ^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

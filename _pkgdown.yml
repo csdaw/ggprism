@@ -1,0 +1,35 @@
+destination: docs
+
+title: ggprism
+
+navbar:
+  title: a title
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Getting Started
+    href: articles/ggprism.html
+  - text: Guides
+    menu:
+    - text: Themes
+      href: articles/themes.html
+    - text: Colour, Fill, and Shape Palettes
+      href: articles/colours.html
+    - text: Changing Axes
+      href: articles/axes.html
+    - text: Adding p-values
+      href: articles/pvalues.html
+  - text: Examples
+    menu:
+    - text: "Ex 1: Dose Response Curve"
+      href: articles/ex1-dose.html
+    - text: "Ex 2: Real Life Data"
+      href: articles/ex2-wings.html
+  - text: All Palettes
+    href: articles/web-only/palettes.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/csdaw/ggprism

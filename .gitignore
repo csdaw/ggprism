@@ -44,3 +44,4 @@ vignettes/*.pdf
 
 # Colour list files
 data-raw/schemes/**/*.clr
+docs
