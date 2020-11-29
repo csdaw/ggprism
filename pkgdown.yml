@@ -1,0 +1,14 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  axes: axes.html
+  colours: colours.html
+  ex1-dose: ex1-dose.html
+  ex2-wings: ex2-wings.html
+  ggprism: ggprism.html
+  pvalues: pvalues.html
+  themes: themes.html
+  web-only/palettes: palettes.html
+last_built: 2020-11-29T18:33Z
+
