@@ -36,6 +36,9 @@ Imports:
 Suggests: 
     covr,
     ggbeeswarm,
+    ggnewscale,
+    knitr,
     patchwork,
     rstatix,
     tinytest
+VignetteBuilder: knitr

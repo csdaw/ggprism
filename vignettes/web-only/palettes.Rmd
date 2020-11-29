@@ -1,0 +1,27 @@
+---
+title: "All ggprism Palettes"
+author: "Charlotte Dawson"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    fig_width: 6
+    fig_height: 4
+vignette: >
+  %\VignetteIndexEntry{All `ggprism` palettes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup}
+library(ggplot2)
+library(ggprism)
+```
+
+```{r, echo=FALSE}
+themes <- names(ggprism_data$themes)[-length(ggprism_data$themes)]
+
+lapply(
+  themes, 
+  function(x) preview_theme(palette = x)
+)
+```
