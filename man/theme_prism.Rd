@@ -42,6 +42,9 @@ colour schemes available in GraphPad Prism.
 \examples{
 library(ggplot2)
 
+# see ?preview_theme for a convenient function to preview ggprism themes
+# before using theme_prism
+
 ## base plot
 base <- ggplot(mpg, aes(x = displ, y = cty, colour = class)) +
   geom_point()
