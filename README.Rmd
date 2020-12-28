@@ -91,8 +91,9 @@ _ggprism: A ggplot2 extension inspired by GraphPad Prism_. R package version
 ## More Examples
 
 Recreates [this figure](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png)
-from the GraphPad Prism website. See this vignette for the source code and 
-step-by-step instructions.
+from the GraphPad Prism website. See 
+[this vignette](https://csdaw.github.io/ggprism/articles/ex1-dose.html) for the 
+source code and step-by-step instructions.
 
 ```{r}
 df <- data.frame(

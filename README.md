@@ -78,8 +78,9 @@ GraphPad Prism*. R package version 0.0.0.9000,
 
 Recreates [this
 figure](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png)
-from the GraphPad Prism website. See this vignette for the source code
-and step-by-step instructions.
+from the GraphPad Prism website. See [this
+vignette](https://csdaw.github.io/ggprism/articles/ex1-dose.html) for
+the source code and step-by-step instructions.
 
 <img src="man/figures/README-ex2-1.png" width="400" /><img src="man/figures/README-ex2-2.png" width="400" />
 
