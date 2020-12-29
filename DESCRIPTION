@@ -35,10 +35,12 @@ Imports:
     utils
 Suggests: 
     covr,
+    dplyr,
     ggbeeswarm,
     ggnewscale,
     knitr,
     patchwork,
     rstatix,
+    tidyr,
     tinytest
 VignetteBuilder: knitr
