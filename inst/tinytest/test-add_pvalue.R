@@ -121,13 +121,15 @@ expect_identical(g$layers[[2]]$aes_params$label.size, 1)
 g1 <- base.tg1 + add_pvalue(two.means, colour = "red")
 g2 <- base.tg1 + add_pvalue(two.means, color = "red")
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that colour can be set by grouping variable
 g1 <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp")
 g2 <- base.tg3 + add_pvalue(pairwise.grouped, color = "supp")
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that tip.length can be adjusted
 g1 <- base.tg2 + add_pvalue(each.vs.ref, tip.length = 0.01) # both at once
@@ -161,7 +163,8 @@ expect_identical(
 g1 <- base.tg1 + add_pvalue(two.means, bracket.colour = "red")
 g2 <- base.tg1 + add_pvalue(two.means, bracket.color = "red")
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that bracket.colour can be adjusted separately to colour
 g <- base.tg1 + add_pvalue(two.means, bracket.colour = "red", colour = "blue")
@@ -179,7 +182,8 @@ expect_false(
 g1 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = 0.05) # all at once
 g2 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = c(0.05, 0.05, 0.05)) #individually
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that bracket.nudge.y works
 g <- base.tg3 + add_pvalue(pairwise.grouped, bracket.nudge.y = 10)
@@ -266,13 +270,15 @@ expect_silent(ggplotGrob(g))
 g1 <- base.tg2 + add_pvalue(one.mean, x = "dose", colour = "blue")
 g2 <- base.tg2 + add_pvalue(one.mean, x = "dose", color = "blue")
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that colour can be set by grouping variable
 g1 <- base.tg2 + add_pvalue(one.mean, x = "dose", colour = "dose")
 g2 <- base.tg2 + add_pvalue(one.mean, x = "dose", color = "dose")
 
-expect_equal(g1, g2)
+# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
+expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
 
 # test that coord.flip works (no brackets)
 g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
@@ -292,7 +298,7 @@ expect_silent(ggplotGrob(g))
 
 # test that warning occurs if colour and color are set
 expect_warning(base.tg1 + add_pvalue(two.means, colour = "red", color = "black"),
-               "Duplicated aesthetics after name standardisation: colour")
+               "Use colour or color but not both.")
 
 # test that warning occurs if bracket.colour and bracket.color are set
 expect_warning(base.tg1 + add_pvalue(two.means, bracket.colour = "blue",

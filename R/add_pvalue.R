@@ -41,8 +41,8 @@
 #' @param tip.length `numeric` vector. Length of bracket tips.
 #' Use `0` to remove tips.
 #' @param bracket.size `numeric`. Linewidth of bracket.
-#' @param bracket.colour `string`. Colour of bracket. Default is `NULL`
-#' which causes brackets to inherit the colour of the text.
+#' @param bracket.colour,bracket.color `string`. Colour of bracket. Default is
+#' `NULL` which causes brackets to inherit the colour of the text.
 #' @param bracket.shorten `numeric`. Shortens the brackets slightly to
 #' allow them to be plotted side-by-side at the same y position.
 #' @param bracket.nudge.y `numeric`. Changes the y position of
@@ -91,7 +91,8 @@ add_pvalue <- function(data,
                        x = NULL, y.position = "y.position",
                        label.size = 3.2,  colour = NULL, color = NULL,
                        tip.length = 0.03, bracket.size = 0.6,
-                       bracket.colour = NULL, bracket.shorten = 0,
+                       bracket.colour = NULL, bracket.color = NULL,
+                       bracket.shorten = 0,
                        bracket.nudge.y = 0, step.increase = 0,
                        step.group.by = NULL, remove.bracket = FALSE,
                        coord.flip = FALSE, position = "identity", ...) {
@@ -211,7 +212,7 @@ add_pvalue <- function(data,
       y.position = "y.position", label.size = label.size,
       colour = colour, color = color,
       tip.length = tip.length, bracket.size = bracket.size,
-      bracket.colour = bracket.colour,
+      bracket.colour = bracket.colour, bracket.color = bracket.color,
       bracket.shorten = bracket.shorten,
       bracket.nudge.y = bracket.nudge.y,
       step.increase = step.increase, step.group.by = step.group.by,
@@ -222,7 +223,7 @@ add_pvalue <- function(data,
     option <- list()
     allowed.options <- c(
       # function arguments
-      "y.position", "x", "label.size", "colour", "color", "tip.length",
+      "y.position", "x", "label.size", "colour", "tip.length",
       "bracket.size","bracket.colour", "bracket.shorten", "bracket.nudge.y",
       "step.increase", "coord.flip", "position",
       # extra aesthetics
@@ -249,6 +250,13 @@ add_pvalue <- function(data,
         # for geom_bracket, value are variable name
         # but this parameter is an option not an aes
         option[[key]] <- value
+      }
+      else if (key == "color") {
+        if (missing(colour)) {
+          option[["colour"]] <- value
+        } else {
+          warn("Use colour or color but not both.")
+        }
       }
       else if (key == "bracket.color") {
         if (missing(bracket.colour)) {

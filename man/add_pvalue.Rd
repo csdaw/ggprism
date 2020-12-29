@@ -17,6 +17,7 @@ add_pvalue(
   tip.length = 0.03,
   bracket.size = 0.6,
   bracket.colour = NULL,
+  bracket.color = NULL,
   bracket.shorten = 0,
   bracket.nudge.y = 0,
   step.increase = 0,
@@ -67,8 +68,8 @@ Use \code{0} to remove tips.}
 
 \item{bracket.size}{\code{numeric}. Linewidth of bracket.}
 
-\item{bracket.colour}{\code{string}. Colour of bracket. Default is \code{NULL}
-which causes brackets to inherit the colour of the text.}
+\item{bracket.colour, bracket.color}{\code{string}. Colour of bracket. Default is
+\code{NULL} which causes brackets to inherit the colour of the text.}
 
 \item{bracket.shorten}{\code{numeric}. Shortens the brackets slightly to
 allow them to be plotted side-by-side at the same y position.}
