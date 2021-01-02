@@ -150,7 +150,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-3-1.png" width="864"></p>
 <p>The overall theme text size is adjusted with the <code>base_size</code> argument, as with the standard ggplot2 themes such as <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># adjust overall theme size</span>
@@ -158,7 +158,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-4-1.png" width="864"></p>
 <p>By default the <code>base_line_size</code> and <code>base_rect_size</code> arguments scales with the <code>base_size</code>, but these can be overridden.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># adjust overall theme size with specific line size</span>
@@ -166,7 +166,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span>, base_line_size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-5-1.png" width="864"></p>
 <p>You can also change the <code>base_fontface</code> (e.g. bold, plain, italic) and <code>base_family</code> (crossplatform compatibility fonts e.g. serif, sans, mono, or specific fonts e.g. Arial).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># change fontface or font family</span>
@@ -174,7 +174,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
 <p><code><a href="../reference/theme_prism.html">theme_prism()</a></code> includes the <code>axis_text_angle</code> argument which is a convenient way to rotate the x axis text (allowed angles are: 0, 45, 90, or 270).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># change x axis text angle</span>
@@ -182,7 +182,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>axis_text_angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-7-1.png" width="864"></p>
 <p>Lastly, you can put a square border around the plot using the <code>border</code> argument. Unfortunately, you need to turn of clipping in order for this to work/appear correct.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># add a border and adjust its thickness</span>
@@ -192,7 +192,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-8-1.png" width="864"></p>
 </div>
 <div id="theme-palettes" class="section level2">
 <h2 class="hasAnchor">
@@ -219,7 +219,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"candy_bright"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-10-1.png" width="864"></p>
 <p>You can preview a single palette using the <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the theme applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html">this page</a> for images of all 43 available <code><a href="../reference/theme_prism.html">theme_prism()</a></code> palettes.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"flames"</span><span class="op">)</span></code></pre></div>
@@ -231,7 +231,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-12-1.png" width="864"></p>
 <p>It is good to try matching <code><a href="../reference/theme_prism.html">theme_prism()</a></code> palettes with their corresponding <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and/or <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> palettes.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># try out two more theme palettes and their corresponding colour palettes</span>
@@ -241,7 +241,7 @@
   <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"stained_glass"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-13-1.png" width="864"></p>
 </div>
 <div id="make-your-own-ggprism-theme" class="section level2">
 <h2 class="hasAnchor">
@@ -279,7 +279,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu">theme_new</span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="themes_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="themes_files/figure-html/unnamed-chunk-15-1.png" width="864"></p>
 </div>
   </div>
 
