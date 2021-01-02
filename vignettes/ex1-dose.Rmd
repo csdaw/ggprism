@@ -206,7 +206,7 @@ p
 Finally, we will fix the axis titles and move the legend on top of the plot
 instead of beside it.
 
-```{r}
+```{r, fig.width=5}
 # remove the y axis title and legend title, change the x axis title and
 # move the legend to the top left
 p <- p + theme(

@@ -3,7 +3,7 @@ title: "Getting Started"
 output: 
   rmarkdown::html_vignette:
     fig_width: 8
-    fig_height: 4
+    fig_height: 3
 vignette: >
   %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
