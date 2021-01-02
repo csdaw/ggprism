@@ -79,7 +79,8 @@ p <- ggplot(wings, aes(x = measure, y = percent.change))
 
 First we will plot the individual data points with random jitter using 
 `geom_beeswarm()` from the [`ggbeeswarm`](https://github.com/eclarke/ggbeeswarm) 
-package. We will also colour the
+package. The points will look too spaced out here, but don't worry they will 
+become more compact in the following step. We will also colour the
 points and adjust their horizontal position them by genotype.
 
 ```{r}
@@ -87,7 +88,8 @@ points and adjust their horizontal position them by genotype.
 p <- p + ggbeeswarm::geom_beeswarm(
   aes(fill = genotype), 
   dodge.width = 0.9, 
-  shape = 21
+  shape = 21,
+  cex = 3.5
 )
 p
 ```
