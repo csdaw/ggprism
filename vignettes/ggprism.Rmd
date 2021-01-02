@@ -2,7 +2,7 @@
 title: "Getting Started"
 output: 
   rmarkdown::html_vignette:
-    fig_width: 7
+    fig_width: 8
     fig_height: 4
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -128,7 +128,7 @@ See the
 [this guide](https://csdaw.github.io/ggprism/articles/axes.html) for more
 detailed usage examples.
 
-```{r, fig.height=6}
+```{r, fig.height=6, fig.width=7}
 # Show the 4 different axis guides included in ggprism
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
@@ -161,7 +161,7 @@ See the
 [this guide](https://csdaw.github.io/ggprism/articles/pvalues.html) for more
 detailed usage examples.
 
-```{r}
+```{r, fig.width=6}
 # Make a p-value table
 df <- data.frame(
   group1 = "OJ",
