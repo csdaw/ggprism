@@ -46,7 +46,7 @@ base +
   scale_color_prism("floral") + 
   scale_fill_prism("floral") + 
   theme_prism(base_size = 16) + 
-  guides(y = "prism_minor") + 
+  guides(y = "prism_offset_minor") + 
   theme(legend.position = "none")
 ```
 
@@ -55,8 +55,8 @@ base +
 ## Feedback and Contributions
 
 Any feedback, issues, suggestions, and contributions are welcome and
-should be shared via `Github`
-[issues](https://github.com/csdaw/ggprism/issues). Bug reports should be
+should be shared via [Github
+issues](https://github.com/csdaw/ggprism/issues). Bug reports should be
 submitted with a minimal reproducible example, e.g. using the
 [`reprex`](https://reprex.tidyverse.org) package.
 
@@ -70,7 +70,7 @@ Some ways to contribute might include:
 
 ## Cite
 
-Charlotte Dawson (2020), *ggprism: A ggplot2 extension inspired by
+Charlotte Dawson (2021), *ggprism: A ggplot2 extension inspired by
 GraphPad Prism*. R package version 0.0.0.9000,
 <https://csdaw.github.io/ggprism/>.
 
@@ -84,9 +84,10 @@ the source code and step-by-step instructions.
 
 <img src="man/figures/README-ex2-1.png" width="400" /><img src="man/figures/README-ex2-2.png" width="400" />
 
-Recreates Figure 2B from [this
-paper](https://doi.org/10.1038/s42003-020-0889-1), which was originally
-created using GraphPad Prism. See this vignette for the source code and
-step-by-step instructions.
+Recreates Figure 2B from [Matsushita & Nishimura
+(2020)](https://doi.org/10.1038/s42003-020-0889-1), which was originally
+created using GraphPad Prism. See [this
+vignette](https://csdaw.github.io/ggprism/articles/ex2-wings.html) for
+the source code and step-by-step instructions.
 
 <img src="man/figures/README-ex3-1.png" width="400" /><img src="man/figures/README-ex3-2.png" width="400" />

@@ -161,8 +161,6 @@ p <- p + scale_y_continuous(
 p
 ```
 
-![](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
-
 Then we'll change the x axis limits and appearance. This step is somewhat 
 complicated by 2 things:
 
@@ -211,7 +209,9 @@ p <- p + theme(axis.title.y = element_blank(),
 p
 ```
 
-And that's it!
+And that's it! Our ggplot graph is almost identical to the original.
+
+![Original plot](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
 
 Here is the complete code for the plot (remember the order of layers is important).
 
