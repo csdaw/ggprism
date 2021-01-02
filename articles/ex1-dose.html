@@ -181,13 +181,13 @@
 <h2 class="hasAnchor">
 <a href="#adjusting-data-related-elements" class="anchor"></a>Adjusting data-related elements</h2>
 <p>Now we begin constructing the plot, layer-by-layer. The order of each step below is important and if you mix them around the final plot will not appear as it should.</p>
-<p>First, we’ll just give the <code>ggplot</code> function our data.</p>
+<p>First, we’ll just give the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function our data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot the log10(agonist concentration) vs the response</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">log.agonist</span>, y <span class="op">=</span> <span class="va">response</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png" style="width:70.0%"></p>
-<p>Looking at the original plot we can see that the dose response curves underlie the data points, so we’ll start by fitting these curves using <code>geom_smooth</code>.</p>
-<p>We need to define a formula for <code>geom_smooth</code> to use. Here we will define a four-parameter log-logistic model manually. See <a href="https://rstudio-pubs-static.s3.amazonaws.com/378543_5b5bda32bf0541a485ccc49efbea680a.html">this notebook</a> for more info on dose response curves in R.</p>
+<p>Looking at the original plot we can see that the dose response curves underlie the data points, so we’ll start by fitting these curves using <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code>.</p>
+<p>We need to define a formula for <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> to use. Here we will define a four-parameter log-logistic model manually. See <a href="https://rstudio-pubs-static.s3.amazonaws.com/378543_5b5bda32bf0541a485ccc49efbea680a.html">this notebook</a> for more info on dose response curves in R.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define model (note x and ec50 are swapped around because ec50 is already -ve)</span>
 <span class="va">dose_resp</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">min</span> <span class="op">+</span> <span class="op">(</span><span class="op">(</span><span class="va">max</span> <span class="op">-</span> <span class="va">min</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">hill_coefficient</span> <span class="op">*</span> <span class="op">(</span><span class="va">ec50</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -203,20 +203,26 @@
 <p>The colours of the curves in the original plot are not in any colour scheme available in Prism. Therefore we will just colour them manually. While we’re at it we can give the two treatment groups more informative names in the legend.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># apply a manual colour scale to the curves</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>, <span class="st">"Inhibitor"</span><span class="op">)</span>,
-                             values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#00167B"</span>, <span class="st">"#9FA3FE"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>
+  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>, <span class="st">"Inhibitor"</span><span class="op">)</span>,
+  values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#00167B"</span>, <span class="st">"#9FA3FE"</span><span class="op">)</span>
+<span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>Now we can plot the actual data using <code>geom_point</code>. We’ll change the point shape and colour depending on the treatment type. To use a separate colour scale for the points versus the curves we can use the <code><a href="https://rdrr.io/pkg/ggnewscale/man/new_scale.html">new_scale_colour()</a></code> function from <a href="https://cran.r-project.org/web/packages/ggnewscale/index.html"><code>ggnewscale</code></a>. <code><a href="https://rdrr.io/pkg/ggnewscale/man/new_scale.html">new_scale_colour()</a></code> must be before <code>geom_point</code> otherwise the new colour scales will not work.</p>
+<p>Now we can plot the actual data using <code>geom_point</code>. We’ll change the point shape and colour depending on the treatment type. To use a separate colour scale for the points versus the curves we can use the <code><a href="https://rdrr.io/pkg/ggnewscale/man/new_scale.html">new_scale_colour()</a></code> function from <a href="https://cran.r-project.org/web/packages/ggnewscale/index.html"><code>ggnewscale</code></a>. <code><a href="https://rdrr.io/pkg/ggnewscale/man/new_scale.html">new_scale_colour()</a></code> must be before <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> otherwise the new colour scales will not work.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># reset the colour scale, add the data points, then use a new colour scale</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">ggnewscale</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggnewscale/man/new_scale.html">new_scale_colour</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">treatment</span>, shape <span class="op">=</span> <span class="va">treatment</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"winter_bright"</span>, 
-                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>,
-                                <span class="st">"Inhibitor"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>,
-                               <span class="st">"Inhibitor"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="st">"winter_bright"</span>, 
+    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>,
+               <span class="st">"Inhibitor"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span>
+    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>,
+               <span class="st">"Inhibitor"</span><span class="op">)</span>
+  <span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
@@ -229,7 +235,7 @@
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"winter_bright"</span>, base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>Next we’ll change the y axis limits and appearance. The <code>prism_offset</code> axis guide will shorten the axis line to the outer-most tick marks. This is similar to what is available in the <a href="https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm">“Frame and Origin”</a> tab in Prism.</p>
+<p>Next we’ll change the y axis limits and appearance. The <code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code> axis guide will shorten the axis line to the outer-most tick marks. This is similar to what is available in the <a href="https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm">“Frame and Origin”</a> tab in Prism.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># adjust the axis limits, major tick positions, and axis guide</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
@@ -241,7 +247,7 @@
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Then we’ll change the x axis limits and appearance. This step is somewhat complicated by 2 things:</p>
 <ol style="list-style-type: decimal">
-<li>We are working with log10 transformed data and want the tick marks to appear as they do in the original plot. First we define the major ticks with the <code>breaks</code> and <code>limits</code> arguments. Then we use the <code>prism_offset_minor</code> axis guide to add minor tick marks. Finally, we use the <code>minor_breaks</code> argument and give it a vector that defines the x axis position of each individual minor tick mark.</li>
+<li>We are working with log10 transformed data and want the tick marks to appear as they do in the original plot. First we define the major ticks with the <code>breaks</code> and <code>limits</code> arguments. Then we use the <code><a href="../reference/guide_prism_offset_minor.html">guide_prism_offset_minor()</a></code> axis guide to add minor tick marks. Finally, we use the <code>minor_breaks</code> argument and give it a vector that defines the x axis position of each individual minor tick mark.</li>
 <li>We want the tick labels to be in the format <strong>10<sup>-7</sup></strong> but at the moment they are in the format -7. To do this we feed the <code>label</code> argument a function which defines a math expression will take the <em>number</em> -7 and convert it into the <em>expression</em> <strong>10<sup>-7</sup></strong>.</li>
 </ol>
 <p>Very complicated and probably not necessary in real life! But in this vignette the goal is to recreate the original plot as closely as possible.</p>
@@ -266,10 +272,12 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># remove the y axis title and legend title, change the x axis title and</span>
 <span class="co"># move the legend to the top left</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-               legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-               legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span>,
-               legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+  axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+  legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+  legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span>,
+  legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"[Agonist], M"</span><span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
@@ -277,6 +285,10 @@
 <div class="figure">
 <img src="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png" style="width:70.0%" alt=""><p class="caption">Original plot</p>
 </div>
+</div>
+<div id="plot-source-code" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot-source-code" class="anchor"></a>Plot source code</h2>
 <p>Here is the complete code for the plot (remember the order of layers is important).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dose_resp</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">min</span> <span class="op">+</span> <span class="op">(</span><span class="op">(</span><span class="va">max</span> <span class="op">-</span> <span class="va">min</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">hill_coefficient</span> <span class="op">*</span> <span class="op">(</span><span class="va">ec50</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -295,7 +307,8 @@
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>, <span class="st">"Inhibitor"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No inhibitor"</span>, <span class="st">"Inhibitor"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"winter_bright"</span>, base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">100</span>, <span class="fl">500</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">100</span>, <span class="fl">500</span>, <span class="fl">100</span><span class="op">)</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">100</span>, <span class="fl">500</span><span class="op">)</span>, 
+                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">100</span>, <span class="fl">500</span>, <span class="fl">100</span><span class="op">)</span>,
                      guide <span class="op">=</span> <span class="st">"prism_offset"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>
     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>, 
