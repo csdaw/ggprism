@@ -22,10 +22,10 @@ In this vignette we will recreate Figure 2B from
 which was made in GraphPad Prism 7.
 
 The authors of this paper mutate trehalose synthesis enzyme (_Tps1_) in
-fruit flies and then observe the effect of this mutation their wings. Figure 2B, 
-shown below, shows the percentage change in three fly wing attributes in homozygous 
-_Tps1_ mutants compared to heterozygous _Tps1_ mutants. The data are separated
-according to the sex of the fly.
+fruit flies and then observe the effect of this mutation on their wings. 
+Figure 2B, shown below, shows the percentage change in three fly wing attributes in 
+homozygous _Tps1_ mutants compared to heterozygous _Tps1_ mutants. The data are 
+separated according to the sex of the fly.
 
 ![Figure 2B from Matsushita & Nishimura (2020)](figure_2B.png){ width=70% }
 
@@ -69,18 +69,21 @@ head(wings)
 
 ## Adjusting data-related elements
 
-Now we'll just give the `ggplot` function our data.
+Now we'll just give the `ggplot()` function our data.
 
 ```{r}
+# plot the wing measurement vs the percentage change compared to
+# the heterozygous mutants
 p <- ggplot(wings, aes(x = measure, y = percent.change))
 ```
 
 First we will plot the individual data points with random jitter using 
-`geom_beeswarm` from the [`ggbeeswarm`](https://github.com/eclarke/ggbeeswarm) 
+`geom_beeswarm()` from the [`ggbeeswarm`](https://github.com/eclarke/ggbeeswarm) 
 package. We will also colour the
 points and adjust their horizontal position them by genotype.
 
 ```{r}
+# add the data points and fill according to the genotype
 p <- p + ggbeeswarm::geom_beeswarm(
   aes(fill = genotype), 
   dodge.width = 0.9, 
@@ -94,6 +97,7 @@ For this we can just use `facet_wrap()` and then set the facet titles to the
 Unicode symbols for male and female.
 
 ```{r}
+# separate data according to fly sex
 p <- p + facet_wrap(
     ~ sex, 
     scales = "free",
@@ -103,18 +107,20 @@ p
 ```
 
 Overlying the points in the original plot is a horizontal dotted line at 
-y = 0. This is added to our ggplot using `geom_hline`.
+y = 0. This is added to our ggplot using `geom_hline()`.
 
 ```{r}
+# plot a horiztonal line at y = 0 i.e. percentage change = 0
 p <- p + geom_hline(yintercept = 0, linetype = 2, size = 0.3)
 p
 ```
 
 On top of this are red horizontal bars showing the mean value for each group.
 These can be added to ggplots using the `stat_summary()` function with the
-`geom_crossbar` Geom.
+`geom_crossbar()` Geom.
 
 ```{r}
+# plot solid red lines at the mean of each group
 p <- p + stat_summary(
     geom = "crossbar",
     aes(fill = genotype),
@@ -143,7 +149,8 @@ bracket ends have the correct x axis positions (specifically the `xmin` and
 bracket labels to appear as we would like them to.
 
 ```{r}
-#
+# perform t-tests to compare the means of the genotypes for each measure
+# and correct the p-values for multiple testing
 wings_pvals <- wings %>%
   group_by(sex, measure) %>%
   rstatix::t_test(
@@ -161,6 +168,7 @@ wings_pvals
 With this p-value table, we can now add p-value brackets.
 
 ```{r}
+# plot the p-values with brackets for each comparison
 p <- p + add_pvalue(
     wings_pvals, y = 10, xmin = "xmin", xmax = "xmax", tip.length = 0, 
     fontface = "italic", lineend = "round", bracket.size = 0.5
@@ -176,6 +184,7 @@ the theme uses all bold font so we set `base_fontface = "plain"` so that
 all text is of normal weight.
 
 ```{r}
+# apply theme_prism()
 p <- p + theme_prism(
   base_fontface = "plain", 
   base_line_size = 0.7, 
@@ -186,9 +195,10 @@ p
 
 We'll need to fix the x axes text as the labels are overlapping, and the axes
 use brackets instead of a line. We can fix the labels using line breaks as in 
-the original plot, and also set the axes guides to `prism_bracket`.
+the original plot, and also set the axes guides to `guide_prism_bracket()`.
 
 ```{r}
+# change the x axis to brackets and add line breaks to the axis text
 p <- p + scale_x_discrete(
     guide = guide_prism_bracket(width = 0.15), 
     labels = scales::wrap_format(5)
@@ -197,10 +207,11 @@ p
 ```
 
 Now we'll fix the y axes so that they are identical as in the original Figure 2B.
-We'll also apply the `prism_offset` guide so the axis line doesn't extend 
+We'll also apply the `guide_prism_offset()` guide so the axis line doesn't extend 
 beyond the outermost tick marks. Additionally, we'll adjust the y axis title.
 
 ```{r}
+# adjust the y axis limits and change the style to 'offset'
 p <- p + scale_y_continuous(
     limits = c(-20, 12),
     expand = c(0, 0),
@@ -218,6 +229,7 @@ We need to use `scale_fill_manual()` to change the point fills to match. We'll
 also fix the formatting of the legend text in this step.
 
 ```{r}
+# change the point fill and adjust the legend text formatting
 p <- p + scale_fill_manual(
     values = c("#026FEE", "#87FFFF"), 
     labels = c(expression("Tps"*1^italic("MIC")~"/ +"), 
@@ -250,6 +262,7 @@ bottom right of the plotting area. This is a little tricky to do with facets
 and requires creating a dummy data.frame to get the positioning correct.
 
 ```{r}
+# add n = 10 as a text annotation
 p <- p + geom_text(
     data = data.frame(
       sex = factor("female", levels = c("male", "female")), 
@@ -266,7 +279,8 @@ The final thing to do is just make the legend symbols a bit larger using
 the `overrride.aes` argument in `guide_legend()`.
 
 ```{r}
-p <- p + guides(fill = guide_legend(override.aes = list(size=3)))
+# make the points larger in the legend only
+p <- p + guides(fill = guide_legend(override.aes = list(size = 3)))
 p
 ```
 
@@ -274,8 +288,58 @@ And that's it! Our ggplot graph is almost identical to the original.
 
 ![Figure 2B from Matsushita & Nishimura (2020)](figure_2B.png){ width=70% }
 
-
 [^source]: Matsushita, R., Nishimura, T. Trehalose metabolism confers 
 developmental robustness and stability in Drosophila by regulating glucose 
 homeostasis. Commun Biol 3, 170 (2020). 
 https://doi.org/10.1038/s42003-020-0889-1
+
+## Plot source code
+
+Here is the complete code for the plot.
+
+```{r, eval=FALSE}
+wings_pvals <- wings %>%
+  group_by(sex, measure) %>%
+  rstatix::t_test(
+    percent.change ~ genotype, 
+    p.adjust.method = "BH", 
+    var.equal = TRUE, 
+    ref.group = "Tps1MIC/+"
+  ) %>%
+  rstatix::add_x_position(x = "measure", dodge = 0.9) %>% # dodge must match points
+  mutate(label = c("***", "*", "P = 0.26", "***", "***", "P = 0.65"))
+
+ggplot(wings, aes(x = measure, y = percent.change)) + 
+  ggbeeswarm::geom_beeswarm(aes(fill = genotype), dodge.width = 0.9, shape = 21) + 
+  facet_wrap(~ sex, scales = "free",
+    labeller = labeller(sex = c(male = "\u2642", female = "\u2640"))) + 
+  geom_hline(yintercept = 0, linetype = 2, size = 0.3) + 
+  stat_summary(geom = "crossbar", aes(fill = genotype),fun = mean,
+    position = position_dodge(0.9), colour = "red", size = 0.4, width = 0.7,
+    show.legend = FALSE) + 
+   add_pvalue(wings_pvals, y = 10, xmin = "xmin", xmax = "xmax", 
+              tip.length = 0, fontface = "italic", 
+              lineend = "round", bracket.size = 0.5) + 
+  theme_prism(base_fontface = "plain", base_line_size = 0.7, 
+              base_family = "Arial") + 
+  scale_x_discrete(guide = guide_prism_bracket(width = 0.15), 
+                   labels = scales::wrap_format(5)) + 
+  scale_y_continuous(limits = c(-20, 12), expand = c(0, 0),
+    breaks = seq(-20, 10, 5), guide = "prism_offset") + 
+  labs(y = "% change") + 
+  scale_fill_manual(values = c("#026FEE", "#87FFFF"), 
+    labels = c(expression("Tps"*1^italic("MIC")~"/ +"), 
+               expression("Tps"*1^italic("MIC")))) + 
+  theme(legend.position = "bottom",
+        axis.title.x = element_blank(),
+        strip.text = element_text(size = 14),
+        legend.spacing.x = unit(0, "pt"),
+        legend.text = element_text(margin = margin(r = 20))) + 
+  geom_text(data = data.frame(sex = factor("female", levels = c("male", "female")), 
+                              measure = "Cell Number", 
+                              percent.change = -18.5, 
+                              lab = "(n = 10)"), 
+            aes(label = lab)) + 
+  guides(fill = guide_legend(override.aes = list(size = 3)))
+```
+

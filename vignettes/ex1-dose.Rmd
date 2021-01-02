@@ -72,7 +72,7 @@ Now we begin constructing the plot, layer-by-layer. The order of each step
 below is important and if you mix them around the final plot will not appear
 as it should.
 
-First, we'll just give the `ggplot` function our data.
+First, we'll just give the `ggplot()` function our data.
 
 ```{r}
 # plot the log10(agonist concentration) vs the response
@@ -83,9 +83,9 @@ p <- ggplot(df, aes(x = log.agonist, y = response))
 
 Looking at the original
 plot we can see that the dose response curves underlie the data points, so 
-we'll start by fitting these curves using `geom_smooth`.
+we'll start by fitting these curves using `geom_smooth()`.
 
-We need to define a formula for `geom_smooth` to use. Here we will define a
+We need to define a formula for `geom_smooth()` to use. Here we will define a
 four-parameter log-logistic model manually. See 
 [this notebook](https://rstudio-pubs-static.s3.amazonaws.com/378543_5b5bda32bf0541a485ccc49efbea680a.html) 
 for more info on dose response curves in R.
@@ -111,8 +111,10 @@ at it we can give the two treatment groups more informative names in the legend.
 
 ```{r}
 # apply a manual colour scale to the curves
-p <- p + scale_colour_manual(labels = c("No inhibitor", "Inhibitor"),
-                             values = c("#00167B", "#9FA3FE"))
+p <- p + scale_colour_manual(
+  labels = c("No inhibitor", "Inhibitor"),
+  values = c("#00167B", "#9FA3FE")
+)
 p
 ```
 
@@ -121,18 +123,22 @@ shape and colour depending on the treatment type. To use a separate colour
 scale for the points versus the curves we can use the
 `new_scale_colour()` function from 
 [`ggnewscale`](https://cran.r-project.org/web/packages/ggnewscale/index.html).
-`new_scale_colour()` must be before `geom_point` otherwise the new colour scales
+`new_scale_colour()` must be before `geom_point()` otherwise the new colour scales
 will not work.
 
 ```{r}
 # reset the colour scale, add the data points, then use a new colour scale
 p <- p + ggnewscale::new_scale_colour() +
   geom_point(aes(colour = treatment, shape = treatment), size = 3) + 
-  scale_colour_prism(palette = "winter_bright", 
-                     labels = c("No inhibitor",
-                                "Inhibitor")) + 
-  scale_shape_prism(labels = c("No inhibitor",
-                               "Inhibitor"))
+  scale_colour_prism(
+    palette = "winter_bright", 
+    labels = c("No inhibitor",
+               "Inhibitor")
+  ) + 
+  scale_shape_prism(
+    labels = c("No inhibitor",
+               "Inhibitor")
+  )
 p
 ```
 
@@ -146,10 +152,11 @@ p <- p + theme_prism(palette = "winter_bright", base_size = 16)
 p
 ```
 
-Next we'll change the y axis limits and appearance. The `prism_offset` axis
-guide will shorten the axis line to the outer-most tick marks. This is 
-similar to what is available in the ["Frame and Origin"](https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm) tab
-in Prism.
+Next we'll change the y axis limits and appearance. The `guide_prism_offset()` 
+axis guide will shorten the axis line to the outer-most tick marks. This is 
+similar to what is available in the 
+["Frame and Origin"](https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm) 
+tab in Prism.
 
 ```{r}
 # adjust the axis limits, major tick positions, and axis guide
@@ -166,9 +173,10 @@ complicated by 2 things:
 
 1. We are working with log10 transformed data and want the tick marks to appear
 as they do in the original plot. First we define the major ticks with the 
-`breaks` and `limits` arguments. Then we use the `prism_offset_minor` axis guide
-to add minor tick marks. Finally, we use the `minor_breaks` argument and give 
-it a vector that defines the x axis position of each individual minor tick mark.
+`breaks` and `limits` arguments. Then we use the `guide_prism_offset_minor()` 
+axis guide to add minor tick marks. Finally, we use the `minor_breaks` argument 
+and give it a vector that defines the x axis position of each individual minor 
+tick mark.
 2. We want the tick labels to be in the format **10^-7^** but at the moment they
 are in the format -7. To do this we feed the `label` argument a function which 
 defines a math expression will take the _number_ -7 and convert it into the
@@ -201,10 +209,12 @@ instead of beside it.
 ```{r}
 # remove the y axis title and legend title, change the x axis title and
 # move the legend to the top left
-p <- p + theme(axis.title.y = element_blank(),
-               legend.title = element_blank(),
-               legend.position = c(0.05, 0.95),
-               legend.justification = c(0.05, 0.95)) + 
+p <- p + theme(
+  axis.title.y = element_blank(),
+  legend.title = element_blank(),
+  legend.position = c(0.05, 0.95),
+  legend.justification = c(0.05, 0.95)
+) + 
   labs(x = "[Agonist], M")
 p
 ```
@@ -212,6 +222,8 @@ p
 And that's it! Our ggplot graph is almost identical to the original.
 
 ![Original plot](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
+
+## Plot source code
 
 Here is the complete code for the plot (remember the order of layers is important).
 
@@ -232,7 +244,8 @@ ggplot(df, aes(x = log.agonist, y = response)) +
                      labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
   theme_prism(palette = "winter_bright", base_size = 16) + 
-  scale_y_continuous(limits = c(-100, 500), breaks = seq(-100, 500, 100),
+  scale_y_continuous(limits = c(-100, 500), 
+                     breaks = seq(-100, 500, 100),
                      guide = "prism_offset") + 
   scale_x_continuous(
     limits = c(-10, -3), 
