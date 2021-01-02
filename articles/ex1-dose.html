@@ -129,7 +129,7 @@
 <p>First, we load the necessary packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># for the graph</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggprism</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggnewscale</span><span class="op">)</span>
 
@@ -239,7 +239,6 @@
 <span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p><img src="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png" style="width:70.0%"></p>
 <p>Then we’ll change the x axis limits and appearance. This step is somewhat complicated by 2 things:</p>
 <ol style="list-style-type: decimal">
 <li>We are working with log10 transformed data and want the tick marks to appear as they do in the original plot. First we define the major ticks with the <code>breaks</code> and <code>limits</code> arguments. Then we use the <code>prism_offset_minor</code> axis guide to add minor tick marks. Finally, we use the <code>minor_breaks</code> argument and give it a vector that defines the x axis position of each individual minor tick mark.</li>
@@ -274,7 +273,10 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"[Agonist], M"</span><span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex1-dose_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<p>And that’s it!</p>
+<p>And that’s it! Our ggplot graph is almost identical to the original.</p>
+<div class="figure">
+<img src="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png" style="width:70.0%" alt=""><p class="caption">Original plot</p>
+</div>
 <p>Here is the complete code for the plot (remember the order of layers is important).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dose_resp</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">min</span> <span class="op">+</span> <span class="op">(</span><span class="op">(</span><span class="va">max</span> <span class="op">-</span> <span class="va">min</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">hill_coefficient</span> <span class="op">*</span> <span class="op">(</span><span class="va">ec50</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
