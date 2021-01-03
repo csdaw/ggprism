@@ -188,8 +188,8 @@ We'll define a base plot to see `scale_shape_prism()` in action.
 base <- ggplot(mpg, aes(x = displ, y = cty)) +
   geom_point(aes(colour = class, fill = class, shape = class)) + 
   theme_prism(base_size = 11, base_fontface = "plain", border = TRUE) +
-  theme(legend.position = c(0.8, 0.75),
-        plot.subtitle = element_text(face = "bold"),
+  theme(plot.subtitle = element_text(face = "bold"),
+        legend.position = c(0.8, 0.75),
         legend.key.height = unit(10, "pt")) +
   coord_cartesian(clip = "off") + 
   scale_colour_prism(palette = "floral") + 
