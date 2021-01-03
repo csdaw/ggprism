@@ -31,7 +31,7 @@ base +
     label = c("4 cyl", "6 cyl", "8 cyl")
   )
 
-## change colour labels in legend with a function
+## change fill labels in legend with a function
 base +
   scale_fill_prism(
     palette = "candy_bright",
@@ -39,7 +39,7 @@ base +
     label = function(x) paste(x, "cyl")
   )
 
-## change order of colours in legend
+## change order of fills in legend
 base +
   scale_fill_prism(
     palette = "candy_bright",
@@ -48,7 +48,7 @@ base +
     breaks = c(8, 4, 6)
   )
 
-## to change which colour is assigned to which cyl
+## to change which fill is assigned to which cyl
 ## you need to change the factor levels in the underlying data
 base <- ggplot(mtcars, aes(x = mpg,
                            fill = factor(cyl, levels = c(6, 4, 8)))) +

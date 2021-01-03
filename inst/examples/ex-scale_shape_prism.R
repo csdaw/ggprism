@@ -8,7 +8,7 @@ base <- ggplot(mtcars, aes(x = wt, y = mpg,
                            shape = factor(cyl))) +
   geom_point(size = 3)
 
-## works pretty much the same as ggplot2 scale_colour_manual
+## works pretty much the same as ggplot2 scale_shape_manual
 base +
   scale_shape_prism(palette = "complete")
 
