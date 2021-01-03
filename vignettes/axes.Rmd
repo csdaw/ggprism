@@ -3,23 +3,476 @@ title: "Changing Axes"
 output: 
   rmarkdown::html_vignette:
     fig_width: 6
-    fig_height: 4
+    fig_height: 3
 vignette: >
   %\VignetteIndexEntry{Changing Axes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+```{r}
 library(ggplot2)
 library(ggprism)
+library(patchwork)
 ```
 
-Placeholder vignette. WIP.
+The ["Frame and Origin"](https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm) 
+tab in Prism allows you to change the appearance of the graph's axes. Some of 
+these options have been implemented in `ggprism` as axis guides. This vignette
+will go through how to use the 4 axis guides included in this package.
+
+## Minor ticks
+
+Adding minor ticks to graphs is very simple. There are two mains ways, using
+the continuous scale functions such as `scale_x_continuous()` or using the 
+`guides()` function, both from `ggplot2`. Note that `guide_prism_minor()`
+_does not_ work with discrete axes as they do not have minor breaks.
+
+```{r}
+# Compare methods for adding minor ticks
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = guide_prism_minor())
+p2 <- p + guides(y = guide_prism_minor())
+
+p1 + p2
+```
+
+Note that if you are happy with the defaults you can refer to the axis guide
+as a string instead of calling the function.
+
+```{r}
+# Refer to guide as string
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = "prism_minor")
+p2 <- p + guides(y = "prism_minor")
+
+p1 + p2
+```
+
+To adjust the number of minor ticks, you just change the number of minor breaks
+using the `minor_breaks` argument of the continuous scale functions. The vector
+you give the `minor_breaks` argument will define the position of each minor 
+tick.
+
+```{r}
+# Compare 1 minor ticks (default) vs 4 minor ticks per major tick
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
+               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = "prism_minor",
+                             limits = c(0, 30),
+                             expand = c(0, 0))
+p2 <- p + scale_y_continuous(guide = "prism_minor", 
+                             limits = c(0, 30),
+                             expand = c(0, 0),
+                             minor_breaks = seq(0, 30, 2))
+p1 + p2
+```
+
+To get log10 minor ticks, just use a log10 scale and then modify the n
+`minor_breaks` argument as above. Remember the vector you give the 
+`minor_breaks` argument will define the position of each minor tick.
+
+```{r}
+p <- ggplot(msleep, aes(bodywt, brainwt)) +
+  geom_point(na.rm = TRUE) + 
+  theme_prism()
+
+p1 <- p + scale_x_log10(limits = c(1e0, 1e4),
+                        guide = "prism_minor")
+p2 <- p + scale_x_log10(limits = c(1e0, 1e4),
+                        minor_breaks = rep(1:9, 4)*(10^rep(0:3, each = 9)),
+                        guide = "prism_minor")
+p1 + p2
+```
+
+You can use the `theme()` function with the `prism.ticks.length` argument to
+change the length of the minor ticks. This works in the same way as the 
+`axis.ticks.length` argument to change the length of major ticks.
+
+```{r}
+# Change minor tick length
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
+               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+  theme_prism() + 
+  scale_y_continuous(guide = "prism_minor", 
+                             limits = c(0, 30),
+                             expand = c(0, 0),
+                             minor_breaks = seq(0, 30, 2))
+
+p1 <- p + theme(legend.position = "none")
+p2 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(20, "pt"))
+
+p1 + p2
+```
+
+You can change the direction of minor ticks just by making their length negative.
+
+```{r}
+# Change minor tick length
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
+               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+  theme_prism() + 
+  scale_y_continuous(guide = "prism_minor", 
+                             limits = c(0, 30),
+                             expand = c(0, 0),
+                             minor_breaks = seq(0, 30, 2))
+
+p1 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(20, "pt"))
+p2 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(-20, "pt"))
+
+p1 + p2
+```
+
+The colour (and other aesthetic attributes) of minor ticks will change when 
+you change the colour of major ticks using the `axis.ticks` argument of the 
+`theme()` function.
+
+```{r}
+# Change how ticks look
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
+               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+  theme_prism() + 
+  scale_y_continuous(guide = "prism_minor", 
+                             limits = c(0, 30),
+                             expand = c(0, 0),
+                             minor_breaks = seq(0, 30, 2))
+
+p1 <- p + theme(legend.position = "none")
+p2 <- p + theme(legend.position = "none",
+                axis.ticks.y = element_line(colour = "blue", 
+                                          size = 2, 
+                                          lineend = "round"))
+
+p1 + p2
+```
+
+## Offset axis
+
+One popular axis option in Prism is the offset axis. This has been implemented
+in `ggprism` as the `guide_prism_offset()` function. This function works by
+only drawing the axis line to the outer most tick mark (either
+major or minor tick). Technically, it works with both continuous and discrete
+scales, but it should probably only be used with continuous scales. 
+
+If you want an offset axis with minor ticks, see the `guide_prism_offset_minor()`
+function below.
+
+```{r}
+# Show that offset axis looks better when you specify the axis limits
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = "prism_offset")
+p2 <- p + scale_y_continuous(limits = c(0, 40), guide = "prism_offset")
+
+p1 + p2
+```
+
+As with a normal ggplot, you can adjust the appearance of the offset axis line
+with the `theme()` function and the `axis.line` argument.
+
+```{r}
+# Change appearance of offset axis
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset")
+
+p1 <- p + theme(legend.position = "none")
+p2 <- p + theme(legend.position = "none",
+                axis.line.y = element_line(colour = "blue", 
+                                           size = 2, 
+                                           lineend = "round"))
+
+p1 + p2
+```
+
+
+## Offset axis with minor ticks
+
+The `guide_prism_offset_minor()` function is similar to `guide_prism_minor()`
+except the axis line is offset.
+
+```{r}
+# Compare prism_minor with prism_offset_minor
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = "prism_offset")
+p2 <- p + scale_y_continuous(guide = "prism_offset_minor")
+
+p1 + p2
+```
+
+As with `guide_prism_offset()`, the axis tends to look better if you explicitly
+set the axis limits.
+
+```{r}
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(guide = "prism_offset_minor")
+p2 <- p + scale_y_continuous(limits = c(0, 40), 
+                             guide = "prism_offset_minor")
+
+p1 + p2
+```
+As with `guide_prism_minor()` you can change the number of minor ticks by
+adjusting the `minor_breaks`.
+
+```{r}
+# Compare 1 minor tick to 4 minor ticks per major
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p1 <- p + scale_y_continuous(limits = c(0, 40), 
+                             guide = "prism_offset_minor")
+p2 <- p + scale_y_continuous(limits = c(0, 40), 
+                             minor_breaks = seq(0, 40, 2),
+                             guide = "prism_offset_minor")
+
+p1 + p2
+```
+
+And as with `guide_prism_minor()` you can change the length of minor ticks by
+adjusting the `prism_ticks_length` argument of the `theme()` function.
+
+```{r}
+# Change minor tick length and direction
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  scale_y_continuous(limits = c(0, 40), 
+                             minor_breaks = seq(0, 40, 2),
+                             guide = "prism_offset_minor")
+
+p1 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(20, "pt"))
+p2 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(-20, "pt"))
+
+p1 + p2
+```
+
+Lastly, the colour (and other aesthetic attributes) of minor ticks will change 
+when you change the colour of major ticks using the `axis.ticks` argument of the 
+`theme()` function.
+
+```{r}
+# Change minor tick colour, thickness, and lineend
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+  geom_boxplot(aes(fill = factor(supp))) + 
+  theme_prism() + 
+  scale_y_continuous(limits = c(0, 40), 
+                             minor_breaks = seq(0, 40, 2),
+                             guide = "prism_offset_minor")
+
+p1 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(20, "pt"))
+p2 <- p + theme(legend.position = "none",
+                prism.ticks.length.y = unit(20, "pt"),
+                axis.ticks.y = element_line(colour = "blue",
+                                           size = 2,
+                                           lineend = "round"))
+
+p1 + p2
+```
+
+## Brackets axis
+
+Brackets are not an axis option in GraphPad Prism. Rather the idea comes 
+from the `lemon` package functions `brackets_horisontal()` and 
+`brackets_vertical`. I felt the idea fit well in `ggprism` therefore I 
+have re-implemented them as the `guide_prism_brackets()` axis guide.
+
+This axis guide works best with discrete axes.
+
+```{r}
+# Show bracket axis guide
+p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset")
+
+p2 <- p1 + scale_x_discrete(guide = "prism_bracket")
+
+p1 + p2
+```
+
+The guide works fine with flipped plots.
+
+```{r}
+# Show bracket axis guide with flipped plot
+p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset") + 
+  scale_x_discrete(guide = "prism_bracket")
+
+p2 <- p1 + coord_flip()
+
+p1 + p2
+```
+
+
+By default, the function tries to guess how wide the brackets should be. 
+However you can control the bracket width with the `width` argument. Try numbers
+between 0 and 1. In this example we make the width of `geom_jitter()` and the
+width of `guide_prism_bracket()` both 0.2 which seems to work well.
+
+```{r}
+# Control bracket width
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset")
+
+p1 <- p + scale_x_discrete(guide = "prism_bracket")
+p2 <- p + scale_x_discrete(guide = guide_prism_bracket(width = 0.2))
+
+p1 + p2
+```
+
+You can change the bracket direction with the `outside` argument. By default,
+`outside = TRUE` which means the brackets point outward.
+
+```{r}
+# Compare brackets outside or inside
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset")
+
+p1 <- p + scale_x_discrete(guide = "prism_bracket")
+p2 <- p + scale_x_discrete(guide = guide_prism_bracket(outside = FALSE))
+
+p1 + p2
+```
+
+Making the brackets point inside makes the space between the axis text and the 
+brackets smaller. You can increase this distance again by changing the margin
+of the relevent `axis.text` element.
+
+```{r}
+# Adjust text spacing with inside pointing brackets
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  scale_y_continuous(limits = c(0, 40), guide = "prism_offset") + 
+  scale_x_discrete(guide = guide_prism_bracket(outside = FALSE))
+
+p1 <- p + theme(legend.position = "none")
+p2 <- p + theme(legend.position = "none",
+                axis.text.x = element_text(margin = margin(t = 10)))
+
+p1 + p2
+```
+
+## Border with minor ticks
+
+Say you want a graph, with a border, and with minor ticks. There are a couple
+of ways one might do this, one of which is outlined here. The other way 
+involved messing around with secondary axes and is buggy so we'll ignore it 
+for now.
+
+First we define a base plot.
+
+```{r, fig.asp=0.9, fig.width=5}
+# define a base plot
+base <- ggplot(mpg, aes(x = displ, y = cty)) +
+  geom_point(aes(colour = class))
+
+base
+```
+
+Then we'll apply `theme_prism()` with a border, move the legend into the 
+plotting area, and turn clipping off so the border thickness is accurate.
+
+```{r, fig.asp=0.9, fig.width=5}
+# apply theme_prism and turn clipping off for the border
+p <- base + theme_prism(border = TRUE) +
+  theme(legend.position = c(0.8, 0.75)) +
+  coord_cartesian(clip = "off")
+p
+```
+
+Now we'll add minor ticks to both primary axes.
+
+```{r, fig.asp=0.9, fig.width=5}
+# add axis guides
+p <- p + guides(x = "prism_minor", y = "prism_minor")
+p
+```
+
+One way to add minor ticks all around the border is to use the 
+`annotation_ticks()` function in `ggprism`. This is the way I would recommend
+to avoid the issues that arise using secondary axes.
+
+Here we add ticks as a plot annotation (i.e. not a proper axis) with the
+following arguments:
+
+1. Put the ticks on the top and right sides
+1. Draw both major and minor ticks (as opposed to just `"minor"` or `"major"`)
+1. Make the thickness = 1
+1. Make them point outside (must turn clipping off!)
+1. Try to match the lengths with the other tick marks (bit of trial and error)
+
+```{r, fig.asp=0.9, fig.width=5}
+# add tick annotations
+p_annot <- p + annotation_ticks(sides = "tr", type = "both", size = 1,
+                                outside = TRUE,
+                                tick.length = unit(14/2, "pt"),
+                                minor.length = unit(14/4, "pt"))
+p_annot
+```
+
+You can adjust the number of minor ticks using the continuous scale 
+functions as before.
+
+```{r, fig.asp=0.9, fig.width=5}
+# tick annotations will mirror adjustments to the actual axis ticks
+p_annot <- p_annot + scale_x_continuous(minor_breaks = seq(1, 7, 0.2))
+p_annot
+```
