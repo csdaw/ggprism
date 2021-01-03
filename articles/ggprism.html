@@ -140,14 +140,14 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="ggprism_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="ggprism_files/figure-html/unnamed-chunk-2-1.png" width="768"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compare some of the available theme palettes</span>
 <span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"mustard_field"</span>, base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>
 <span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"flames"</span>, base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>
 
 <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></code></pre></div>
-<p><img src="ggprism_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<p><img src="ggprism_files/figure-html/unnamed-chunk-2-2.png" width="768"></p>
 </div>
 <div id="colours-fills-and-shapes" class="section level2">
 <h2 class="hasAnchor">
@@ -167,7 +167,7 @@
   <span class="fu"><a href="../reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"flames"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="ggprism_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="ggprism_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Try using the same palette for colour, fill, and theme</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -182,7 +182,7 @@
   <span class="fu"><a href="../reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"neon"</span><span class="op">)</span>
 
 <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></code></pre></div>
-<p><img src="ggprism_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<p><img src="ggprism_files/figure-html/unnamed-chunk-3-2.png" width="768"></p>
 <p>Additionally, <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> includes some shape scales which roughly match the shapes (and order of shapes) used in GraphPad Prism.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compare ggplot2 default shape order with ggprism default shape order</span>
@@ -195,7 +195,7 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="ggprism_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="ggprism_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
 </div>
 <div id="axes" class="section level2">
 <h2 class="hasAnchor">
