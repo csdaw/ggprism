@@ -187,13 +187,14 @@
 <code class="sourceCode R"><span class="co"># plot the wing measurement vs the percentage change compared to</span>
 <span class="co"># the heterozygous mutants</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">wings</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">measure</span>, y <span class="op">=</span> <span class="va">percent.change</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>First we will plot the individual data points with random jitter using <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm()</a></code> from the <a href="https://github.com/eclarke/ggbeeswarm"><code>ggbeeswarm</code></a> package. We will also colour the points and adjust their horizontal position them by genotype.</p>
+<p>First we will plot the individual data points with random jitter using <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm()</a></code> from the <a href="https://github.com/eclarke/ggbeeswarm"><code>ggbeeswarm</code></a> package. The points will look too spaced out here, but don’t worry they will become more compact in the following step. We will also colour the points and adjust their horizontal position them by genotype.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># add the data points and fill according to the genotype</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm</a></span><span class="op">(</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">genotype</span><span class="op">)</span>, 
   dodge.width <span class="op">=</span> <span class="fl">0.9</span>, 
-  shape <span class="op">=</span> <span class="fl">21</span>
+  shape <span class="op">=</span> <span class="fl">21</span>,
+  cex <span class="op">=</span> <span class="fl">3.5</span>
 <span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
