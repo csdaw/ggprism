@@ -1,9 +1,6 @@
 ---
 title: "Getting Started"
-output: 
-  rmarkdown::html_vignette:
-    fig_width: 8
-    fig_height: 3
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
@@ -44,7 +41,7 @@ which correspond to the colour schemes available in Prism. Go to the
 [All Palettes](https://csdaw.github.io/ggprism/articles/web-only/palettes.html)
 page to see all the available palettes.
 
-```{r}
+```{r, fig.width=8, fig.height=3}
 # Compare theme_grey() to theme_prism()
 p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
@@ -72,7 +69,7 @@ See the
 [this guide](https://csdaw.github.io/ggprism/articles/colours.html) for more
 detailed usage examples.
 
-```{r}
+```{r, fig.width=8, fig.height=3}
 # Compare some colour and fill palettes with default theme_prism()
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(colour = factor(supp), fill = factor(supp))) + 
@@ -104,7 +101,7 @@ p3 + p4
 Additionally, `scale_shape_prism()` includes some shape scales which roughly 
 match the shapes (and order of shapes) used in GraphPad Prism.
 
-```{r}
+```{r, fig.width=8, fig.height=3}
 # Compare ggplot2 default shape order with ggprism default shape order
 p1 <- ggplot(msleep[complete.cases(msleep), ], 
              aes(x = sleep_rem, y = sleep_total)) + 
@@ -128,7 +125,7 @@ See the
 [this guide](https://csdaw.github.io/ggprism/articles/axes.html) for more
 detailed usage examples.
 
-```{r, fig.height=6, fig.width=7}
+```{r, fig.width=7, fig.height=6}
 # Show the 4 different axis guides included in ggprism
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
@@ -161,7 +158,7 @@ See the
 [this guide](https://csdaw.github.io/ggprism/articles/pvalues.html) for more
 detailed usage examples.
 
-```{r, fig.width=6}
+```{r, fig.width=6, fig.height=3}
 # Make a p-value table
 df <- data.frame(
   group1 = "OJ",

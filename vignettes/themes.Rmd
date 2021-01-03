@@ -1,8 +1,6 @@
 ---
 title: "Themes"
-output: 
-  rmarkdown::html_vignette:
-    fig_height: 3
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Themes}
   %\VignetteEngine{knitr::rmarkdown}
@@ -61,7 +59,7 @@ p1 + p2
 The overall theme text size is adjusted with the `base_size` 
 argument, as with the standard ggplot2 themes such as `theme_bw()`. 
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # adjust overall theme size
 p1 <- base + theme_prism(base_size = 10)
 p2 <- base + theme_prism(base_size = 16)
@@ -72,7 +70,7 @@ p1 + p2
 By default the `base_line_size` and `base_rect_size` arguments scales with the
 `base_size`, but these can be overridden.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # adjust overall theme size with specific line size
 p1 <- base + theme_prism(base_size = 14)
 p2 <- base + theme_prism(base_size = 14, base_line_size = 0.2)
@@ -86,7 +84,7 @@ You can also change the `base_fontface` (e.g. bold, plain, italic) and
 `base_family` (crossplatform compatibility fonts e.g. serif, sans, mono, 
 or specific fonts e.g. Arial).
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # change fontface or font family
 p1 <- base + theme_prism(base_fontface = "plain")
 p2 <- base + theme_prism(base_family = "mono")
@@ -97,7 +95,7 @@ p1 + p2
 `theme_prism()` includes the `axis_text_angle` argument which is a convenient
 way to rotate the x axis text (allowed angles are: 0, 45, 90, or 270).
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # change x axis text angle
 p1 <- base + theme_prism(axis_text_angle = 45)
 p2 <- base + theme_prism(axis_text_angle = 90)
@@ -109,7 +107,7 @@ Lastly, you can put a square border around the plot using the `border` argument.
 Unfortunately, you need to turn of clipping in order for this to work/appear 
 correct.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # add a border and adjust its thickness
 p1 <- base + theme_prism(border = TRUE) + 
   coord_cartesian(clip = "off")
@@ -130,7 +128,7 @@ names(ggprism_data$themes)
 
 Using the palettes is simple.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # try out some different theme palettes
 p1 <- base + theme_prism(palette = "purple_passion")
 p2 <- base + theme_prism(palette = "candy_bright")
@@ -151,7 +149,7 @@ preview_theme("flames")
 Note that several of the palettes happen to be identical. This is not a bug
 but just how they were designed in GraphPad Prism.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # compare two identical theme palettes
 p1 <- base + theme_prism(palette = "black_and_white")
 p2 <- base + theme_prism(palette = "plasma")
@@ -162,7 +160,7 @@ p1 + p2
 It is good to try matching `theme_prism()` palettes with their corresponding
 `scale_colour_prism()` and/or `scale_fill_prism()` palettes.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # try out two more theme palettes and their corresponding colour palettes
 p1 <- base + theme_prism(palette = "summer") + 
   scale_colour_prism(palette = "summer")
@@ -214,7 +212,7 @@ theme_new <- function(base_size = 14,
 }
 ```
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # compare theme_prism() and our new theme function
 p1 <- base + theme_prism()
 p2 <- base + theme_new()
