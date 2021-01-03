@@ -1,25 +1,214 @@
 ---
 title: "Colour, Fill, and Shape Palettes"
-output: 
-  rmarkdown::html_vignette:
-    fig_width: 6
-    fig_height: 4
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Colour, Fill, and Shape Palettes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+```{r}
 library(ggplot2)
 library(ggprism)
+library(patchwork)
 ```
 
-Placeholder vignette. WIP.
+`ggprism` includes colour and fill scales with various palettes that mirror
+the colour schemes available in GraphPad Prism. 
+
+**Disclaimer:** some of these palettes are
+quite nice, some are pretty ugly and not useful, and most are not colour blind 
+friendly as far as I know (except `palette = "colorblind_safe"`). It would 
+probably be safer to use other colour scales e.g. those in `RColorBrewer` for 
+any serious application or work to be published. 
+
+In any case, these scales are used to colour the 
+data elements of ggplots and can be used separately or together with 
+`theme_prism()`. Additionally, a shape scale with 3 palettes is included which
+is similar to the shapes available in Prism. This vignette outlines how to
+use `scale_colour_prism()` (or `scale_color_prism()`), `scale_fill_prism()`,
+and `scale_shape_prism()`.
+
+## Colour scales
+
+First we'll create a base plot.
+
+```{r, fig.width=3.6, fig.asp=0.9}
+# create a base plot to compare colour scales
+base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(aes(colour = factor(cyl), shape = factor(cyl)), size = 3) + 
+  theme_prism() + 
+  theme(legend.position = c(0.8, 0.8))
+
+base
+```
+
+`scale_colour_prism()` (US spelling also works) functions pretty much 
+identically to `scale_colour_manual()` from `ggplot2`. The default palette for
+`scale_colour_prism()` is `"colors"`.
+
+```{r, fig.width=7.2, fig.asp=0.5}
+# compare manual colour scale with prism colour scale
+p1 <- base + scale_colour_manual(values = c("blue", "red", "green3"))
+p2 <- base + scale_colour_prism()
+
+p1 + p2
+```
+
+There are several different colour palettes that are built into 
+`scale_colour_prism()`.
+
+```{r}
+# see names and lengths of available scale_colour_prism() palettes
+lengths(ggprism_data$colour_palettes)
+```
+
+Using the palettes is simple.
+
+```{r, fig.width=7.2, fig.asp=0.5}
+# try out some different colour palettes
+p1 <- base + scale_colour_prism(palette = "purple_passion")
+p2 <- base + scale_colour_prism(palette = "candy_bright")
+
+p1 + p2
+```
+
+You can preview a single palette using the `preview_theme()` function. It shows 
+a sample plot with the colour scale applied (as well as `scale_fill_prism()` and
+`theme_prism()`). See 
+[this page](https://csdaw.github.io/ggprism/articles/web-only/palettes.html) for
+images of most available colour palettes.
+
+```{r, fig.width=4.5}
+preview_theme("flames")
+```
+
+## Fill scales
+
+First we'll create a base plot.
+
+```{r, fig.width=3.6, fig.asp=0.9}
+# create a base plot to compare fill scales
+base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(aes(fill = factor(cyl), shape = factor(cyl)), size = 3) + 
+  theme_prism() + 
+  theme(legend.position = c(0.8, 0.8)) + 
+  scale_shape_prism(palette = "filled")
+
+base
+```
+
+`scale_fill_prism()` functions pretty much 
+identically to `scale_fill_manual()` from `ggplot2`. The default palette for
+`scale_fill_prism()` is `"colors"`.
+
+```{r, fig.width=7.2, fig.asp=0.5}
+# compare manual fill scale with prism fill scale
+p1 <- base + scale_fill_manual(values = c("blue", "red", "green3"))
+p2 <- base + scale_fill_prism()
+
+p1 + p2
+```
+
+There are several different fill palettes that are built into 
+`scale_fill_prism()`.
+
+```{r}
+# see names and lengths of available scale_fill_prism() palettes
+lengths(ggprism_data$fill_palettes)
+```
+
+Using the palettes is simple.
+
+```{r, fig.width=7.2, fig.asp=0.5}
+# try out some different fill palettes
+p1 <- base + scale_fill_prism(palette = "colorblind_safe")
+p2 <- base + scale_fill_prism(palette = "neon")
+
+p1 + p2
+```
+
+You can preview a single palette using the `preview_theme()` function. It shows 
+a sample plot with the colour scale applied (as well as `scale_colour_prism()` and
+`theme_prism()`). See 
+[this page](https://csdaw.github.io/ggprism/articles/web-only/palettes.html) for
+images of most available fill palettes.
+
+```{r, fig.width=4.5}
+preview_theme("diazo")
+```
+
+## Shape scales
+
+The order of shapes used in GraphPad Prism is slightly different to `ggplot2`,
+hence 3 different shape palettes are included in the `ggprism` function
+`scale_shape_prism()`.
+
+We can see the names and lengths of these shape palettes. Naturally, 
+`"default"` is the default palette and does not include any shape with a fill. 
+The `"filled"` palette should be used when you also want to use a fill scale, 
+as the first 5 symbols have a fill. The `"complete"` palette symbols 5-9 have
+a fill.
+
+```{r}
+# see names and lengths of available scale_shape_prism() palettes
+lapply(ggprism_data$shape_palettes, nrow)
+```
+
+We can also define a function to see all the shapes in a specific palette.
+
+```{r, fig.width=3.6, fig.asp=0.9}
+# define a function for convenience
+show_shapes <- function(palette) {
+  df_shapes <- ggprism_data$shape_palettes[[palette]][, -1]
+  df_shapes$pch_f <- factor(df_shapes$pch, levels = df_shapes$pch)
+
+  ggplot(df_shapes, aes(x = 0, y = 0, shape = pch)) +
+    geom_point(aes(shape = pch), size = 5, fill = 'red') +
+    scale_shape_identity() +
+    facet_wrap(~ pch_f) +
+    theme_void()
+}
+
+# show the shapes in the palette "complete"
+show_shapes("complete")
+```
+
+We'll define a base plot to see `scale_shape_prism()` in action.
+
+```{r, fig.width=3.6, fig.asp=0.9}
+# create a base plot to compare shape scales
+base <- ggplot(mpg, aes(x = displ, y = cty)) +
+  geom_point(aes(colour = class, fill = class, shape = class)) + 
+  theme_prism(base_size = 11, base_fontface = "plain", border = TRUE) +
+  theme(legend.position = c(0.8, 0.75),
+        plot.subtitle = element_text(face = "bold"),
+        legend.key.height = unit(10, "pt")) +
+  coord_cartesian(clip = "off") + 
+  scale_colour_prism(palette = "floral") + 
+  scale_fill_prism(palette = "floral")
+
+base
+```
+
+Then we'll compare the 3 shape palettes to the `ggplot2` base plot.
+
+```{r, fig.width=7, fig.height=6}
+# compare shape scales
+p1 <- base
+p2 <- base + scale_shape_prism(palette = "default") + 
+  labs(subtitle = "default")
+p3 <- base + scale_shape_prism(palette = "filled") + 
+  labs(subtitle = "filled")
+p4 <- base + scale_shape_prism(palette = "complete") + 
+  labs(subtitle = "complete")
+
+(p1 + p2) / (p3 + p4)
+```
