@@ -1,25 +1,61 @@
 ---
 title: "Adding p-values"
-output: 
-  rmarkdown::html_vignette:
-    fig_width: 6
-    fig_height: 4
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Adding p-values}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+```{r}
 library(ggplot2)
 library(ggprism)
+
+library(dplyr)
+library(tidyr)
+library(rstatix)
 ```
 
-Placeholder vignette. WIP.
+Arguably one of the most popular features of GraphPad Prism is adding p-values
+to plots. Indeed in [Prism 9](https://www.graphpad.com/support/faq/prism-900-release-notes/), 
+GraphPad have added a feature to automatically
+perform pairwise comparisons and add the resulting p-values with brackets to
+the graph.
+
+`ggprism` includes the `add_pvalue()` function to add p-values with or without
+brackets to ggplots. This vignette will go through the many ways in which this
+function can be used.
+
+This function is a re-written version of `stat_pvalue_manual()` from the 
+[`ggpubr` package](https://github.com/kassambara/ggpubr), which itself is 
+based on the `geom_signif()` function from the 
+[`ggsignif` package](https://github.com/const-ae/ggsignif). Compared to
+`stat_pvalue_manual()`, the `add_pvalue()` function is easier to use, is more
+robust with less dependencies, and has more customisable brackets.
+
+## Basic use (brackets)
+
+## Basic use (no brackets)
+
+## Change the look
+
+## Using the `rstatix` package
+
+## Many more examples
+
+### Compare two means
+
+### Compare mean vs reference
+
+### Multiple pairwise comparisons
+
+### Grouped pairwise comparisons
+
+### Facets
