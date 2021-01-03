@@ -1,7 +1,5 @@
 ---
 title: "All `ggprism` Palettes"
-author: "Charlotte Dawson"
-date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     fig_width: 6

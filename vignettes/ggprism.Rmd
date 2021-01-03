@@ -32,14 +32,14 @@ guides with more detailed examples of how to use each function.
 
 The most useful function in this package is `theme_prism()` which is a 
 'complete' theme which works just like any other standard ggplot2 theme e.g. 
-`theme_grey()`. See
-[this guide](https://csdaw.github.io/ggprism/articles/themes.html) for more
-detailed usage examples.
-
-The standard theme palette is `"black_and_white"` but there are many others
-which correspond to the colour schemes available in Prism. Go to the 
+`theme_grey()`. The standard theme palette is `"black_and_white"` but there are 
+many others which correspond to the colour schemes available in Prism. Go to the 
 [All Palettes](https://csdaw.github.io/ggprism/articles/web-only/palettes.html)
 page to see all the available palettes.
+
+See
+[this guide](https://csdaw.github.io/ggprism/articles/themes.html) for more
+detailed usage examples.
 
 ```{r, fig.width=8, fig.height=3}
 # Compare theme_grey() to theme_prism()
@@ -145,7 +145,7 @@ p4 <- p + scale_y_continuous(limits = c(0, 40), guide = "prism_offset_minor")
 (p1 + p2) / (p3 + p4)
 ```
 
-## P-values
+## p-values
 
 `ggprism` includes the `add_pvalue()` function to easily add p-values from
 a simple data.frame to your plots. This function is a re-written version of 
