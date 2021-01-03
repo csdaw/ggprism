@@ -27,6 +27,7 @@ library(ggnewscale)
 <!-- badges: start -->
 [![R build status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
 [![Codecov test coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://codecov.io/gh/csdaw/ggprism?branch=master)
+[![Website https://csdaw.github.io/ggprism](https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg)](https://csdaw.github.io/ggprism/)
 <!-- badges: end -->
 
 The `ggprism` package provides various themes, palettes, and other useful 
@@ -34,7 +35,7 @@ functions to customise ggplots and give them the _'GraphPad Prism'_ look.
 
 ## Install
 
-Install the development version from github.
+Install the development version from GitHub.
 
 ```{r, eval=FALSE, echo=TRUE}
 remotes::install_github("csdaw/ggprism")
@@ -48,13 +49,22 @@ Detailed examples and instructions can be found below and on the
 [`ggprism` website](https://csdaw.github.io/ggprism/).
 
 ```{r, echo=TRUE}
+library(ggplot2)
+library(ggprism)
+
 tg <- ToothGrowth
 tg$dose <- as.factor(tg$dose)
 
-base <- ggplot(tg, aes(x = dose, y = len, colour = dose, fill = dose)) + 
-  geom_violin(trim = FALSE) + 
-  geom_boxplot(width = 0.2, colour = "black") + 
+base <- ggplot(tg, aes(x = dose, y = len)) + 
+  geom_violin(aes(colour = dose, fill = dose), trim = FALSE) + 
+  geom_boxplot(aes(fill = dose), width = 0.2, colour = "black") + 
   scale_y_continuous(limits = c(-5, 40))
+
+p_vals <- tibble::tribble(
+  ~group1, ~group2, ~p.adj,   ~y.position,
+  "0.5",   "1",     8.80e-14, 35,
+  "0.5",   "2",     1.27e-7,  39
+)
 ```
 
 ```{r ex, echo=TRUE, fig.show='hold'}
@@ -63,21 +73,26 @@ base
 base + 
   scale_color_prism("floral") + 
   scale_fill_prism("floral") + 
-  theme_prism(base_size = 16) + 
   guides(y = "prism_offset_minor") + 
-  theme(legend.position = "none")
+  theme_prism(base_size = 16) + 
+  theme(legend.position = "none") + 
+  add_pvalue(p_vals, label = "p.adj", tip.length = 0, label.size = 4)
 ```
 
 ## Feedback and Contributions
 
-Any feedback, issues, suggestions, and contributions are welcome and should be 
-shared via [Github issues](https://github.com/csdaw/ggprism/issues). Bug reports
-should be submitted with a 
-minimal reproducible example, e.g. using the 
+Any feedback, questions, and suggestions are welcome and should be 
+shared via [GitHub discussions](https://github.com/csdaw/ggprism/discussions). 
+
+Bug reports should be submitted via 
+[GitHub issues](https://github.com/csdaw/ggprism/issues) 
+with a minimal reproducible example, e.g. using the 
 [`reprex`](https://reprex.tidyverse.org) package. 
 
-Pull requests for contributions should be made against the `dev` branch. 
-Some ways to contribute might include:
+Contributions to `ggprism` are also welcome and pull requires should also be
+submitted via [GitHub issues](https://github.com/csdaw/ggprism/issues). 
+Please **fork** this repository and **create a new branch** to develop your 
+contribution in. Some ways to contribute might include:
 
 - Updates and corrections to documentation
 - Examples and vignettes for existing functions
@@ -85,6 +100,9 @@ Some ways to contribute might include:
 - New functions with associated documentation, examples, and tests
 
 ## Cite
+
+I would be very grateful if you could cite this package if you use it in your
+publication.
 
 Charlotte Dawson (`r format(Sys.Date(), "%Y")`), 
 _ggprism: A ggplot2 extension inspired by GraphPad Prism_. R package version
