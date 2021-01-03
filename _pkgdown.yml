@@ -2,6 +2,14 @@ destination: docs
 
 title: ggprism
 
+template:
+  bootswatch: spacelab
+
+home:
+  links:
+  - text: 'Ask a question'
+    href: https://github.com/csdaw/ggprism/discussions
+
 navbar:
   title: a title
   type: default
@@ -30,6 +38,5 @@ navbar:
     href: articles/web-only/palettes.html
   - text: Reference
     href: reference/index.html
-  right:
   - icon: fa-github fa-lg
     href: https://github.com/csdaw/ggprism
