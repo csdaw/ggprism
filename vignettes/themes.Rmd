@@ -2,7 +2,6 @@
 title: "Themes"
 output: 
   rmarkdown::html_vignette:
-    fig_width: 9
     fig_height: 3
 vignette: >
   %\VignetteIndexEntry{Themes}
@@ -50,7 +49,7 @@ settings. By default the:
 You can easily bring back the legend title by overriding the `legend.title`
 element.
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=3}
 # apply default theme
 p1 <- base + theme_prism()
 p2 <- base + theme_prism() + 
