@@ -88,14 +88,15 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/csdaw/ggprism">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/csdaw/ggprism/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -111,7 +112,7 @@
       <h1 data-toc-skip>Colour, Fill, and Shape Palettes</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/master/vignettes/colours.Rmd"><code>vignettes/colours.Rmd</code></a></small>
       <div class="hidden name"><code>colours.Rmd</code></div>
 
     </div>
@@ -120,7 +121,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggprism</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/">ggprism</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></code></pre></div>
 <p><code>ggprism</code> includes colour and fill scales with various palettes that mirror the colour schemes available in GraphPad Prism.</p>
 <p><strong>Disclaimer:</strong> some of these palettes are quite nice, some are pretty ugly and not useful, and most are not colour blind friendly as far as I know (except <code>palette = "colorblind_safe"</code>). It would probably be safer to use other colour scales e.g. those in <code>RColorBrewer</code> for any serious application or work to be published.</p>

@@ -88,14 +88,15 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/csdaw/ggprism">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/csdaw/ggprism/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -111,7 +112,7 @@
       <h1 data-toc-skip>Changing Axes</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/master/vignettes/axes.Rmd"><code>vignettes/axes.Rmd</code></a></small>
       <div class="hidden name"><code>axes.Rmd</code></div>
 
     </div>
@@ -120,7 +121,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggprism</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/">ggprism</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></code></pre></div>
 <p>The <a href="https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm">“Frame and Origin”</a> tab in Prism allows you to change the appearance of the graph’s axes. Some of these options have been implemented in <code>ggprism</code> as axis guides. This vignette will go through how to use the 4 axis guides included in this package.</p>
 <div id="minor-ticks" class="section level2">
@@ -487,6 +488,78 @@
 <span class="va">p_annot</span> <span class="op">&lt;-</span> <span class="va">p_annot</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">p_annot</span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-25-1.png" width="480"></p>
+</div>
+<div id="discontinuous-axis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#discontinuous-axis" class="anchor"></a>Discontinuous axis</h2>
+<p>Generally using discontinuous axes is discouraged. However as it is an option in GraphPad Prism, an example of how to do this with <code>ggprism</code> is given below.</p>
+<p>First we’ll take the <code>ToothGrowth</code> data set and change a value in the <code>len</code> column to be an obvious outlier.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># multiply one of the len values by 100</span>
+<span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span>
+<span class="va">tg</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"len"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">tg</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"len"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">100</span></code></pre></div>
+<p>Next we’ll see what a plot without a discontinuous axis would look like. The majority of the data has been compressed near the bottom of the plot in an attempt to fit the outlier point. In this situation one might want to use a discontinuous axis (although honestly it is probably better to add an inset plot using the <code>patchwork</code> package).</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
+<p><img src="axes_files/figure-html/unnamed-chunk-27-1.png" width="384"></p>
+<p>We’ll use the <code>patchwork</code> package to create our discontinuous axis plot. Indeed, we will be making two plots (one zoomed in on the main data and the other zoomed in on the outlier), using a slightly different theme for each plot, and then combining them.</p>
+<p>First we’ll make a plot zoomed in on the main data. It is important to use <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> to change the axis limits instead of <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous()</a></code> as <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> does not exclude any data, unlike <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous()</a></code>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p_bottom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prism_bracket"</span>, y <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
+
+<span class="va">p_bottom</span></code></pre></div>
+<p><img src="axes_files/figure-html/unnamed-chunk-28-1.png" width="384"></p>
+<p>Next we’ll make a plot zoomed in on the outlier, and we’ll make a new theme for the top plot specifically, called <code>theme_outlier()</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p_top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1140</span>, <span class="fl">1160</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1140</span>, <span class="fl">1160</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span>
+
+<span class="va">theme_outlier</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">palette</span> <span class="op">=</span> <span class="st">"black_and_white"</span>,
+                         <span class="va">base_size</span> <span class="op">=</span> <span class="fl">14</span>,
+                         <span class="va">base_family</span> <span class="op">=</span> <span class="st">"sans"</span>,
+                         <span class="va">base_fontface</span> <span class="op">=</span> <span class="st">"bold"</span>,
+                         <span class="va">base_line_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,
+                         <span class="va">base_rect_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,
+                         <span class="va">axis_text_angle</span> <span class="op">=</span> <span class="fl">0</span>,
+                         <span class="va">border</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="va">palette</span>,
+              base_size <span class="op">=</span> <span class="va">base_size</span>,
+              base_family <span class="op">=</span> <span class="va">base_family</span>,
+              base_fontface <span class="op">=</span> <span class="va">base_fontface</span>,
+              base_line_size <span class="op">=</span> <span class="va">base_line_size</span>,
+              base_rect_size <span class="op">=</span> <span class="va">base_rect_size</span>,
+              axis_text_angle <span class="op">=</span> <span class="va">axis_text_angle</span>,
+              border <span class="op">=</span> <span class="va">border</span><span class="op">)</span> <span class="op">%+replace%</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+          axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+          axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+          axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+          legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">p_top</span> <span class="op">&lt;-</span> <span class="va">p_top</span> <span class="op">+</span> <span class="fu">theme_outlier</span><span class="op">(</span><span class="op">)</span>
+<span class="va">p_top</span></code></pre></div>
+<p><img src="axes_files/figure-html/unnamed-chunk-29-1.png" width="384"></p>
+<p>Now we’ll combine the two plots with <code>patchwork</code>. We can easily change theme elements of both plots using <code>&amp; theme()</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p_top</span> <span class="op">/</span> <span class="va">p_bottom</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="axes_files/figure-html/unnamed-chunk-30-1.png" width="384"></p>
 </div>
   </div>
 
