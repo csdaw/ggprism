@@ -476,3 +476,100 @@ functions as before.
 p_annot <- p_annot + scale_x_continuous(minor_breaks = seq(1, 7, 0.2))
 p_annot
 ```
+
+## Discontinuous axis
+
+Generally using discontinuous axes is discouraged. However as it is an option
+in GraphPad Prism, an example of how to do this with `ggprism` is given below.
+
+First we'll take the `ToothGrowth` data set and change a value in the `len`
+column to be an obvious outlier.
+
+```{r}
+# multiply one of the len values by 100
+tg <- ToothGrowth
+tg[2, "len"] <- tg[2, "len"] * 100
+```
+
+
+Next we'll see what a plot without a discontinuous axis would look like.
+The majority of the data has been compressed near the bottom of the plot in
+an attempt to fit the outlier point. In this situation  one might want to use a 
+discontinuous axis (although honestly it is probably better to add an inset 
+plot using the `patchwork` package).
+
+```{r, fig.width=4, fig.height=5}
+ggplot(tg, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  theme_prism() + 
+  theme(legend.position = "none")
+```
+
+We'll use the `patchwork` package to create our discontinuous
+axis plot. Indeed, we will be making two plots (one zoomed in on the main data
+and the other zoomed in on the outlier), using a slightly different theme for 
+each plot, and then combining them.
+
+First we'll make a plot zoomed in on the main data. It is important to use
+`coord_cartesian()` to change the axis limits instead of `scale_y_continuous()`
+as `coord_cartesian()` does not exclude any data, unlike `scale_y_continuous()`.
+
+```{r, fig.width=4, fig.height=3}
+p_bottom <- ggplot(tg, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  coord_cartesian(ylim = c(0, 60)) + 
+  guides(x = "prism_bracket", y = "prism_offset_minor") + 
+  theme_prism() + 
+  theme(legend.position = "none")
+
+p_bottom
+```
+
+Next we'll make a plot zoomed in on the outlier, and we'll make a new theme for 
+the top plot specifically, called `theme_outlier()`.
+
+```{r, fig.width=4, fig.height=1.5}
+p_top <- ggplot(tg, aes(x = factor(dose), y = len)) + 
+  geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
+  scale_shape_prism() + 
+  coord_cartesian(ylim = c(1140, 1160)) +
+  scale_y_continuous(breaks = c(1140, 1160)) +
+  guides(y = "prism_offset_minor")
+
+theme_outlier <- function(palette = "black_and_white",
+                         base_size = 14,
+                         base_family = "sans",
+                         base_fontface = "bold",
+                         base_line_size = base_size/14,
+                         base_rect_size = base_size/14,
+                         axis_text_angle = 0,
+                         border = FALSE) {
+  theme_prism(palette = palette,
+              base_size = base_size,
+              base_family = base_family,
+              base_fontface = base_fontface,
+              base_line_size = base_line_size,
+              base_rect_size = base_rect_size,
+              axis_text_angle = axis_text_angle,
+              border = border) %+replace% 
+    theme(axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.line.x = element_blank(),
+          legend.position = "none")
+}
+
+p_top <- p_top + theme_outlier()
+p_top
+```
+
+Now we'll combine the two plots with `patchwork`. We can easily change theme
+elements of both plots using `& theme()`.
+
+```{r, fig.width=4, fig.height=5}
+p_top / p_bottom + 
+  plot_layout(heights = c(1, 4)) & 
+  theme(axis.text.y = element_text(colour = "red"))
+```
