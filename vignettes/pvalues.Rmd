@@ -519,7 +519,7 @@ p-value table **must** have columns with the same
 names as the two faceting variables (in this case `"grp"` and `"dose"`).
 
 ```{r, fig.height=7}
-# add our grouping variable to ToothGrowth
+# add a grouping variable to ToothGrowth
 tg <- ToothGrowth
 tg$grp <- factor(rep(c("grp1", "grp2"), 30))
 

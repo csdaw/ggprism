@@ -42,7 +42,7 @@ See
 detailed usage examples.
 
 ```{r, fig.width=8, fig.height=3}
-# Compare theme_grey() to theme_prism()
+# compare theme_grey() to theme_prism()
 p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
                geom = "col", fun = mean, colour = "black", size = 0.9) + 
@@ -51,7 +51,7 @@ p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
 p2 <- p1 + theme_prism(base_size = 14)
 
 p1 + p2
-# Compare some of the available theme palettes
+# compare some of the available theme palettes
 p3 <- p1 + theme_prism(palette = "mustard_field", base_size = 14)
 p4 <- p1 + theme_prism(palette = "flames", base_size = 14)
 
@@ -70,7 +70,7 @@ See the
 detailed usage examples.
 
 ```{r, fig.width=8, fig.height=3}
-# Compare some colour and fill palettes with default theme_prism()
+# compare some colour and fill palettes with default theme_prism()
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(colour = factor(supp), fill = factor(supp))) + 
   theme_prism(base_size = 14)
@@ -82,7 +82,7 @@ p2 <- p + scale_colour_prism(palette = "flames") +
   scale_fill_prism(palette = "flames")
 
 p1 + p2
-# Try using the same palette for colour, fill, and theme
+# try using the same palette for colour, fill, and theme
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(colour = factor(supp), fill = factor(supp)))
 
@@ -102,7 +102,7 @@ Additionally, `scale_shape_prism()` includes some shape scales which roughly
 match the shapes (and order of shapes) used in GraphPad Prism.
 
 ```{r, fig.width=8, fig.height=3}
-# Compare ggplot2 default shape order with ggprism default shape order
+# compare ggplot2 default shape order with ggprism default shape order
 p1 <- ggplot(msleep[complete.cases(msleep), ], 
              aes(x = sleep_rem, y = sleep_total)) + 
   geom_point(aes(shape = factor(vore)), size = 3) + 
@@ -126,7 +126,7 @@ See the
 detailed usage examples.
 
 ```{r, fig.width=7, fig.height=6}
-# Show the 4 different axis guides included in ggprism
+# show the 4 different axis guides included in ggprism
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
@@ -159,23 +159,23 @@ See the
 detailed usage examples.
 
 ```{r, fig.width=6, fig.height=4}
-# Make a p-value table
-df <- data.frame(
+# make a p-value table
+df_p_pval <- data.frame(
   group1 = "OJ",
   group2 = "VC",
   p.adj = 0.0606,
   y.position = 36
 )
 
-# Make a plot
+# make a plot
 p1 <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   scale_fill_prism(palette = "candy_bright") + 
   theme_prism() + 
   theme(legend.position = "none")
 
-# Add the p-value
-p2 <- p1 + add_pvalue(df)
+# add the p-value
+p2 <- p1 + add_pvalue(df_p_val)
 
 p1 + p2
 ```

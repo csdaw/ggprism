@@ -51,7 +51,7 @@ Note that if you are happy with the defaults you can refer to the axis guide
 as a string instead of calling the function.
 
 ```{r, fig.height=3.5}
-# Refer to guide as string
+# refer to guide as string
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -69,7 +69,7 @@ you give the `minor_breaks` argument will define the position of each minor
 tick.
 
 ```{r, fig.height=3.5}
-# Compare 1 minor ticks (default) vs 4 minor ticks per major tick
+# compare 1 minor ticks (default) vs 4 minor ticks per major tick
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
                geom = "col", fun = mean, colour = "black", size = 0.9) + 
@@ -108,7 +108,7 @@ change the length of the minor ticks. This works in the same way as the
 `axis.ticks.length` argument to change the length of major ticks.
 
 ```{r, fig.height=3.5}
-# Change minor tick length
+# change minor tick length
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
                geom = "col", fun = mean, colour = "black", size = 0.9) + 
@@ -128,7 +128,7 @@ p1 + p2
 You can change the direction of minor ticks just by making their length negative.
 
 ```{r, fig.height=3.5}
-# Change minor tick length
+# change minor tick length
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
                geom = "col", fun = mean, colour = "black", size = 0.9) + 
@@ -151,7 +151,7 @@ you change the colour of major ticks using the `axis.ticks` argument of the
 `theme()` function.
 
 ```{r, fig.height=3.5}
-# Change how ticks look
+# change how ticks look
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
                geom = "col", fun = mean, colour = "black", size = 0.9) + 
@@ -182,7 +182,7 @@ If you want an offset axis with minor ticks, see the `guide_prism_offset_minor()
 function below.
 
 ```{r, fig.height=3.5}
-# Show that offset axis looks better when you specify the axis limits
+# show that offset axis looks better when you specify the axis limits
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -198,7 +198,7 @@ As with a normal ggplot, you can adjust the appearance of the offset axis line
 with the `theme()` function and the `axis.line` argument.
 
 ```{r, fig.height=3.5}
-# Change appearance of offset axis
+# change appearance of offset axis
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -220,7 +220,7 @@ The `guide_prism_offset_minor()` function is similar to `guide_prism_minor()`
 except the axis line is offset.
 
 ```{r, fig.height=3.5}
-# Compare prism_minor with prism_offset_minor
+# compare prism_minor with prism_offset_minor
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -252,7 +252,7 @@ As with `guide_prism_minor()` you can change the number of minor ticks by
 adjusting the `minor_breaks`.
 
 ```{r, fig.height=3.5}
-# Compare 1 minor tick to 4 minor ticks per major
+# compare 1 minor tick to 4 minor ticks per major
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -271,7 +271,7 @@ And as with `guide_prism_minor()` you can change the length of minor ticks by
 adjusting the `prism_ticks_length` argument of the `theme()` function.
 
 ```{r, fig.height=3.5}
-# Change minor tick length and direction
+# change minor tick length and direction
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -292,7 +292,7 @@ when you change the colour of major ticks using the `axis.ticks` argument of the
 `theme()` function.
 
 ```{r, fig.height=3.5}
-# Change minor tick colour, thickness, and lineend
+# change minor tick colour, thickness, and lineend
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
@@ -322,7 +322,7 @@ graphs, therefore they have been re-implemented in `ggprism` as the
 This axis guide works best with discrete axes.
 
 ```{r, fig.height=3.5}
-# Show bracket axis guide
+# show bracket axis guide
 p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
@@ -338,7 +338,7 @@ p1 + p2
 The guide works fine with flipped plots.
 
 ```{r, fig.height=3.5}
-# Show bracket axis guide with flipped plot
+# show bracket axis guide with flipped plot
 p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
@@ -358,7 +358,7 @@ between 0 and 1. In this example we make the width of `geom_jitter()` and the
 width of `guide_prism_bracket()` both 0.2 which seems to work well.
 
 ```{r, fig.height=3.5}
-# Control bracket width
+# control bracket width
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
@@ -376,7 +376,7 @@ You can change the bracket direction with the `outside` argument. By default,
 `outside = TRUE` which means the brackets point outward.
 
 ```{r, fig.height=3.5}
-# Compare brackets outside or inside
+# compare brackets outside or inside
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
@@ -395,7 +395,7 @@ brackets smaller. You can increase this distance again by changing the margin
 of the relevent `axis.text` element.
 
 ```{r, fig.height=3.5}
-# Adjust text spacing with inside pointing brackets
+# adjust text spacing with inside pointing brackets
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   geom_jitter(aes(shape = factor(dose)), width = 0.2, size = 2) + 
   scale_shape_prism() + 
