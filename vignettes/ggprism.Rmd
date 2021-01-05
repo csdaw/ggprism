@@ -160,7 +160,7 @@ detailed usage examples.
 
 ```{r, fig.width=6, fig.height=4}
 # make a p-value table
-df_p_pval <- data.frame(
+df_p_val <- data.frame(
   group1 = "OJ",
   group2 = "VC",
   p.adj = 0.0606,
