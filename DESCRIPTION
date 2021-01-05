@@ -40,6 +40,7 @@ Suggests:
     ggbeeswarm,
     ggnewscale,
     knitr,
+    magrittr,
     patchwork,
     rstatix,
     tidyr,
