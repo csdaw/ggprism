@@ -19,6 +19,10 @@ guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
                                 angle = NULL, n.dodge = 1, order = 0,
                                 position = waiver(), width = NULL,
                                 outside = TRUE) {
+  if (packageVersion("ggplot2") < "3.3.0") {
+    stop("ggplot2 >= 3.3.0 needed for this function.", call. = FALSE)
+  }
+
   structure(
     list(
       title = title,

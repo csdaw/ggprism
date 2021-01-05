@@ -14,6 +14,15 @@ This package provides various themes, palettes, and other functions
     available in the 'Frame and Origin' tab of Prism. P-values and significance
     brackets can be added to plots using \code{add_pvalue()}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://csdaw.github.io/ggprism/}
+  \item \url{https://github.com/csdaw/ggprism}
+  \item Report bugs at \url{https://github.com/csdaw/ggprism/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Charlotte Dawson \email{csdaw@outlook.com} (\href{https://orcid.org/0000-0002-7151-5971}{ORCID})
 

@@ -1,7 +1,6 @@
 Package: ggprism
 Title: A ggplot2 extension inspired by GraphPad Prism
 Version: 0.0.0.9000
-Date: 2020-11-09
 Authors@R: 
     person(given = "Charlotte",
            family = "Dawson",
@@ -26,7 +25,7 @@ Depends:
     R (>= 3.2)
 Imports: 
     digest,
-    ggplot2 (>= 3.3.0),
+    ggplot2 (>= 3.2.0),
     glue,
     grid,
     gtable (>= 0.1.1),
