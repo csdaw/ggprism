@@ -61,7 +61,7 @@ base +
   guides(y = "prism_offset_minor") + 
   theme_prism(base_size = 16) + 
   theme(legend.position = "none") + 
-  add_pvalue(p_vals, label = "p.adj", tip.length = 0, label.size = 4)
+  add_pvalue(p_vals, label = "p = {p.adj}", tip.length = 0, label.size = 4)
 ```
 
 <img src="man/figures/README-ex-1.png" width="400" /><img src="man/figures/README-ex-2.png" width="400" />
@@ -79,7 +79,7 @@ reproducible example, e.g. using the
 
 Contributions to `ggprism` are also welcome and pull requires should
 also be submitted via [GitHub
-issues](https://github.com/csdaw/ggprism/issues). Please **fork** this
+issues](https://github.com/csdaw/ggprism/issues). Please fork/clone this
 repository and **create a new branch** to develop your contribution in.
 Some ways to contribute might include:
 
