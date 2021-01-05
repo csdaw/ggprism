@@ -272,8 +272,8 @@ of how to add p-values to different plots.
 
 ### Compare two means
 
-Compare mean `len` depending on `supp`. Error bars indicate 95% confidence 
-intervals.
+Compare mean `len` depending on `supp`. Error bars indicate 
+1 standard deviation from the mean.
 
 ```{r, fig.width=4, fig.height=3.5}
 df_p_val <- rstatix::t_test(ToothGrowth, len ~ supp) %>% 
@@ -281,7 +281,8 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ supp) %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_cl_normal, width = 0.3) + 
+  stat_summary(geom = "errorbar", fun.data = mean_sdl,
+               fun.args = list(mult = 1), width = 0.3) + 
   theme_prism() + 
   coord_cartesian(ylim = c(0, 30)) + 
   scale_y_continuous(breaks = seq(0, 30, 5), expand = c(0, 0))
@@ -317,7 +318,7 @@ p1 + p2
 ```
 
 Now, compare overall mean `len` (base mean) to the mean `len` for each `dose`. 
-Error bars indicate the standard error of the mean.
+Error bars indicate 1 standard deviation from the mean.
 
 ```{r, fig.width=4, fig.height=3.5}
 df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "all") %>% 
@@ -325,7 +326,8 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "all") %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_se, width = 0.3) + 
+  stat_summary(geom = "errorbar", fun.data = mean_sdl,
+               fun.args = list(mult = 1), width = 0.3) + 
   theme_prism() + 
   coord_cartesian(ylim = c(0, 40)) + 
   scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
