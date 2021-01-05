@@ -4,11 +4,11 @@ pkgdown_sha: ~
 articles:
   axes: axes.html
   colours: colours.html
-  ex1-dose: ex1-dose.html
-  ex2-wings: ex2-wings.html
   ggprism: ggprism.html
   pvalues: pvalues.html
   themes: themes.html
+  web-only/ex1-dose: ex1-dose.html
+  web-only/ex2-wings: ex2-wings.html
   web-only/palettes: palettes.html
-last_built: 2021-01-04T17:28Z
+last_built: 2021-01-05T15:22Z
 

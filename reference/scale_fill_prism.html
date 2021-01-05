@@ -73,7 +73,7 @@ colour schemes available in GraphPad Prism." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -264,7 +264,7 @@ The default, <code>TRUE</code>, uses the levels that appear in the data;
     label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"4 cyl"</span>, <span class='st'>"6 cyl"</span>, <span class='st'>"8 cyl"</span><span class='op'>)</span>
   <span class='op'>)</span>
 </div><div class='img'><img src='scale_fill_prism-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## change colour labels in legend with a function</span>
+<span class='co'>## change fill labels in legend with a function</span>
 <span class='va'>base</span> <span class='op'>+</span>
   <span class='fu'>scale_fill_prism</span><span class='op'>(</span>
     palette <span class='op'>=</span> <span class='st'>"candy_bright"</span>,
@@ -272,7 +272,7 @@ The default, <code>TRUE</code>, uses the levels that appear in the data;
     label <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"cyl"</span><span class='op'>)</span>
   <span class='op'>)</span>
 </div><div class='img'><img src='scale_fill_prism-5.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## change order of colours in legend</span>
+<span class='co'>## change order of fills in legend</span>
 <span class='va'>base</span> <span class='op'>+</span>
   <span class='fu'>scale_fill_prism</span><span class='op'>(</span>
     palette <span class='op'>=</span> <span class='st'>"candy_bright"</span>,
@@ -281,7 +281,7 @@ The default, <code>TRUE</code>, uses the levels that appear in the data;
     breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span>
   <span class='op'>)</span>
 </div><div class='img'><img src='scale_fill_prism-6.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## to change which colour is assigned to which cyl</span>
+<span class='co'>## to change which fill is assigned to which cyl</span>
 <span class='co'>## you need to change the factor levels in the underlying data</span>
 <span class='va'>base</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mpg</span>,
                            fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>cyl</span>, levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>4</span>, <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>

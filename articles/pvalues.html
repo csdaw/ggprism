@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -536,7 +536,7 @@
 <p><img src="pvalues_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>Facet according to some particular grouping variable called <code>grp</code> and <code>dose</code>, and then compare mean <code>len</code> between either <code>supp</code>. It is important that the p-value table <strong>must</strong> have columns with the same names as the two faceting variables (in this case <code>"grp"</code> and <code>"dose"</code>).</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># add our grouping variable to ToothGrowth</span>
+<code class="sourceCode R"><span class="co"># add a grouping variable to ToothGrowth</span>
 <span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span>
 <span class="va">tg</span><span class="op">$</span><span class="va">grp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grp1"</span>, <span class="st">"grp2"</span><span class="op">)</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span>
 
