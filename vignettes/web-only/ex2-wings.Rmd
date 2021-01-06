@@ -260,8 +260,8 @@ p
 ```
 
 The original graph also has a label with the number of replicates in the 
-bottom right of the plotting area. This is a little tricky to do with facets 
-and requires creating a dummy data.frame to get the positioning correct.
+bottom right corner of the plotting area. This is a little tricky to do with 
+facets and requires creating a dummy data.frame to get the positioning correct.
 
 ```{r}
 # add n = 10 as a text annotation
@@ -344,4 +344,3 @@ ggplot(wings, aes(x = measure, y = percent.change)) +
             aes(label = lab)) + 
   guides(fill = guide_legend(override.aes = list(size = 3)))
 ```
-
