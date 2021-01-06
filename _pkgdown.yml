@@ -28,9 +28,9 @@ navbar:
   - text: Examples
     menu:
     - text: "Ex 1: Dose Response Curve"
-      href: articles/ex1-dose.html
+      href: articles/web-only/ex1-dose.html
     - text: "Ex 2: Real Life Data"
-      href: articles/ex2-wings.html
+      href: articles/web-only/ex2-wings.html
   - text: All Palettes
     href: articles/web-only/palettes.html
   - text: Reference
