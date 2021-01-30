@@ -1,4 +1,4 @@
-data-raw/
+^data-raw$
 ^ggprism\.Rproj$
 ^Makefile$
 ^README.Rmd$
@@ -9,3 +9,4 @@ stuff/
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^cran-comments\.md$
