@@ -2,7 +2,8 @@
 #'
 #' @description Add p-values with or without brackets to a ggplot.
 #'
-#' See **here** or the examples section below for examples of how to use.
+#' See [here](https://csdaw.github.io/ggprism/articles/pvalues.html)
+#' or the examples section below for examples of how to use.
 #'
 #' `add_pvalue` is a refactored version of
 #' `stat_pvalue_manual` from
@@ -40,7 +41,7 @@
 #' @param colour,color `string`. Colour of text.
 #' @param tip.length `numeric` vector. Length of bracket tips.
 #' Use `0` to remove tips.
-#' @param bracket.size `numeric`. Linewidth of bracket.
+#' @param bracket.size `numeric`. Line width of bracket.
 #' @param bracket.colour,bracket.color `string`. Colour of bracket. Default is
 #' `NULL` which causes brackets to inherit the colour of the text.
 #' @param bracket.shorten `numeric`. Shortens the brackets slightly to

@@ -30,7 +30,7 @@ draw_prism_offset_minor(
 (recursively) prioritizing the first, last, and middle labels.}
 
 \item{angle}{Compared to setting the angle in
-\code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
+\code{\link[ggplot2]{theme}} / \code{element_text},
 this also uses some heuristics to automatically pick the \code{hjust} and
 \code{vjust} that you probably want.}
 

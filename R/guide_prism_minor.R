@@ -124,9 +124,9 @@ guide_gengrob.prism_minor <- function(guide, theme) {
 #' @param check.overlap silently remove overlapping labels,
 #'   (recursively) prioritizing the first, last, and middle labels.
 #' @param angle Compared to setting the angle in
-#'   \code{\link[ggplot2]{theme}} / \code{\link[ggplot2]{element_text}},
-#'   this also uses some heuristics to automatically pick the \code{hjust} and
-#'   \code{vjust} that you probably want.
+#'   \code{\link[ggplot2]{theme}} / `element_text`,
+#'   this also uses some heuristics to automatically pick the `hjust` and
+#'   `vjust` that you probably want.
 #' @param n.dodge The number of rows (for vertical axes) or columns (for
 #'   horizontal axes) that should be used to render the labels. This is
 #'   useful for displaying labels that would otherwise overlap.

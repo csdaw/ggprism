@@ -1,10 +1,10 @@
-#' Wing morphology of mutant flys
+#' Wing morphology of mutant flies
 #'
 #' Fold changes of different measures of wing morphology in heterozygous
-#' (Tps1MIC/+) and homozygous (Tps1MIC) Tps1 mutant flys. Data are expressed
+#' (Tps1MIC/+) and homozygous (Tps1MIC) Tps1 mutant flies. Data are expressed
 #' as percentage change relative to the mean of the heterozygous mutants.
 #'
-#' 40 flys were measured in total, with 3 measurements taken per fly.
+#' 40 flies were measured in total, with 3 measurements taken per fly.
 #'
 #' \describe{
 #'   \item{sex}{`factor`. Male or female.}

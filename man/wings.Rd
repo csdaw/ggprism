@@ -3,7 +3,7 @@
 \docType{data}
 \name{wings}
 \alias{wings}
-\title{Wing morphology of mutant flys}
+\title{Wing morphology of mutant flies}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 4 columns.
 }
@@ -12,11 +12,11 @@ wings
 }
 \description{
 Fold changes of different measures of wing morphology in heterozygous
-(Tps1MIC/+) and homozygous (Tps1MIC) Tps1 mutant flys. Data are expressed
+(Tps1MIC/+) and homozygous (Tps1MIC) Tps1 mutant flies. Data are expressed
 as percentage change relative to the mean of the heterozygous mutants.
 }
 \details{
-40 flys were measured in total, with 3 measurements taken per fly.
+40 flies were measured in total, with 3 measurements taken per fly.
 
 \describe{
 \item{sex}{\code{factor}. Male or female.}

@@ -66,7 +66,7 @@ height or a \code{numeric} vector that will override \code{data}.}
 \item{tip.length}{\code{numeric} vector. Length of bracket tips.
 Use \code{0} to remove tips.}
 
-\item{bracket.size}{\code{numeric}. Linewidth of bracket.}
+\item{bracket.size}{\code{numeric}. Line width of bracket.}
 
 \item{bracket.colour, bracket.color}{\code{string}. Colour of bracket. Default is
 \code{NULL} which causes brackets to inherit the colour of the text.}
@@ -97,7 +97,8 @@ position of p-values to be in line with dodged data.}
 \description{
 Add p-values with or without brackets to a ggplot.
 
-See \strong{here} or the examples section below for examples of how to use.
+See \href{https://csdaw.github.io/ggprism/articles/pvalues.html}{here}
+or the examples section below for examples of how to use.
 
 \code{add_pvalue} is a refactored version of
 \code{stat_pvalue_manual} from
