@@ -40,6 +40,7 @@ Suggests:
     knitr,
     magrittr,
     patchwork,
+    rmarkdown,
     rstatix,
     tidyr,
     tinytest
