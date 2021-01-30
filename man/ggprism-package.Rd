@@ -4,15 +4,13 @@
 \name{ggprism-package}
 \alias{ggprism}
 \alias{ggprism-package}
-\title{ggprism: A ggplot2 extension inspired by GraphPad Prism}
+\title{ggprism: A ggplot2 Extension Inspired by GraphPad Prism}
 \description{
-This package provides various themes, palettes, and other functions
+Provides various themes, palettes, and other functions
     that are used to customise ggplots to look like they were made in GraphPad 
-    Prism. The 'Prism-look' is achieved by \code{theme_prism()} and 
-    \code{scale_fill|colour_prism()} which include all of the Prism colour 
-    schemes as palettes. Several axis guides are included which mirror those
-    available in the 'Frame and Origin' tab of Prism. P-values and significance
-    brackets can be added to plots using \code{add_pvalue()}.
+    Prism. The 'Prism-look' is achieved with theme_prism() and 
+    scale_fill|colour_prism(), axes can be changed with custom guides like 
+    guide_prism_minor(), and significance indicators added with add_pvalue().
 }
 \seealso{
 Useful links:
