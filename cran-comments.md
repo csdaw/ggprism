@@ -1,3 +1,11 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+* Put 'ggplot2' in single quotes in the Title field.
+* Removed the separate LICENSE file and fixed the License field.
+* Fixed the doi link in Wings.Rd to use \doi{}.
+
 ## Test environments
 
 * local MacOS (Big Sur 11.1) install, R 4.0.3

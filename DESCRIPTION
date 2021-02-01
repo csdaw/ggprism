@@ -1,5 +1,5 @@
 Package: ggprism
-Title: A ggplot2 Extension Inspired by GraphPad Prism
+Title: A 'ggplot2' Extension Inspired by GraphPad Prism
 Version: 1.0.1
 Authors@R: 
     person(given = "Charlotte",
@@ -12,7 +12,7 @@ Description: Provides various themes, palettes, and other functions
     Prism. The 'Prism-look' is achieved with theme_prism() and 
     scale_fill|colour_prism(), axes can be changed with custom guides like 
     guide_prism_minor(), and significance indicators added with add_pvalue().
-License: GPL-3 + file LICENSE
+License: GPL (>= 3.0)
 URL: https://csdaw.github.io/ggprism/, https://github.com/csdaw/ggprism
 BugReports: https://github.com/csdaw/ggprism/issues
 Encoding: UTF-8

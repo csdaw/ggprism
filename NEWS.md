@@ -1,6 +1,7 @@
 # ggprism 1.0.1
 
-* Prepare for CRAN submission.
+* First CRAN submission
+* Remove separate LICENSE file
 * Reword package description in DESCRIPTION.
 * Fix various typos in vignettes and function documentation.
 * Move the two example vignettes to be online only, i.e. not included

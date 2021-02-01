@@ -3,7 +3,6 @@
 ^Makefile$
 ^README.Rmd$
 ^\.Rproj\.user$
-stuff/
 ^\.github$
 ^codecov\.yml$
 ^_pkgdown\.yml$
