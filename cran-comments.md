@@ -4,15 +4,17 @@ This is a resubmission. In this version I have:
 
 * Put 'ggplot2' in single quotes in the Title field.
 * Removed the separate LICENSE file and fixed the License field.
-* Fixed the doi link in Wings.Rd to use \doi{}.
+* Fixed the doi link in wings.Rd to use \doi{}.
 
 ## Test environments
 
-* local MacOS (Big Sur 11.1) install, R 4.0.3
+* MacOS local install (Big Sur 11.1), R 4.0.3
+* MacOS latest (release) via GitHub actions, R 4.0.3
 * Ubuntu 20.04 (release) via GitHub actions, R 4.0.3
 * Ubuntu 20.04 (devel) via GitHub actions, R 4.0.3
 * Windows latest (release) via GitHub actions, R 4.0.3
-* MacOS latest (release) via GitHub actions, R 4.0.3
+* Windows Server 2008 R2 SP1 via R-hub, R-devel
+* Windows via win-builder, R-devel
 
 ## R CMD check results
 
@@ -23,6 +25,10 @@ There was 1 NOTE:
 * checking CRAN incoming feasibility ... NOTE
 
 This is my first submission so this note is unavoidable.
+
+* Possibly mis-spelled words in DESCRIPTION: GraphPad, ggplots
+
+These words are not mis-spelled.
 
 ## Downstream dependencies
 
