@@ -13,6 +13,10 @@
 #' have a fill.
 #'
 #' @inheritParams scale_shape_prism
+#' @return Returns a function which takes a single integer as its only argument
+#' and returns a character vector of integers which correspond to R plot pch
+#' symbols.
+#' See the examples below for usage.
 #' @example inst/examples/ex-prism_shape_pal.R
 #' @export
 prism_shape_pal <- function(palette = c("default", "filled", "complete")) {

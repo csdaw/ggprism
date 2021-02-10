@@ -36,6 +36,9 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 \item{position}{Where this guide should be drawn: one of top, bottom,
 left, or right.}
 }
+\value{
+Returns a \emph{prism_offset} guide class object.
+}
 \description{
 This guide draws the axis only as wide as the outermost tick marks,
 similar to offset axes from Prism.

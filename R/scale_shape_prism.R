@@ -16,6 +16,9 @@
 #' `filled`, or `complete`.
 #' @inheritDotParams ggplot2::discrete_scale -aesthetics -scale_name
 #'
+#' @return Returns a ggproto object of class _ScaleDiscrete_ which works with
+#' _shape_ aesthetics.
+#'
 #' @example inst/examples/ex-scale_shape_prism.R
 #'
 #' @export

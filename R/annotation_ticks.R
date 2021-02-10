@@ -33,6 +33,8 @@
 #' faceting variable you want to annotate specifically.
 #' See [here](https://stackoverflow.com/questions/20128582) for an example.
 #'
+#' @return Returns a _layer_ ggproto object with `geom = GeomTicks`.
+#'
 #' @example inst/examples/ex-annotation_ticks.R
 #'
 #' @export

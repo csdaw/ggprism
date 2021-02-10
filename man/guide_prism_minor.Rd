@@ -36,6 +36,9 @@ top-to-bottom), if more than one  guide must be drawn at the same location.}
 \item{position}{Where this guide should be drawn: one of top, bottom,
 left, or right.}
 }
+\value{
+Returns a \emph{prism_minor} guide class object.
+}
 \description{
 This guide is like the standard \code{\link[ggplot2]{guide_axis}}, but
 with minor ticks.

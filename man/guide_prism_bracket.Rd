@@ -45,6 +45,9 @@ values between 0 and 1.}
 outwards. If \code{FALSE} the bracket crossbar is moved so the ticks appear
 to point inwards towards the plotting area.}
 }
+\value{
+Returns a \emph{prism_bracket} guide class object.
+}
 \description{
 This guide turns the axis into brackets drawn around each axis label.
 }

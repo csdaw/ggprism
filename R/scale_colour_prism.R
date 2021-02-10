@@ -8,6 +8,9 @@
 #' and their number of values each palette supports.
 #' @inheritDotParams ggplot2::discrete_scale -aesthetics -scale_name
 #'
+#' @return Returns a ggproto object of class _ScaleDiscrete_ which works with
+#' _colour_ aesthetics.
+#'
 #' @example inst/examples/ex-scale_colour_prism.R
 #'
 #' @export

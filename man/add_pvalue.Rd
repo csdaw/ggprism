@@ -94,6 +94,10 @@ position of p-values to be in line with dodged data.}
 \item{...}{Additional aesthetics or arguments passed to
 \code{\link[ggplot2]{layer}}. See below for allowed values.}
 }
+\value{
+Returns a \emph{layer} ggproto object with either \code{geom = GeomBracket} or
+\code{geom = GeomText}.
+}
 \description{
 Add p-values with or without brackets to a ggplot.
 

@@ -4,6 +4,9 @@
 #' colour schemes available in GraphPad Prism.
 #'
 #' @inheritParams scale_colour_prism
+#' @return Returns a function which takes a single integer as its only argument
+#' and returns a character vector of hexadecimal colours.
+#' See the examples below for usage.
 #' @example inst/examples/ex-prism_colour_pal.R
 #' @export
 prism_colour_pal <- function(palette = "colors") {

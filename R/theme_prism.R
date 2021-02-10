@@ -15,6 +15,8 @@
 #' @param border `logical`. Should a border be drawn around the plot?
 #' Clipping will occur unless e.g. `coord_cartesian(clip = "off")` is used.
 #'
+#' @return Returns a list-like object of class _theme_.
+#'
 #' @example inst/examples/ex-theme_prism.R
 #'
 #' @export

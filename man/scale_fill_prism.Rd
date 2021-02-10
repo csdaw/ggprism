@@ -65,6 +65,10 @@ The default, \code{TRUE}, uses the levels that appear in the data;
     \item{\code{super}}{The super class to use for the constructed scale}
   }}
 }
+\value{
+Returns a ggproto object of class \emph{ScaleDiscrete} which works with
+\emph{fill} aesthetics.
+}
 \description{
 A collection of discrete fill scales that use palettes which mirror the
 colour schemes available in GraphPad Prism.

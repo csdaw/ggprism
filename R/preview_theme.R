@@ -5,6 +5,8 @@
 #'
 #' @param palette `string`. Palette name.
 #'
+#' @return Returns an object of class _ggplot_.
+#'
 #' @example inst/examples/ex-preview_theme.R
 #'
 #' @export

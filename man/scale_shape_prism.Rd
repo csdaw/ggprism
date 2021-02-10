@@ -64,6 +64,10 @@ The default, \code{TRUE}, uses the levels that appear in the data;
     \item{\code{super}}{The super class to use for the constructed scale}
   }}
 }
+\value{
+Returns a ggproto object of class \emph{ScaleDiscrete} which works with
+\emph{shape} aesthetics.
+}
 \description{
 Shape scales that approximate those used in GraphPad Prism.
 No unicode characters are used, only the default symbols available in R.

@@ -9,6 +9,9 @@ preview_theme(palette)
 \arguments{
 \item{palette}{\code{string}. Palette name.}
 }
+\value{
+Returns an object of class \emph{ggplot}.
+}
 \description{
 Quickly generate a preview of a ggprism theme.
 See \code{names(ggprism_data$themes)} for valid palette names.

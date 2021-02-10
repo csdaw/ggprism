@@ -60,6 +60,9 @@ ticks on different facets. Pass a data.frame containing the levels from the
 faceting variable you want to annotate specifically.
 See \href{https://stackoverflow.com/questions/20128582}{here} for an example.}
 }
+\value{
+Returns a \emph{layer} ggproto object with \code{geom = GeomTicks}.
+}
 \description{
 This is an annotation function to add tick marks (major, minor, or both) to
 a ggplot. Clipping must be turned off if the ticks are to appear outside the

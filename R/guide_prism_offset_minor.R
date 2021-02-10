@@ -15,6 +15,8 @@
 #'
 #' @inheritParams ggplot2::guide_axis
 #'
+#' @return Returns a \emph{prism_offset_minor} guide class object.
+#'
 #' @example inst/examples/ex-guide_prism_offset_minor.R
 #'
 #' @export

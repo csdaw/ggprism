@@ -60,6 +60,9 @@
 #' @param ... Additional aesthetics or arguments passed to
 #' \code{\link[ggplot2]{layer}}. See below for allowed values.
 #'
+#' @return Returns a _layer_ ggproto object with either `geom = GeomBracket` or
+#' `geom = GeomText`.
+#'
 #' @section Allowed ... values:
 #' `add_pvalue` understands the following additional aesthetics or arguments:
 #'

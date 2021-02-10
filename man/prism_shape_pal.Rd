@@ -10,6 +10,12 @@ prism_shape_pal(palette = c("default", "filled", "complete"))
 \item{palette}{\code{string}. Palette name, one of: \code{default},
 \code{filled}, or \code{complete}.}
 }
+\value{
+Returns a function which takes a single integer as its only argument
+and returns a character vector of integers which correspond to R plot pch
+symbols.
+See the examples below for usage.
+}
 \description{
 Shape palettes that approximate those used in GraphPad Prism.
 No unicode characters are used, only the default symbols available in R.

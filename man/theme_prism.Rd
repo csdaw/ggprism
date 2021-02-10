@@ -35,6 +35,9 @@ One of: \verb{0, 45, 90, 270}.}
 \item{border}{\code{logical}. Should a border be drawn around the plot?
 Clipping will occur unless e.g. \code{coord_cartesian(clip = "off")} is used.}
 }
+\value{
+Returns a list-like object of class \emph{theme}.
+}
 \description{
 A collection of ggplot2 themes that use palettes which mirror the
 colour schemes available in GraphPad Prism.

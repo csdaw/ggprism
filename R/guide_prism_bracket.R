@@ -12,6 +12,8 @@
 #' outwards. If `FALSE` the bracket crossbar is moved so the ticks appear
 #' to point inwards towards the plotting area.
 #'
+#' @return Returns a \emph{prism_bracket} guide class object.
+#'
 #' @example inst/examples/ex-guide_prism_bracket.R
 #'
 #' @export

@@ -14,6 +14,11 @@ prism_color_pal(palette = "colors")
 \code{lengths(ggprism_data$colour_palettes)} to show all valid palette names
 and their number of values each palette supports.}
 }
+\value{
+Returns a function which takes a single integer as its only argument
+and returns a character vector of hexadecimal colours.
+See the examples below for usage.
+}
 \description{
 A collection of colour palettes which mirror the
 colour schemes available in GraphPad Prism.
