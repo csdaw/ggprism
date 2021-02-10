@@ -23,11 +23,13 @@ preview_theme <- function(palette) {
   max_n <- attr(prism_colour_pal(palette), "max_n")
 
   # generate some data
-  set.seed(1)
   df <- data.frame(
-    x = rep(factor(1:max_n), max_n),
-    y = stats::rnorm(max_n^2)
+    x = rep(factor(1:20), 20),
+    y = stats::rnorm(20^2)
   )
+
+  # subset data depending on palette length
+  df <- df[df$x %in% c(1:max_n), ]
 
   # make a boxplot which shows entire palette
   ggplot(df, aes(x = .data$x, y = .data$y, colour = .data$x, fill = .data$x)) +
