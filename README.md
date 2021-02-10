@@ -94,7 +94,7 @@ I would be very grateful if you could cite this package if you use it in
 your publication.
 
 Charlotte Dawson (2021), *ggprism: A ggplot2 extension inspired by
-GraphPad Prism*. R package version 0.0.0.9000,
+GraphPad Prism*. R package version 1.0.1,
 <https://csdaw.github.io/ggprism/>.
 
 ## More Examples
