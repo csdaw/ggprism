@@ -2,7 +2,12 @@
 
 This is a resubmission. In this version I have:
 
-* Put 'ggplot2' in single quotes in the Title field.
+* Put 'ggplot2' and 'GraphPad Prism' in single quotes in the Title and 
+  Description fields.
+* Added missing \value sections to the .Rd files for exported methods 
+  to explain what each function returns.
+* Removed set_seed() from the preview_theme() function.
+
 * Removed the separate LICENSE file and fixed the License field.
 * Fixed the doi link in wings.Rd to use \doi{}.
 
@@ -23,6 +28,7 @@ There were no ERRORs or WARNINGS.
 There was 1 NOTE:
 
 * checking CRAN incoming feasibility ... NOTE
+  New submission
 
 This is my first submission so this note is unavoidable.
 
