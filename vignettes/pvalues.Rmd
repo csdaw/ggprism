@@ -281,14 +281,17 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ supp) %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_sdl,
-               fun.args = list(mult = 1), width = 0.3) + 
+  stat_summary(geom = "errorbar", 
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) + 
   theme_prism() + 
-  coord_cartesian(ylim = c(0, 30)) + 
-  scale_y_continuous(breaks = seq(0, 30, 5), expand = c(0, 0))
+  coord_cartesian(ylim = c(0, 35)) + 
+  scale_y_continuous(breaks = seq(0, 35, 5), expand = c(0, 0))
 
 # normal plot
-p + add_pvalue(df_p_val, y.position = 28)
+p + add_pvalue(df_p_val, y.position = 30)
 ```
 
 ### Compare mean vs reference
@@ -302,8 +305,11 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "0.5") %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_sdl,
-               fun.args = list(mult = 1), width = 0.3) + 
+  stat_summary(geom = "errorbar", 
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) + 
   theme_prism() + 
   coord_cartesian(ylim = c(0, 40)) + 
   scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
@@ -326,8 +332,11 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "all") %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_sdl,
-               fun.args = list(mult = 1), width = 0.3) + 
+  stat_summary(geom = "errorbar", 
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) + 
   theme_prism() + 
   coord_cartesian(ylim = c(0, 40)) + 
   scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
@@ -336,7 +345,7 @@ p + add_pvalue(df_p_val, label = "p.adj.signif")
 ```
 
 Now, compare the mean `len` for each `dose` to some arbitrary value, say
-`26` in this case. Error bars indicate 95% confidence intervals.
+`26` in this case. Error bars indicate 1 standard deviation from the mean.
 
 ```{r, fig.width=4, fig.height=3.5}
 df_p_val <- ToothGrowth %>% 
@@ -348,7 +357,11 @@ df_p_val <- ToothGrowth %>%
 
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
-  stat_summary(geom = "errorbar", fun.data = mean_cl_normal, width = 0.3) + 
+  stat_summary(geom = "errorbar", 
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) + 
   theme_prism() + 
   coord_cartesian(ylim = c(0, 40)) + 
   scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
