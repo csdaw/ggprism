@@ -1,3 +1,5 @@
+# ggprism (development version)
+
 # ggprism 1.0.1
 
 * First CRAN submission
