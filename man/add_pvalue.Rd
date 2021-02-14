@@ -354,15 +354,15 @@ ggplot(tg, aes(x = dose, y = len)) +
 
 ## p-value (text only) with comparisons to a base mean
 each.vs.basemean <- tibble::tribble(
-  ~group1, ~group2, ~p.adj, ~y.position, ~x,
-  "all",   "0.5",   "****", 35, 1,
-  "all",   "0.5",   "ns",   35, 2,
-  "all",   "0.5",   "****", 35, 3
+  ~group1, ~group2, ~p.adj, ~y.position,
+  "all",   "0.5",   "****", 35,
+  "all",   "1",     "ns",   35,
+  "all",   "2",     "****", 35
 )
 
 ggplot(tg, aes(x = dose, y = len)) +
   geom_boxplot(aes(fill = dose)) +
-  add_pvalue(each.vs.basemean, x = "x")
+  add_pvalue(each.vs.basemean)
 
 ## p-value (text only) with comparison to reference sample
 each.vs.ref <- tibble::tribble(
