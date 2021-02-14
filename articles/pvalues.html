@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -386,8 +386,7 @@
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="fl">1</span>, mu <span class="op">=</span> <span class="fl">26</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/adjust_pvalue.html">adjust_pvalue</a></span><span class="op">(</span>p.col <span class="op">=</span> <span class="st">"p"</span>, method <span class="op">=</span> <span class="st">"holm"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/add_significance.html">add_significance</a></span><span class="op">(</span>p.col <span class="op">=</span> <span class="st">"p.adj"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html">add_xy_position</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/add_significance.html">add_significance</a></span><span class="op">(</span>p.col <span class="op">=</span> <span class="st">"p.adj"</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span><span class="op">)</span> <span class="op">+</span> 
@@ -404,6 +403,7 @@
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
                xmin <span class="op">=</span> <span class="st">"group1"</span>, 
                x <span class="op">=</span> <span class="st">"factor(dose)"</span>, 
+               y <span class="op">=</span> <span class="fl">37</span>,
                label <span class="op">=</span> <span class="st">"p.adj.signif"</span><span class="op">)</span></code></pre></div>
 <p><img src="pvalues_files/figure-html/unnamed-chunk-19-1.png" width="384"></p>
 </div>
