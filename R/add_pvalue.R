@@ -129,10 +129,14 @@ add_pvalue <- function(data,
 
   # check for remove.bracket
   # should stay before (!is.null(x))
-  if (remove.bracket) {
+  if (remove.bracket & !is.null(xmax)) {
     xmin.length <- length(unique(data[[xmin]]))
-    if (xmin.length == 1) {
+    xmax.length <- length(unique(data[[xmax]]))
+    if (xmin.length == 1 & xmax.length >= 2) {
       xmin <- xmax
+      xmax <- NULL
+    }
+    else if (xmin.length >= 2 & xmax.length == 1) {
       xmax <- NULL
     }
   }
@@ -155,8 +159,9 @@ add_pvalue <- function(data,
     }
     else if (ngroup1 >= 2 & ngroup2 >= 2) {
       comparison <- "pairwise"
-    } else {
-      stop("Make sure that xmin and xmax columns exist in the data.")
+    }
+    else if (ngroup1 >= 2 & ngroup2 == 1) {
+      comparison <- "each_vs_ref"
     }
   } else {
     if(ngroup1 >= 1) {
@@ -206,10 +211,6 @@ add_pvalue <- function(data,
 
   # draw brackets else draw p-value text
   if (pvalue.geom == "bracket") {
-    if (identical(data$xmin, data$xmax) | remove.bracket) {
-      bracket.size = 0
-    }
-
     params <- list(
       group = 1:nrow(data),
       label = "label", xmin = "xmin", xmax = "xmax",
