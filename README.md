@@ -9,6 +9,8 @@
 status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://codecov.io/gh/csdaw/ggprism?branch=master)
+[![CRAN
+version](https://www.r-pkg.org/badges/version/ggprism?color=green)](https://cran.r-project.org/package=ggprism)
 [![Website
 https://csdaw.github.io/ggprism](https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg)](https://csdaw.github.io/ggprism/)
 <!-- badges: end -->
@@ -19,7 +21,13 @@ Prism’* look.
 
 ## Install
 
-Install the development version from GitHub.
+Install the latest version from CRAN:
+
+``` r
+install.packages("ggprism")
+```
+
+Install the development version from GitHub:
 
 ``` r
 remotes::install_github("csdaw/ggprism")
