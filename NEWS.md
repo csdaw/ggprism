@@ -1,5 +1,6 @@
 # ggprism (development version)
 
+* Make `add_pvalue()` more flexible to different input columns
 * Fix error in p-values vignette so it works again
 * Increase test coverage
 
