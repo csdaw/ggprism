@@ -352,8 +352,7 @@ df_p_val <- ToothGrowth %>%
   rstatix::group_by(factor(dose)) %>% 
   rstatix::t_test(len ~ 1, mu = 26) %>% 
   rstatix::adjust_pvalue(p.col = "p", method = "holm") %>% 
-  rstatix::add_significance(p.col = "p.adj") %>% 
-  rstatix::add_xy_position()
+  rstatix::add_significance(p.col = "p.adj")
 
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(geom = "col", fun = mean) + 
@@ -370,6 +369,7 @@ p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
 p + add_pvalue(df_p_val, 
                xmin = "group1", 
                x = "factor(dose)", 
+               y = 37,
                label = "p.adj.signif")
 ```
 
