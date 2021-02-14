@@ -43,6 +43,15 @@ each.vs.ref <- tibble::tribble(
   "0.5",   "2",     1.27e-7,  38
 )
 
+each.vs.ref.grouped <- tibble::tribble(
+  ~group1, ~group2, ~p.signif, ~y.position, ~supp,
+  "0.5",   "1",     "***",     33.6,        "OJ",
+  "0.5",   "2",     "***",     39,          "OJ",
+  "0.5",   "1",     "***",     36.6,        "VC",
+  "0.5",   "2",     "***",     42,          "VC"
+)
+each.vs.ref.grouped$supp <- factor(each.vs.ref.grouped$supp)
+
 each.vs.basemean <- tibble::tribble(
   ~group1, ~group2, ~p.adj,     ~y.position,
   "all",   "0.5",   0.00000087, 35,
@@ -77,6 +86,9 @@ base.tg2 <- ggplot(tg, aes(x = dose, y = len)) +
 
 base.tg3 <- ggplot(tg, aes(x = dose, y = len)) +
   geom_boxplot(aes(fill = supp))
+
+base.tg4 <- ggplot(tg, aes(x = supp, y = len)) +
+  geom_boxplot(aes(fill = dose))
 
 #### Tests (brackets) ----------------------------------------------------------
 
@@ -210,6 +222,11 @@ expect_silent(ggplotGrob(g))
 
 # test that comparison against basemean works
 g <- base.tg2 + add_pvalue(each.vs.basemean)
+
+expect_silent(ggplotGrob(g))
+
+# test that grouped comparison against reference works
+g <- base.tg4 + add_pvalue(each.vs.ref.grouped, x = "supp")
 
 expect_silent(ggplotGrob(g))
 

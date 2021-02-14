@@ -1,13 +1,12 @@
 geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          position = "identity", na.rm = FALSE,
                          show.legend = NA, inherit.aes = TRUE,
-                         label = NULL, type = c("text", "expression"),
+                         label = NULL,
                          xmin = NULL, xmax = NULL, y.position = NULL,
                          label.size = 3.2, tip.length = 0.03, bracket.size = 0.6,
                          bracket.colour = NULL, bracket.shorten = 0,
                          bracket.nudge.y = 0, step.increase = 0,
                          step.group.by = NULL, coord.flip = FALSE, ...) {
-  type <- match.arg(type)
 
   build_signif_data <- function(data = NULL,
                                 label = NULL, xmin = NULL, xmax = NULL,
@@ -101,7 +100,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
-      type = type, label.size = label.size,
+      label.size = label.size,
       tip.length = tip.length, bracket.size = bracket.size,
       na.rm = na.rm, coord.flip = coord.flip, ...
     )
@@ -184,12 +183,9 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                        ),
                        draw_key = draw_key_path,
                        draw_group = function(data, panel_params,
-                                             coord, type = "text",
+                                             coord,
                                              coord.flip = FALSE) {
                          lab <- as.character(data$annotation)
-                         if (type == "expression") {
-                           lab <- parse_as_expression(lab)
-                         }
 
                          coords <- coord$transform(data, panel_params)
 
