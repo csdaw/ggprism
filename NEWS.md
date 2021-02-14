@@ -1,5 +1,8 @@
 # ggprism (development version)
 
+* Fix error in p-values vignette so it works again
+* Increase test coverage
+
 # ggprism 1.0.1
 
 * First CRAN submission
