@@ -102,7 +102,7 @@ I would be very grateful if you could cite this package if you use it in
 your publication.
 
 Charlotte Dawson (2021), *ggprism: A ggplot2 extension inspired by
-GraphPad Prism*. R package version 1.0.1,
+GraphPad Prism*. R package version 1.0.1.9000,
 <https://csdaw.github.io/ggprism/>.
 
 ## More Examples
@@ -110,15 +110,15 @@ GraphPad Prism*. R package version 1.0.1,
 Recreates [this
 figure](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png)
 from the GraphPad Prism website. See [this
-vignette](https://csdaw.github.io/ggprism/articles/ex1-dose.html) for
-the source code and step-by-step instructions.
+vignette](https://csdaw.github.io/ggprism/articles/web-only/ex1-dose.html)
+for the source code and step-by-step instructions.
 
 <img src="man/figures/README-ex2-1.png" width="400" /><img src="man/figures/README-ex2-2.png" width="400" />
 
 Recreates Figure 2B from [Matsushita & Nishimura
 (2020)](https://doi.org/10.1038/s42003-020-0889-1), which was originally
 created using GraphPad Prism. See [this
-vignette](https://csdaw.github.io/ggprism/articles/ex2-wings.html) for
-the source code and step-by-step instructions.
+vignette](https://csdaw.github.io/ggprism/articles/web-only/ex2-wings.html)
+for the source code and step-by-step instructions.
 
 <img src="man/figures/README-ex3-1.png" width="400" /><img src="man/figures/README-ex3-2.png" width="400" />
