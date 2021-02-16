@@ -1,6 +1,5 @@
 ^data-raw$
 ^ggprism\.Rproj$
-^Makefile$
 ^README.Rmd$
 ^\.Rproj\.user$
 ^\.github$
