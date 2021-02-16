@@ -99,7 +99,7 @@ Some ways to contribute might include:
 ## Cite
 
 I would be very grateful if you could cite this package if you use it in
-your publication. Use `citation("ggprism")` or:
+your publication. Use `citation("ggprism")` or for convenience:
 
 Charlotte Dawson (2021). *ggprism: A ‘ggplot2’ Extension Inspired by
 ‘GraphPad Prism’*. R package version 1.0.1.
