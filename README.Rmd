@@ -109,11 +109,11 @@ your contribution in. Some ways to contribute might include:
 ## Cite
 
 I would be very grateful if you could cite this package if you use it in your
-publication.
+publication. Use `citation("ggprism")` or:
 
-Charlotte Dawson (`r format(Sys.Date(), "%Y")`), 
-_ggprism: A ggplot2 extension inspired by GraphPad Prism_. R package version
-`r getNamespaceVersion("ggprism")`, <https://csdaw.github.io/ggprism/>.
+Charlotte Dawson (`r format(Sys.Date(), "%Y")`). 
+_ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'_. R package version
+`r getNamespaceVersion("ggprism")`. <https://cran.r-project.org/package=ggprism>
 
 ## More Examples
 
