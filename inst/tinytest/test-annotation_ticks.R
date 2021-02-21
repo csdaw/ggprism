@@ -42,9 +42,9 @@ g <- p + annotation_ticks(outside = TRUE) +
 expect_silent(ggplotGrob(g))
 
 ticks <- layer_grob(g, 2L)[[1]]$children[[1]]$y1
-lapply(
-  ticks,
-  function(x) expect_true(as.numeric(x) < 0)
+expect_equal(
+  grid::convertUnit(ticks, "pt", valueOnly = TRUE),
+  c(rep(-4.8, 5), rep(-2.4, 3))
 )
 
 # test that tick lengths can be set

@@ -48,10 +48,8 @@ g <- p + scale_y_continuous(guide = "prism_minor") +
 
 expect_silent(ggplotGrob(g))
 
-control <- sum(unit(1, "npc"), unit(-20, "pt"))
-test <- grab_axis(g, side = "l")
-
-expect_equal(test$grobs[[2]]$x[13], control)
+test <- grab_axis(g, side = "l")$grobs[[2]]$x
+expect_equal(length(unique(test)), 3)
 
 # test that guide_prism_minor produces error with no minor breaks
 g1 <- p + scale_x_discrete(guide = "prism_minor")

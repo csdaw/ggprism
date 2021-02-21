@@ -536,6 +536,7 @@ names as the two faceting variables (in this case `"grp"` and `"dose"`).
 ```{r, fig.height=7}
 # add a grouping variable to ToothGrowth
 tg <- ToothGrowth
+tg$dose <- factor(tg$dose)
 tg$grp <- factor(rep(c("grp1", "grp2"), 30))
 
 # construct the p-value table by hand
@@ -548,7 +549,7 @@ df_p_val <- data.frame(
   dose = c("0.5", "1")
 )
 
-p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) + 
+p <- ggplot(tg, aes(x = factor(supp), y = len)) + 
   geom_boxplot(width = 0.4) + 
   facet_wrap(grp ~ dose, scales = "free") + 
   theme_prism()

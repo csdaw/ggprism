@@ -32,13 +32,12 @@ expect_equal(ggprism:::validate_x_position(1, df), rep(1, 60))
 expect_equal(ggprism:::validate_y_position(1, df), rep(1, 60))
 
 # test that keep_only_tbl_df_classes works
-df2 <- df %>%
-  rstatix::group_by(supp) %>%
-  rstatix::t_test(len ~ dose, ref.group = "0.5")
+df2 <- df
+class(df2) <- c("data.frame", "orange")
 
 expect_equal(
   class(ggprism:::keep_only_tbl_df_classes(df2)),
-  c("tbl_df", "tbl", "data.frame")
+  c("data.frame")
 )
 
 #### Sanity checks -------------------------------------------------------------
