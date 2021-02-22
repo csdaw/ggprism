@@ -1,3 +1,7 @@
+# ggprism (development version)
+
+* Fix one of the figures in p-values vignette
+
 # ggprism 1.0.2
 
 * Make `add_pvalue()` more flexible to different input columns
