@@ -13,6 +13,7 @@ coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](ht
 version](https://www.r-pkg.org/badges/version/ggprism?color=green)](https://cran.r-project.org/package=ggprism)
 [![Website
 https://csdaw.github.io/ggprism](https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg)](https://csdaw.github.io/ggprism/)
+[![DOI](https://zenodo.org/badge/251058802.svg)](https://zenodo.org/badge/latestdoi/251058802)
 <!-- badges: end -->
 
 The `ggprism` package provides various themes, palettes, and other
@@ -99,11 +100,21 @@ Some ways to contribute might include:
 ## Cite
 
 I would be very grateful if you could cite this package if you use it in
-your publication. Use `citation("ggprism")` or for convenience:
+your publication:
 
 Charlotte Dawson (2021). *ggprism: A ‘ggplot2’ Extension Inspired by
-‘GraphPad Prism’*. R package version 1.0.1.
-<https://cran.r-project.org/package=ggprism>
+‘GraphPad Prism’*. R package version 1.0.2.
+<https://cran.r-project.org/package=ggprism> doi: 10.5281/zenodo.4556067
+
+    # BibTex for LaTeX users
+    @Manual{
+      title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
+      author = {Charlotte Dawson},
+      year = {2021},
+      note = {R package version 1.0.2},
+      url = {https://cran.r-project.org/package=ggprism},
+      doi = {10.5281/zenodo.4556067}
+    }
 
 ## More Examples
 
