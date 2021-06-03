@@ -55,18 +55,20 @@ g <- p + annotation_ticks(
 )
 
 expect_silent(ggplotGrob(g))
-expect_identical(g$layers[[2]]$geom_params$tick.length, unit(20, "pt"))
-expect_identical(g$layers[[2]]$geom_params$minor.length, unit(10, "pt"))
+layer_grob(g, 2L)
+
+expect_identical(layer_grob(g, 2L)[[1]]$children[[1]]$y1[1], unit(20, "pt"))
+expect_identical(layer_grob(g, 2L)[[1]]$children[[1]]$y1[8], unit(10, "pt"))
 
 # test that you can set the colour with both spellings
 g1 <- p + annotation_ticks(colour = "red")
 g2 <- p + annotation_ticks(color = "red")
 
 expect_silent(ggplotGrob(g1))
-expect_true(g1$layers[[2]]$geom_params$colour == "red")
+expect_identical(layer_grob(g1, 2L)[[1]]$children[[1]]$gp$col, "#FF0000FF")
 
 expect_silent(ggplotGrob(g2))
-expect_true(g2$layers[[2]]$geom_params$colour == "red")
+expect_identical(layer_grob(g2, 2L)[[1]]$children[[1]]$gp$col, "#FF0000FF")
 
 #### Sanity checks -------------------------------------------------------------
 # test that warning occurs if both colour and color are set
