@@ -1,6 +1,8 @@
 # ggprism (development version)
 
 * Fix one of the figures in p-values vignette
+* Replace some `annotation_ticks()` tests to ensure compatibility with
+the upcoming ggplot2 v3.4.0
 
 # ggprism 1.0.2
 
