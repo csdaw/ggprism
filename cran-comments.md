@@ -1,11 +1,11 @@
 ## Test environments
 
 * Fedora Linux, clang, gfortran, R-devel
-* MacOS local install (Big Sur 11.1), R 4.0.3
-* MacOS latest (release) via GitHub actions, R 4.0.4
-* Ubuntu 20.04 (release) via GitHub actions, R 4.0.4
-* Ubuntu 20.04 (devel) via GitHub actions, R 4.0.4
-* Windows latest (release) via GitHub actions, R 4.0.4
+* MacOS local install (Big Sur 11.2.3), R 4.0.4
+* MacOS latest (release) via GitHub actions, R 4.1.0
+* Ubuntu 20.04 (release) via GitHub actions, R 4.1.0
+* Ubuntu 20.04 (devel) via GitHub actions, R-devel
+* Windows latest (release) via GitHub actions, R 4.1.0
 * Windows Server 2008 via win-builder, R-devel
 * Windows Server 2008 via R-hub, R-oldrel
 
