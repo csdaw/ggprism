@@ -143,6 +143,19 @@ add_pvalue <- function(data,
     }
   }
 
+  # only for p-value displayed as text (without brackets)
+  if (!is.null(x)) {
+    x <- validate_x_position(x, data)
+
+    if (is.numeric(x)) {
+      data$x <- x
+      x <- "x"
+    }
+
+    xmin <- x
+    xmax <- NULL
+  }
+
   # determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
   # should stay before (!is.null(x))
   ngroup1 <- length(unique(data[[xmin]]))
@@ -169,19 +182,6 @@ add_pvalue <- function(data,
     if(ngroup1 >= 1) {
       comparison <- "two_groups"
     }
-  }
-
-  # only for p-value displayed as text (without brackets)
-  if (!is.null(x)) {
-    x <- validate_x_position(x, data)
-
-    if (is.numeric(x)) {
-      data$x <- x
-      x <- "x"
-    }
-
-    xmin <- x
-    xmax <- NULL
   }
 
   # validate p-value y position
