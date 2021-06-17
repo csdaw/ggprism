@@ -104,20 +104,26 @@ g <- base.tg1 + add_pvalue(two.means, label = "p = {p}")
 
 expect_silent(ggplotGrob(g))
 
-# test_that label can be column with any name
+# test that label can be column with any name
 two.means$custom.label <- "ns"
 g <- base.tg1 + add_pvalue(two.means, label = "custom.label")
 
 expect_silent(ggplotGrob(g))
 
-# test_that xmin and xmax can be column with any name
+# test that label can be parse into expressions and displayed as plotmath
+each.vs.ref$p.exprs <- paste0("P==1*x*10^", round(log10(each.vs.ref$p.adj), 0))
+g <- base.tg2 + add_pvalue(each.vs.ref, label = "p.exprs", parse = TRUE)
+
+expect_silent(ggplotGrob(g))
+
+# test that xmin and xmax can be column with any name
 colnames(two.means)[1:2] <- c("apple", "banana")
 g <- base.tg1 + add_pvalue(two.means, xmin = "apple", xmax = "banana")
 
 expect_silent(ggplotGrob(g))
 colnames(two.means)[1:2] <- c("group1", "group2") # change them back
 
-# test_that y.position can be column with any name
+# test that y.position can be column with any name
 colnames(two.means)[4] <- "orange"
 g <- base.tg1 + add_pvalue(two.means, y.position = "orange")
 
@@ -129,7 +135,7 @@ g <- base.tg1 + add_pvalue(two.means, label.size = 1)
 
 expect_identical(g$layers[[2]]$aes_params$label.size, 1)
 
-# test_that colour or color can be changed manually
+# test that colour or color can be changed manually
 g1 <- base.tg1 + add_pvalue(two.means, colour = "red")
 g2 <- base.tg1 + add_pvalue(two.means, color = "red")
 
@@ -157,7 +163,7 @@ g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = -0.01)
 
 expect_silent(ggplotGrob(g))
 
-# test_that tip.length can be zero
+# test that tip.length can be zero
 g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = 0)
 
 expect_silent(ggplotGrob(g))
@@ -190,7 +196,7 @@ expect_false(
   )
 )
 
-# test_that brackets can be shortened
+# test that brackets can be shortened
 g1 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = 0.05) # all at once
 g2 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = c(0.05, 0.05, 0.05)) #individually
 
@@ -202,13 +208,13 @@ g <- base.tg3 + add_pvalue(pairwise.grouped, bracket.nudge.y = 10)
 
 expect_silent(ggplotGrob(g))
 
-# test_that step.increase works
+# test that step.increase works
 g <- base.tg3 + add_pvalue(pairwise.grouped, step.increase = 0.2,
                            step.group.by = "supp")
 
 expect_silent(ggplotGrob(g))
 
-# test_that("step.group.by works", {
+# test that step.group.by works
 g <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp",
                            step.group.by = "supp")
 
