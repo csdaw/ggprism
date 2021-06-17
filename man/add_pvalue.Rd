@@ -11,6 +11,7 @@ add_pvalue(
   xmax = "group2",
   x = NULL,
   y.position = "y.position",
+  parse = FALSE,
   label.size = 3.2,
   colour = NULL,
   color = NULL,
@@ -58,6 +59,9 @@ Only use when plotting p-value as text only (no brackets).}
 \code{data} containing the y coordinates (\code{numeric}) of each p-value to
 be plotted. Can also be a single number to plot all p-values at the same
 height or a \code{numeric} vector that will override \code{data}.}
+
+\item{parse}{\code{logical}. Default is \code{FALSE}. If \code{TRUE} the text labels will
+be parsed into expressions and displayed as described in \code{?plotmath}.}
 
 \item{label.size}{\code{numeric}. Size of text.}
 

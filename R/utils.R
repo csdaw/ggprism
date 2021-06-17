@@ -23,7 +23,8 @@
     "absoluteGrob",
     "axis_label_element_overrides",
     "draw_axis_labels",
-    "new_data_frame"
+    "new_data_frame",
+    "parse_safe"
   )
 
   objects <- setNames(objects, objects)
