@@ -59,6 +59,8 @@ p_vals <- tibble::tribble(
   "0.5",   "1",     8.80e-14, 35,
   "0.5",   "2",     1.27e-7,  39
 )
+
+p_vals$p.exprs <- paste0("p==1*x*10^", round(log10(p_vals$p.adj), 0))
 ```
 
 ``` r
@@ -70,7 +72,7 @@ base +
   guides(y = "prism_offset_minor") + 
   theme_prism(base_size = 16) + 
   theme(legend.position = "none") + 
-  add_pvalue(p_vals, label = "p = {p.adj}", tip.length = 0, label.size = 4)
+  add_pvalue(p_vals, label = "p.exprs", tip.length = 0, label.size = 4, parse = TRUE)
 ```
 
 <img src="man/figures/README-ex-1.png" width="400" /><img src="man/figures/README-ex-2.png" width="400" />
@@ -103,7 +105,7 @@ I would be very grateful if you could cite this package if you use it in
 your publication:
 
 Charlotte Dawson (2021). *ggprism: A ‘ggplot2’ Extension Inspired by
-‘GraphPad Prism’*. R package version 1.0.2.
+‘GraphPad Prism’*. R package version 1.0.3.
 <https://cran.r-project.org/package=ggprism> doi: 10.5281/zenodo.4556067
 
     # BibTex for LaTeX users
@@ -111,7 +113,7 @@ Charlotte Dawson (2021). *ggprism: A ‘ggplot2’ Extension Inspired by
       title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
       author = {Charlotte Dawson},
       year = {2021},
-      note = {R package version 1.0.2},
+      note = {R package version 1.0.3},
       url = {https://cran.r-project.org/package=ggprism},
       doi = {10.5281/zenodo.4556067}
     }
