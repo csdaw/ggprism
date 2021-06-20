@@ -1,5 +1,8 @@
 # ggprism (development version)
 
+* Add `parse` argument to `add_pvalue()` which allows the use of plotmath
+expressions for the text labels.
+
 # ggprism 1.0.3
 
 * Fix one of the figures in p-values vignette
