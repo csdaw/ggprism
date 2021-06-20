@@ -59,8 +59,6 @@ p_vals <- tibble::tribble(
   "0.5",   "1",     8.80e-14, 35,
   "0.5",   "2",     1.27e-7,  39
 )
-
-p_vals$p.exprs <- paste0("p==1*x*10^", round(log10(p_vals$p.adj), 0))
 ```
 
 ``` r
@@ -72,7 +70,7 @@ base +
   guides(y = "prism_offset_minor") + 
   theme_prism(base_size = 16) + 
   theme(legend.position = "none") + 
-  add_pvalue(p_vals, label = "p.exprs", tip.length = 0, label.size = 4, parse = TRUE)
+  add_pvalue(p_vals, label = "p = {p.adj}", tip.length = 0, label.size = 4)
 ```
 
 <img src="man/figures/README-ex-1.png" width="400" /><img src="man/figures/README-ex-2.png" width="400" />
