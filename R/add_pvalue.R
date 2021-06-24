@@ -37,6 +37,8 @@
 #' \code{data} containing the y coordinates (`numeric`) of each p-value to
 #' be plotted. Can also be a single number to plot all p-values at the same
 #' height or a `numeric` vector that will override `data`.
+#' @param parse `logical`. Default is `FALSE`. If `TRUE` the text labels will
+#' be parsed into expressions and displayed as described in `?plotmath`.
 #' @param label.size `numeric`. Size of text.
 #' @param colour,color `string`. Colour of text.
 #' @param tip.length `numeric` vector. Length of bracket tips.
@@ -92,7 +94,7 @@
 #' @export
 add_pvalue <- function(data,
                        label = NULL, xmin = "group1", xmax = "group2",
-                       x = NULL, y.position = "y.position",
+                       x = NULL, y.position = "y.position", parse = FALSE,
                        label.size = 3.2,  colour = NULL, color = NULL,
                        tip.length = 0.03, bracket.size = 0.6,
                        bracket.colour = NULL, bracket.color = NULL,
@@ -106,7 +108,7 @@ add_pvalue <- function(data,
   }
 
   # if label is a glue package expression, parse it
-  if (grepl("\\{|\\}", label, perl = TRUE)) {
+  if (grepl("\\{|\\}", label, perl = TRUE) && !parse) {
     data$label <- glue_data(data, label)
     label <- "label"
   }
@@ -141,6 +143,19 @@ add_pvalue <- function(data,
     }
   }
 
+  # only for p-value displayed as text (without brackets)
+  if (!is.null(x)) {
+    x <- validate_x_position(x, data)
+
+    if (is.numeric(x)) {
+      data$x <- x
+      x <- "x"
+    }
+
+    xmin <- x
+    xmax <- NULL
+  }
+
   # determine the type of comparisons: one_group, two_groups, each_vs_ref, pairwise
   # should stay before (!is.null(x))
   ngroup1 <- length(unique(data[[xmin]]))
@@ -167,19 +182,6 @@ add_pvalue <- function(data,
     if(ngroup1 >= 1) {
       comparison <- "two_groups"
     }
-  }
-
-  # only for p-value displayed as text (without brackets)
-  if (!is.null(x)) {
-    x <- validate_x_position(x, data)
-
-    if (is.numeric(x)) {
-      data$x <- x
-      x <- "x"
-    }
-
-    xmin <- x
-    xmax <- NULL
   }
 
   # validate p-value y position
@@ -214,8 +216,8 @@ add_pvalue <- function(data,
     params <- list(
       group = 1:nrow(data),
       label = "label", xmin = "xmin", xmax = "xmax",
-      y.position = "y.position", label.size = label.size,
-      colour = colour, color = color,
+      y.position = "y.position", parse = parse,
+      label.size = label.size, colour = colour, color = color,
       tip.length = tip.length, bracket.size = bracket.size,
       bracket.colour = bracket.colour, bracket.color = bracket.color,
       bracket.shorten = bracket.shorten,
@@ -228,7 +230,7 @@ add_pvalue <- function(data,
     option <- list()
     allowed.options <- c(
       # function arguments
-      "y.position", "x", "label.size", "colour", "tip.length",
+      "y.position", "parse", "x", "label.size", "colour", "tip.length",
       "bracket.size","bracket.colour", "bracket.shorten", "bracket.nudge.y",
       "step.increase", "coord.flip", "position",
       # extra aesthetics
@@ -298,7 +300,7 @@ add_pvalue <- function(data,
       mapping <- aes(x = xmin, y = y.position, label = label)
     }
 
-    option <- list(data = data, size = label.size, position = position, ...)
+    option <- list(data = data, size = label.size, position = position, parse = parse, ...)
 
     if (!missing(color)) {
       if (color %in% colnames(data)) {

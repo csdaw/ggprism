@@ -2,7 +2,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
                          position = "identity", na.rm = FALSE,
                          show.legend = NA, inherit.aes = TRUE,
                          label = NULL,
-                         xmin = NULL, xmax = NULL, y.position = NULL,
+                         xmin = NULL, xmax = NULL, y.position = NULL, parse = FALSE,
                          label.size = 3.2, tip.length = 0.03, bracket.size = 0.6,
                          bracket.colour = NULL, bracket.shorten = 0,
                          bracket.nudge.y = 0, step.increase = 0,
@@ -100,6 +100,7 @@ geom_bracket <- function(mapping = NULL, data = NULL, stat = "bracket",
     stat = stat, geom = GeomBracket, mapping = mapping,  data = data,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
+      parse = parse,
       label.size = label.size,
       tip.length = tip.length, bracket.size = bracket.size,
       na.rm = na.rm, coord.flip = coord.flip, ...
@@ -172,7 +173,7 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                        required_aes = c("x", "xend", "y", "yend", "annotation"),
                        default_aes = aes(
                          label = NULL, xmin = NULL, xmax = NULL,
-                         y.position = NULL,
+                         y.position = NULL, parse = FALSE,
                          label.size = 3.2, colour = "black",
                          angle = NULL, hjust = 0.5, vjust = NULL,
                          alpha = NA, fontfamily = "", fontface = 1,
@@ -188,6 +189,10 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                          lab <- as.character(data$annotation)
 
                          coords <- coord$transform(data, panel_params)
+
+                         if (coords$parse[1]) {
+                           lab <- .ggint$parse_safe(lab)
+                         }
 
                          if (is.null(coords$vjust)) {
                            if (lab[1] %in% c("****", "***", "**", "*")) {
