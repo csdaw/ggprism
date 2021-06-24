@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -271,6 +271,7 @@
 <span class="co"># instead just specify x position in the same way as y.position</span>
 <span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   group1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,
+  group2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
   label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">result</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,
   y.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">35</span>, <span class="fl">35</span><span class="op">)</span>
@@ -278,35 +279,62 @@
 <p>Then we add the p-values to the plot. As before, you can change how the labels look quite easily.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
-               xmin <span class="op">=</span> <span class="st">"group1"</span>, 
-               x <span class="op">=</span> <span class="st">"x"</span>, 
-               label <span class="op">=</span> <span class="st">"label"</span>,
-               y.position <span class="op">=</span> <span class="st">"y.position"</span><span class="op">)</span>
+                     xmin <span class="op">=</span> <span class="st">"group1"</span>, 
+                     x <span class="op">=</span> <span class="st">"x"</span>, 
+                     label <span class="op">=</span> <span class="st">"label"</span>,
+                     y.position <span class="op">=</span> <span class="st">"y.position"</span><span class="op">)</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
-               xmin <span class="op">=</span> <span class="st">"group1"</span>, 
-               x <span class="op">=</span> <span class="st">"x"</span>, 
-               label <span class="op">=</span> <span class="st">"p = {label}"</span>,
-               y.position <span class="op">=</span> <span class="st">"y.position"</span>,
-               label.size <span class="op">=</span> <span class="fl">3.2</span>,
-               fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>
+                     xmin <span class="op">=</span> <span class="st">"group1"</span>, 
+                     x <span class="op">=</span> <span class="st">"x"</span>, 
+                     label <span class="op">=</span> <span class="st">"p = {label}"</span>,
+                     y.position <span class="op">=</span> <span class="st">"y.position"</span>,
+                     label.size <span class="op">=</span> <span class="fl">3.2</span>,
+                     fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
 <p><img src="pvalues_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>If you have the development version of <code>ggprism</code> installed, and you want the label number format to look nicer you can provide a column to <code>label</code> with <em>plotmath</em> expressions and set <code>parse = TRUE</code>. This works with or without brackets.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># plotmath expression to have superscript exponent</span>
+<span class="va">df_p_val</span><span class="op">$</span><span class="va">p.exprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"P==1*x*10^"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># as above but with italics</span>
+<span class="va">df_p_val</span><span class="op">$</span><span class="va">p.exprs.ital</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,
+  <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/bquote.html">bquote</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span><span class="op">(</span><span class="st">"P = 1x10"</span><span class="op">^</span><span class="fu">.</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
+                     xmin <span class="op">=</span> <span class="st">"group1"</span>, 
+                     x <span class="op">=</span> <span class="st">"x"</span>, 
+                     label <span class="op">=</span> <span class="st">"p.exprs"</span>,
+                     y.position <span class="op">=</span> <span class="st">"y.position"</span>,
+                     parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
+                     xmin <span class="op">=</span> <span class="st">"group1"</span>, 
+                     x <span class="op">=</span> <span class="st">"x"</span>, 
+                     label <span class="op">=</span> <span class="st">"p.exprs.ital"</span>,
+                     y.position <span class="op">=</span> <span class="st">"y.position"</span>,
+                     parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div id="using-the-rstatix-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-the-rstatix-package" class="anchor"></a>Using the <code>rstatix</code> package</h2>
 <p>As <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> is ultimately just a rewritten version of <code>stat_pvalue_manual()</code>, it works well with the <a href="https://github.com/kassambara/rstatix"><code>rstatix</code> package</a>.</p>
 <p>With <a href="https://github.com/kassambara/rstatix"><code>rstatix</code></a>, you can perform the statistical test and create the p-value table with the appropriate x and y position automatically, in a single step.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="va">len</span> <span class="op">~</span> <span class="va">dose</span>, ref.group <span class="op">=</span> <span class="st">"0.5"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html">add_xy_position</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
                label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>,
                remove.bracket <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-15-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-16-1.png" width="384"></p>
 </div>
 <div id="many-more-examples" class="section level2">
 <h2 class="hasAnchor">
@@ -316,7 +344,7 @@
 <h3 class="hasAnchor">
 <a href="#compare-two-means" class="anchor"></a>Compare two means</h3>
 <p>Compare mean <code>len</code> depending on <code>supp</code>. Error bars indicate 1 standard deviation from the mean.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="va">len</span> <span class="op">~</span> <span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html">add_x_position</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -333,13 +361,13 @@
 
 <span class="co"># normal plot</span>
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, y.position <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-16-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-17-1.png" width="384"></p>
 </div>
 <div id="compare-mean-vs-reference" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compare-mean-vs-reference" class="anchor"></a>Compare mean vs reference</h3>
 <p>Compare mean <code>len</code> of each dose to <code>dose = 0.5</code>. Error bars indicate 1 standard deviation from the mean.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="va">len</span> <span class="op">~</span> <span class="va">dose</span>, ref.group <span class="op">=</span> <span class="st">"0.5"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html">add_xy_position</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -361,9 +389,9 @@
 <span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, label <span class="op">=</span> <span class="st">"p.adj.signif"</span>, remove.bracket <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>Now, compare overall mean <code>len</code> (base mean) to the mean <code>len</code> for each <code>dose</code>. Error bars indicate 1 standard deviation from the mean.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="va">len</span> <span class="op">~</span> <span class="va">dose</span>, ref.group <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -380,9 +408,9 @@
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
                label <span class="op">=</span> <span class="st">"p.adj.signif"</span>, 
                y.position <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-18-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-19-1.png" width="384"></p>
 <p>Now, compare the mean <code>len</code> for each <code>dose</code> to some arbitrary value, say <code>26</code> in this case. Error bars indicate 1 standard deviation from the mean.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="fl">1</span>, mu <span class="op">=</span> <span class="fl">26</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -406,13 +434,13 @@
                x <span class="op">=</span> <span class="st">"factor(dose)"</span>, 
                y <span class="op">=</span> <span class="fl">37</span>,
                label <span class="op">=</span> <span class="st">"p.adj.signif"</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-19-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-20-1.png" width="384"></p>
 </div>
 <div id="multiple-pairwise-comparisons" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-pairwise-comparisons" class="anchor"></a>Multiple pairwise comparisons</h3>
 <p>Compare mean <code>len</code> across the 3 different <code>dose</code>. Use the <code>bracket.shorten</code> argument to slightly shorten side-by-side brackets.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="va">len</span> <span class="op">~</span> <span class="va">dose</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -425,7 +453,7 @@
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, 
                y.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">44</span>, <span class="fl">41</span>, <span class="fl">44</span><span class="op">)</span>,
                bracket.shorten <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0</span>, <span class="fl">0.025</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-20-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-21-1.png" width="384"></p>
 </div>
 <div id="grouped-pairwise-comparisons" class="section level3">
 <h3 class="hasAnchor">
@@ -436,7 +464,7 @@
 <li>Any grouping of data <strong>must</strong> be done in the individual Geom functions (in this case <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>) and <strong>not</strong> in the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function.</li>
 <li>You can use the <code>step.group.by = "supp"</code> to automatically change the bracket spacing between different groups.</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -456,9 +484,9 @@
                tip.length <span class="op">=</span> <span class="fl">0</span>,
                bracket.colour <span class="op">=</span> <span class="st">"black"</span>,
                show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-21-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-22-1.png" width="480"></p>
 <p>Pairwise comparisons <em>within groups</em> of the <code>ToothGrowth</code> data set, grouped according to <code>supp</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span>
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -476,9 +504,9 @@
                xmax <span class="op">=</span> <span class="st">"xmax"</span>,
                label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>,
                tip.length <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-22-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-23-1.png" width="480"></p>
 <p>Pairwise comparisons <em>within groups</em> and <em>between groups</em> of the <code>ToothGrowth</code> data set, grouped according to <code>supp</code>. You can use <code>bracket.nudge.y</code> to slightly adjust the overall y position of the brackets instead of having to redefine <code>df_p_val2</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val1</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span>
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -505,13 +533,13 @@
              tip.length <span class="op">=</span> <span class="fl">0.01</span>,
              bracket.nudge.y <span class="op">=</span> <span class="fl">2</span>,
              step.increase <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-23-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-24-1.png" width="480"></p>
 </div>
 <div id="facets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#facets" class="anchor"></a>Facets</h3>
 <p>Facet according to <code>dose</code> and then compare mean <code>len</code> between either <code>supp</code>. It is important that the p-value table <strong>must</strong> have a column with the same name as the faceting variable (in this case <code>"dose"</code>).</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -522,13 +550,13 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span>
     <span class="op">~</span> <span class="va">dose</span>, scales <span class="op">=</span> <span class="st">"free"</span>, 
     labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labeller.html">labeller</a></span><span class="op">(</span>dose <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"dose ="</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span> 
+  <span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 <p>Facet according to <code>supp</code> and then compare mean <code>len</code> between the three <code>dose</code>. It is important that the p-value table <strong>must</strong> have a column with the same name as the faceting variable (in this case <code>"supp"</code>).</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -540,9 +568,9 @@
   <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 <p>Facet according to some particular grouping variable called <code>grp</code> and <code>dose</code>, and then compare mean <code>len</code> between either <code>supp</code>. It is important that the p-value table <strong>must</strong> have columns with the same names as the two faceting variables (in this case <code>"grp"</code> and <code>"dose"</code>).</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># add a grouping variable to ToothGrowth</span>
 <span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span>
 <span class="va">tg</span><span class="op">$</span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">tg</span><span class="op">$</span><span class="va">dose</span><span class="op">)</span>
@@ -564,7 +592,7 @@
   <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, bracket.nudge.y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
 </div>
   </div>

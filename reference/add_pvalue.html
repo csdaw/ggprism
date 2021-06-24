@@ -89,7 +89,7 @@ will also work with add_pvalue." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -184,6 +184,7 @@ will also work with <code>add_pvalue</code>.</p>
   xmax <span class='op'>=</span> <span class='st'>"group2"</span>,
   x <span class='op'>=</span> <span class='cn'>NULL</span>,
   y.position <span class='op'>=</span> <span class='st'>"y.position"</span>,
+  parse <span class='op'>=</span> <span class='cn'>FALSE</span>,
   label.size <span class='op'>=</span> <span class='fl'>3.2</span>,
   colour <span class='op'>=</span> <span class='cn'>NULL</span>,
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -245,6 +246,11 @@ Only use when plotting p-value as text only (no brackets).</p></td>
 <code>data</code> containing the y coordinates (<code>numeric</code>) of each p-value to
 be plotted. Can also be a single number to plot all p-values at the same
 height or a <code>numeric</code> vector that will override <code>data</code>.</p></td>
+    </tr>
+    <tr>
+      <th>parse</th>
+      <td><p><code>logical</code>. Default is <code>FALSE</code>. If <code>TRUE</code> the text labels will
+be parsed into expressions and displayed as described in <code><a href='https://rdrr.io/r/grDevices/plotmath.html'>?plotmath</a></code>.</p></td>
     </tr>
     <tr>
       <th>label.size</th>
