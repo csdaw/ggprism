@@ -135,7 +135,7 @@ StatBracket <- ggproto("StatBracket", Stat,
                          xmin <- data$xmin + bracket.shorten
                          xmax <- data$xmax - bracket.shorten
 
-                         y.position <- data$y.position + (y.scale.range*data$step.increase) + data$bracket.nudge.y
+                         y.position <- data$y + (y.scale.range*data$step.increase) + data$bracket.nudge.y
 
                          label <- data$label
 
