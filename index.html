@@ -23,6 +23,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -35,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3.9000</span>
       </span>
     </div>
 
@@ -51,7 +53,7 @@
   <a href="articles/ggprism.html">Getting Started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -72,7 +74,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Examples
      
     <span class="caret"></span>
@@ -95,7 +97,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/csdaw/ggprism/">
+  <a href="https://github.com/csdaw/ggprism/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -112,62 +114,60 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ggprism-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#ggprism-" class="anchor"></a>ggprism <img src="reference/figures/ggprism_logo.png" align="right" width="150">
+<div class="section level1">
+<div class="page-header"><h1 id="ggprism-">ggprism <img src="reference/figures/ggprism_logo.png" align="right" width="150"><a class="anchor" aria-label="anchor" href="#ggprism-"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p>The <code>ggprism</code> package provides various themes, palettes, and other useful functions to customise ggplots and give them the <em>‘GraphPad Prism’</em> look.</p>
-<div id="install" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
+<div class="section level2">
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+</h2>
 <p>Install the latest version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggprism"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggprism"</span><span class="op">)</span></span></code></pre></div>
 <p>Install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"csdaw/ggprism"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"csdaw/ggprism"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="how-to-use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-to-use" class="anchor"></a>How to Use</h2>
-<p>See the <a href="https://csdaw.github.io/ggprism/articles/ggprism.html">Getting Started</a> page for a quick overview of <code>ggprism</code> features. Detailed examples and instructions can be found below and on the <a href="https://csdaw.github.io/ggprism/"><code>ggprism</code> website</a>.</p>
+<div class="section level2">
+<h2 id="how-to-use">How to Use<a class="anchor" aria-label="anchor" href="#how-to-use"></a>
+</h2>
+<p>See the <a href="https://csdaw.github.io/ggprism/articles/ggprism.html" class="external-link">Getting Started</a> page for a quick overview of <code>ggprism</code> features. Detailed examples and instructions can be found below and on the <a href="https://csdaw.github.io/ggprism/" class="external-link"><code>ggprism</code> website</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/">ggprism</a></span><span class="op">)</span>
-
-<span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span>
-<span class="va">tg</span><span class="op">$</span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">tg</span><span class="op">$</span><span class="va">dose</span><span class="op">)</span>
-
-<span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dose</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">dose</span>, fill <span class="op">=</span> <span class="va">dose</span><span class="op">)</span>, trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">dose</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">p_vals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
-  <span class="op">~</span><span class="va">group1</span>, <span class="op">~</span><span class="va">group2</span>, <span class="op">~</span><span class="va">p.adj</span>,   <span class="op">~</span><span class="va">y.position</span>,
-  <span class="st">"0.5"</span>,   <span class="st">"1"</span>,     <span class="fl">8.80e-14</span>, <span class="fl">35</span>,
-  <span class="st">"0.5"</span>,   <span class="st">"2"</span>,     <span class="fl">1.27e-7</span>,  <span class="fl">39</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span></span>
+<span><span class="va">tg</span><span class="op">$</span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">tg</span><span class="op">$</span><span class="va">dose</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dose</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">dose</span>, fill <span class="op">=</span> <span class="va">dose</span><span class="op">)</span>, trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">dose</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_vals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">group1</span>, <span class="op">~</span><span class="va">group2</span>, <span class="op">~</span><span class="va">p.adj</span>,   <span class="op">~</span><span class="va">y.position</span>,</span>
+<span>  <span class="st">"0.5"</span>,   <span class="st">"1"</span>,     <span class="fl">8.80e-14</span>, <span class="fl">35</span>,</span>
+<span>  <span class="st">"0.5"</span>,   <span class="st">"2"</span>,     <span class="fl">1.27e-7</span>,  <span class="fl">39</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">base</span>
-
-<span class="va">base</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/scale_colour_prism.html">scale_color_prism</a></span><span class="op">(</span><span class="st">"floral"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span><span class="st">"floral"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">p_vals</span>, label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>, tip.length <span class="op">=</span> <span class="fl">0</span>, label.size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">base</span></span>
+<span></span>
+<span><span class="va">base</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_colour_prism.html">scale_color_prism</a></span><span class="op">(</span><span class="st">"floral"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span><span class="st">"floral"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">p_vals</span>, label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>, tip.length <span class="op">=</span> <span class="fl">0</span>, label.size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-ex-1.png" width="400"><img src="reference/figures/README-ex-2.png" width="400"></p>
 </div>
-<div id="feedback-and-contributions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#feedback-and-contributions" class="anchor"></a>Feedback and Contributions</h2>
-<p>Any feedback, questions, and suggestions are welcome and should be shared via <a href="https://github.com/csdaw/ggprism/discussions">GitHub discussions</a>.</p>
-<p>Bug reports should be submitted via <a href="https://github.com/csdaw/ggprism/issues">GitHub issues</a> with a minimal reproducible example, e.g. using the <a href="https://reprex.tidyverse.org"><code>reprex</code></a> package.</p>
-<p>Contributions to <code>ggprism</code> are also welcome and pull requires should also be submitted via <a href="https://github.com/csdaw/ggprism/issues">GitHub issues</a>. Please fork/clone this repository and <strong>create a new branch</strong> to develop your contribution in. Some ways to contribute might include:</p>
+<div class="section level2">
+<h2 id="feedback-and-contributions">Feedback and Contributions<a class="anchor" aria-label="anchor" href="#feedback-and-contributions"></a>
+</h2>
+<p>Any feedback, questions, and suggestions are welcome and should be shared via <a href="https://github.com/csdaw/ggprism/discussions" class="external-link">GitHub discussions</a>.</p>
+<p>Bug reports should be submitted via <a href="https://github.com/csdaw/ggprism/issues" class="external-link">GitHub issues</a> with a minimal reproducible example, e.g. using the <a href="https://reprex.tidyverse.org" class="external-link"><code>reprex</code></a> package.</p>
+<p>Contributions to <code>ggprism</code> are also welcome and pull requires should also be submitted via <a href="https://github.com/csdaw/ggprism/issues" class="external-link">GitHub issues</a>. Please fork/clone this repository and <strong>create a new branch</strong> to develop your contribution in. Some ways to contribute might include:</p>
 <ul>
 <li>Updates and corrections to documentation</li>
 <li>Examples and vignettes for existing functions</li>
@@ -175,11 +175,11 @@
 <li>New functions with associated documentation, examples, and tests</li>
 </ul>
 </div>
-<div id="cite" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cite" class="anchor"></a>Cite</h2>
+<div class="section level2">
+<h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
+</h2>
 <p>I would be very grateful if you could cite this package if you use it in your publication:</p>
-<p>Charlotte Dawson (2021). <em>ggprism: A ‘ggplot2’ Extension Inspired by ‘GraphPad Prism’</em>. R package version 1.0.3. <a href="https://cran.r-project.org/package=ggprism" class="uri">https://cran.r-project.org/package=ggprism</a> doi: 10.5281/zenodo.4556067</p>
+<p>Charlotte Dawson (2021). <em>ggprism: A ‘ggplot2’ Extension Inspired by ‘GraphPad Prism’</em>. R package version 1.0.3. <a href="https://cran.r-project.org/package=ggprism" class="external-link uri">https://cran.r-project.org/package=ggprism</a> doi: 10.5281/zenodo.4556067</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># BibTex for LaTeX users</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="op">@</span>Manual{</span>
 <span id="cb5-3"><a href="#cb5-3"></a>  title =<span class="st"> </span>{ggprism<span class="op">:</span><span class="st"> </span>A <span class="st">'ggplot2'</span> Extension Inspired by <span class="st">'GraphPad Prism'</span>},</span>
@@ -190,12 +190,12 @@
 <span id="cb5-8"><a href="#cb5-8"></a>  doi =<span class="st"> </span>{<span class="fl">10.5281</span><span class="op">/</span>zenodo<span class="fl">.4556067</span>}</span>
 <span id="cb5-9"><a href="#cb5-9"></a>}</span></code></pre></div>
 </div>
-<div id="more-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#more-examples" class="anchor"></a>More Examples</h2>
-<p>Recreates <a href="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png">this figure</a> from the GraphPad Prism website. See <a href="https://csdaw.github.io/ggprism/articles/web-only/ex1-dose.html">this vignette</a> for the source code and step-by-step instructions.</p>
+<div class="section level2">
+<h2 id="more-examples">More Examples<a class="anchor" aria-label="anchor" href="#more-examples"></a>
+</h2>
+<p>Recreates <a href="https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png" class="external-link">this figure</a> from the GraphPad Prism website. See <a href="https://csdaw.github.io/ggprism/articles/web-only/ex1-dose.html" class="external-link">this vignette</a> for the source code and step-by-step instructions.</p>
 <p><img src="reference/figures/README-ex2-1.png" width="400"><img src="reference/figures/README-ex2-2.png" width="400"></p>
-<p>Recreates Figure 2B from <a href="https://doi.org/10.1038/s42003-020-0889-1">Matsushita &amp; Nishimura (2020)</a>, which was originally created using GraphPad Prism. See <a href="https://csdaw.github.io/ggprism/articles/web-only/ex2-wings.html">this vignette</a> for the source code and step-by-step instructions.</p>
+<p>Recreates Figure 2B from <a href="https://doi.org/10.1038/s42003-020-0889-1" class="external-link">Matsushita &amp; Nishimura (2020)</a>, which was originally created using GraphPad Prism. See <a href="https://csdaw.github.io/ggprism/articles/web-only/ex2-wings.html" class="external-link">this vignette</a> for the source code and step-by-step instructions.</p>
 <p><img src="reference/figures/README-ex3-1.png" width="400"><img src="reference/figures/README-ex3-2.png" width="400"></p>
 </div>
 </div>
@@ -203,51 +203,60 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ggprism">https://​cloud.r-project.org/​package=ggprism</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/csdaw/ggprism/">https://​github.com/​csdaw/​ggprism/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/csdaw/ggprism/issues">https://​github.com/​csdaw/​ggprism/​issues</a>
-</li>
-<li>Ask a question at <br><a href="https://github.com/csdaw/ggprism/discussions">https://​github.com/​csdaw/​ggprism/​discussions</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=ggprism" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/csdaw/ggprism/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/csdaw/ggprism/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/csdaw/ggprism/discussions" class="external-link">Ask a question</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 3.0)</li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Charlotte Dawson <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7151-5971" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing ggprism</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/csdaw/ggprism/actions"><img src="https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/csdaw/ggprism?branch=master"><img src="https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://cran.r-project.org/package=ggprism"><img src="https://www.r-pkg.org/badges/version/ggprism?color=green" alt="CRAN version"></a></li>
-<li><a href="https://csdaw.github.io/ggprism/"><img src="https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg" alt="Website https://csdaw.github.io/ggprism"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/251058802"><img src="https://zenodo.org/badge/251058802.svg" alt="DOI"></a></li>
+<li>Charlotte Dawson <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7151-5971" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/csdaw/ggprism/actions" class="external-link"><img src="https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/csdaw/ggprism?branch=master" class="external-link"><img src="https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=ggprism" class="external-link"><img src="https://www.r-pkg.org/badges/version/ggprism?color=green" alt="CRAN version"></a></li>
+<li><a href="https://csdaw.github.io/ggprism/" class="external-link"><img src="https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg" alt="Website https://csdaw.github.io/ggprism"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/251058802" class="external-link"><img src="https://zenodo.org/badge/251058802.svg" alt="DOI"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlotte Dawson.</p>
+  <p></p>
+<p>Developed by Charlotte Dawson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
@@ -255,6 +264,8 @@
 
   
 
+
+  
 
   </body>
 </html>
