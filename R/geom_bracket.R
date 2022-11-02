@@ -191,7 +191,7 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                          coords <- coord$transform(data, panel_params)
 
                          if (coords$parse[1]) {
-                           lab <- .ggint$parse_safe(lab)
+                           lab <- parse_safe(lab)
                          }
 
                          if (is.null(coords$vjust)) {

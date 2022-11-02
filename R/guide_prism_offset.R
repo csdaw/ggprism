@@ -94,7 +94,7 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
 
   # override label element parameters for rotation
   if (inherits(label_element, "element_text")) {
-    label_overrides <- .ggint$axis_label_element_overrides(axis_position, angle)
+    label_overrides <- axis_label_element_overrides(axis_position, angle)
     # label_overrides is an element_text, but label_element may not be;
     # to merge the two elements, we just copy angle, hjust, and vjust
     # unless their values are NULL
@@ -146,7 +146,7 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
 
   if (n_breaks == 0) {
     return(
-      .ggint$absoluteGrob(
+      absoluteGrob(
         gList(line_grob),
         width = grobWidth(line_grob),
         height = grobHeight(line_grob)
@@ -168,7 +168,7 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
   dodge_indices <- split(seq_len(n_breaks), dodge_pos)
 
   label_grobs <- lapply(dodge_indices, function(indices) {
-    .ggint$draw_axis_labels(
+    draw_axis_labels(
       break_positions = break_positions[indices],
       break_labels = break_labels[indices],
       label_element = label_element,
@@ -214,7 +214,7 @@ draw_prism_offset <- function(break_positions, break_labels, axis_position, them
     just = axis_position_opposite
   )
 
-  .ggint$absoluteGrob(
+  absoluteGrob(
     gList(line_grob, gt),
     width = gtable_width(gt),
     height = gtable_height(gt),

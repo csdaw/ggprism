@@ -14,26 +14,6 @@
   )
 }
 
-#### Get required internal ggplot2 functions -----------------------------------
-
-# Copied from https://github.com/teunbrand/ggh4x/tree/master/R/utils.R
-# Function for grabbing internal function of ggplot2 that are also used here
-.grab_ggplot_internals <- function() {
-  objects <- c(
-    "absoluteGrob",
-    "axis_label_element_overrides",
-    "draw_axis_labels",
-    "new_data_frame",
-    "parse_safe"
-  )
-
-  objects <- setNames(objects, objects)
-  out <- lapply(objects, function(i) getFromNamespace(i, "ggplot2"))
-}
-
-# Store the needed ggplot internals here
-.ggint <- .grab_ggplot_internals()
-
 #### Helper functions for stat_pvalue_manual -----------------------------------
 
 # Guess the column to be used as the significance labels
@@ -128,4 +108,144 @@ guess_signif_label_column <- function(data) {
     stop("label is missing")
   }
   res
+}
+
+#### Copies of internal ggplot2 functions -----------------------------------
+
+absoluteGrob <- function(grob, width = NULL, height = NULL,
+                         xmin = NULL, ymin = NULL, vp = NULL) {
+
+  gTree(
+    children = grob,
+    width = width, height = height,
+    xmin = xmin, ymin = ymin,
+    vp = vp, cl = "absoluteGrob"
+  )
+}
+
+draw_axis_labels <- function(break_positions, break_labels, label_element, is_vertical,
+                             check.overlap = FALSE) {
+
+  position_dim <- if (is_vertical) "y" else "x"
+  label_margin_name <- if (is_vertical) "margin_x" else "margin_y"
+
+  n_breaks <- length(break_positions)
+  break_positions <- unit(break_positions, "native")
+
+  if (check.overlap) {
+    priority <- axis_label_priority(n_breaks)
+    break_labels <- break_labels[priority]
+    break_positions <- break_positions[priority]
+  }
+
+  labels_grob <- exec(
+    element_grob, label_element,
+    !!position_dim := break_positions,
+    !!label_margin_name := TRUE,
+    label = break_labels,
+    check.overlap = check.overlap
+  )
+}
+
+#' Determine the label priority for a given number of labels
+#'
+#' @param n The number of labels
+#'
+#' @return The vector `seq_len(n)` arranged such that the
+#'   first, last, and middle elements are recursively
+#'   placed at the beginning of the vector.
+#' @noRd
+#'
+axis_label_priority <- function(n) {
+  if (n <= 0) {
+    return(numeric(0))
+  }
+
+  c(1, n, axis_label_priority_between(1, n))
+}
+
+axis_label_priority_between <- function(x, y) {
+  n <- y - x + 1
+  if (n <= 2) {
+    return(numeric(0))
+  }
+
+  mid <- x - 1 + (n + 1) %/% 2
+  c(
+    mid,
+    axis_label_priority_between(x, mid),
+    axis_label_priority_between(mid, y)
+  )
+}
+
+#' Override axis text angle and alignment
+#'
+#' @param axis_position One of bottom, left, top, or right
+#' @param angle The text angle, or NULL to override nothing
+#'
+#' @return An [element_text()] that contains parameters that should be
+#'   overridden from the user- or theme-supplied element.
+#' @noRd
+#'
+axis_label_element_overrides <- function(axis_position, angle = NULL) {
+  if (is.null(angle)) {
+    return(element_text(angle = NULL, hjust = NULL, vjust = NULL))
+  }
+
+  # it is not worth the effort to align upside-down labels properly
+  if (angle > 90 || angle < -90) {
+    stop("`angle` must be between 90 and -90")
+  }
+
+  if (axis_position == "bottom") {
+    element_text(
+      angle = angle,
+      hjust = if (angle > 0) 1 else if (angle < 0) 0 else 0.5,
+      vjust = if (abs(angle) == 90) 0.5 else 1
+    )
+  } else if (axis_position == "left") {
+    element_text(
+      angle = angle,
+      hjust = if (abs(angle) == 90) 0.5 else 1,
+      vjust = if (angle > 0) 0 else if (angle < 0) 1 else 0.5,
+    )
+  } else if (axis_position == "top") {
+    element_text(
+      angle = angle,
+      hjust = if (angle > 0) 0 else if (angle < 0) 1 else 0.5,
+      vjust = if (abs(angle) == 90) 0.5 else 0
+    )
+  } else if (axis_position == "right") {
+    element_text(
+      angle = angle,
+      hjust = if (abs(angle) == 90) 0.5 else 0,
+      vjust = if (angle > 0) 1 else if (angle < 0) 0 else 0.5,
+    )
+  } else {
+    stop(c(
+      "Unrecognized `axis_position`\n",
+      "Use one of 'top', 'bottom', 'left' or 'right'."
+    ))
+  }
+}
+
+# Parse takes a vector of n lines and returns m expressions.
+# See https://github.com/tidyverse/ggplot2/issues/2864 for discussion.
+#
+# parse(text = c("alpha", "", "gamma"))
+# #> expression(alpha, gamma)
+#
+# parse_safe(text = c("alpha", "", "gamma"))
+# #> expression(alpha, NA, gamma)
+#
+parse_safe <- function(text) {
+  if (!is.character(text)) {
+    stop("`text` must be a character vector")
+  }
+  out <- vector("expression", length(text))
+  for (i in seq_along(text)) {
+    expr <- parse(text = text[[i]])
+    out[[i]] <- if (length(expr) == 0) NA else expr[[1]]
+  }
+  out
 }
