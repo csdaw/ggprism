@@ -126,7 +126,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></code></pre></div>
-<p>Arguably one of the most popular features of GraphPad Prism is adding p-values to plots. Indeed in <a href="https://www.graphpad.com/support/faq/prism-900-release-notes/" class="external-link">Prism 9</a>, GraphPad have added a feature to automatically perform pairwise comparisons and add the resulting p-values with brackets to the graph.</p>
+<p>Arguably one of the most popular features of GraphPad Prism is adding p-values to plots. Indeed in <a href="https://www.graphpad.com/updates/prism-900-release-notes" class="external-link">Prism 9</a>, GraphPad have added a feature to automatically perform pairwise comparisons and add the resulting p-values with brackets to the graph.</p>
 <p><code>ggprism</code> includes the <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> function to add p-values with or without brackets to ggplots. This vignette will go through the many ways in which this function can be used.</p>
 <p>This function is a re-written version of <code>stat_pvalue_manual()</code> from the <a href="https://github.com/kassambara/ggpubr" class="external-link"><code>ggpubr</code> package</a>, which itself is based on the <code>geom_signif()</code> function from the <a href="https://github.com/const-ae/ggsignif" class="external-link"><code>ggsignif</code> package</a>. Compared to <code>stat_pvalue_manual()</code>, the <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> function is: easier to use, more robust with less dependencies, and has more customisable brackets.</p>
 <div class="section level2">
@@ -296,7 +296,7 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="pvalues_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>If you have the development version of <code>ggprism</code> installed, and you want the label number format to look nicer you can provide a column to <code>label</code> with <em>plotmath</em> expressions and set <code>parse = TRUE</code>. This works with or without brackets.</p>
+<p>If you want the label number format to look nicer you can provide a column name to <code>label</code> with <em>plotmath</em> expressions and set <code>parse = TRUE</code>. This works with or without brackets.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plotmath expression to have superscript exponent</span></span>
 <span><span class="va">df_p_val</span><span class="op">$</span><span class="va">p.exprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"P==1*x*10^"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">$</span><span class="va">label</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
@@ -616,7 +616,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
