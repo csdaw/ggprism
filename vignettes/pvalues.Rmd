@@ -24,7 +24,7 @@ library(magrittr)
 ```
 
 Arguably one of the most popular features of GraphPad Prism is adding p-values
-to plots. Indeed in [Prism 9](https://www.graphpad.com/support/faq/prism-900-release-notes/), 
+to plots. Indeed in [Prism 9](https://www.graphpad.com/updates/prism-900-release-notes), 
 GraphPad have added a feature to automatically
 perform pairwise comparisons and add the resulting p-values with brackets to
 the graph.

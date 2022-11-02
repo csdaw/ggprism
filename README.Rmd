@@ -26,7 +26,7 @@ library(ggnewscale)
 
 <!-- badges: start -->
 [![R build status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
-[![Codecov test coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://codecov.io/gh/csdaw/ggprism?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://app.codecov.io/gh/csdaw/ggprism?branch=master)
 [![CRAN version](https://www.r-pkg.org/badges/version/ggprism?color=green)](https://cran.r-project.org/package=ggprism)
 [![Website https://csdaw.github.io/ggprism](https://img.shields.io/website-up-down-green-red/https/csdaw.github.io/ggprism.svg)](https://csdaw.github.io/ggprism/)
 [![DOI](https://zenodo.org/badge/251058802.svg)](https://zenodo.org/badge/latestdoi/251058802)
@@ -266,14 +266,14 @@ ggplot(df2, aes(
     legend.spacing.x = unit(0, "pt"),
     legend.text = element_text(margin = margin(r = 20))
   ) +
-  geom_hline(yintercept = 0, linetype = 2, size = 0.3) +
+  geom_hline(yintercept = 0, linetype = 2, linewidth = 0.3) +
   stat_summary(
     geom = "crossbar",
     aes(fill = genotype),
     fun = mean,
     position = position_dodge(0.9),
     colour = "red",
-    size = 0.4, width = 0.7,
+    linewidth = 0.4, width = 0.7,
     show.legend = FALSE
   ) +
   geom_text(
@@ -326,14 +326,14 @@ ggplot(df2, aes(
     legend.spacing.x = unit(0, "pt"),
     legend.text = element_text(margin = margin(r = 20))
   ) +
-  geom_hline(yintercept = 0, linetype = 2, size = 0.3) +
+  geom_hline(yintercept = 0, linetype = 2, linewidth = 0.3) +
   stat_summary(
     geom = "crossbar",
     aes(fill = genotype),
     fun = mean,
     position = position_dodge(0.9),
     colour = "red",
-    size = 0.4, width = 0.7,
+    linewidth = 0.4, width = 0.7,
     show.legend = FALSE
   ) +
   add_pvalue(

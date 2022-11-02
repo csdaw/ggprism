@@ -8,7 +8,7 @@
 [![R build
 status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://codecov.io/gh/csdaw/ggprism?branch=master)
+coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://app.codecov.io/gh/csdaw/ggprism?branch=master)
 [![CRAN
 version](https://www.r-pkg.org/badges/version/ggprism?color=green)](https://cran.r-project.org/package=ggprism)
 [![Website
@@ -102,16 +102,16 @@ Some ways to contribute might include:
 I would be very grateful if you could cite this package if you use it in
 your publication:
 
-Charlotte Dawson (2021). *ggprism: A ‘ggplot2’ Extension Inspired by
-‘GraphPad Prism’*. R package version 1.0.3.
+Charlotte Dawson (2022). *ggprism: A ‘ggplot2’ Extension Inspired by
+‘GraphPad Prism’*. R package version 1.0.3.9000.
 <https://cran.r-project.org/package=ggprism> doi: 10.5281/zenodo.4556067
 
     # BibTex for LaTeX users
     @Manual{
       title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
       author = {Charlotte Dawson},
-      year = {2021},
-      note = {R package version 1.0.3},
+      year = {2022},
+      note = {R package version 1.0.3.9000},
       url = {https://cran.r-project.org/package=ggprism},
       doi = {10.5281/zenodo.4556067}
     }
