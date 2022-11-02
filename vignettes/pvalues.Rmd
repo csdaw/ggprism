@@ -246,8 +246,7 @@ p2 <- p + add_pvalue(df_p_val,
 p1 + p2
 ```
 
-If you have the development version of `ggprism` installed, and you want the 
-label number format to look nicer you can provide a column to
+If you want the label number format to look nicer you can provide a column name to
 `label` with _plotmath_ expressions and set `parse = TRUE`. This works with or
 without brackets.
 
