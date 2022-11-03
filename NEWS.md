@@ -1,5 +1,6 @@
 # ggprism (development version)
 
+* Update wings vignette with `linewidth` aesthetic from ggplot2 v3.4.0
 * Stop relying on unexported ggplot2 functions to maintain compatibility
 with ggplot2 v3.4.0 (#20)
 * Fix bug in `StatBracket` (#18)
