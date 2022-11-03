@@ -113,7 +113,7 @@ y = 0. This is added to our ggplot using `geom_hline()`.
 
 ```{r}
 # plot a horiztonal line at y = 0 i.e. percentage change = 0
-p <- p + geom_hline(yintercept = 0, linetype = 2, size = 0.3)
+p <- p + geom_hline(yintercept = 0, linetype = 2, linewidth = 0.3)
 p
 ```
 
@@ -129,7 +129,7 @@ p <- p + stat_summary(
     fun = mean,
     position = position_dodge(0.9),
     colour = "red",
-    size = 0.4, width = 0.7,
+    linewidth = 0.4, width = 0.7,
     show.legend = FALSE
   )
 p
@@ -315,9 +315,9 @@ ggplot(wings, aes(x = measure, y = percent.change)) +
   ggbeeswarm::geom_beeswarm(aes(fill = genotype), dodge.width = 0.9, shape = 21) + 
   facet_wrap(~ sex, scales = "free",
     labeller = labeller(sex = c(male = "\u2642", female = "\u2640"))) + 
-  geom_hline(yintercept = 0, linetype = 2, size = 0.3) + 
+  geom_hline(yintercept = 0, linetype = 2, linewidth = 0.3) + 
   stat_summary(geom = "crossbar", aes(fill = genotype),fun = mean,
-    position = position_dodge(0.9), colour = "red", size = 0.4, width = 0.7,
+    position = position_dodge(0.9), colour = "red", linewidth = 0.4, width = 0.7,
     show.legend = FALSE) + 
    add_pvalue(wings_pvals, y = 10, xmin = "xmin", xmax = "xmax", 
               tip.length = 0, fontface = "italic", 

@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/csdaw/ggprism/workflows/R-CMD-check/badge.svg)](https://github.com/csdaw/ggprism/actions)
+[![R-CMD-check](https://github.com/csdaw/ggprism/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csdaw/ggprism/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/csdaw/ggprism/branch/master/graph/badge.svg)](https://app.codecov.io/gh/csdaw/ggprism?branch=master)
 [![CRAN
