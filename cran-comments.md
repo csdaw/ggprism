@@ -1,18 +1,31 @@
 ## Test environments
 
-* Fedora Linux, clang, gfortran, R-devel
-* MacOS local install (Big Sur 11.2.3), R 4.0.4
-* MacOS latest (release) via GitHub actions, R 4.1.0
-* Ubuntu 20.04 (release) via GitHub actions, R 4.1.0
-* Ubuntu 20.04 (devel) via GitHub actions, R-devel
-* Windows latest (release) via GitHub actions, R 4.1.0
-* Windows Server 2008 via win-builder, R-devel
-* Windows Server 2008 via R-hub, R-oldrel
+* MacOS local install (Monterey 12.5.1), R 4.2.1 [0 NOTES, WARNINGS, ERRORS]
+* Ubuntu latest (release) via GitHub actions, R 4.2.2 [0 NOTES, WARNINGS, ERRORS]
+* Fedora Linux clang via R-hub, R-devel [3 NOTES, 0 WARNINGS, 0 ERRORS]
 
-## R CMD check results
+NOTE: Version contains large components (1.0.3.9000). This will be 
+resolved by updating the package version just before CRAN submission.
 
-There were no NOTES, ERRORs or WARNINGS.
+NOTE: Examples with CPU (user + system) or elapsed time > 10s. Likely due to 
+due to limited resources of remote instance.
 
-## Downstream dependencies
+NOTE: Skipping checking HTML validation: no command 'tidy' found. I can't 
+control the dependencies on the remote instance.
 
-There are currently no downstream dependencies for this package.
+* Windows Server 2022 via R-hub, R-oldrel [3 NOTES, 0 WARNINGS, 0 ERRORS (as previous)]
+* Windows Server 2022 via win-builder, R-devel [2 NOTES, 0 WARNINGS, 0 ERRORS]
+
+NOTE: Version contains large components (1.0.3.9000). This will be
+resolved by updating the package version just before CRAN submission.
+
+NOTE: Examples with CPU (user + system) or elapsed time > 10s. Likely due to 
+due to limited resources of remote instance.
+
+## revdepcheck results
+
+We checked 3 reverse dependencies (2 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+
