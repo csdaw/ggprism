@@ -1,4 +1,4 @@
-# ggprism (development version)
+# ggprism 1.0.4
 
 * Update wings vignette with `linewidth` aesthetic from ggplot2 v3.4.0
 * Stop relying on unexported ggplot2 functions to maintain compatibility
