@@ -57,7 +57,7 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-p + scale_x_discrete(position = "right", guide = "prism_bracket")
+# p + scale_x_discrete(position = "right", guide = "prism_bracket")
 
 # test that bracket width can be adjusted or left missing
 g1 <- p + scale_x_discrete(guide = "prism_bracket")
