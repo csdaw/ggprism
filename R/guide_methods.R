@@ -93,3 +93,14 @@ warn_for_guide_position <- function(guide) {
 guide_geom.prism_axis <- function(guide, layers, ...) {
   guide
 }
+
+#' @export
+#' @importFrom ggplot2 guide_merge
+guide_merge.prism_axis <- function(guide, layers, ...) {
+  if (!inherits(new_guide, "guide_none")) {
+    warn(c(
+      "Discarding guide on merge",
+      "i" = "Do you have more than one guide with the same position?"
+    ))
+  }
+}
