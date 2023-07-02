@@ -26,7 +26,11 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[2]]$y) * 2) + 2)
+if (utils::packageVersion("ggplot2") <= "3.4.2") {
+  expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[2]]$y) * 2) + 2)
+} else {
+  expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[1]]$y) * 2) + 2)
+}
 
 # test that guide_prism_minor works with coord flip
 g1 <- p + scale_y_continuous(guide = "axis") +

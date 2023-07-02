@@ -41,7 +41,11 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[1]]$x) * 2)
+if (utils::packageVersion("ggplot2") <= "3.4.2") {
+  expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[1]]$x) * 2)
+} else {
+  expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[2]]$x) * 2)
+}
 
 # test that guide_prism_bracket works with y axis and continuous scale
 g1 <- p + scale_y_continuous(guide = "axis")
