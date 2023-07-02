@@ -96,8 +96,8 @@ guide_geom.prism_axis <- function(guide, layers, ...) {
 
 #' @export
 #' @importFrom ggplot2 guide_merge
-guide_merge.prism_axis <- function(guide, layers, ...) {
-  if (!inherits(new_guide, "guide_none")) {
+guide_merge.prism_axis <- function(guide, new_guide) {
+  if (!inherits(new_guide, c("guide_none", "GuideNone"))) {
     warn(c(
       "Discarding guide on merge",
       "i" = "Do you have more than one guide with the same position?"
