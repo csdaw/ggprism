@@ -38,7 +38,7 @@ guide_prism_offset <- function(title = waiver(), check.overlap = FALSE,
 
       name = "axis"
     ),
-    class = c("guide", "prism_offset", "axis")
+    class = c("guide", "prism_offset", "prism_axis", "axis")
   )
 }
 

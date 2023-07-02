@@ -42,7 +42,7 @@ guide_prism_minor <- function(title = waiver(), check.overlap = FALSE,
 
       name = "axis"
     ),
-    class = c("guide", "prism_minor", "axis")
+    class = c("guide", "prism_minor", "prism_axis", "axis")
   )
 }
 
