@@ -26,7 +26,7 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-if (utils::packageVersion("ggplot2") <= "3.4.2") {
+if (!inherits(guide_none(), "Guide")) {
   expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[2]]$y) * 2) + 2)
 } else {
   expect_equal(length(test$grobs[[2]]$y), (length(control$grobs[[1]]$y) * 2) + 2)
