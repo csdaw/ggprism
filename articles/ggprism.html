@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="ggprism_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting Started</h1>
@@ -125,18 +125,31 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-<p>The goal of this package is to enable R users to format their ggplots to look like they were made in GraphPad Prism. I moved away from Prism to R for statistics quite a while ago, however I missed the ‘look’ that GraphPad Prism graphs have. Which is how I got the idea to make this package.</p>
-<p>This document outlines what features are available in <code>ggprism</code> and has links to guides with more detailed examples of how to use each function.</p>
+<p>The goal of this package is to enable R users to format their ggplots
+to look like they were made in GraphPad Prism. I moved away from Prism
+to R for statistics quite a while ago, however I missed the ‘look’ that
+GraphPad Prism graphs have. Which is how I got the idea to make this
+package.</p>
+<p>This document outlines what features are available in
+<code>ggprism</code> and has links to guides with more detailed examples
+of how to use each function.</p>
 <div class="section level2">
 <h2 id="themes">Themes<a class="anchor" aria-label="anchor" href="#themes"></a>
 </h2>
-<p>The most useful function in this package is <code><a href="../reference/theme_prism.html">theme_prism()</a></code> which is a ‘complete’ theme which works just like any other standard ggplot2 theme e.g.  <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_grey()</a></code>. The standard theme palette is <code>"black_and_white"</code> but there are many others which correspond to the colour schemes available in Prism. Go to the <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">All Palettes</a> page to see all the available palettes.</p>
-<p>See <a href="https://csdaw.github.io/ggprism/articles/themes.html" class="external-link">this guide</a> for more detailed usage examples.</p>
+<p>The most useful function in this package is
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code> which is a ‘complete’ theme which works just
+like any other standard ggplot2 theme e.g.  <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_grey()</a></code>.
+The standard theme palette is <code>"black_and_white"</code> but there
+are many others which correspond to the colour schemes available in
+Prism. Go to the <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">All
+Palettes</a> page to see all the available palettes.</p>
+<p>See <a href="https://csdaw.github.io/ggprism/articles/themes.html" class="external-link">this
+guide</a> for more detailed usage examples.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare theme_grey() to theme_prism()</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
@@ -154,8 +167,14 @@
 <div class="section level2">
 <h2 id="colours-fills-and-shapes">Colours, fills, and shapes<a class="anchor" aria-label="anchor" href="#colours-fills-and-shapes"></a>
 </h2>
-<p><code>ggprism</code> includes the functions <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code>/<code><a href="../reference/scale_colour_prism.html">scale_color_prism()</a></code> and <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> which make the colour schemes from Prism available for use with ggplot2 geoms and stats. You can either use them with the default <code>"black_and_white"</code> theme or try matching themes and colour/fill scales.</p>
-<p>See the <a href="https://csdaw.github.io/ggprism/articles/colours.html" class="external-link">this guide</a> for more detailed usage examples.</p>
+<p><code>ggprism</code> includes the functions
+<code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code>/<code><a href="../reference/scale_colour_prism.html">scale_color_prism()</a></code> and
+<code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> which make the colour schemes from Prism
+available for use with ggplot2 geoms and stats. You can either use them
+with the default <code>"black_and_white"</code> theme or try matching
+themes and colour/fill scales.</p>
+<p>See the <a href="https://csdaw.github.io/ggprism/articles/colours.html" class="external-link">this
+guide</a> for more detailed usage examples.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare some colour and fill palettes with default theme_prism()</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -185,7 +204,9 @@
 <span></span>
 <span><span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></span></code></pre></div>
 <p><img src="ggprism_files/figure-html/unnamed-chunk-3-2.png" width="768"></p>
-<p>Additionally, <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> includes some shape scales which roughly match the shapes (and order of shapes) used in GraphPad Prism.</p>
+<p>Additionally, <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> includes some shape
+scales which roughly match the shapes (and order of shapes) used in
+GraphPad Prism.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare ggplot2 default shape order with ggprism default shape order</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">msleep</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">msleep</span><span class="op">)</span>, <span class="op">]</span>, </span>
@@ -202,8 +223,13 @@
 <div class="section level2">
 <h2 id="axes">Axes<a class="anchor" aria-label="anchor" href="#axes"></a>
 </h2>
-<p><code>ggprism</code> includes several axis guides which can be used to change the look of continuous (or in some cases discrete) axes. These guides work best with <code><a href="../reference/theme_prism.html">theme_prism()</a></code> but can also be used with any other ggplot2 theme which has axis lines e.g. <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw()</a></code>.</p>
-<p>See the <a href="https://csdaw.github.io/ggprism/articles/axes.html" class="external-link">this guide</a> for more detailed usage examples.</p>
+<p><code>ggprism</code> includes several axis guides which can be used
+to change the look of continuous (or in some cases discrete) axes. These
+guides work best with <code><a href="../reference/theme_prism.html">theme_prism()</a></code> but can also be used
+with any other ggplot2 theme which has axis lines
+e.g. <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw()</a></code>.</p>
+<p>See the <a href="https://csdaw.github.io/ggprism/articles/axes.html" class="external-link">this guide</a>
+for more detailed usage examples.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show the 4 different axis guides included in ggprism</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -221,14 +247,26 @@
 <span></span>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The S3 guide system was deprecated in ggplot2 3.5.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="ggprism_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="p-values">p-values<a class="anchor" aria-label="anchor" href="#p-values"></a>
 </h2>
-<p><code>ggprism</code> includes the <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> function to easily add p-values from a simple data.frame to your plots. This function is a re-written version of <code>stat_pvalue_manual()</code> from the <a href="https://github.com/kassambara/ggpubr" class="external-link"><code>ggpubr</code> package</a>. <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> is more flexible to different inputs than <code>stat_pvalue_manual()</code> and also allows you to change the look of the brackets and text more easily.</p>
-<p>See the <a href="https://csdaw.github.io/ggprism/articles/pvalues.html" class="external-link">this guide</a> for more detailed usage examples.</p>
+<p><code>ggprism</code> includes the <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> function
+to easily add p-values from a simple data.frame to your plots. This
+function is a re-written version of <code>stat_pvalue_manual()</code>
+from the <a href="https://github.com/kassambara/ggpubr" class="external-link"><code>ggpubr</code>
+package</a>. <code><a href="../reference/add_pvalue.html">add_pvalue()</a></code> is more flexible to different
+inputs than <code>stat_pvalue_manual()</code> and also allows you to
+change the look of the brackets and text more easily.</p>
+<p>See the <a href="https://csdaw.github.io/ggprism/articles/pvalues.html" class="external-link">this
+guide</a> for more detailed usage examples.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># make a p-value table</span></span>
 <span><span class="va">df_p_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -270,7 +308,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

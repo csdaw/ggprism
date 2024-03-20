@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="themes_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Themes</h1>
@@ -125,38 +125,52 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/theme_prism.html">theme_prism()</a></code> is arguably the most useful part of this package. It is the main tool which is used make ggplots look like they were made in GraphPad Prism. This vignette goes through of the options included in the function, and also shows you how to make your own theme.</p>
+<p><code><a href="../reference/theme_prism.html">theme_prism()</a></code> is arguably the most useful part of this
+package. It is the main tool which is used make ggplots look like they
+were made in GraphPad Prism. This vignette goes through of the options
+included in the function, and also shows you how to make your own
+theme.</p>
 <div class="section level2">
 <h2 id="using-theme_prism">Using <code>theme_prism()</code><a class="anchor" aria-label="anchor" href="#using-theme_prism"></a>
 </h2>
-<p>First we’ll just define a base plot to use for the rest of the vignette.</p>
+<p>First we’ll just define a base plot to use for the rest of the
+vignette.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define a base plot</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Then we’ll apply <code><a href="../reference/theme_prism.html">theme_prism()</a></code> and see how it looks just with the default settings. By default the:</p>
+<p>Then we’ll apply <code><a href="../reference/theme_prism.html">theme_prism()</a></code> and see how it looks just
+with the default settings. By default the:</p>
 <ul>
 <li>Fontface for all text is bold except the legend text</li>
 <li>Font size is 14 pt</li>
-<li>Legend title is hidden (by setting <code>legend.title = element_blank()</code>)</li>
+<li>Legend title is hidden (by setting
+<code>legend.title = element_blank()</code>)</li>
 <li>Background is white and all text and lines are black</li>
 <li>Default palette is <code>"black_and_white"</code>
 </li>
 </ul>
-<p>You can easily bring back the legend title by overriding the <code>legend.title</code> element.</p>
+<p>You can easily bring back the legend title by overriding the
+<code>legend.title</code> element.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># apply default theme</span></span>
-<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
 <span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
 <span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<p>The overall theme text size is adjusted with the <code>base_size</code> argument, as with the standard ggplot2 themes such as <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw()</a></code>.</p>
+<p>The overall theme text size is adjusted with the
+<code>base_size</code> argument, as with the standard ggplot2 themes
+such as <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># redefine base plot without a legend for convenience</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -168,7 +182,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>By default the <code>base_line_size</code> and <code>base_rect_size</code> arguments scales with the <code>base_size</code>, but these can be overridden.</p>
+<p>By default the <code>base_line_size</code> and
+<code>base_rect_size</code> arguments scales with the
+<code>base_size</code>, but these can be overridden.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adjust overall theme size with specific line size</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
@@ -176,7 +192,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>You can also change the <code>base_fontface</code> (e.g. bold, plain, italic) and <code>base_family</code> (crossplatform compatibility fonts e.g. serif, sans, mono, or specific fonts e.g. Arial).</p>
+<p>You can also change the <code>base_fontface</code> (e.g. bold, plain,
+italic) and <code>base_family</code> (crossplatform compatibility fonts
+e.g. serif, sans, mono, or specific fonts e.g. Arial).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change fontface or font family</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_fontface <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span></span>
@@ -184,7 +202,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p><code><a href="../reference/theme_prism.html">theme_prism()</a></code> includes the <code>axis_text_angle</code> argument which is a convenient way to rotate the x axis text (allowed angles are: 0, 45, 90, or 270).</p>
+<p><code><a href="../reference/theme_prism.html">theme_prism()</a></code> includes the <code>axis_text_angle</code>
+argument which is a convenient way to rotate the x axis text (allowed
+angles are: 0, 45, 90, or 270).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change x axis text angle</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>axis_text_angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span>
@@ -192,7 +212,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<p>Lastly, you can put a square border around the plot using the <code>border</code> argument. Unfortunately, you need to turn of clipping in order for this to work/appear correct.</p>
+<p>Lastly, you can put a square border around the plot using the
+<code>border</code> argument. Unfortunately, you need to turn of
+clipping in order for this to work/appear correct.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add a border and adjust its thickness</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>border <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -206,7 +228,8 @@
 <div class="section level2">
 <h2 id="theme-palettes">Theme palettes<a class="anchor" aria-label="anchor" href="#theme-palettes"></a>
 </h2>
-<p>There are several different colour palettes that are built into <code><a href="../reference/theme_prism.html">theme_prism()</a></code>.</p>
+<p>There are several different colour palettes that are built into
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># see names of available theme_prism() palettes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ggprism_data</span><span class="op">$</span><span class="va">themes</span><span class="op">)</span></span>
@@ -229,11 +252,17 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<p>You can preview a single palette using the <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the theme applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this page</a> for images of all 43 available <code><a href="../reference/theme_prism.html">theme_prism()</a></code> palettes.</p>
+<p>You can preview a single palette using the
+<code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the
+theme applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and
+<code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this
+page</a> for images of all 43 available <code><a href="../reference/theme_prism.html">theme_prism()</a></code>
+palettes.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"flames"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-11-1.png" width="432"></p>
-<p>Note that several of the palettes happen to be identical. This is not a bug but just how they were designed in GraphPad Prism.</p>
+<p>Note that several of the palettes happen to be identical. This is not
+a bug but just how they were designed in GraphPad Prism.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare two identical theme palettes</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"black_and_white"</span><span class="op">)</span></span>
@@ -241,7 +270,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="themes_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>It is good to try matching <code><a href="../reference/theme_prism.html">theme_prism()</a></code> palettes with their corresponding <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and/or <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> palettes.</p>
+<p>It is good to try matching <code><a href="../reference/theme_prism.html">theme_prism()</a></code> palettes with
+their corresponding <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and/or
+<code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> palettes.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># try out two more theme palettes and their corresponding colour palettes</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"summer"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -255,8 +286,17 @@
 <div class="section level2">
 <h2 id="make-your-own-ggprism-theme">Make your own ggprism theme<a class="anchor" aria-label="anchor" href="#make-your-own-ggprism-theme"></a>
 </h2>
-<p>Many of these theme palettes are pretty ugly and not suitable for publication. Even GraphPad themselves say that palettes such as <code>summer</code> and <code>mustard_fields</code> <a href="https://www.graphpad.com/support/faq/prism-color-schemes/" class="external-link">“are less than appealing”</a>.</p>
-<p>Therefore, it would be good to be able to make your own themes based off of <code><a href="../reference/theme_prism.html">theme_prism()</a></code>. Fortunately, because <code><a href="../reference/theme_prism.html">theme_prism()</a></code> is a ‘complete’ theme it means that using it to make your own theme is super easy. You can read <a href="https://ggplot2-book.org/extensions.html" class="external-link">this chapter</a> from the official ggplot2 book, or <a href="https://www.r-bloggers.com/2018/09/custom-themes-in-ggplot2/" class="external-link">this blog post</a> if you want to learn more of the specifics of making your own themes.</p>
+<p>Many of these theme palettes are pretty ugly and not suitable for
+publication. Even GraphPad themselves say that palettes such as
+<code>summer</code> and <code>mustard_fields</code> <a href="https://www.graphpad.com/support/faq/prism-color-schemes/" class="external-link">“are
+less than appealing”</a>.</p>
+<p>Therefore, it would be good to be able to make your own themes based
+off of <code><a href="../reference/theme_prism.html">theme_prism()</a></code>. Fortunately, because
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code> is a ‘complete’ theme it means that using it
+to make your own theme is super easy. You can read <a href="https://ggplot2-book.org/extensions.html" class="external-link">this chapter</a> from
+the official ggplot2 book, or <a href="https://www.r-bloggers.com/2018/09/custom-themes-in-ggplot2/" class="external-link">this
+blog post</a> if you want to learn more of the specifics of making your
+own themes.</p>
 <p>Otherwise, an example is given below.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define a new theme function based on the stained_glass palette</span></span>
@@ -309,7 +349,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

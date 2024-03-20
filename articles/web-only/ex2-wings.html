@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="ex2-wings_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Ex 2: Real Life Data</h1>
@@ -121,16 +121,27 @@
 
     
     
-<p>In this vignette we will recreate Figure 2B from <a href="https://doi.org/10.1038/s42003-020-0889-1" class="external-link">Matsushita &amp; Nishimura (2020)</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> which was made in GraphPad Prism 7.</p>
-<p>The authors of this paper mutate trehalose synthesis enzyme (<em>Tps1</em>) in fruit flies and then observe the effect of this mutation on their wings. Figure 2B, shown below, shows the percentage change in three fly wing attributes in homozygous <em>Tps1</em> mutants compared to heterozygous <em>Tps1</em> mutants. The data are separated according to the sex of the fly.</p>
-<div class="figure">
-<img src="figure_2B.png" style="width:70.0%" alt=""><p class="caption">Figure 2B from Matsushita &amp; Nishimura (2020)</p>
+<p>In this vignette we will recreate Figure 2B from <a href="https://doi.org/10.1038/s42003-020-0889-1" class="external-link">Matsushita &amp;
+Nishimura (2020)</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> which was made in GraphPad Prism 7.</p>
+<p>The authors of this paper mutate trehalose synthesis enzyme
+(<em>Tps1</em>) in fruit flies and then observe the effect of this
+mutation on their wings. Figure 2B, shown below, shows the percentage
+change in three fly wing attributes in homozygous <em>Tps1</em> mutants
+compared to heterozygous <em>Tps1</em> mutants. The data are separated
+according to the sex of the fly.</p>
+<div class="float">
+<img src="figure_2B.png" style="width:70.0%" alt="Figure 2B from Matsushita &amp; Nishimura (2020)"><div class="figcaption">Figure 2B from Matsushita &amp; Nishimura
+(2020)</div>
 </div>
-<p>The raw data underlying Figure 2B is accessible in the article’s Supplementary Data. For ease of use, this small data set (aptly named <code>wings</code>) has been ‘tidied’ and is provided with the <code>ggprism</code> package.</p>
+<p>The raw data underlying Figure 2B is accessible in the article’s
+Supplementary Data. For ease of use, this small data set (aptly named
+<code>wings</code>) has been ‘tidied’ and is provided with the
+<code>ggprism</code> package.</p>
 <div class="section level2">
 <h2 id="preparation">Preparation<a class="anchor" aria-label="anchor" href="#preparation"></a>
 </h2>
-<p>To recreate this figure we begin with loading the required packages and data set.</p>
+<p>To recreate this figure we begin with loading the required packages
+and data set.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -162,7 +173,10 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> male  Tps1MIC/+ wing.size            -<span style="color: #BB0000;">1.14</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> male  Tps1MIC/+ cell.size            -<span style="color: #BB0000;">2.53</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> male  Tps1MIC/+ cell.number           1.26</span></span></code></pre></div>
-<p>The data are already in ‘long format’ so we could just jump straight to plotting. However, we can see that the text in the <code>measure</code> column is not in title case so we’ll need to quickly do some string manipulation.</p>
+<p>The data are already in ‘long format’ so we could just jump straight
+to plotting. However, we can see that the text in the
+<code>measure</code> column is not in title case so we’ll need to
+quickly do some string manipulation.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># substitute period with space, convert to title case, convert back to factor</span></span>
 <span><span class="va">wings</span><span class="op">$</span><span class="va">measure</span> <span class="op">&lt;-</span> <span class="va">wings</span><span class="op">$</span><span class="va">measure</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -189,7 +203,11 @@
 <code class="sourceCode R"><span><span class="co"># plot the wing measurement vs the percentage change compared to</span></span>
 <span><span class="co"># the heterozygous mutants</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">wings</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">measure</span>, y <span class="op">=</span> <span class="va">percent.change</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>First we will plot the individual data points with random jitter using <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm()</a></code> from the <a href="https://github.com/eclarke/ggbeeswarm" class="external-link"><code>ggbeeswarm</code></a> package. The points will look too spaced out here, but don’t worry they will become more compact in the following step. We will also colour the points and adjust their horizontal position them by genotype.</p>
+<p>First we will plot the individual data points with random jitter
+using <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm()</a></code> from the <a href="https://github.com/eclarke/ggbeeswarm" class="external-link"><code>ggbeeswarm</code></a>
+package. The points will look too spaced out here, but don’t worry they
+will become more compact in the following step. We will also colour the
+points and adjust their horizontal position them by genotype.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add the data points and fill according to the genotype</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">ggbeeswarm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span></span>
@@ -200,7 +218,10 @@
 <span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>Now we want to separate the points according to sex as in the original plot. For this we can just use <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code> and then set the facet titles to the Unicode symbols for male and female.</p>
+<p>Now we want to separate the points according to sex as in the
+original plot. For this we can just use <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code> and
+then set the facet titles to the Unicode symbols for male and
+female.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># separate data according to fly sex</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span></span>
@@ -210,14 +231,18 @@
 <span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<p>Overlying the points in the original plot is a horizontal dotted line at y = 0. This is added to our ggplot using <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline()</a></code>.</p>
+<p>Overlying the points in the original plot is a horizontal dotted line
+at y = 0. This is added to our ggplot using
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot a horiztonal line at y = 0 i.e. percentage change = 0</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span>, linewidth <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Ignoring unknown parameters: linewidth</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>On top of this are red horizontal bars showing the mean value for each group. These can be added to ggplots using the <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary()</a></code> function with the <code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_crossbar()</a></code> Geom.</p>
+<p>On top of this are red horizontal bars showing the mean value for
+each group. These can be added to ggplots using the
+<code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary()</a></code> function with the
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_crossbar()</a></code> Geom.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot solid red lines at the mean of each group</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span></span>
@@ -229,11 +254,22 @@
 <span>    linewidth <span class="op">=</span> <span class="fl">0.4</span>, width <span class="op">=</span> <span class="fl">0.7</span>,</span>
 <span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Ignoring unknown parameters: linewidth</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>The last data-related element to be added are the p-value brackets. To do this we need to generate a table of p-values with the correct format, and then use this table with the <code><a href="../../reference/add_pvalue.html">add_pvalue()</a></code> function from <code>ggprism</code>.</p>
-<p>The easiest way to generate the p-value table is with the <a href="https://github.com/kassambara/rstatix" class="external-link"><code>rstatix</code></a> (you could also do it manually but using <code>rstatix</code> ensures the table is of the correct format). In this case we group the <code>wings</code> data by sex and wing measure, and then test whether the percentage change in wing size/cell size/cell number is explained by the fly genotype. We also use the <code><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html" class="external-link">add_x_position()</a></code> function from <code>rstatix</code> to make sure the bracket ends have the correct x axis positions (specifically the <code>xmin</code> and <code>xmax</code> columns). Lastly, we manually change the bracket labels to appear as we would like them to.</p>
+<p>The last data-related element to be added are the p-value brackets.
+To do this we need to generate a table of p-values with the correct
+format, and then use this table with the <code><a href="../../reference/add_pvalue.html">add_pvalue()</a></code>
+function from <code>ggprism</code>.</p>
+<p>The easiest way to generate the p-value table is with the <a href="https://github.com/kassambara/rstatix" class="external-link"><code>rstatix</code></a>
+(you could also do it manually but using <code>rstatix</code> ensures
+the table is of the correct format). In this case we group the
+<code>wings</code> data by sex and wing measure, and then test whether
+the percentage change in wing size/cell size/cell number is explained by
+the fly genotype. We also use the <code><a href="https://rpkgs.datanovia.com/rstatix/reference/get_pvalue_position.html" class="external-link">add_x_position()</a></code> function
+from <code>rstatix</code> to make sure the bracket ends have the correct
+x axis positions (specifically the <code>xmin</code> and
+<code>xmax</code> columns). Lastly, we manually change the bracket
+labels to appear as we would like them to.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># perform t-tests to compare the means of the genotypes for each measure</span></span>
 <span><span class="co"># and correct the p-values for multiple testing</span></span>
@@ -250,16 +286,15 @@
 <span></span>
 <span><span class="va">wings_pvals</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 14</span></span></span>
-<span><span class="co">#&gt;   sex    measure     .y.   group1 group2    n1    n2 stati…¹    df       p     x</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> male   Wing Size   perc… Tps1M… Tps1M…    10    10   4.85     18 1.29<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> male   Cell Size   perc… Tps1M… Tps1M…    10    10   2.65     18 1.61<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> male   Cell Number perc… Tps1M… Tps1M…    10    10   1.17     18 2.58<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> female Wing Size   perc… Tps1M… Tps1M…    10    10   7.05     18 1.41<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span>     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> female Cell Size   perc… Tps1M… Tps1M…    10    10   4.59     18 2.28<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> female Cell Number perc… Tps1M… Tps1M…    10    10   0.463    18 6.49<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     3</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 3 more variables: xmin &lt;dbl&gt;, xmax &lt;dbl&gt;, label &lt;chr&gt;, and abbreviated</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   variable name ¹​statistic</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   sex    measure   .y.   group1 group2    n1    n2 statistic    df       p     x</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> male   Wing Size perc… Tps1M… Tps1M…    10    10     4.85     18 1.29<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> male   Cell Size perc… Tps1M… Tps1M…    10    10     2.65     18 1.61<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> male   Cell Num… perc… Tps1M… Tps1M…    10    10     1.17     18 2.58<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> female Wing Size perc… Tps1M… Tps1M…    10    10     7.05     18 1.41<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span>     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> female Cell Size perc… Tps1M… Tps1M…    10    10     4.59     18 2.28<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> female Cell Num… perc… Tps1M… Tps1M…    10    10     0.463    18 6.49<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     3</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: xmin &lt;dbl&gt;, xmax &lt;dbl&gt;, label &lt;chr&gt;</span></span></span></code></pre></div>
 <p>With this p-value table, we can now add p-value brackets.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot the p-values with brackets for each comparison</span></span>
@@ -273,7 +308,11 @@
 <div class="section level2">
 <h2 id="adjusting-theme-elements">Adjusting theme elements<a class="anchor" aria-label="anchor" href="#adjusting-theme-elements"></a>
 </h2>
-<p>With the data-related elements in place we can turn to changing the overall plot theme and appearance. First, we’ll apply <code><a href="../../reference/theme_prism.html">theme_prism()</a></code>. By default the theme uses all bold font so we set <code>base_fontface = "plain"</code> so that all text is of normal weight.</p>
+<p>With the data-related elements in place we can turn to changing the
+overall plot theme and appearance. First, we’ll apply
+<code><a href="../../reference/theme_prism.html">theme_prism()</a></code>. By default the theme uses all bold font so
+we set <code>base_fontface = "plain"</code> so that all text is of
+normal weight.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># apply theme_prism()</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span></span>
@@ -283,16 +322,28 @@
 <span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>We’ll need to fix the x axes text as the labels are overlapping, and the axes use brackets instead of a line. We can fix the labels using line breaks as in the original plot, and also set the axes guides to <code><a href="../../reference/guide_prism_bracket.html">guide_prism_bracket()</a></code>.</p>
+<p>We’ll need to fix the x axes text as the labels are overlapping, and
+the axes use brackets instead of a line. We can fix the labels using
+line breaks as in the original plot, and also set the axes guides to
+<code><a href="../../reference/guide_prism_bracket.html">guide_prism_bracket()</a></code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change the x axis to brackets and add line breaks to the axis text</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span></span>
 <span>    guide <span class="op">=</span> <span class="fu"><a href="../../reference/guide_prism_bracket.html">guide_prism_bracket</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.15</span><span class="op">)</span>, </span>
 <span>    labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/wrap_format.html" class="external-link">wrap_format</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="va">p</span></span></code></pre></div>
+<span><span class="va">p</span></span>
+<span><span class="co">#&gt; Warning: The S3 guide system was deprecated in ggplot2 3.5.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<p>Now we’ll fix the y axes so that they are identical as in the original Figure 2B. We’ll also apply the <code><a href="../../reference/guide_prism_offset.html">guide_prism_offset()</a></code> guide so the axis line doesn’t extend beyond the outermost tick marks. Additionally, we’ll adjust the y axis title.</p>
+<p>Now we’ll fix the y axes so that they are identical as in the
+original Figure 2B. We’ll also apply the
+<code><a href="../../reference/guide_prism_offset.html">guide_prism_offset()</a></code> guide so the axis line doesn’t extend
+beyond the outermost tick marks. Additionally, we’ll adjust the y axis
+title.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adjust the y axis limits and change the style to 'offset'</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span></span>
@@ -303,8 +354,13 @@
 <span>  <span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"% change"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="ex2-wings_files/figure-html/unnamed-chunk-14-1.png" width="700"> The plot is already looking good as is. But the goal of this vignette is to recreate the original as closely as possible, so we will continue with some minor adjustments.</p>
-<p>We need to use <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> to change the point fills to match. We’ll also fix the formatting of the legend text in this step.</p>
+<p><img src="ex2-wings_files/figure-html/unnamed-chunk-14-1.png" width="700">
+The plot is already looking good as is. But the goal of this vignette is
+to recreate the original as closely as possible, so we will continue
+with some minor adjustments.</p>
+<p>We need to use <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> to change the point
+fills to match. We’ll also fix the formatting of the legend text in this
+step.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change the point fill and adjust the legend text formatting</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
@@ -314,7 +370,8 @@
 <span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
-<p>Next we’ll do a few things at once in one call of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function:</p>
+<p>Next we’ll do a few things at once in one call of the
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function:</p>
 <ol style="list-style-type: decimal">
 <li>Move the legend below the plot</li>
 <li>Remove the x axis title</li>
@@ -332,7 +389,10 @@
 <span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<p>The original graph also has a label with the number of replicates in the bottom right corner of the plotting area. This is a little tricky to do with facets and requires creating a dummy data.frame to get the positioning correct.</p>
+<p>The original graph also has a label with the number of replicates in
+the bottom right corner of the plotting area. This is a little tricky to
+do with facets and requires creating a dummy data.frame to get the
+positioning correct.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add n = 10 as a text annotation</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span></span>
@@ -346,15 +406,19 @@
 <span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<p>The final thing to do is just make the legend symbols a bit larger using the <code>overrride.aes</code> argument in <code><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend()</a></code>.</p>
+<p>The final thing to do is just make the legend symbols a bit larger
+using the <code>overrride.aes</code> argument in
+<code><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># make the points larger in the legend only</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="ex2-wings_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<p>And that’s it! Our ggplot graph is almost identical to the original.</p>
-<div class="figure">
-<img src="figure_2B.png" style="width:70.0%" alt=""><p class="caption">Figure 2B from Matsushita &amp; Nishimura (2020)</p>
+<p>And that’s it! Our ggplot graph is almost identical to the
+original.</p>
+<div class="float">
+<img src="figure_2B.png" style="width:70.0%" alt="Figure 2B from Matsushita &amp; Nishimura (2020)"><div class="figcaption">Figure 2B from Matsushita &amp; Nishimura
+(2020)</div>
 </div>
 </div>
 <div class="section level2">
@@ -406,10 +470,12 @@
 <span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">lab</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Matsushita, R., Nishimura, T. Trehalose metabolism confers developmental robustness and stability in Drosophila by regulating glucose homeostasis. Commun Biol 3, 170 (2020). <a href="https://doi.org/10.1038/s42003-020-0889-1" class="external-link uri">https://doi.org/10.1038/s42003-020-0889-1</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Matsushita, R., Nishimura, T. Trehalose metabolism
+confers developmental robustness and stability in Drosophila by
+regulating glucose homeostasis. Commun Biol 3, 170 (2020). <a href="https://doi.org/10.1038/s42003-020-0889-1" class="external-link uri">https://doi.org/10.1038/s42003-020-0889-1</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -431,7 +497,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

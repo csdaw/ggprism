@@ -104,7 +104,7 @@ plotting area, for example with: <code>coord_cartesian(clip = "off")</code>.</p>
 <span>  outside <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tick.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4.8</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>  minor.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2.4</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
-<span>  size <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>  linewidth <span class="op">=</span> <span class="fl">0.6</span>,</span>
 <span>  colour <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  linetype <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -151,7 +151,7 @@ of major ticks.</p></dd>
 of minor ticks.</p></dd>
 
 
-<dt>size</dt>
+<dt>linewidth</dt>
 <dd><p><code>numeric</code>. Linewidth of ticks.</p></dd>
 
 
@@ -210,6 +210,8 @@ See <a href="https://stackoverflow.com/questions/20128582" class="external-link"
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">annotation_ticks</span><span class="op">(</span>sides <span class="op">=</span> <span class="st">"tr"</span>, type <span class="op">=</span> <span class="st">"both"</span>, outside <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The S3 guide system was deprecated in ggplot2 3.5.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span>
 <span class="r-plt img"><img src="annotation_ticks-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># you can adjust the appearance of annotation_ticks</span></span></span>
@@ -223,7 +225,7 @@ See <a href="https://stackoverflow.com/questions/20128582" class="external-link"
 <span class="r-in"><span>    outside <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    tick.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"pt"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"red"</span>,</span></span>
-<span class="r-in"><span>    size <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    linewidth <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>    linetype <span class="op">=</span> <span class="st">"dashed"</span>,</span></span>
 <span class="r-in"><span>    lineend <span class="op">=</span> <span class="st">"round"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
@@ -286,7 +288,7 @@ See <a href="https://stackoverflow.com/questions/20128582" class="external-link"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

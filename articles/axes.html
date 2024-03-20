@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="axes_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Changing Axes</h1>
@@ -125,11 +125,20 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-<p>The <a href="https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm" class="external-link">“Frame and Origin”</a> tab in Prism allows you to change the appearance of the graph’s axes. Some of these options have been implemented in <code>ggprism</code> as axis guides. This vignette will go through how to use the 4 axis guides included in this package.</p>
+<p>The <a href="https://www.graphpad.com/guides/prism/latest/user-guide/frame_and_axes.htm" class="external-link">“Frame
+and Origin”</a> tab in Prism allows you to change the appearance of the
+graph’s axes. Some of these options have been implemented in
+<code>ggprism</code> as axis guides. This vignette will go through how
+to use the 4 axis guides included in this package.</p>
 <div class="section level2">
 <h2 id="minor-ticks">Minor ticks<a class="anchor" aria-label="anchor" href="#minor-ticks"></a>
 </h2>
-<p>Adding minor ticks to graphs is very simple. There are two mains ways, using the continuous scale functions such as <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous()</a></code> or using the <code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides()</a></code> function, both from <code>ggplot2</code>. Note that <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> <em>does not</em> work with discrete axes as they do not have minor breaks.</p>
+<p>Adding minor ticks to graphs is very simple. There are two mains
+ways, using the continuous scale functions such as
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous()</a></code> or using the <code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides()</a></code>
+function, both from <code>ggplot2</code>. Note that
+<code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> <em>does not</em> work with discrete
+axes as they do not have minor breaks.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare methods for adding minor ticks</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -140,9 +149,15 @@
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="../reference/guide_prism_minor.html">guide_prism_minor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/guide_prism_minor.html">guide_prism_minor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span>
+<span><span class="co">#&gt; Warning: The S3 guide system was deprecated in ggplot2 3.5.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p>Note that if you are happy with the defaults you can refer to the axis guide as a string instead of calling the function.</p>
+<p>Note that if you are happy with the defaults you can refer to the
+axis guide as a string instead of calling the function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># refer to guide as string</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -155,12 +170,16 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<p>To adjust the number of minor ticks, you just change the number of minor breaks using the <code>minor_breaks</code> argument of the continuous scale functions. The vector you give the <code>minor_breaks</code> argument will define the position of each minor tick.</p>
+<p>To adjust the number of minor ticks, you just change the number of
+minor breaks using the <code>minor_breaks</code> argument of the
+continuous scale functions. The vector you give the
+<code>minor_breaks</code> argument will define the position of each
+minor tick.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare 1 minor ticks (default) vs 4 minor ticks per major tick</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
@@ -173,7 +192,10 @@
 <span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>To get log10 minor ticks, just use a log10 scale and then modify the n <code>minor_breaks</code> argument as above. Remember the vector you give the <code>minor_breaks</code> argument will define the position of each minor tick.</p>
+<p>To get log10 minor ticks, just use a log10 scale and then modify the
+n <code>minor_breaks</code> argument as above. Remember the vector you
+give the <code>minor_breaks</code> argument will define the position of
+each minor tick.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">msleep</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">bodywt</span>, <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -186,17 +208,21 @@
 <span>                        guide <span class="op">=</span> <span class="st">"prism_minor"</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>You can use the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function with the <code>prism.ticks.length</code> argument to change the length of the minor ticks. This works in the same way as the <code>axis.ticks.length</code> argument to change the length of major ticks.</p>
+<p>You can use the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function with the
+<code>prism.ticks.length</code> argument to change the length of the
+minor ticks. This works in the same way as the
+<code>axis.ticks.length</code> argument to change the length of major
+ticks.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change minor tick length</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"prism_minor"</span>, </span>
-<span>                             limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>                             expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>                     minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
@@ -204,17 +230,18 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>You can change the direction of minor ticks just by making their length negative.</p>
+<p>You can change the direction of minor ticks just by making their
+length negative.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change minor tick length</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"prism_minor"</span>, </span>
-<span>                             limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>                             expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>                     minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
@@ -223,23 +250,26 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<p>The colour (and other aesthetic attributes) of minor ticks will change when you change the colour of major ticks using the <code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function.</p>
+<p>The colour (and other aesthetic attributes) of minor ticks will
+change when you change the colour of major ticks using the
+<code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>
+function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change how ticks look</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>               geom <span class="op">=</span> <span class="st">"col"</span>, fun <span class="op">=</span> <span class="va">mean</span>, colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"prism_minor"</span>, </span>
-<span>                             limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>                             expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>                     minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"blue"</span>, </span>
-<span>                                          size <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                                          lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                                            linewidth <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>                                            lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
@@ -247,8 +277,14 @@
 <div class="section level2">
 <h2 id="offset-axis">Offset axis<a class="anchor" aria-label="anchor" href="#offset-axis"></a>
 </h2>
-<p>One popular axis option in Prism is the offset axis. This has been implemented in <code>ggprism</code> as the <code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code> function. This function works by only drawing the axis line to the outer most tick mark (either major or minor tick). Technically, it works with both continuous and discrete scales, but it should probably only be used with continuous scales.</p>
-<p>If you want an offset axis with minor ticks, see the <code><a href="../reference/guide_prism_offset_minor.html">guide_prism_offset_minor()</a></code> function below.</p>
+<p>One popular axis option in Prism is the offset axis. This has been
+implemented in <code>ggprism</code> as the
+<code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code> function. This function works by only
+drawing the axis line to the outer most tick mark (either major or minor
+tick). Technically, it works with both continuous and discrete scales,
+but it should probably only be used with continuous scales.</p>
+<p>If you want an offset axis with minor ticks, see the
+<code><a href="../reference/guide_prism_offset_minor.html">guide_prism_offset_minor()</a></code> function below.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show that offset axis looks better when you specify the axis limits</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -261,7 +297,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>As with a normal ggplot, you can adjust the appearance of the offset axis line with the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function and the <code>axis.line</code> argument.</p>
+<p>As with a normal ggplot, you can adjust the appearance of the offset
+axis line with the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function and the
+<code>axis.line</code> argument.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change appearance of offset axis</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -272,7 +310,7 @@
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"blue"</span>, </span>
-<span>                                           size <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>                                           linewidth <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>                                           lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
@@ -281,7 +319,8 @@
 <div class="section level2">
 <h2 id="offset-axis-with-minor-ticks">Offset axis with minor ticks<a class="anchor" aria-label="anchor" href="#offset-axis-with-minor-ticks"></a>
 </h2>
-<p>The <code><a href="../reference/guide_prism_offset_minor.html">guide_prism_offset_minor()</a></code> function is similar to <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> except the axis line is offset.</p>
+<p>The <code><a href="../reference/guide_prism_offset_minor.html">guide_prism_offset_minor()</a></code> function is similar to
+<code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> except the axis line is offset.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare prism_minor with prism_offset_minor</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -294,7 +333,8 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<p>As with <code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code>, the axis tends to look better if you explicitly set the axis limits.</p>
+<p>As with <code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code>, the axis tends to look
+better if you explicitly set the axis limits.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -307,7 +347,8 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>As with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the number of minor ticks by adjusting the <code>minor_breaks</code>.</p>
+<p>As with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the number of
+minor ticks by adjusting the <code>minor_breaks</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare 1 minor tick to 4 minor ticks per major</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -323,15 +364,17 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<p>And as with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the length of minor ticks by adjusting the <code>prism_ticks_length</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function.</p>
+<p>And as with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the
+length of minor ticks by adjusting the <code>prism_ticks_length</code>
+argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change minor tick length and direction</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, </span>
-<span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>                             guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
+<span>                     minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                     guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
@@ -340,23 +383,26 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>Lastly, the colour (and other aesthetic attributes) of minor ticks will change when you change the colour of major ticks using the <code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function.</p>
+<p>Lastly, the colour (and other aesthetic attributes) of minor ticks
+will change when you change the colour of major ticks using the
+<code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>
+function.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># change minor tick colour, thickness, and lineend</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">supp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, </span>
-<span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>                             guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
+<span>                     minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                     guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>                axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"blue"</span>,</span>
-<span>                                           size <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                                           lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                                            linewidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                                            lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
@@ -364,7 +410,12 @@
 <div class="section level2">
 <h2 id="brackets-axis">Brackets axis<a class="anchor" aria-label="anchor" href="#brackets-axis"></a>
 </h2>
-<p>Brackets are not an axis option in GraphPad Prism. Rather the idea comes from the <a href="https://github.com/stefanedwards/lemon" class="external-link"><code>lemon</code></a> package functions <code>brackets_horisontal()</code> and <code>brackets_vertical()</code>. I wanted brackets for my graphs, therefore they have been re-implemented in <code>ggprism</code> as the <code>guide_prism_brackets()</code> axis guide.</p>
+<p>Brackets are not an axis option in GraphPad Prism. Rather the idea
+comes from the <a href="https://github.com/stefanedwards/lemon" class="external-link"><code>lemon</code></a>
+package functions <code>brackets_horisontal()</code> and
+<code>brackets_vertical()</code>. I wanted brackets for my graphs,
+therefore they have been re-implemented in <code>ggprism</code> as the
+<code>guide_prism_brackets()</code> axis guide.</p>
 <p>This axis guide works best with discrete axes.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show bracket axis guide</span></span>
@@ -394,7 +445,12 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<p>By default, the function tries to guess how wide the brackets should be. However you can control the bracket width with the <code>width</code> argument. Try numbers between 0 and 1. In this example we make the width of <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter()</a></code> and the width of <code><a href="../reference/guide_prism_bracket.html">guide_prism_bracket()</a></code> both 0.2 which seems to work well.</p>
+<p>By default, the function tries to guess how wide the brackets should
+be. However you can control the bracket width with the
+<code>width</code> argument. Try numbers between 0 and 1. In this
+example we make the width of <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter()</a></code> and the width of
+<code><a href="../reference/guide_prism_bracket.html">guide_prism_bracket()</a></code> both 0.2 which seems to work
+well.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># control bracket width</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -409,7 +465,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<p>You can change the bracket direction with the <code>outside</code> argument. By default, <code>outside = TRUE</code> which means the brackets point outward.</p>
+<p>You can change the bracket direction with the <code>outside</code>
+argument. By default, <code>outside = TRUE</code> which means the
+brackets point outward.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare brackets outside or inside</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -424,7 +482,9 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
-<p>Making the brackets point inside makes the space between the axis text and the brackets smaller. You can increase this distance again by changing the margin of the relevent <code>axis.text</code> element.</p>
+<p>Making the brackets point inside makes the space between the axis
+text and the brackets smaller. You can increase this distance again by
+changing the margin of the relevent <code>axis.text</code> element.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># adjust text spacing with inside pointing brackets</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ToothGrowth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -444,7 +504,10 @@
 <div class="section level2">
 <h2 id="border-with-minor-ticks">Border with minor ticks<a class="anchor" aria-label="anchor" href="#border-with-minor-ticks"></a>
 </h2>
-<p>Say you want a graph, with a border, and with minor ticks. There are a couple of ways one might do this, one of which is outlined here. The other way involved messing around with secondary axes and is buggy so we’ll ignore it for now.</p>
+<p>Say you want a graph, with a border, and with minor ticks. There are
+a couple of ways one might do this, one of which is outlined here. The
+other way involved messing around with secondary axes and is buggy so
+we’ll ignore it for now.</p>
 <p>First we define a base plot.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define a base plot</span></span>
@@ -453,11 +516,14 @@
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-21-1.png" width="480"></p>
-<p>Then we’ll apply <code><a href="../reference/theme_prism.html">theme_prism()</a></code> with a border, move the legend into the plotting area, and turn clipping off so the border thickness is accurate.</p>
+<p>Then we’ll apply <code><a href="../reference/theme_prism.html">theme_prism()</a></code> with a border, move the
+legend into the plotting area, and turn clipping off so the border
+thickness is accurate.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># apply theme_prism and turn clipping off for the border</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>border <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-22-1.png" width="480"></p>
@@ -467,24 +533,31 @@
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prism_minor"</span>, y <span class="op">=</span> <span class="st">"prism_minor"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-23-1.png" width="480"></p>
-<p>One way to add minor ticks all around the border is to use the <code><a href="../reference/annotation_ticks.html">annotation_ticks()</a></code> function in <code>ggprism</code>. This is the way I would recommend to avoid the issues that arise using secondary axes.</p>
-<p>Here we add ticks as a plot annotation (i.e. not a proper axis) with the following arguments:</p>
+<p>One way to add minor ticks all around the border is to use the
+<code><a href="../reference/annotation_ticks.html">annotation_ticks()</a></code> function in <code>ggprism</code>. This
+is the way I would recommend to avoid the issues that arise using
+secondary axes.</p>
+<p>Here we add ticks as a plot annotation (i.e. not a proper axis) with
+the following arguments:</p>
 <ol style="list-style-type: decimal">
 <li>Put the ticks on the top and right sides</li>
-<li>Draw both major and minor ticks (as opposed to just <code>"minor"</code> or <code>"major"</code>)</li>
+<li>Draw both major and minor ticks (as opposed to just
+<code>"minor"</code> or <code>"major"</code>)</li>
 <li>Make the thickness = 1</li>
 <li>Make them point outside (must turn clipping off!)</li>
-<li>Try to match the lengths with the other tick marks (bit of trial and error)</li>
+<li>Try to match the lengths with the other tick marks (bit of trial and
+error)</li>
 </ol>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add tick annotations</span></span>
-<span><span class="va">p_annot</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/annotation_ticks.html">annotation_ticks</a></span><span class="op">(</span>sides <span class="op">=</span> <span class="st">"tr"</span>, type <span class="op">=</span> <span class="st">"both"</span>, size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span><span class="va">p_annot</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/annotation_ticks.html">annotation_ticks</a></span><span class="op">(</span>sides <span class="op">=</span> <span class="st">"tr"</span>, type <span class="op">=</span> <span class="st">"both"</span>, linewidth <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                                outside <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                                tick.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">14</span><span class="op">/</span><span class="fl">2</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>                                minor.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">14</span><span class="op">/</span><span class="fl">4</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p_annot</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-24-1.png" width="480"></p>
-<p>You can adjust the number of minor ticks using the continuous scale functions as before.</p>
+<p>You can adjust the number of minor ticks using the continuous scale
+functions as before.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tick annotations will mirror adjustments to the actual axis ticks</span></span>
 <span><span class="va">p_annot</span> <span class="op">&lt;-</span> <span class="va">p_annot</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span>
@@ -494,13 +567,21 @@
 <div class="section level2">
 <h2 id="discontinuous-axis">Discontinuous axis<a class="anchor" aria-label="anchor" href="#discontinuous-axis"></a>
 </h2>
-<p>Generally using discontinuous axes is discouraged. However as it is an option in GraphPad Prism, an example of how to do this with <code>ggprism</code> is given below.</p>
-<p>First we’ll take the <code>ToothGrowth</code> data set and change a value in the <code>len</code> column to be an obvious outlier.</p>
+<p>Generally using discontinuous axes is discouraged. However as it is
+an option in GraphPad Prism, an example of how to do this with
+<code>ggprism</code> is given below.</p>
+<p>First we’ll take the <code>ToothGrowth</code> data set and change a
+value in the <code>len</code> column to be an obvious outlier.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># multiply one of the len values by 100</span></span>
 <span><span class="va">tg</span> <span class="op">&lt;-</span> <span class="va">ToothGrowth</span></span>
 <span><span class="va">tg</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"len"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">tg</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"len"</span><span class="op">]</span> <span class="op">*</span> <span class="fl">100</span></span></code></pre></div>
-<p>Next we’ll see what a plot without a discontinuous axis would look like. The majority of the data has been compressed near the bottom of the plot in an attempt to fit the outlier point. In this situation one might want to use a discontinuous axis (although honestly it is probably better to add an inset plot using the <code>patchwork</code> package).</p>
+<p>Next we’ll see what a plot without a discontinuous axis would look
+like. The majority of the data has been compressed near the bottom of
+the plot in an attempt to fit the outlier point. In this situation one
+might want to use a discontinuous axis (although honestly it is probably
+better to add an inset plot using the <code>patchwork</code>
+package).</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -508,8 +589,14 @@
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-27-1.png" width="384"></p>
-<p>We’ll use the <code>patchwork</code> package to create our discontinuous axis plot. Indeed, we will be making two plots (one zoomed in on the main data and the other zoomed in on the outlier), using a slightly different theme for each plot, and then combining them.</p>
-<p>First we’ll make a plot zoomed in on the main data. It is important to use <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code> to change the axis limits instead of <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous()</a></code> as <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code> does not exclude any data, unlike <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous()</a></code>.</p>
+<p>We’ll use the <code>patchwork</code> package to create our
+discontinuous axis plot. Indeed, we will be making two plots (one zoomed
+in on the main data and the other zoomed in on the outlier), using a
+slightly different theme for each plot, and then combining them.</p>
+<p>First we’ll make a plot zoomed in on the main data. It is important
+to use <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code> to change the axis limits instead
+of <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous()</a></code> as <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code>
+does not exclude any data, unlike <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous()</a></code>.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_bottom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -521,7 +608,9 @@
 <span></span>
 <span><span class="va">p_bottom</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-28-1.png" width="384"></p>
-<p>Next we’ll make a plot zoomed in on the outlier, and we’ll make a new theme for the top plot specifically, called <code>theme_outlier()</code>.</p>
+<p>Next we’ll make a plot zoomed in on the outlier, and we’ll make a new
+theme for the top plot specifically, called
+<code>theme_outlier()</code>.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">len</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.2</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -531,13 +620,13 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">theme_outlier</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">palette</span> <span class="op">=</span> <span class="st">"black_and_white"</span>,</span>
-<span>                         <span class="va">base_size</span> <span class="op">=</span> <span class="fl">14</span>,</span>
-<span>                         <span class="va">base_family</span> <span class="op">=</span> <span class="st">"sans"</span>,</span>
-<span>                         <span class="va">base_fontface</span> <span class="op">=</span> <span class="st">"bold"</span>,</span>
-<span>                         <span class="va">base_line_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,</span>
-<span>                         <span class="va">base_rect_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,</span>
-<span>                         <span class="va">axis_text_angle</span> <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>                         <span class="va">border</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                          <span class="va">base_size</span> <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>                          <span class="va">base_family</span> <span class="op">=</span> <span class="st">"sans"</span>,</span>
+<span>                          <span class="va">base_fontface</span> <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>                          <span class="va">base_line_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,</span>
+<span>                          <span class="va">base_rect_size</span> <span class="op">=</span> <span class="va">base_size</span><span class="op">/</span><span class="fl">14</span>,</span>
+<span>                          <span class="va">axis_text_angle</span> <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                          <span class="va">border</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="va">palette</span>,</span>
 <span>              base_size <span class="op">=</span> <span class="va">base_size</span>,</span>
 <span>              base_family <span class="op">=</span> <span class="va">base_family</span>,</span>
@@ -556,7 +645,9 @@
 <span><span class="va">p_top</span> <span class="op">&lt;-</span> <span class="va">p_top</span> <span class="op">+</span> <span class="fu">theme_outlier</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">p_top</span></span></code></pre></div>
 <p><img src="axes_files/figure-html/unnamed-chunk-29-1.png" width="384"></p>
-<p>Now we’ll combine the two plots with <code>patchwork</code>. We can easily change theme elements of both plots using <code>&amp; theme()</code>.</p>
+<p>Now we’ll combine the two plots with <code>patchwork</code>. We can
+easily change theme elements of both plots using
+<code>&amp; theme()</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_top</span> <span class="op">/</span> <span class="va">p_bottom</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
@@ -582,7 +673,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

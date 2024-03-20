@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="colours_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Colour, Fill, and Shape Palettes</h1>
@@ -125,9 +125,21 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://csdaw.github.io/ggprism/" class="external-link">ggprism</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-<p><code>ggprism</code> includes colour and fill scales with various palettes that mirror the colour schemes available in GraphPad Prism.</p>
-<p><strong>Disclaimer:</strong> some of these palettes are quite nice, some are pretty ugly and not useful, and most are not colour blind friendly as far as I know (except <code>palette = "colorblind_safe"</code>). It would probably be safer to use other colour scales e.g. those in <code>RColorBrewer</code> for any serious application or work to be published.</p>
-<p>In any case, these scales are used to colour the data elements of ggplots and can be used separately or together with <code><a href="../reference/theme_prism.html">theme_prism()</a></code>. Additionally, a shape scale with 3 palettes is included which is similar to the shapes available in Prism. This vignette outlines how to use <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> (or <code><a href="../reference/scale_colour_prism.html">scale_color_prism()</a></code>), <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>, and <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code>.</p>
+<p><code>ggprism</code> includes colour and fill scales with various
+palettes that mirror the colour schemes available in GraphPad Prism.</p>
+<p><strong>Disclaimer:</strong> some of these palettes are quite nice,
+some are pretty ugly and not useful, and most are not colour blind
+friendly as far as I know (except
+<code>palette = "colorblind_safe"</code>). It would probably be safer to
+use other colour scales e.g. those in <code>RColorBrewer</code> for any
+serious application or work to be published.</p>
+<p>In any case, these scales are used to colour the data elements of
+ggplots and can be used separately or together with
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code>. Additionally, a shape scale with 3 palettes
+is included which is similar to the shapes available in Prism. This
+vignette outlines how to use <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> (or
+<code><a href="../reference/scale_colour_prism.html">scale_color_prism()</a></code>), <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>, and
+<code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code>.</p>
 <div class="section level2">
 <h2 id="colour-scales">Colour scales<a class="anchor" aria-label="anchor" href="#colour-scales"></a>
 </h2>
@@ -137,11 +149,15 @@
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-2-1.png" width="345.6"></p>
-<p><code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> (US spelling also works) functions pretty much identically to <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual()</a></code> from <code>ggplot2</code>. The default palette for <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> is <code>"colors"</code>.</p>
+<p><code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> (US spelling also works) functions
+pretty much identically to <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual()</a></code> from
+<code>ggplot2</code>. The default palette for
+<code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> is <code>"colors"</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare manual colour scale with prism colour scale</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green3"</span><span class="op">)</span><span class="op">)</span></span>
@@ -149,7 +165,8 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-3-1.png" width="691.2"></p>
-<p>There are several different colour palettes that are built into <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code>.</p>
+<p>There are several different colour palettes that are built into
+<code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># see names and lengths of available scale_colour_prism() palettes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">ggprism_data</span><span class="op">$</span><span class="va">colour_palettes</span><span class="op">)</span></span>
@@ -187,7 +204,11 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-5-1.png" width="691.2"></p>
-<p>You can preview a single palette using the <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the colour scale applied (as well as <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> and <code><a href="../reference/theme_prism.html">theme_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this page</a> for images of most available colour palettes.</p>
+<p>You can preview a single palette using the
+<code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the
+colour scale applied (as well as <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> and
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this
+page</a> for images of most available colour palettes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"flames"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-6-1.png" width="432"></p>
@@ -201,12 +222,17 @@
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span>,</span>
+<span>         shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"filled"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-7-1.png" width="345.6"></p>
-<p><code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> functions pretty much identically to <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> from <code>ggplot2</code>. The default palette for <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> is <code>"colors"</code>.</p>
+<p><code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> functions pretty much identically to
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> from <code>ggplot2</code>. The default
+palette for <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> is
+<code>"colors"</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare manual fill scale with prism fill scale</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green3"</span><span class="op">)</span><span class="op">)</span></span>
@@ -214,7 +240,8 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-8-1.png" width="691.2"></p>
-<p>There are several different fill palettes that are built into <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>.</p>
+<p>There are several different fill palettes that are built into
+<code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># see names and lengths of available scale_fill_prism() palettes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">ggprism_data</span><span class="op">$</span><span class="va">fill_palettes</span><span class="op">)</span></span>
@@ -244,7 +271,11 @@
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-10-1.png" width="691.2"></p>
-<p>You can preview a single palette using the <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the colour scale applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and <code><a href="../reference/theme_prism.html">theme_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this page</a> for images of most available fill palettes.</p>
+<p>You can preview a single palette using the
+<code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the
+colour scale applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and
+<code><a href="../reference/theme_prism.html">theme_prism()</a></code>). See <a href="https://csdaw.github.io/ggprism/articles/web-only/palettes.html" class="external-link">this
+page</a> for images of most available fill palettes.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"diazo"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-11-1.png" width="432"></p>
@@ -252,8 +283,14 @@
 <div class="section level2">
 <h2 id="shape-scales">Shape scales<a class="anchor" aria-label="anchor" href="#shape-scales"></a>
 </h2>
-<p>The order of shapes used in GraphPad Prism is slightly different to <code>ggplot2</code>, hence 3 different shape palettes are included in the <code>ggprism</code> function <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code>.</p>
-<p>We can see the names and lengths of these shape palettes. Naturally, <code>"default"</code> is the default palette and does not include any shape with a fill. The <code>"filled"</code> palette should be used when you also want to use a fill scale, as the first 5 symbols have a fill. The <code>"complete"</code> palette symbols 5-9 have a fill.</p>
+<p>The order of shapes used in GraphPad Prism is slightly different to
+<code>ggplot2</code>, hence 3 different shape palettes are included in
+the <code>ggprism</code> function <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code>.</p>
+<p>We can see the names and lengths of these shape palettes. Naturally,
+<code>"default"</code> is the default palette and does not include any
+shape with a fill. The <code>"filled"</code> palette should be used when
+you also want to use a fill scale, as the first 5 symbols have a fill.
+The <code>"complete"</code> palette symbols 5-9 have a fill.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># see names and lengths of available scale_shape_prism() palettes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ggprism_data</span><span class="op">$</span><span class="va">shape_palettes</span>, <span class="va">nrow</span><span class="op">)</span></span>
@@ -265,7 +302,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $filled</span></span>
 <span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<p>We can also define a function to see all the shapes in a specific palette.</p>
+<p>We can also define a function to see all the shapes in a specific
+palette.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define a function for convenience</span></span>
 <span><span class="va">show_shapes</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">palette</span><span class="op">)</span> <span class="op">{</span></span>
@@ -282,26 +320,33 @@
 <span><span class="co"># show the shapes in the palette "complete"</span></span>
 <span><span class="fu">show_shapes</span><span class="op">(</span><span class="st">"complete"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-13-1.png" width="345.6"></p>
-<p>We’ll define a base plot to see <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> in action.</p>
+<p>We’ll define a base plot to see <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> in
+action.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a base plot to compare shape scales</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span>, fill <span class="op">=</span> <span class="va">class</span>, shape <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">11</span>, base_fontface <span class="op">=</span> <span class="st">"plain"</span>, border <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span>,</span>
+<span>         fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span>,</span>
+<span>         shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"inside"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
-<span>        legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
+<span>        legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
 <span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"floral"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"floral"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span>
-<span><span class="co">#&gt; Warning: The shape palette can deal with a maximum of 6 discrete values because</span></span>
-<span><span class="co">#&gt; more than 6 becomes difficult to discriminate; you have 7. Consider</span></span>
-<span><span class="co">#&gt; specifying shapes manually if you must have them.</span></span>
-<span><span class="co">#&gt; Warning: Removed 62 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: The shape palette can deal with a maximum of 6 discrete values because more</span></span>
+<span><span class="co">#&gt; than 6 becomes difficult to discriminate</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> you have requested 7 values. Consider specifying shapes manually if you need</span></span>
+<span><span class="co">#&gt;   that many have them.</span></span>
+<span><span class="co">#&gt; Warning: Removed 62 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-14-1.png" width="345.6"></p>
-<p>Then we’ll compare the 3 shape palettes to the <code>ggplot2</code> base plot.</p>
+<p>Then we’ll compare the 3 shape palettes to the <code>ggplot2</code>
+base plot.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare shape scales</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">base</span></span>
@@ -313,10 +358,12 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"complete"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The shape palette can deal with a maximum of 6 discrete values because</span></span>
-<span><span class="co">#&gt; more than 6 becomes difficult to discriminate; you have 7. Consider</span></span>
-<span><span class="co">#&gt; specifying shapes manually if you must have them.</span></span>
-<span><span class="co">#&gt; Warning: Removed 62 rows containing missing values (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: The shape palette can deal with a maximum of 6 discrete values because more</span></span>
+<span><span class="co">#&gt; than 6 becomes difficult to discriminate</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> you have requested 7 values. Consider specifying shapes manually if you need</span></span>
+<span><span class="co">#&gt;   that many have them.</span></span>
+<span><span class="co">#&gt; Warning: Removed 62 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="colours_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
   </div>
@@ -338,7 +385,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
