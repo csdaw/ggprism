@@ -45,7 +45,7 @@ detailed usage examples.
 # compare theme_grey() to theme_prism()
 p1 <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
-               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+               geom = "col", fun = mean, colour = "black", linewidth = 0.9) + 
   scale_y_continuous(limits = c(0, 30), expand = c(0, 0))
 
 p2 <- p1 + theme_prism(base_size = 14)

@@ -47,7 +47,7 @@ guide_prism_bracket <- function(title = waiver(), check.overlap = FALSE,
 
       name = "axis"
     ),
-    class = c("guide", "prism_bracket", "axis")
+    class = c("guide", "prism_bracket", "prism_axis", "axis")
   )
 }
 

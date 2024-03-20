@@ -21,8 +21,8 @@ grab_axis <- function(plot, side = "b") {
 g1 <- p + scale_x_discrete(guide = "axis")
 g2 <- p + scale_x_discrete(guide = "prism_bracket")
 
-expect_silent(ggplotGrob(g1))
-expect_silent(ggplotGrob(g2))
+expect_equal(dim(ggplotGrob(g1)), c(16, 13))
+expect_equal(dim(ggplotGrob(g2)), c(16, 13))
 
 control <- grab_axis(g1, side = "b")
 test <- grab_axis(g2, side = "b")
@@ -41,7 +41,11 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[1]]$x) * 2)
+if (!inherits(guide_none(), "Guide")) {
+  expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[1]]$x) * 2)
+} else {
+  expect_equal(length(test$grobs[[1]]$x), length(control$grobs[[2]]$x) * 2)
+}
 
 # test that guide_prism_bracket works with y axis and continuous scale
 g1 <- p + scale_y_continuous(guide = "axis")
@@ -53,7 +57,7 @@ expect_silent(ggplotGrob(g2))
 control <- grab_axis(g1, side = "l")
 test <- grab_axis(g2, side = "l")
 
-p + scale_x_discrete(position = "right", guide = "prism_bracket")
+# p + scale_x_discrete(position = "right", guide = "prism_bracket")
 
 # test that bracket width can be adjusted or left missing
 g1 <- p + scale_x_discrete(guide = "prism_bracket")

@@ -45,7 +45,8 @@ First we'll create a base plot.
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(aes(colour = factor(cyl), shape = factor(cyl)), size = 3) + 
   theme_prism() + 
-  theme(legend.position = c(0.8, 0.8))
+  guides(colour = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.8, 0.8))
 
 base
 ```
@@ -99,7 +100,9 @@ First we'll create a base plot.
 base <- ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(aes(fill = factor(cyl), shape = factor(cyl)), size = 3) + 
   theme_prism() + 
-  theme(legend.position = c(0.8, 0.8)) + 
+  guides(fill = guide_legend(position = "inside"),
+         shape = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.8, 0.8)) + 
   scale_shape_prism(palette = "filled")
 
 base
@@ -188,8 +191,11 @@ We'll define a base plot to see `scale_shape_prism()` in action.
 base <- ggplot(mpg, aes(x = displ, y = cty)) +
   geom_point(aes(colour = class, fill = class, shape = class)) + 
   theme_prism(base_size = 11, base_fontface = "plain", border = TRUE) +
+  guides(colour = guide_legend(position = "inside"),
+         fill = guide_legend(position = "inside"),
+         shape = guide_legend(position = "inside")) +
   theme(plot.subtitle = element_text(face = "bold"),
-        legend.position = c(0.8, 0.75),
+        legend.position.inside = c(0.8, 0.75),
         legend.key.height = unit(10, "pt")) +
   coord_cartesian(clip = "off") + 
   scale_colour_prism(palette = "floral") + 

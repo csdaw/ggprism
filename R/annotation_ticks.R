@@ -22,7 +22,7 @@
 #' of major ticks.
 #' @param minor.length a \code{\link[grid]{unit}} object specifying the length
 #' of minor ticks.
-#' @param size `numeric`. Linewidth of ticks.
+#' @param linewidth `numeric`. Linewidth of ticks.
 #' @param colour,color `string`. Colour of ticks.
 #' @param linetype `string` or `numeric`. Linetype of tick marks.
 #' @param lineend `string`. Lineend of ticks. One of `"square"`
@@ -43,7 +43,7 @@ annotation_ticks <- function(sides = "b",
                              outside = FALSE,
                              tick.length = unit(4.8, "pt"),
                              minor.length = unit(2.4, "pt"),
-                             size = 0.6,
+                             linewidth = 0.6,
                              colour = "black",
                              color = NULL,
                              linetype = 1,
@@ -89,7 +89,7 @@ annotation_ticks <- function(sides = "b",
       type = type,
       tick.length = tick.length,
       minor.length = minor.length,
-      size = size,
+      linewidth = linewidth,
       colour = colour,
       linetype = linetype,
       lineend = lineend,
@@ -148,7 +148,7 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                                  gp = gpar(
                                    col = alpha(colour, alpha),
                                    lty = linetype,
-                                   lwd = size * .pt,
+                                   lwd = linewidth * .pt,
                                    lineend = lineend
                                  )
                                )
@@ -165,7 +165,7 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                                  gp = gpar(
                                    col = alpha(colour, alpha),
                                    lty = linetype,
-                                   lwd = size * .pt,
+                                   lwd = linewidth * .pt,
                                    lineend = lineend
                                  )
                                )
@@ -202,7 +202,7 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                                  gp = gpar(
                                    col = alpha(colour, alpha),
                                    lty = linetype,
-                                   lwd = size * .pt,
+                                   lwd = linewidth * .pt,
                                    lineend = lineend
                                  )
                                )
@@ -219,7 +219,7 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                                  gp = gpar(
                                    col = alpha(colour, alpha),
                                    lty = linetype,
-                                   lwd = size * .pt,
+                                   lwd = linewidth * .pt,
                                    lineend = lineend
                                  )
                                )
@@ -229,6 +229,6 @@ GeomTicks <- ggproto("GeomTicks", Geom, extra_params = "",
                        }
                        gTree(children = do.call("gList", ticks))
                      },
-                     default_aes = aes(colour = "black", size = 0.6,
+                     default_aes = aes(colour = "black", linewidth = 0.6,
                                        linetype = 1, lineend = "butt", alpha = 1)
 )

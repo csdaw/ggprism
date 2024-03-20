@@ -12,8 +12,8 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 
@@ -107,14 +107,23 @@ p
 
 The colours of the curves in the original plot are not in any colour scheme
 available in Prism. Therefore we will just colour them manually. While we're
-at it we can give the two treatment groups more informative names in the legend.
+at it we can give the two treatment groups more informative names in the legend
+and move the legend inside the plot.
 
 ```{r}
 # apply a manual colour scale to the curves
 p <- p + scale_colour_manual(
   labels = c("No inhibitor", "Inhibitor"),
   values = c("#00167B", "#9FA3FE")
-)
+) +
+  guides(
+    colour = guide_legend(position = "inside"),
+    shape = guide_legend(position = "inside")     
+  ) + 
+  theme(
+    legend.position.inside = c(0.05, 0.95),
+    legend.justification = c(0.05, 0.95)
+  )
 p
 ```
 
@@ -144,11 +153,16 @@ p
 
 ## Adjusting theme elements
 
-First, we'll apply `theme_prism`.
+First, we'll apply `theme_prism`. The legend positioning is slightly buggy with
+ggplot 3.5.0 and ggnewscale so we'll have to set it again.
 
 ```{r}
 # use the Winter Bright theme and make the size of all plot elements larger
-p <- p + theme_prism(palette = "winter_bright", base_size = 16)
+p <- p + theme_prism(palette = "winter_bright", base_size = 16) + 
+  theme(
+    legend.position.inside = c(0.05, 0.95),
+    legend.justification = c(0.05, 0.95)
+  )
 p
 ```
 
@@ -203,18 +217,13 @@ p <- p + scale_x_continuous(
 p
 ```
 
-Finally, we will fix the axis titles and move the legend on top of the plot
-instead of beside it.
+Finally, we will fix the axis titles.
 
 ```{r, fig.width=5}
 # remove the y axis title and legend title, change the x axis title and
 # move the legend to the top left
-p <- p + theme(
-  axis.title.y = element_blank(),
-  legend.title = element_blank(),
-  legend.position = c(0.05, 0.95),
-  legend.justification = c(0.05, 0.95)
-) + 
+p <- p + 
+  theme(axis.title.y = element_blank()) + 
   labs(x = "[Agonist], M")
 p
 ```
@@ -238,12 +247,26 @@ ggplot(df, aes(x = log.agonist, y = response)) +
   ) + 
   scale_colour_manual(labels = c("No inhibitor", "Inhibitor"),
                       values = c("#00167B", "#9FA3FE")) + 
+  guides(
+    colour = guide_legend(position = "inside"),
+    shape = guide_legend(position = "inside")     
+  ) +
+  theme(
+    legend.title = element_blank(),
+    legend.position.inside = c(0.5, 0.5),
+    legend.justification = c(0.05, 0.95)
+  ) +
   ggnewscale::new_scale_colour() +
   geom_point(aes(colour = treatment, shape = treatment), size = 3) + 
   scale_colour_prism(palette = "winter_bright", 
                      labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
-  theme_prism(palette = "winter_bright", base_size = 16) + 
+  theme_prism(palette = "winter_bright", base_size = 16) +
+  theme(
+    legend.title = element_blank(),
+    legend.position.inside = c(0.5, 0.5),
+    legend.justification = c(0.05, 0.95)
+  ) +
   scale_y_continuous(limits = c(-100, 500), 
                      breaks = seq(-100, 500, 100),
                      guide = "prism_offset") + 
@@ -259,9 +282,6 @@ ggplot(df, aes(x = log.agonist, y = response)) +
       )
     }
   ) + 
-  theme(axis.title.y = element_blank(),
-        legend.title = element_blank(),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0.05, 0.95)) + 
+  theme(axis.title.y = element_blank()) + 
   labs(x = "[Agonist], M")
 ```

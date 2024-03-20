@@ -65,6 +65,7 @@ The default, \code{TRUE}, uses the levels that appear in the data;
 \code{\link[ggplot2:guides]{guides()}} for more information.}
     \item{\code{position}}{For position scales, The position of the axis.
 \code{left} or \code{right} for y axes, \code{top} or \code{bottom} for x axes.}
+    \item{\code{call}}{The \code{call} used to construct the scale for reporting messages.}
     \item{\code{super}}{The super class to use for the constructed scale}
   }}
 }

@@ -51,11 +51,15 @@ element.
 
 ```{r, fig.height=3.5}
 # apply default theme
-p1 <- base + theme_prism() + 
-  theme(legend.position = c(0.8, 0.75),
+p1 <- base + 
+  theme_prism() + 
+  guides(colour = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.8, 0.75),
         legend.key.height = unit(10, "pt"))
-p2 <- base + theme_prism() + 
-  theme(legend.position = c(0.8, 0.75),
+p2 <- base + 
+  theme_prism() + 
+  guides(colour = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.8, 0.75),
         legend.key.height = unit(10, "pt"),
         legend.title = element_text())
 
