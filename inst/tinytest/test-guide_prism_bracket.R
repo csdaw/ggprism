@@ -21,8 +21,8 @@ grab_axis <- function(plot, side = "b") {
 g1 <- p + scale_x_discrete(guide = "axis")
 g2 <- p + scale_x_discrete(guide = "prism_bracket")
 
-expect_silent(ggplotGrob(g1))
-expect_silent(ggplotGrob(g2))
+expect_equal(dim(ggplotGrob(g1)), c(16, 13))
+expect_equal(dim(ggplotGrob(g2)), c(16, 13))
 
 control <- grab_axis(g1, side = "b")
 test <- grab_axis(g2, side = "b")
