@@ -31,7 +31,7 @@ ggplot(mtcars, aes(x = mpg, y = disp)) +
     outside = TRUE,
     tick.length = unit(10, "pt"),
     colour = "red",
-    size = 2,
+    linewidth = 2,
     linetype = "dashed",
     lineend = "round"
   ) +

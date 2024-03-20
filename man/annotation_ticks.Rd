@@ -17,7 +17,7 @@ annotation_ticks(
   outside = FALSE,
   tick.length = unit(4.8, "pt"),
   minor.length = unit(2.4, "pt"),
-  size = 0.6,
+  linewidth = 0.6,
   colour = "black",
   color = NULL,
   linetype = 1,
@@ -44,7 +44,7 @@ of major ticks.}
 \item{minor.length}{a \code{\link[grid]{unit}} object specifying the length
 of minor ticks.}
 
-\item{size}{\code{numeric}. Linewidth of ticks.}
+\item{linewidth}{\code{numeric}. Linewidth of ticks.}
 
 \item{colour, color}{\code{string}. Colour of ticks.}
 
@@ -102,7 +102,7 @@ ggplot(mtcars, aes(x = mpg, y = disp)) +
     outside = TRUE,
     tick.length = unit(10, "pt"),
     colour = "red",
-    size = 2,
+    linewidth = 2,
     linetype = "dashed",
     lineend = "round"
   ) +
