@@ -70,6 +70,11 @@ base +
   theme_prism(base_size = 16) + 
   theme(legend.position = "none") + 
   add_pvalue(p_vals, label = "p = {p.adj}", tip.length = 0, label.size = 4)
+#> Warning: The S3 guide system was deprecated in ggplot2 3.5.0.
+#> ℹ It has been replaced by a ggproto system that can be extended.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 <img src="man/figures/README-ex-1.png" width="400" /><img src="man/figures/README-ex-2.png" width="400" />
@@ -91,28 +96,28 @@ issues](https://github.com/csdaw/ggprism/issues). Please fork/clone this
 repository and **create a new branch** to develop your contribution in.
 Some ways to contribute might include:
 
--   Updates and corrections to documentation
--   Examples and vignettes for existing functions
--   Bug fixes
--   New functions with associated documentation, examples, and tests
+- Updates and corrections to documentation
+- Examples and vignettes for existing functions
+- Bug fixes
+- New functions with associated documentation, examples, and tests
 
 ## Cite
 
 I would be very grateful if you could cite this package if you use it in
 your publication:
 
-Charlotte Dawson (2022). *ggprism: A ‘ggplot2’ Extension Inspired by
+Charlotte Dawson (2024). *ggprism: A ‘ggplot2’ Extension Inspired by
 ‘GraphPad Prism’*. R package version 1.0.4.
 <https://cran.r-project.org/package=ggprism> doi: 10.5281/zenodo.4556067
 
     # BibTex for LaTeX users
     @Manual{
-      title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
-      author = {Charlotte Dawson},
-      year = {2022},
-      note = {R package version 1.0.4},
-      url = {https://cran.r-project.org/package=ggprism},
-      doi = {10.5281/zenodo.4556067}
+    title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
+    author = {Charlotte Dawson},
+    year = {2024},
+    note = {R package version 1.0.4},
+    url = {https://cran.r-project.org/package=ggprism},
+    doi = {10.5281/zenodo.4556067}
     }
 
 ## More Examples

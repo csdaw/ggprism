@@ -115,17 +115,17 @@ publication:
 Charlotte Dawson (`r format(Sys.Date(), "%Y")`). 
 _ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'_. R package version
 `r getNamespaceVersion("ggprism")`. <https://cran.r-project.org/package=ggprism>
- doi: 10.5281/zenodo.4556067
+doi: 10.5281/zenodo.4556067
 
 ```
 # BibTex for LaTeX users
 @Manual{
-  title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
-  author = {Charlotte Dawson},
-  year = {`r format(Sys.Date(), "%Y")`},
-  note = {R package version `r getNamespaceVersion("ggprism")`},
-  url = {https://cran.r-project.org/package=ggprism},
-  doi = {10.5281/zenodo.4556067}
+title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
+author = {Charlotte Dawson},
+year = {`r format(Sys.Date(), "%Y")`},
+note = {R package version `r getNamespaceVersion("ggprism")`},
+url = {https://cran.r-project.org/package=ggprism},
+doi = {10.5281/zenodo.4556067}
 }
 ```
 
@@ -156,7 +156,7 @@ df <- data.frame(
 dr_eq <- y ~ min + ((max - min) / (1 + 10^(ec50 - (x))))
 ```
 
-```{r ex2}
+```{r ex2, warning=FALSE}
 # Before
 ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment)) + 
   geom_point() + 
@@ -170,9 +170,11 @@ ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment
   theme_grey(base_size = 11) +
   scale_colour_discrete(labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_discrete(labels = c("No inhibitor", "Inhibitor")) +
+  guides(colour = guide_legend(position = "inside"),
+         shape = guide_legend(position = "inside")) +
   theme(axis.title.y = element_blank(),
         legend.title = element_blank(),
-        legend.position = c(0.05, 0.95),
+        legend.position.inside = c(0.05, 0.95),
         legend.justification = c(0.05, 0.95)) + 
   labs(x = "[Agonist], M")
 
@@ -200,15 +202,20 @@ ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) +
     limits = c(-100, 500), breaks = seq(-100, 500, 100),
     guide = "prism_offset"
   ) + 
+  guides(colour = guide_legend(position = "inside"),
+         shape = guide_legend(position = "inside")) +
+  theme(legend.title = element_blank(),
+        legend.position.inside = c(0.05, 0.95),
+        legend.justification = c(0.05, 0.95)) +
   new_scale_colour() + 
   geom_point(aes(colour = treatment), size = 3) + 
   theme_prism("winter_bright", base_size = 16) + 
+  theme(legend.title = element_blank(),
+        legend.position.inside = c(0.05, 0.95),
+        legend.justification = c(0.05, 0.95)) +
   scale_colour_prism("winter_bright", labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
-  theme(axis.title.y = element_blank(),
-        legend.title = element_blank(),
-        legend.position = c(0.05, 0.95),
-        legend.justification = c(0.05, 0.95)) + 
+  theme(axis.title.y = element_blank()) + 
   labs(x = "[Agonist], M")
 ```
 
