@@ -72,7 +72,7 @@ tick.
 # compare 1 minor ticks (default) vs 4 minor ticks per major tick
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
-               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+               geom = "col", fun = mean, colour = "black", linewidth = 0.9) + 
   theme_prism() + 
   theme(legend.position = "none")
 
@@ -111,12 +111,12 @@ change the length of the minor ticks. This works in the same way as the
 # change minor tick length
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
-               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+               geom = "col", fun = mean, colour = "black", linewidth = 0.9) + 
   theme_prism() + 
   scale_y_continuous(guide = "prism_minor", 
-                             limits = c(0, 30),
-                             expand = c(0, 0),
-                             minor_breaks = seq(0, 30, 2))
+                     limits = c(0, 30),
+                     expand = c(0, 0),
+                     minor_breaks = seq(0, 30, 2))
 
 p1 <- p + theme(legend.position = "none")
 p2 <- p + theme(legend.position = "none",
@@ -131,12 +131,12 @@ You can change the direction of minor ticks just by making their length negative
 # change minor tick length
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
-               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+               geom = "col", fun = mean, colour = "black", linewidth = 0.9) + 
   theme_prism() + 
   scale_y_continuous(guide = "prism_minor", 
-                             limits = c(0, 30),
-                             expand = c(0, 0),
-                             minor_breaks = seq(0, 30, 2))
+                     limits = c(0, 30),
+                     expand = c(0, 0),
+                     minor_breaks = seq(0, 30, 2))
 
 p1 <- p + theme(legend.position = "none",
                 prism.ticks.length.y = unit(20, "pt"))
@@ -154,18 +154,18 @@ you change the colour of major ticks using the `axis.ticks` argument of the
 # change how ticks look
 p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) + 
   stat_summary(aes(fill = factor(dose)), na.rm = TRUE,
-               geom = "col", fun = mean, colour = "black", size = 0.9) + 
+               geom = "col", fun = mean, colour = "black", linewidth = 0.9) + 
   theme_prism() + 
   scale_y_continuous(guide = "prism_minor", 
-                             limits = c(0, 30),
-                             expand = c(0, 0),
-                             minor_breaks = seq(0, 30, 2))
+                     limits = c(0, 30),
+                     expand = c(0, 0),
+                     minor_breaks = seq(0, 30, 2))
 
 p1 <- p + theme(legend.position = "none")
 p2 <- p + theme(legend.position = "none",
                 axis.ticks.y = element_line(colour = "blue", 
-                                          size = 2, 
-                                          lineend = "round"))
+                                            linewidth = 2, 
+                                            lineend = "round"))
 
 p1 + p2
 ```
@@ -207,7 +207,7 @@ p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) +
 p1 <- p + theme(legend.position = "none")
 p2 <- p + theme(legend.position = "none",
                 axis.line.y = element_line(colour = "blue", 
-                                           size = 2, 
+                                           linewidth = 2, 
                                            lineend = "round"))
 
 p1 + p2
@@ -276,8 +276,8 @@ p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) +
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
   scale_y_continuous(limits = c(0, 40), 
-                             minor_breaks = seq(0, 40, 2),
-                             guide = "prism_offset_minor")
+                     minor_breaks = seq(0, 40, 2),
+                     guide = "prism_offset_minor")
 
 p1 <- p + theme(legend.position = "none",
                 prism.ticks.length.y = unit(20, "pt"))
@@ -297,16 +297,16 @@ p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) +
   geom_boxplot(aes(fill = factor(supp))) + 
   theme_prism() + 
   scale_y_continuous(limits = c(0, 40), 
-                             minor_breaks = seq(0, 40, 2),
-                             guide = "prism_offset_minor")
+                     minor_breaks = seq(0, 40, 2),
+                     guide = "prism_offset_minor")
 
 p1 <- p + theme(legend.position = "none",
                 prism.ticks.length.y = unit(20, "pt"))
 p2 <- p + theme(legend.position = "none",
                 prism.ticks.length.y = unit(20, "pt"),
                 axis.ticks.y = element_line(colour = "blue",
-                                           size = 2,
-                                           lineend = "round"))
+                                            linewidth = 2,
+                                            lineend = "round"))
 
 p1 + p2
 ```
@@ -433,7 +433,8 @@ plotting area, and turn clipping off so the border thickness is accurate.
 ```{r, fig.asp=0.9, fig.width=5}
 # apply theme_prism and turn clipping off for the border
 p <- base + theme_prism(border = TRUE) +
-  theme(legend.position = c(0.8, 0.75)) +
+  guides(colour = guide_legend(position = "inside")) +
+  theme(legend.position.inside = c(0.8, 0.75)) +
   coord_cartesian(clip = "off")
 p
 ```
@@ -461,7 +462,7 @@ following arguments:
 
 ```{r, fig.asp=0.9, fig.width=5}
 # add tick annotations
-p_annot <- p + annotation_ticks(sides = "tr", type = "both", size = 1,
+p_annot <- p + annotation_ticks(sides = "tr", type = "both", linewidth = 1,
                                 outside = TRUE,
                                 tick.length = unit(14/2, "pt"),
                                 minor.length = unit(14/4, "pt"))
@@ -539,13 +540,13 @@ p_top <- ggplot(tg, aes(x = factor(dose), y = len)) +
   guides(y = "prism_offset_minor")
 
 theme_outlier <- function(palette = "black_and_white",
-                         base_size = 14,
-                         base_family = "sans",
-                         base_fontface = "bold",
-                         base_line_size = base_size/14,
-                         base_rect_size = base_size/14,
-                         axis_text_angle = 0,
-                         border = FALSE) {
+                          base_size = 14,
+                          base_family = "sans",
+                          base_fontface = "bold",
+                          base_line_size = base_size/14,
+                          base_rect_size = base_size/14,
+                          axis_text_angle = 0,
+                          border = FALSE) {
   theme_prism(palette = palette,
               base_size = base_size,
               base_family = base_family,
