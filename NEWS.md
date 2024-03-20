@@ -1,3 +1,8 @@
+# ggprism 1.0.5
+
+* Update annotation_ticks() with `linewidth` aesthetic.
+* Various fixes to enable compatability with ggplot2 v3.5.0.
+
 # ggprism 1.0.4
 
 * Update wings vignette with `linewidth` aesthetic from ggplot2 v3.4.0
