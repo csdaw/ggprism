@@ -1,24 +1,24 @@
 # Platform
 
-|field    |value                                                                             |
-|:--------|:---------------------------------------------------------------------------------|
-|version  |R version 4.2.1 (2022-06-23)                                                      |
-|os       |macOS Monterey 12.5.1                                                             |
-|system   |x86_64, darwin17.0                                                                |
-|ui       |RStudio                                                                           |
-|language |(EN)                                                                              |
-|collate  |en_AU.UTF-8                                                                       |
-|ctype    |en_AU.UTF-8                                                                       |
-|tz       |Europe/London                                                                     |
-|date     |2022-11-03                                                                        |
-|rstudio  |2022.07.1+554 Spotted Wakerobin (desktop)                                         |
-|pandoc   |2.18 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown) |
+|field    |value                                                                                      |
+|:--------|:------------------------------------------------------------------------------------------|
+|version  |R version 4.3.2 (2023-10-31)                                                               |
+|os       |macOS Sonoma 14.1.2                                                                        |
+|system   |x86_64, darwin20                                                                           |
+|ui       |RStudio                                                                                    |
+|language |(EN)                                                                                       |
+|collate  |en_US.UTF-8                                                                                |
+|ctype    |en_US.UTF-8                                                                                |
+|tz       |Europe/London                                                                              |
+|date     |2024-03-20                                                                                 |
+|rstudio  |2023.12.1+402 Ocean Storm (desktop)                                                        |
+|pandoc   |3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown) |
 
 # Dependencies
 
-|package |old   |new        |Δ  |
-|:-------|:-----|:----------|:--|
-|ggprism |1.0.3 |1.0.3.9000 |*  |
+|package |old   |new   |Δ  |
+|:-------|:-----|:-----|:--|
+|ggprism |1.0.4 |1.0.4 |NA |
 
 # Revdeps
 
