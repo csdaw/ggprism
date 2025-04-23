@@ -21,8 +21,8 @@ expect_silent(ggplotGrob(g2))
 p1 <- prism_colour_pal(palette = "colors")
 p2 <- prism_color_pal(palette = "colors")
 
-expect_equal(class(p1), "function")
-expect_equal(class(p2), "function")
+expect_true(is.function(p1))
+expect_true(is.function(p2))
 
 expect_equal(attr(p1, "max_n"), 20)
 expect_equal(attr(p2, "max_n"), 20)
