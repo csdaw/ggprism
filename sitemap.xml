@@ -1,111 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/axes.html</loc>
-  </url>
-  <url>
-    <loc>/articles/colours.html</loc>
-  </url>
-  <url>
-    <loc>/articles/ggprism.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/pvalues.html</loc>
-  </url>
-  <url>
-    <loc>/articles/themes.html</loc>
-  </url>
-  <url>
-    <loc>/articles/web-only/ex1-dose.html</loc>
-  </url>
-  <url>
-    <loc>/articles/web-only/ex2-wings.html</loc>
-  </url>
-  <url>
-    <loc>/articles/web-only/palettes.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_pvalue.html</loc>
-  </url>
-  <url>
-    <loc>/reference/annotation_ticks.html</loc>
-  </url>
-  <url>
-    <loc>/reference/draw_prism_bracket.html</loc>
-  </url>
-  <url>
-    <loc>/reference/draw_prism_minor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/draw_prism_offset.html</loc>
-  </url>
-  <url>
-    <loc>/reference/draw_prism_offset_minor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ggprism-ggproto.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ggprism-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ggprism_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/guide_prism_bracket.html</loc>
-  </url>
-  <url>
-    <loc>/reference/guide_prism_minor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/guide_prism_offset.html</loc>
-  </url>
-  <url>
-    <loc>/reference/guide_prism_offset_minor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/preview_theme.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prism_colour_pal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prism_fill_pal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prism_shape_pal.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scale_colour_prism.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scale_fill_prism.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scale_shape_prism.html</loc>
-  </url>
-  <url>
-    <loc>/reference/theme_prism.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wings.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/axes.html</loc></url>
+<url><loc>/articles/colours.html</loc></url>
+<url><loc>/articles/ggprism.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/pvalues.html</loc></url>
+<url><loc>/articles/themes.html</loc></url>
+<url><loc>/articles/web-only/ex1-dose.html</loc></url>
+<url><loc>/articles/web-only/ex2-wings.html</loc></url>
+<url><loc>/articles/web-only/palettes.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/add_pvalue.html</loc></url>
+<url><loc>/reference/annotation_ticks.html</loc></url>
+<url><loc>/reference/draw_prism_bracket.html</loc></url>
+<url><loc>/reference/draw_prism_minor.html</loc></url>
+<url><loc>/reference/draw_prism_offset.html</loc></url>
+<url><loc>/reference/draw_prism_offset_minor.html</loc></url>
+<url><loc>/reference/ggprism-ggproto.html</loc></url>
+<url><loc>/reference/ggprism-package.html</loc></url>
+<url><loc>/reference/ggprism_data.html</loc></url>
+<url><loc>/reference/guide_prism_bracket.html</loc></url>
+<url><loc>/reference/guide_prism_minor.html</loc></url>
+<url><loc>/reference/guide_prism_offset.html</loc></url>
+<url><loc>/reference/guide_prism_offset_minor.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/preview_theme.html</loc></url>
+<url><loc>/reference/prism_colour_pal.html</loc></url>
+<url><loc>/reference/prism_fill_pal.html</loc></url>
+<url><loc>/reference/prism_shape_pal.html</loc></url>
+<url><loc>/reference/scale_colour_prism.html</loc></url>
+<url><loc>/reference/scale_fill_prism.html</loc></url>
+<url><loc>/reference/scale_shape_prism.html</loc></url>
+<url><loc>/reference/theme_prism.html</loc></url>
+<url><loc>/reference/wings.html</loc></url>
 </urlset>
+
