@@ -17,7 +17,7 @@ expect_silent(ggplotGrob(g))
 # test that prism_shape_pal has correct structure
 p1 <- prism_shape_pal(palette = "default")
 
-expect_equal(class(p1), "function")
+expect_true(is.function(p1))
 
 expect_equal(attr(p1, "max_n"), 9)
 
