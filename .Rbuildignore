@@ -1,5 +1,6 @@
 ^revdep$
 ^data-raw$
+^dev$
 ^ggprism\.Rproj$
 ^README.Rmd$
 ^\.Rproj\.user$
