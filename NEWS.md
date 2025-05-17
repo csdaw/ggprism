@@ -1,3 +1,8 @@
+# ggprism 1.0.6
+
+* Fixes some tests broken by scales package v.1.4.0.
+* No changes to package functionality.
+
 # ggprism 1.0.5
 
 * Update annotation_ticks() with `linewidth` aesthetic.
