@@ -1,24 +1,25 @@
 # Platform
 
-|field    |value                                                                                      |
-|:--------|:------------------------------------------------------------------------------------------|
-|version  |R version 4.3.2 (2023-10-31)                                                               |
-|os       |macOS Sonoma 14.1.2                                                                        |
-|system   |x86_64, darwin20                                                                           |
-|ui       |RStudio                                                                                    |
-|language |(EN)                                                                                       |
-|collate  |en_US.UTF-8                                                                                |
-|ctype    |en_US.UTF-8                                                                                |
-|tz       |Europe/London                                                                              |
-|date     |2024-03-20                                                                                 |
-|rstudio  |2023.12.1+402 Ocean Storm (desktop)                                                        |
-|pandoc   |3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown) |
+|field    |value                                 |
+|:--------|:-------------------------------------|
+|version  |R version 4.5.0 (2025-04-11)          |
+|os       |macOS Sonoma 14.6.1                   |
+|system   |x86_64, darwin20                      |
+|ui       |RStudio                               |
+|language |(EN)                                  |
+|collate  |en_US.UTF-8                           |
+|ctype    |en_US.UTF-8                           |
+|tz       |Europe/London                         |
+|date     |2025-05-17                            |
+|rstudio  |2024.12.1+563 Kousa Dogwood (desktop) |
+|pandoc   |NA                                    |
+|quarto   |1.4.552 @ /usr/local/bin/quarto       |
 
 # Dependencies
 
 |package |old   |new   |Δ  |
 |:-------|:-----|:-----|:--|
-|ggprism |1.0.4 |1.0.4 |NA |
+|ggprism |1.0.5 |1.0.5 |NA |
 
 # Revdeps
 
