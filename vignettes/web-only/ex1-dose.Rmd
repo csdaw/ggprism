@@ -113,16 +113,12 @@ and move the legend inside the plot.
 ```{r}
 # apply a manual colour scale to the curves
 p <- p + scale_colour_manual(
+  name = "treatment",
   labels = c("No inhibitor", "Inhibitor"),
   values = c("#00167B", "#9FA3FE")
 ) +
   guides(
-    colour = guide_legend(position = "inside"),
-    shape = guide_legend(position = "inside")     
-  ) + 
-  theme(
-    legend.position.inside = c(0.05, 0.95),
-    legend.justification = c(0.05, 0.95)
+    colour = guide_legend(position = "inside")   
   )
 p
 ```
@@ -140,26 +136,27 @@ will not work.
 p <- p + ggnewscale::new_scale_colour() +
   geom_point(aes(colour = treatment, shape = treatment), size = 3) + 
   scale_colour_prism(
+    name = "treatment",
     palette = "winter_bright", 
-    labels = c("No inhibitor",
-               "Inhibitor")
+    labels = c("No inhibitor", "Inhibitor")
   ) + 
   scale_shape_prism(
-    labels = c("No inhibitor",
-               "Inhibitor")
+    name = "treatment",
+    labels = c("No inhibitor", "Inhibitor")
   )
 p
 ```
 
 ## Adjusting theme elements
 
-First, we'll apply `theme_prism`. The legend positioning is slightly buggy with
-ggplot 3.5.0 and ggnewscale so we'll have to set it again.
+First, we'll apply `theme_prism`. And then we set the legend position.
 
 ```{r}
 # use the Winter Bright theme and make the size of all plot elements larger
 p <- p + theme_prism(palette = "winter_bright", base_size = 16) + 
   theme(
+    axis.title.y = element_blank(),
+    legend.title = element_blank(),
     legend.position.inside = c(0.05, 0.95),
     legend.justification = c(0.05, 0.95)
   )
@@ -223,7 +220,6 @@ Finally, we will fix the axis titles.
 # remove the y axis title and legend title, change the x axis title and
 # move the legend to the top left
 p <- p + 
-  theme(axis.title.y = element_blank()) + 
   labs(x = "[Agonist], M")
 p
 ```
@@ -245,31 +241,34 @@ ggplot(df, aes(x = log.agonist, y = response)) +
     method = "nls", formula = dose_resp, se = FALSE,
     method.args = list(start = list(min = 1.67, max = 397, ec50 = -7, hill_coefficient = 1))
   ) + 
-  scale_colour_manual(labels = c("No inhibitor", "Inhibitor"),
-                      values = c("#00167B", "#9FA3FE")) + 
+  scale_colour_manual(
+    name = "treatment",
+    labels = c("No inhibitor", "Inhibitor"),
+    values = c("#00167B", "#9FA3FE")
+  ) + 
   guides(
-    colour = guide_legend(position = "inside"),
-    shape = guide_legend(position = "inside")     
-  ) +
-  theme(
-    legend.title = element_blank(),
-    legend.position.inside = c(0.5, 0.5),
-    legend.justification = c(0.05, 0.95)
+    colour = guide_legend(position = "inside")   
   ) +
   ggnewscale::new_scale_colour() +
   geom_point(aes(colour = treatment, shape = treatment), size = 3) + 
-  scale_colour_prism(palette = "winter_bright", 
-                     labels = c("No inhibitor", "Inhibitor")) + 
-  scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
+  scale_colour_prism(
+    name = "treatment",
+    palette = "winter_bright", 
+    labels = c("No inhibitor", "Inhibitor")
+  ) + 
+  scale_shape_prism(name = "treatment", labels = c("No inhibitor", "Inhibitor")) + 
   theme_prism(palette = "winter_bright", base_size = 16) +
   theme(
+    axis.title.y = element_blank(),
     legend.title = element_blank(),
-    legend.position.inside = c(0.5, 0.5),
+    legend.position.inside = c(0.05, 0.95),
     legend.justification = c(0.05, 0.95)
   ) +
-  scale_y_continuous(limits = c(-100, 500), 
-                     breaks = seq(-100, 500, 100),
-                     guide = "prism_offset") + 
+  scale_y_continuous(
+    limits = c(-100, 500), 
+    breaks = seq(-100, 500, 100),
+    guide = "prism_offset"
+  ) + 
   scale_x_continuous(
     limits = c(-10, -3), 
     breaks = -10:-3,
@@ -282,6 +281,5 @@ ggplot(df, aes(x = log.agonist, y = response)) +
       )
     }
   ) + 
-  theme(axis.title.y = element_blank()) + 
   labs(x = "[Agonist], M")
 ```
