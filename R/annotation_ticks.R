@@ -5,7 +5,7 @@
 #' plotting area, for example with: `coord_cartesian(clip = "off")`.
 #'
 #' @source The code is a slightly modified version of the answer to this
-#' [Stack Overflow](https://stackoverflow.com/questions/58485334) question,
+#' Stack Overflow question 58485334,
 #' which is itself a refactored version of this
 #' [`annotation_ticks()`](https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r)
 #' function.
@@ -31,7 +31,7 @@
 #' @param data `data.frame`. Use this argument to control the appearance of
 #' ticks on different facets. Pass a data.frame containing the levels from the
 #' faceting variable you want to annotate specifically.
-#' See [here](https://stackoverflow.com/questions/20128582) for an example.
+#' See question 20128582 on Stack Overflow for an example.
 #'
 #' @return Returns a _layer_ ggproto object with `geom = GeomTicks`.
 #'

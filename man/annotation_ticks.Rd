@@ -5,7 +5,7 @@
 \title{Add ticks as ggplot annotation}
 \source{
 The code is a slightly modified version of the answer to this
-\href{https://stackoverflow.com/questions/58485334}{Stack Overflow} question,
+Stack Overflow question 58485334,
 which is itself a refactored version of this
 \href{https://github.com/hrbrmstr/ggalt/blob/master/R/annotation_ticks.r}{\code{annotation_ticks()}}
 function.
@@ -58,7 +58,7 @@ of minor ticks.}
 \item{data}{\code{data.frame}. Use this argument to control the appearance of
 ticks on different facets. Pass a data.frame containing the levels from the
 faceting variable you want to annotate specifically.
-See \href{https://stackoverflow.com/questions/20128582}{here} for an example.}
+See question 20128582 on Stack Overflow for an example.}
 }
 \value{
 Returns a \emph{layer} ggproto object with \code{geom = GeomTicks}.
