@@ -160,8 +160,10 @@ dr_eq <- y ~ min + ((max - min) / (1 + 10^(ec50 - (x))))
 # Before
 ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment)) + 
   geom_point() + 
-  geom_smooth(method = "nls", formula = dr_eq, se = FALSE,
-              method.args = list(start = list(min = 1.67, max = 397, ec50 = -7))) + 
+  geom_smooth(
+    method = "nls", formula = dr_eq, se = FALSE,
+    method.args = list(start = list(min = 1.67, max = 397, ec50 = -7))
+  ) + 
   scale_x_continuous(
     limits = c(-10, -3), breaks = -10:-3,
     minor_breaks = log10(rep(1:9, 7)*(10^rep(-10:-4, each = 9)))
@@ -170,12 +172,16 @@ ggplot(df, aes(x = log.agonist, y = value, colour = treatment, shape = treatment
   theme_grey(base_size = 11) +
   scale_colour_discrete(labels = c("No inhibitor", "Inhibitor")) + 
   scale_shape_discrete(labels = c("No inhibitor", "Inhibitor")) +
-  guides(colour = guide_legend(position = "inside"),
-         shape = guide_legend(position = "inside")) +
-  theme(axis.title.y = element_blank(),
-        legend.title = element_blank(),
-        legend.position.inside = c(0.05, 0.95),
-        legend.justification = c(0.05, 0.95)) + 
+  guides(
+    colour = guide_legend(position = "inside"),
+    shape = guide_legend(position = "inside")
+  ) +
+  theme(
+    axis.title.y = element_blank(),
+    legend.title = element_blank(),
+    legend.position.inside = c(0.05, 0.95),
+    legend.justification = c(0.05, 0.95)
+  ) + 
   labs(x = "[Agonist], M")
 
 # After
@@ -186,12 +192,18 @@ exp_bold <- function(lab) {
   )
 }
 
-ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) + 
-  geom_smooth(aes(colour = treatment),
-              method = "nls", formula = dr_eq, se = FALSE,
-              method.args = list(start = list(min = 1.67, max = 397, ec50 = -7))) + 
-  scale_colour_manual(labels = c("No inhibitor", "Inhibitor"),
-                      values = c("#00167B", "#9FA3FE")) +
+ggplot(df, aes(x = log.agonist, y = value)) + 
+  geom_smooth(
+    aes(colour = treatment),
+    method = "nls", formula = dr_eq, se = FALSE,
+    method.args = list(start = list(min = 1.67, max = 397, ec50 = -7)),
+    show.legend = TRUE
+  ) + 
+  scale_colour_manual(
+    name = "treatment",
+    labels = c("No inhibitor", "Inhibitor"),
+    values = c("#00167B", "#9FA3FE")
+  ) +
   scale_x_continuous(
     limits = c(-10, -3), breaks = -10:-3,
     minor_breaks = log10(rep(1:9, 7)*(10^rep(-10:-4, each = 9))),
@@ -202,20 +214,25 @@ ggplot(df, aes(x = log.agonist, y = value, shape = treatment)) +
     limits = c(-100, 500), breaks = seq(-100, 500, 100),
     guide = "prism_offset"
   ) + 
-  guides(colour = guide_legend(position = "inside"),
-         shape = guide_legend(position = "inside")) +
-  theme(legend.title = element_blank(),
-        legend.position.inside = c(0.05, 0.95),
-        legend.justification = c(0.05, 0.95)) +
+  guides(colour = guide_legend(position = "inside")) +
   new_scale_colour() + 
-  geom_point(aes(colour = treatment), size = 3) + 
+  geom_point(aes(colour = treatment, shape = treatment), size = 3) + 
+  scale_colour_prism(
+    "winter_bright", 
+    name = "treatment", labels = c("No inhibitor", "Inhibitor")
+  ) +
+  scale_shape_prism(name = "treatment", labels = c("No inhibitor", "Inhibitor")) + 
+  guides(
+    colour = guide_legend(position = "inside"),
+    shape = guide_legend(position = "inside")
+  ) +
   theme_prism("winter_bright", base_size = 16) + 
-  theme(legend.title = element_blank(),
-        legend.position.inside = c(0.05, 0.95),
-        legend.justification = c(0.05, 0.95)) +
-  scale_colour_prism("winter_bright", labels = c("No inhibitor", "Inhibitor")) + 
-  scale_shape_prism(labels = c("No inhibitor", "Inhibitor")) + 
-  theme(axis.title.y = element_blank()) + 
+  theme(
+    axis.title.y = element_blank(),
+    legend.title = element_blank(),
+    legend.position.inside = c(0.05, 0.95),
+    legend.justification = c(0.05, 0.95)
+  ) +
   labs(x = "[Agonist], M")
 ```
 

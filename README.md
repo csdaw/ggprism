@@ -106,16 +106,16 @@ Some ways to contribute might include:
 I would be very grateful if you could cite this package if you use it in
 your publication:
 
-Charlotte Dawson (2024). *ggprism: A ‘ggplot2’ Extension Inspired by
-‘GraphPad Prism’*. R package version 1.0.5.
+Charlotte Dawson (2025). *ggprism: A ‘ggplot2’ Extension Inspired by
+‘GraphPad Prism’*. R package version 1.0.6.
 <https://cran.r-project.org/package=ggprism> doi: 10.5281/zenodo.4556067
 
     # BibTex for LaTeX users
     @Manual{
     title = {ggprism: A 'ggplot2' Extension Inspired by 'GraphPad Prism'},
     author = {Charlotte Dawson},
-    year = {2024},
-    note = {R package version 1.0.5},
+    year = {2025},
+    note = {R package version 1.0.6},
     url = {https://cran.r-project.org/package=ggprism},
     doi = {10.5281/zenodo.4556067}
     }
