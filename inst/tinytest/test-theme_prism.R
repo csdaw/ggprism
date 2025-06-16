@@ -7,7 +7,7 @@ p <- ggplot(ToothGrowth, aes(x = as.factor(dose), y = len)) +
 
 #### Tests ---------------------------------------------------------------------
 # test that theme_prism has correct class
-expect_equal(class(theme_prism()), c("theme", "gg"))
+expect_true(inherits(theme_prism(), c("theme", "ggplot2::theme")))
 
 # test that theme_prism defaults work
 g <- p + theme_prism()
