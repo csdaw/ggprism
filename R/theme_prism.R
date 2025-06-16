@@ -169,7 +169,7 @@ theme_prism <- function(palette = "black_and_white", base_size = 14,
     complete = TRUE
   )
 
-  parent <- ggprism::ggprism_data$themes[["all_null"]]
+  parent <- theme(!!!ggprism::ggprism_data$themes[["all_null"]])
   if (!"legend.text.align" %in% rlang::fn_fmls_names(theme)) {
     t$legend.text.align  <- parent$legend.text.align <- NULL
     t$legend.title.align <- parent$legend.title.align <- NULL
