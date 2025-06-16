@@ -58,10 +58,10 @@ theme_prism <- function(palette = "black_and_white", base_size = 14,
 
   t <- theme(
     # Base elements (to be inherited by other elements)
-    line = element_line(colour = colours["axisColor"], size = base_line_size,
+    line = element_line(colour = colours["axisColor"], linewidth = base_line_size,
                         linetype = 1, lineend = "square"),
     rect = element_rect(fill = "white", colour = colours["axisColor"],
-                        size = base_rect_size, linetype = 1),
+                        linewidth = base_rect_size, linetype = 1),
     text = element_text(family = base_family, face = base_fontface,
                         colour = colours["graphTitleColor"], size = base_size,
                         lineheight = 0.9, hjust = 0.5, vjust = 0.5, angle = 0,
