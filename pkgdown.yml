@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.2
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   axes: axes.html
@@ -10,4 +10,4 @@ articles:
   web-only/palettes: web-only/palettes.html
   pvalues: pvalues.html
   themes: themes.html
-last_built: 2025-05-17T09:47Z
+last_built: 2025-07-31T21:26Z
