@@ -278,7 +278,10 @@ add_pvalue <- function(data,
 
     option[["data"]] <- data
 
-    option[["mapping"]] <- do.call(aes_string, mapping)
+    mapping <- lapply(mapping, function(x) {
+      str2lang(paste0(".data[['", x, "']]"))
+    })
+    option[["mapping"]] <- aes(!!!mapping)
 
     do.call(geom_bracket, option)
 
