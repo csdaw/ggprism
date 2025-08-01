@@ -1,5 +1,10 @@
 # ggprism (development version)
 
+* Incorporate compatability fixes for ggplot2 v4.0.0 (#38). Includes:
+    * Ensure parent of theme_prism() is itself a theme
+    * Fix a fragile test
+    * Update some deprecated function calls
+
 # ggprism 1.0.6
 
 * Fixes some tests broken by scales package v.1.4.0.
