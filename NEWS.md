@@ -1,3 +1,5 @@
+# ggprism (development version)
+
 # ggprism 1.0.6
 
 * Fixes some tests broken by scales package v.1.4.0.
