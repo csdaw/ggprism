@@ -146,7 +146,7 @@ p1 <- p + add_pvalue(df_p_val,
                      lineend = "round") # bracket
 
 # use glue expression for label
-p2 <- p + add_pvalue(df_p_val, label = "p = {label}")
+p2 <- p + add_pvalue(df_p_val, label = "p = {label}", parse = TRUE)
 
 # make bracket tips longer and use coord_flip
 p3 <- p + add_pvalue(df_p_val, tip.length = 0.15, coord.flip = TRUE) + 
@@ -171,11 +171,11 @@ to change the x position of the text.
 ```{r, fig.height=3.5}
 # position label above "group1"
 p1 <- p + add_pvalue(df_p_val, label = "p = {label}", 
-                     remove.bracket = TRUE, x = 1)
+                     remove.bracket = TRUE, x = 1, parse = TRUE)
 
 # position label between x = 1 and x = 2
 p2 <- p + add_pvalue(df_p_val, label = "p = {label}", 
-                     remove.bracket = TRUE, x = 1.5)
+                     remove.bracket = TRUE, x = 1.5, parse = TRUE)
 
 p1 + p2
 ```
@@ -241,7 +241,8 @@ p2 <- p + add_pvalue(df_p_val,
                      label = "p = {label}",
                      y.position = "y.position",
                      label.size = 3.2,
-                     fontface = "bold")
+                     fontface = "bold",
+                     parse = TRUE)
 
 p1 + p2
 ```
@@ -294,7 +295,7 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "0.5") %>%
 
 p + add_pvalue(df_p_val, 
                label = "p = {p.adj}",
-               remove.bracket = TRUE)
+               remove.bracket = TRUE, parse = TRUE)
 ```
 
 ## Many more examples
@@ -461,7 +462,8 @@ p + add_pvalue(df_p_val,
                step.increase = 0.1,
                tip.length = 0,
                bracket.colour = "black",
-               show.legend = FALSE)
+               show.legend = FALSE,
+               parse = TRUE)
 ```
 
 Pairwise comparisons _within groups_ of the `ToothGrowth` data set, 
@@ -484,7 +486,8 @@ p + add_pvalue(df_p_val,
                xmin = "xmin", 
                xmax = "xmax",
                label = "p = {p.adj}",
-               tip.length = 0)
+               tip.length = 0, 
+               parse = TRUE)
 ```
 
 Pairwise comparisons _within groups_ and _between groups_ of the `ToothGrowth` 
@@ -513,12 +516,14 @@ p + add_pvalue(df_p_val1,
                xmin = "xmin", 
                xmax = "xmax",
                label = "p = {p.adj}",
-               tip.length = 0) + 
+               tip.length = 0,
+               parse = TRUE) + 
   add_pvalue(df_p_val2,
              label = "p = {p.adj}",
              tip.length = 0.01,
              bracket.nudge.y = 2,
-             step.increase = 0.015)
+             step.increase = 0.015,
+             parse = TRUE)
 ```
 
 ### Facets

@@ -87,10 +87,16 @@ add_ctr_rows <- function(data, ref.group) {
 #### Helper functions for geom_bracket -----------------------------------------
 
 # Add increments to bracket height
-add_step_increase <- function(data, step.increase) {
-  comparisons.number <- 0:(nrow(data) - 1)
-  step.increase <- step.increase * comparisons.number
-  data$step.increase <- step.increase
+add_step_increase <- function(data, n_comparisons, step.increase) {
+  vec_comparisons <- 0:(n_comparisons - 1)
+  step.increase <- step.increase * vec_comparisons
+
+  if (nrow(data) == n_comparisons) {
+    data$y <- data$y + step.increase
+  } else {
+    data$y <- data$y + step.increase[data$group]
+  }
+
   data
 }
 

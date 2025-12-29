@@ -41,7 +41,7 @@ two.means <- tibble::tribble(
 
 ggplot(tg, aes(x = supp, y = len)) +
   geom_boxplot() +
-  add_pvalue(two.means, label = "p = {p}")
+  add_pvalue(two.means, label = "p = {p}", parse = TRUE)
 
 ## you can change aesthetics of the bracket and label
 ggplot(tg, aes(x = supp, y = len)) +
@@ -49,6 +49,7 @@ ggplot(tg, aes(x = supp, y = len)) +
   add_pvalue(
     two.means,
     label = "p = {p}",
+    parse = TRUE,
     colour = "red", # label
     label.size = 6, # label
     fontface = "bold", # label
