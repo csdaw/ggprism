@@ -108,13 +108,12 @@ Add p-values with or without brackets to a ggplot.
 See \href{https://csdaw.github.io/ggprism/articles/pvalues.html}{here}
 or the examples section below for examples of how to use.
 
-\code{add_pvalue} is a refactored version of
+\code{add_pvalue} is a heavily re-written version of
 \code{stat_pvalue_manual} from
-\href{https://github.com/kassambara/ggpubr}{kassambara/ggpubr}, altered to
-have less dependencies, and more flexibility with input format and
-aesthetics. Any examples using \code{stat_pvalue_manual} found on
+\href{https://github.com/kassambara/ggpubr}{kassambara/ggpubr}. Any examples
+using \code{stat_pvalue_manual} found on
 \href{https://www.datanovia.com/en/?s=p-value&search-type=default}{Datanovia}
-will also work with \code{add_pvalue}.
+should also work with \code{add_pvalue} with minimal to no alterations.
 }
 \section{Allowed ... values}{
 

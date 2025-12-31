@@ -95,7 +95,8 @@ lists which parameters it can accept.
 \item{tip.length}{\code{numeric}, length of bracket tips. Default is 0.03. Set to 0 to
 remove bracket tips and just draw a straight line.}
 
-\item{direction}{\code{string}, either "up" or "down". Default is "down".}
+\item{direction}{\code{string}, direction the bracket tips point by default,
+either "up" or "down". Default is "down".}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -120,6 +121,8 @@ Returns a ggplot2 \code{Layer} object that can be added to a plot.
 Draw square brackets. Works similar to \link[ggplot2:geom_segment]{ggplot2::geom_segment}.
 }
 \examples{
+
+library(ggplot2)
 
 ggplot(
   data.frame(x = 1, xend = 4, y = 1, yend = 1),

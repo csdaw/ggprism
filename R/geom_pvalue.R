@@ -44,7 +44,7 @@ geom_pvalue <- function(mapping = NULL,
     }
   }
 
-  if (length(mapping$label) == 1 && inherits(mapping$label, "character") & parse) {
+  if (length(mapping$label) == 1 && inherits(mapping$label, "character")) {
     data$label <- glue::glue_data(data, mapping$label)
     mapping$label <- quo(`label`)
   }
@@ -218,6 +218,7 @@ GeomPValue <- ggproto("GeomPValue", Geom,
                                             bracket.shorten = 0, bracket.nudge.y = 0,
                                             bracket.colour = NULL, label.colour = NULL,
                                             step.group.by = NULL, step.increase = 0,
+                                            parse = FALSE,
                                             flipped_aes = FALSE,
                                             na.rm = FALSE) {
                         # browser()
@@ -295,13 +296,15 @@ GeomPValue <- ggproto("GeomPValue", Geom,
                           data2$y <- data2$y + (y.range * 0.01)
                           data2 <- flip_data(data2, flipped_aes)
                           text_grob <- GeomText$draw_panel(
-                            data2, panel_params, coord, na.rm = na.rm
+                            data2, panel_params, coord,
+                            parse = parse, na.rm = na.rm
                           )
                         } else {
                           data2$vjust[data$vjust == 0] <- 0.5
                           data2 <- flip_data(data2, flipped_aes)
                           text_grob <- GeomText$draw_panel(
-                            data2, panel_params, coord, na.rm = na.rm
+                            data2, panel_params, coord,
+                            parse = parse, na.rm = na.rm
                           )
                           return(text_grob)
                         }

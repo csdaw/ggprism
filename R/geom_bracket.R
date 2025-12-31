@@ -14,6 +14,8 @@
 #'
 #' @examples
 #'
+#' library(ggplot2)
+#'
 #' ggplot(
 #'   data.frame(x = 1, xend = 4, y = 1, yend = 1),
 #'   aes(x = x, xend = xend, y = y, yend = yend)

@@ -5,13 +5,12 @@
 #' See [here](https://csdaw.github.io/ggprism/articles/pvalues.html)
 #' or the examples section below for examples of how to use.
 #'
-#' `add_pvalue` is a refactored version of
+#' `add_pvalue` is a heavily re-written version of
 #' `stat_pvalue_manual` from
-#' [kassambara/ggpubr](https://github.com/kassambara/ggpubr), altered to
-#' have less dependencies, and more flexibility with input format and
-#' aesthetics. Any examples using `stat_pvalue_manual` found on
+#' [kassambara/ggpubr](https://github.com/kassambara/ggpubr). Any examples
+#' using `stat_pvalue_manual` found on
 #' [Datanovia](https://www.datanovia.com/en/?s=p-value&search-type=default)
-#' will also work with `add_pvalue`.
+#' should also work with `add_pvalue` with minimal to no alterations.
 #'
 #' @param data A `data.frame` with the statistics to plot. Default format
 #' has the following columns: `group1 | group2 | p.adj | y.position | etc`.
@@ -121,12 +120,8 @@ add_pvalue <- function(data,
 
   # if label is a glue package expression, parse it
   if (grepl("\\{|\\}", label, perl = TRUE)) {
-    if (parse) {
-      data$label <- glue::glue_data(data, label)
-      label <- "label"
-    } else {
-      warning("glue expression detected in `label` string, but `parse` = FALSE.\n  Try setting `parse` = TRUE.")
-    }
+    data$label <- glue::glue_data(data, label)
+    label <- "label"
   }
 
   mapping <- aes(
