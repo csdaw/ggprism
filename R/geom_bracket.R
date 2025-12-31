@@ -81,7 +81,7 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                            df = data,
                            na.rm = na.rm,
                            vars = c("x", "y", "xend", "yend", "linetype", "linewidth", "lineend"),
-                           name = "geom_bracket2"
+                           name = "geom_bracket"
                          )
                          if (is.null(data) || nrow(data) == 0) return(ggplot2::zeroGrob())
 

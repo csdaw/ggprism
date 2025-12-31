@@ -37,12 +37,12 @@
 #' be plotted. Can also be a single number to plot all p-values at the same
 #' height or a `numeric` vector that will override `data`.
 #' @param parse `logical`. Default is `FALSE`. If `TRUE` the text labels will
-#' be parsed into expressions and displayed as described in `?plotmath`.
-#' @param label.size `numeric`. Size of text.
-#' @param colour,color `string`. Colour of text.
-#' @param tip.length `numeric` vector. Length of bracket tips.
-#' Use `0` to remove tips.
-#' @param bracket.size `numeric`. Line width of bracket.
+#' be parsed into expressions and displayed as described in [grDevices::plotmath].
+#' @param label.size `numeric`. Size of text. Default is `3.2`.
+#' @param colour,color `string`. Colour of text. Default is `"black"`.
+#' @param tip.length `numeric` vector. Length of bracket tips. Default is `0.03`,
+#' use `0` to remove tips.
+#' @param bracket.size `numeric`. Line width of bracket. Default is `0.6`.
 #' @param bracket.colour,bracket.color `string`. Colour of bracket. Default is
 #' `NULL` which causes brackets to inherit the colour of the text.
 #' @param bracket.shorten `numeric`. Shortens the brackets slightly to
@@ -53,16 +53,14 @@
 #' @param step.group.by `string`. Variable to group brackets by.
 #' @param remove.bracket `logical`. If `TRUE` all brackets are
 #' removed and p-value is shown as text only.
-#' @param coord.flip `logical`. If `TRUE` p-values are rotated by
-#' 90 degrees. Should be used with \code{\link[ggplot2]{coord_flip}}
+#' @param coord.flip `logical`. This argument is deprecated.
 #' @param position `string` or call to position function such as
 #' \code{\link[ggplot2]{position_dodge}}. Typically used for adjusting x
 #' position of p-values to be in line with dodged data.
 #' @param ... Additional aesthetics or arguments passed to
 #' \code{\link[ggplot2]{layer}}. See below for allowed values.
 #'
-#' @return Returns a _layer_ ggproto object with either `geom = GeomBracket` or
-#' `geom = GeomText`.
+#' @return Returns a ggplot2 `Layer` object that can be added to a plot.
 #'
 #' @section Allowed ... values:
 #' `add_pvalue` understands the following additional aesthetics or arguments:
@@ -106,8 +104,6 @@ add_pvalue <- function(data,
   }
 
   ## Input checking ...
-
-
 
   if (coord.flip) {
     message("The `coord.flip = TRUE` argument is no longer necessary and can be removed.")

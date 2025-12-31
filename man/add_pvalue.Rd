@@ -61,16 +61,16 @@ be plotted. Can also be a single number to plot all p-values at the same
 height or a \code{numeric} vector that will override \code{data}.}
 
 \item{parse}{\code{logical}. Default is \code{FALSE}. If \code{TRUE} the text labels will
-be parsed into expressions and displayed as described in \code{?plotmath}.}
+be parsed into expressions and displayed as described in \link[grDevices:plotmath]{grDevices::plotmath}.}
 
-\item{label.size}{\code{numeric}. Size of text.}
+\item{label.size}{\code{numeric}. Size of text. Default is \code{3.2}.}
 
-\item{colour, color}{\code{string}. Colour of text.}
+\item{colour, color}{\code{string}. Colour of text. Default is \code{"black"}.}
 
-\item{tip.length}{\code{numeric} vector. Length of bracket tips.
-Use \code{0} to remove tips.}
+\item{tip.length}{\code{numeric} vector. Length of bracket tips. Default is \code{0.03},
+use \code{0} to remove tips.}
 
-\item{bracket.size}{\code{numeric}. Line width of bracket.}
+\item{bracket.size}{\code{numeric}. Line width of bracket. Default is \code{0.6}.}
 
 \item{bracket.colour, bracket.color}{\code{string}. Colour of bracket. Default is
 \code{NULL} which causes brackets to inherit the colour of the text.}
