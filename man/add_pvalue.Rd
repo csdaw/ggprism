@@ -88,8 +88,7 @@ p-values. Useful for slightly adjusting p-values if the text is cut off.}
 \item{remove.bracket}{\code{logical}. If \code{TRUE} all brackets are
 removed and p-value is shown as text only.}
 
-\item{coord.flip}{\code{logical}. If \code{TRUE} p-values are rotated by
-90 degrees. Should be used with \code{\link[ggplot2]{coord_flip}}}
+\item{coord.flip}{\code{logical}. This argument is deprecated.}
 
 \item{position}{\code{string} or call to position function such as
 \code{\link[ggplot2]{position_dodge}}. Typically used for adjusting x
@@ -99,8 +98,7 @@ position of p-values to be in line with dodged data.}
 \code{\link[ggplot2]{layer}}. See below for allowed values.}
 }
 \value{
-Returns a \emph{layer} ggproto object with either \code{geom = GeomBracket} or
-\code{geom = GeomText}.
+Returns a ggplot2 \code{Layer} object that can be added to a plot.
 }
 \description{
 Add p-values with or without brackets to a ggplot.

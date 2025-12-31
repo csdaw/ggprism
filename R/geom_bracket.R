@@ -50,6 +50,7 @@ geom_bracket <- function(mapping = NULL,
   )
 }
 
+#' @rdname ggprism-ggproto
 #' @format NULL
 #' @usage NULL
 #' @export
