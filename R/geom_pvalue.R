@@ -213,7 +213,7 @@ GeomPValue <- ggproto("GeomPValue", Geom,
 
                         if (!is.null(data_text$xend)) {
                           data_text$x <- (data$xend + data$x) / 2
-                          data_text$y <- data_text$y + (y.range * 0.01)
+                          data_text$y <- data_text$y + (y.range * 0.013)
                           data_text <- flip_data(data_text, flipped_aes)
                           text_grob <- GeomText$draw_panel(
                             data_text, panel_params, coord,

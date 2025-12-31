@@ -146,15 +146,15 @@ p1 <- p + add_pvalue(df_p_val,
                      lineend = "round") # bracket
 
 # use glue expression for label
-p2 <- p + add_pvalue(df_p_val, label = "p = {label}", parse = TRUE)
+p2 <- p + add_pvalue(df_p_val, label = "p = {label}")
 
 # make bracket tips longer and use coord_flip
-p3 <- p + add_pvalue(df_p_val, tip.length = 0.15, coord.flip = TRUE) + 
+p3 <- p + add_pvalue(df_p_val, tip.length = 0.1) + 
   coord_flip()
 
 # change bracket tips independently
 # (make one side disappear and the other longer)
-p4 <- p + add_pvalue(df_p_val, tip.length = c(0.2, 0))
+p4 <- p + add_pvalue(df_p_val, tip.length = c(0.1, 0))
 
 (p1 + p2) / (p3 + p4)
 ```
@@ -171,11 +171,11 @@ to change the x position of the text.
 ```{r, fig.height=3.5}
 # position label above "group1"
 p1 <- p + add_pvalue(df_p_val, label = "p = {label}", 
-                     remove.bracket = TRUE, x = 1, parse = TRUE)
+                     remove.bracket = TRUE, x = 1)
 
 # position label between x = 1 and x = 2
 p2 <- p + add_pvalue(df_p_val, label = "p = {label}", 
-                     remove.bracket = TRUE, x = 1.5, parse = TRUE)
+                     remove.bracket = TRUE, x = 1.5)
 
 p1 + p2
 ```
@@ -241,8 +241,7 @@ p2 <- p + add_pvalue(df_p_val,
                      label = "p = {label}",
                      y.position = "y.position",
                      label.size = 3.2,
-                     fontface = "bold",
-                     parse = TRUE)
+                     fontface = "bold")
 
 p1 + p2
 ```
@@ -295,7 +294,7 @@ df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "0.5") %>%
 
 p + add_pvalue(df_p_val, 
                label = "p = {p.adj}",
-               remove.bracket = TRUE, parse = TRUE)
+               remove.bracket = TRUE)
 ```
 
 ## Many more examples
@@ -420,11 +419,11 @@ p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
   geom_violin(trim = FALSE) + 
   geom_boxplot(width = 0.2) +
   theme_prism() + 
-  coord_cartesian(ylim = c(0, 45)) + 
+  coord_cartesian(ylim = c(0, 47)) + 
   scale_y_continuous(breaks = seq(0, 45, 5), expand = c(0, 0))
 
 p + add_pvalue(df_p_val, 
-               y.position = c(44, 41, 44),
+               y.position = c(45, 41, 45),
                bracket.shorten = c(0.025, 0, 0.025))
 ```
 
@@ -462,8 +461,7 @@ p + add_pvalue(df_p_val,
                step.increase = 0.1,
                tip.length = 0,
                bracket.colour = "black",
-               show.legend = FALSE,
-               parse = TRUE)
+               show.legend = FALSE)
 ```
 
 Pairwise comparisons _within groups_ of the `ToothGrowth` data set, 
@@ -486,8 +484,7 @@ p + add_pvalue(df_p_val,
                xmin = "xmin", 
                xmax = "xmax",
                label = "p = {p.adj}",
-               tip.length = 0, 
-               parse = TRUE)
+               tip.length = 0)
 ```
 
 Pairwise comparisons _within groups_ and _between groups_ of the `ToothGrowth` 
@@ -516,14 +513,12 @@ p + add_pvalue(df_p_val1,
                xmin = "xmin", 
                xmax = "xmax",
                label = "p = {p.adj}",
-               tip.length = 0,
-               parse = TRUE) + 
+               tip.length = 0) + 
   add_pvalue(df_p_val2,
              label = "p = {p.adj}",
              tip.length = 0.01,
              bracket.nudge.y = 2,
-             step.increase = 0.015,
-             parse = TRUE)
+             step.increase = 0.015)
 ```
 
 ### Facets
