@@ -1,4 +1,4 @@
-create_bracket <- function(x, y, xend, yend, tip.length, direction = c("right", "left")) {
+create_bracket <- function(x, y, xend, yend, tip.length, direction = c("down", "up")) {
   # argument checking
   stopifnot(is.numeric(tip.length) & length(tip.length) == 2)
 
@@ -14,7 +14,7 @@ create_bracket <- function(x, y, xend, yend, tip.length, direction = c("right", 
   uy <- dy / len
 
   # Rotate unit vector either left of right
-  if (direction == "left") {
+  if (direction == "up") {
     perp_x <- -uy
     perp_y <- ux
   } else {

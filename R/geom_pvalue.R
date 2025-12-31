@@ -229,12 +229,12 @@ GeomPValue <- ggproto("GeomPValue", Geom,
                         if (flipped_aes | coord_flipped) {
                           y.range <- panel_params$x.range[2] - panel_params$x.range[1]
                           y.scale.range <- panel_params$x$scale$get_limits()[2] - panel_params$x$scale$get_limits()[1]
-                          direction <- "left"
+                          direction <- "up"
                           data$angle[data$angle == 0] <- 270
                         } else {
                           y.range <- panel_params$y.range[2] - panel_params$y.range[1]
                           y.scale.range <- panel_params$y$scale$get_limits()[2] - panel_params$y$scale$get_limits()[1]
-                          direction <- "right"
+                          direction <- "down"
                         }
 
                         aaa <- "banana"
@@ -324,7 +324,6 @@ GeomPValue <- ggproto("GeomPValue", Geom,
 
                         bracket_grob <- GeomBracket$draw_panel(
                           data3, panel_params, coord,
-                          somevariable = 20,
                           tip.length = tip.length,
                           direction = direction,
                           na.rm = FALSE

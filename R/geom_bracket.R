@@ -1,12 +1,32 @@
+#' Square brackets
+#'
+#' @description Draw square brackets. Works similar to [ggplot2::geom_segment].
+#'
+#' @param tip.length `numeric`, length of bracket tips. Default is 0.03. Set to 0 to
+#' remove bracket tips and just draw a straight line.
+#' @param direction `string`, direction the bracket tips point by default,
+#' either "up" or "down". Default is "down".
+#' @inheritParams ggplot2::geom_segment
+#'
+#' @returns Returns a ggplot2 `Layer` object that can be added to a plot.
+#'
 #' @export
+#'
+#' @examples
+#'
+#' ggplot(
+#'   data.frame(x = 1, xend = 4, y = 1, yend = 1),
+#'   aes(x = x, xend = xend, y = y, yend = yend)
+#' ) +
+#'   geom_bracket()
+#'
 geom_bracket <- function(mapping = NULL,
                          data = NULL,
                          stat = "identity",
                          position = "identity",
                          ...,
-                         somevariable = 50,
                          tip.length = 0.03,
-                         direction = "left",
+                         direction = "down",
                          na.rm = FALSE,
                          show.legend = NA,
                          inherit.aes = TRUE) {
@@ -20,7 +40,6 @@ geom_bracket <- function(mapping = NULL,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
-      somevariable = somevariable,
       tip.length = tip.length,
       direction = direction,
       na.rm = na.rm,
@@ -29,6 +48,8 @@ geom_bracket <- function(mapping = NULL,
   )
 }
 
+#' @format NULL
+#' @usage NULL
 #' @export
 GeomBracket <- ggproto("GeomBracket", Geom,
                        # Fields ------------------------------------------------
@@ -49,9 +70,8 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                        draw_panel = function(data,
                                              panel_params,
                                              coord,
-                                             somevariable = 20,
                                              tip.length = 0.03,
-                                             direction = "left",
+                                             direction = "down",
                                              na.rm = FALSE) {
 
                          # Remove missing data, returning early if all are missing
@@ -63,31 +83,20 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                          )
                          if (is.null(data) || nrow(data) == 0) return(ggplot2::zeroGrob())
 
-                         # # Supply the coordinate system for the plot
-                         # if (!coord$is_linear()) {
-                         #   rlang::warn(
-                         #     "spring geom only works correctly on linear coordinate systems"
-                         #   )
-                         # }
-
-                         # CRITICAL STEP! Turns x/y/xend/yend values into npc (between 0 and 1)
-                         # Output: data.frame same as `data`, but the columns x, y, xend, yend
-                         # are scaled between 0 and 1.
+                         # CRITICAL STEP! Turn x/y/xend/yend values into npc (between 0 and 1)
                          coord <- coord$transform(data, panel_params)
 
-                         # need tip.length to be length 2
+                         # need tip.length to be numeric vector length 2
                          if (length(tip.length) == 1) {
                            tip.length <- rep(tip.length, 2)
                          }
 
-                         # Construct the grob
                          bracketGrob(
                            coord$x,
                            coord$y,
                            coord$xend,
                            coord$yend,
                            default.units = "native",
-                           somevariable = somevariable,
                            tip.length = tip.length,
                            direction = direction,
                            gp = gpar(
@@ -100,14 +109,12 @@ GeomBracket <- ggproto("GeomBracket", Geom,
                        }
 )
 
-#' @export
 bracketGrob <- function(x0 = unit(0, "npc"),
                         y0 = unit(0, "npc"),
                         x1 = unit(1, "npc"),
                         y1 = unit(1, "npc"),
-                        somevariable = 20,
                         tip.length = 0.03,
-                        direction = "left",
+                        direction = "down",
                         default.units = "npc",
                         name = NULL,
                         gp = gpar(),
@@ -119,13 +126,11 @@ bracketGrob <- function(x0 = unit(0, "npc"),
   if (!grid::is.unit(y0)) y0 <- unit(y0, default.units)
   if (!grid::is.unit(y1)) y1 <- unit(y1, default.units)
 
-  # Return a gTree of class "spring"
   gTree(
     x0 = x0,
     y0 = y0,
     x1 = x1,
     y1 = y1,
-    somevariable = somevariable,
     tip.length = tip.length,
     direction = direction,
     name = name,
@@ -137,9 +142,6 @@ bracketGrob <- function(x0 = unit(0, "npc"),
 
 #' @exportS3Method ggplot2::makeContent
 makeContent.bracket <- function(x) {
-  # Input: x = a gTree of springs. Essentially a list with the contents defined
-  # just above, but also with: "children" (gList), "childrenOrder" (vector),
-  # which are both currently length 0.
 
   # Convert position and diameter values absolute units.
   # These are all numeric vectors.
@@ -148,14 +150,11 @@ makeContent.bracket <- function(x) {
   y0 <- grid::convertY(x$y0, "mm", valueOnly = TRUE)
   y1 <- grid::convertY(x$y1, "mm", valueOnly = TRUE)
 
-  # Leave tension and n untouched
+  # Leave tip.length and direction untouched
   tip.length <- x$tip.length
-  # browser()
-  somevariable <- x$somevariable
   direction <- x$direction
 
-  # Transform the input data to a data frame containing spring paths
-  # Output: list of data.frames with columns: x, y, id
+  # Transform the input data to a data frame containing bracket paths
   brackets <- lapply(seq_along(x0), function(i) {
     cbind(
       create_bracket(
@@ -163,17 +162,16 @@ makeContent.bracket <- function(x) {
         y = y0[i],
         xend = x1[i],
         yend = y1[i],
-        tip.length = tip.length * 100, # for backwards compatibility??
+        tip.length = tip.length * 100, # magic number for ggprism backwards compatibility
         direction = direction
       ),
       id = i
     )
   })
 
-  # Output: data.frame with columns x, y, id
+  # output: data.frame with columns x, y, id
   brackets <- do.call(rbind, brackets)
 
-  # Construct the grob
   bracket_paths <- grid::polylineGrob(
     x = brackets$x,
     y = brackets$y,
