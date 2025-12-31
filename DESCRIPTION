@@ -42,6 +42,8 @@ Suggests:
     patchwork,
     rmarkdown,
     rstatix,
+    rsvg,
     tidyr,
+    tinysnapshot,
     tinytest
 VignetteBuilder: knitr
