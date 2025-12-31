@@ -234,9 +234,7 @@
 <use xlink:href="#glyph-0-4" x="112.574219" y="46.670898"/>
 </g>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 72.019531 53.910156 L 72.019531 49.535156 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 72.019531 49.535156 L 135.132812 49.535156 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 135.132812 49.535156 L 135.132812 53.910156 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 72.019531 58.039062 L 72.019531 49.535156 L 135.132812 49.535156 L 135.132812 58.039062 "/>
 <g clip-path="url(#clip-2)">
 <path fill="none" stroke-width="1.066978" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(20%, 20%, 20%)" stroke-opacity="1" stroke-miterlimit="10" d="M 34.152344 228.457031 L 173 228.457031 L 173 41.011719 L 34.152344 41.011719 Z M 34.152344 228.457031 "/>
 </g>
@@ -291,9 +289,7 @@
 <use xlink:href="#glyph-0-7" x="274.335938" y="289.061523"/>
 </g>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 231.277344 296.144531 L 231.277344 291.925781 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 231.277344 291.925781 L 294.390625 291.925781 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 294.390625 291.925781 L 294.390625 296.144531 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 231.277344 300.429688 L 231.277344 291.925781 L 294.390625 291.925781 L 294.390625 300.429688 "/>
 <g clip-path="url(#clip-9)">
 <path fill="none" stroke-width="1.066978" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(20%, 20%, 20%)" stroke-opacity="1" stroke-miterlimit="10" d="M 193.410156 470.847656 L 332.257812 470.847656 L 332.257812 283.402344 L 193.410156 283.402344 Z M 193.410156 470.847656 "/>
 </g>

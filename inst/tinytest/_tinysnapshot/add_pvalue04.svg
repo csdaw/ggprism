@@ -121,9 +121,7 @@
 <use xlink:href="#glyph-0-4" x="249.855469" y="20.991211"/>
 <use xlink:href="#glyph-0-5" x="254.855469" y="20.991211"/>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 148.71875 110.988281 L 148.71875 26.632812 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 148.71875 26.632812 L 342.996094 26.632812 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 342.996094 26.632812 L 342.996094 26.632812 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 148.71875 83.324219 L 148.71875 26.632812 L 342.996094 26.632812 "/>
 <g clip-path="url(#clip-1)">
 <path fill="none" stroke-width="1.066978" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(20%, 20%, 20%)" stroke-opacity="1" stroke-miterlimit="10" d="M 32.152344 470.847656 L 459.5625 470.847656 L 459.5625 5.476562 L 32.152344 5.476562 Z M 32.152344 470.847656 "/>
 </g>

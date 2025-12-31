@@ -132,9 +132,7 @@
 <use xlink:href="#glyph-0-1" x="270.335938" y="66.319336"/>
 <use xlink:href="#glyph-0-3" x="275.335938" y="66.319336"/>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 160.796875 83.808594 L 160.796875 71.960938 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 160.796875 71.960938 L 371.875 71.960938 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 371.875 71.960938 L 371.875 83.808594 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 160.796875 80.464844 L 160.796875 71.960938 L 371.875 71.960938 L 371.875 80.464844 "/>
 <g clip-path="url(#clip-3)">
 <path fill="none" stroke-width="1.066978" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(20%, 20%, 20%)" stroke-opacity="1" stroke-miterlimit="10" d="M 34.152344 470.847656 L 498.523438 470.847656 L 498.523438 5.476562 L 34.152344 5.476562 Z M 34.152344 470.847656 "/>
 </g>

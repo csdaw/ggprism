@@ -127,18 +127,14 @@
 <use xlink:href="#glyph-0-1" x="193.777344" y="56.995117"/>
 <use xlink:href="#glyph-0-1" x="197.777344" y="56.995117"/>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 71.0625 L 121.21875 59.136719 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 59.136719 L 266.335938 59.136719 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 266.335938 59.136719 L 266.335938 71.0625 "/>
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-0-1" x="258.335938" y="22.370117"/>
 <use xlink:href="#glyph-0-1" x="262.335938" y="22.370117"/>
 <use xlink:href="#glyph-0-1" x="266.335938" y="22.370117"/>
 <use xlink:href="#glyph-0-1" x="270.335938" y="22.370117"/>
 </g>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 36.4375 L 121.21875 24.511719 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 24.511719 L 411.453125 24.511719 "/>
-<path fill="none" stroke-width="1.280374" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 411.453125 24.511719 L 411.453125 36.4375 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 67.640625 L 121.21875 59.136719 L 266.335938 59.136719 L 266.335938 67.640625 "/>
+<path fill="none" stroke-width="1.280374" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 121.21875 33.015625 L 121.21875 24.511719 L 411.453125 24.511719 L 411.453125 33.015625 "/>
 <g clip-path="url(#clip-4)">
 <path fill="none" stroke-width="1.066978" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(20%, 20%, 20%)" stroke-opacity="1" stroke-miterlimit="10" d="M 34.152344 470.847656 L 498.523438 470.847656 L 498.523438 5.476562 L 34.152344 5.476562 Z M 34.152344 470.847656 "/>
 </g>
