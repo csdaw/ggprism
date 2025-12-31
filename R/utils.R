@@ -1,3 +1,6 @@
+#### Global variables ----------------------------------------------------------
+utils::globalVariables(c("label", "xend"))
+
 #### Define custom elements upon package load ----------------------------------
 .onLoad <- function(libname, pkgname) {
   register_theme_elements(

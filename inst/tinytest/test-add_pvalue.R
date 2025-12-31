@@ -1,6 +1,7 @@
 #### Setup ---------------------------------------------------------------------
 library(tinytest)
 library(ggplot2)
+library(dplyr)
 using("tinysnapshot")
 
 ## Most of these tests are borrowed from the p-value vignette

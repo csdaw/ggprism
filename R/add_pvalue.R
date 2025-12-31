@@ -120,6 +120,10 @@ add_pvalue <- function(data,
     label <- "label"
   }
 
+  if (all(data[[xmin]] == "all")) {
+    remove.bracket <- TRUE
+  }
+
   mapping <- aes(
     x = .data[[xmin]],
     xend = .data[[xmax]],
