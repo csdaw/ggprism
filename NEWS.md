@@ -1,3 +1,5 @@
+# ggprism (development version)
+
 # ggprism 1.0.7
 
 * Incorporate compatability fixes for ggplot2 v4.0.0 (#38). Includes:
