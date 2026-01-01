@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
       <h1 data-toc-skip>Changing Axes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/v1.0.7/vignettes/axes.Rmd" class="external-link"><code>vignettes/axes.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/master/vignettes/axes.Rmd" class="external-link"><code>vignettes/axes.Rmd</code></a></small>
       <div class="hidden name"><code>axes.Rmd</code></div>
 
     </div>
@@ -151,10 +151,10 @@ axes as they do not have minor breaks.</p>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span>
 <span><span class="co">#&gt; Warning: The S3 guide system was deprecated in ggplot2 3.5.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> It has been replaced by a ggproto system that can be extended.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span></code></pre></div>
+<p><img src="axes_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="700"></p>
 <p>Note that if you are happy with the defaults you can refer to the
 axis guide as a string instead of calling the function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -168,7 +168,7 @@ axis guide as a string instead of calling the function.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"prism_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="700"></p>
 <p>To adjust the number of minor ticks, you just change the number of
 minor breaks using the <code>minor_breaks</code> argument of the
 continuous scale functions. The vector you give the
@@ -190,7 +190,7 @@ minor tick.</p>
 <span>                             expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>                             minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
 <p>To get log10 minor ticks, just use a log10 scale and then modify the
 n <code>minor_breaks</code> argument as above. Remember the vector you
 give the <code>minor_breaks</code> argument will define the position of
@@ -206,7 +206,7 @@ each minor tick.</p>
 <span>                        minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">4</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">3</span>, each <span class="op">=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                        guide <span class="op">=</span> <span class="st">"prism_minor"</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 <p>You can use the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function with the
 <code>prism.ticks.length</code> argument to change the length of the
 minor ticks. This works in the same way as the
@@ -228,7 +228,7 @@ ticks.</p>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
 <p>You can change the direction of minor ticks just by making their
 length negative.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -248,7 +248,7 @@ length negative.</p>
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
 <p>The colour (and other aesthetic attributes) of minor ticks will
 change when you change the colour of major ticks using the
 <code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>
@@ -271,7 +271,7 @@ function.</p>
 <span>                                            lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="offset-axis">Offset axis<a class="anchor" aria-label="anchor" href="#offset-axis"></a>
@@ -295,7 +295,7 @@ but it should probably only be used with continuous scales.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, guide <span class="op">=</span> <span class="st">"prism_offset"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
 <p>As with a normal ggplot, you can adjust the appearance of the offset
 axis line with the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function and the
 <code>axis.line</code> argument.</p>
@@ -313,7 +313,7 @@ axis line with the <code><a href="https://ggplot2.tidyverse.org/reference/theme.
 <span>                                           lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="offset-axis-with-minor-ticks">Offset axis with minor ticks<a class="anchor" aria-label="anchor" href="#offset-axis-with-minor-ticks"></a>
@@ -331,7 +331,7 @@ axis line with the <code><a href="https://ggplot2.tidyverse.org/reference/theme.
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
 <p>As with <code><a href="../reference/guide_prism_offset.html">guide_prism_offset()</a></code>, the axis tends to look
 better if you explicitly set the axis limits.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -345,7 +345,7 @@ better if you explicitly set the axis limits.</p>
 <span>                             guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="700"></p>
 <p>As with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the number of
 minor ticks by adjusting the <code>minor_breaks</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -362,7 +362,7 @@ minor ticks by adjusting the <code>minor_breaks</code>.</p>
 <span>                             guide <span class="op">=</span> <span class="st">"prism_offset_minor"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
 <p>And as with <code><a href="../reference/guide_prism_minor.html">guide_prism_minor()</a></code> you can change the
 length of minor ticks by adjusting the <code>prism_ticks_length</code>
 argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> function.</p>
@@ -381,7 +381,7 @@ argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.htm
 <span>                prism.ticks.length.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 <p>Lastly, the colour (and other aesthetic attributes) of minor ticks
 will change when you change the colour of major ticks using the
 <code>axis.ticks</code> argument of the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code>
@@ -404,7 +404,7 @@ function.</p>
 <span>                                            lineend <span class="op">=</span> <span class="st">"round"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="brackets-axis">Brackets axis<a class="anchor" aria-label="anchor" href="#brackets-axis"></a>
@@ -428,7 +428,7 @@ therefore they have been re-implemented in <code>ggprism</code> as the
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"prism_bracket"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="700"></p>
 <p>The guide works fine with flipped plots.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show bracket axis guide with flipped plot</span></span>
@@ -443,7 +443,7 @@ therefore they have been re-implemented in <code>ggprism</code> as the
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="700"></p>
 <p>By default, the function tries to guess how wide the brackets should
 be. However you can control the bracket width with the
 <code>width</code> argument. Try numbers between 0 and 1. In this
@@ -463,7 +463,7 @@ well.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="../reference/guide_prism_bracket.html">guide_prism_bracket</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="700"></p>
 <p>You can change the bracket direction with the <code>outside</code>
 argument. By default, <code>outside = TRUE</code> which means the
 brackets point outward.</p>
@@ -480,7 +480,7 @@ brackets point outward.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="../reference/guide_prism_bracket.html">guide_prism_bracket</a></span><span class="op">(</span>outside <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="700"></p>
 <p>Making the brackets point inside makes the space between the axis
 text and the brackets smaller. You can increase this distance again by
 changing the margin of the relevent <code>axis.text</code> element.</p>
@@ -498,7 +498,7 @@ changing the margin of the relevent <code>axis.text</code> element.</p>
 <span>                axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="border-with-minor-ticks">Border with minor ticks<a class="anchor" aria-label="anchor" href="#border-with-minor-ticks"></a>
@@ -514,7 +514,7 @@ we’ll ignore it for now.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-21-1.png" width="480"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="480"></p>
 <p>Then we’ll apply <code><a href="../reference/theme_prism.html">theme_prism()</a></code> with a border, move the
 legend into the plotting area, and turn clipping off so the border
 thickness is accurate.</p>
@@ -525,13 +525,13 @@ thickness is accurate.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-22-1.png" width="480"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="480"></p>
 <p>Now we’ll add minor ticks to both primary axes.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add axis guides</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prism_minor"</span>, y <span class="op">=</span> <span class="st">"prism_minor"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-23-1.png" width="480"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="480"></p>
 <p>One way to add minor ticks all around the border is to use the
 <code><a href="../reference/annotation_ticks.html">annotation_ticks()</a></code> function in <code>ggprism</code>. This
 is the way I would recommend to avoid the issues that arise using
@@ -554,14 +554,14 @@ error)</li>
 <span>                                tick.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">14</span><span class="op">/</span><span class="fl">2</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>                                minor.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">14</span><span class="op">/</span><span class="fl">4</span>, <span class="st">"pt"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p_annot</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-24-1.png" width="480"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="480"></p>
 <p>You can adjust the number of minor ticks using the continuous scale
 functions as before.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># tick annotations will mirror adjustments to the actual axis ticks</span></span>
 <span><span class="va">p_annot</span> <span class="op">&lt;-</span> <span class="va">p_annot</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p_annot</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-25-1.png" width="480"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="discontinuous-axis">Discontinuous axis<a class="anchor" aria-label="anchor" href="#discontinuous-axis"></a>
@@ -587,7 +587,7 @@ package).</p>
 <span>  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-27-1.png" width="384"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" alt="" width="384"></p>
 <p>We’ll use the <code>patchwork</code> package to create our
 discontinuous axis plot. Indeed, we will be making two plots (one zoomed
 in on the main data and the other zoomed in on the outlier), using a
@@ -606,7 +606,7 @@ does not exclude any data, unlike <code><a href="https://ggplot2.tidyverse.org/r
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_bottom</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-28-1.png" width="384"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-28-1.png" class="r-plt" alt="" width="384"></p>
 <p>Next we’ll make a plot zoomed in on the outlier, and we’ll make a new
 theme for the top plot specifically, called
 <code>theme_outlier()</code>.</p>
@@ -633,7 +633,7 @@ theme for the top plot specifically, called
 <span>              base_line_size <span class="op">=</span> <span class="va">base_line_size</span>,</span>
 <span>              base_rect_size <span class="op">=</span> <span class="va">base_rect_size</span>,</span>
 <span>              axis_text_angle <span class="op">=</span> <span class="va">axis_text_angle</span>,</span>
-<span>              border <span class="op">=</span> <span class="va">border</span><span class="op">)</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">%+replace%</a></span> </span>
+<span>              border <span class="op">=</span> <span class="va">border</span><span class="op">)</span> <span class="op"><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">%+replace%</a></span> </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>          axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>          axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -643,7 +643,7 @@ theme for the top plot specifically, called
 <span></span>
 <span><span class="va">p_top</span> <span class="op">&lt;-</span> <span class="va">p_top</span> <span class="op">+</span> <span class="fu">theme_outlier</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">p_top</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-29-1.png" width="384"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="384"></p>
 <p>Now we’ll combine the two plots with <code>patchwork</code>. We can
 easily change theme elements of both plots using
 <code>&amp; theme()</code>.</p>
@@ -651,7 +651,7 @@ easily change theme elements of both plots using
 <code class="sourceCode R"><span><span class="va">p_top</span> <span class="op">/</span> <span class="va">p_bottom</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="axes_files/figure-html/unnamed-chunk-30-1.png" width="384"></p>
+<p><img src="axes_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" alt="" width="384"></p>
 </div>
   </div>
 
@@ -670,7 +670,7 @@ easily change theme elements of both plots using
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>

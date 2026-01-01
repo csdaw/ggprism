@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
       <h1 data-toc-skip>Adding p-values</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/v1.0.7/vignettes/pvalues.Rmd" class="external-link"><code>vignettes/pvalues.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/master/vignettes/pvalues.Rmd" class="external-link"><code>vignettes/pvalues.Rmd</code></a></small>
       <div class="hidden name"><code>pvalues.Rmd</code></div>
 
     </div>
@@ -177,7 +177,7 @@ examples</strong> section for help with this/examples.</p>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-3-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="384"></p>
 <p>Next we’ll perform a t-test and obtain a p-value for the difference
 between the two means.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -220,7 +220,7 @@ p-value table has special column names, you will need to specify them in
 <span>                     y.position <span class="op">=</span> <span class="st">"some_y_position"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># return column names back to default</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group1"</span>, <span class="st">"group2"</span>, <span class="st">"label"</span>, <span class="st">"y.position"</span><span class="op">)</span></span></code></pre></div>
@@ -255,7 +255,7 @@ length of the bracket. Lastly, you can flip the label when using
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, tip.length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="basic-use-no-brackets">Basic use (no brackets)<a class="anchor" aria-label="anchor" href="#basic-use-no-brackets"></a>
@@ -277,7 +277,7 @@ text.</p>
 <span>                     remove.bracket <span class="op">=</span> <span class="cn">TRUE</span>, x <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
 <p>Here is another example of ‘text only’ plot using the
 <code>ToothGrowth</code> data set.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -293,7 +293,7 @@ text.</p>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-11-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="384"></p>
 <p>Next we’ll perform two t-tests and compare the means against
 <code>dose = 0.5</code> as a reference group. Then we’ll correct the
 p-values for multiple testing.</p>
@@ -339,7 +339,7 @@ the labels look quite easily.</p>
 <span>                     fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 <p>If you want the label number format to look nicer you can provide a
 column name to <code>label</code> with <em>plotmath</em> expressions and
 set <code>parse = TRUE</code>. This works with or without brackets.</p>
@@ -368,7 +368,7 @@ set <code>parse = TRUE</code>. This works with or without brackets.</p>
 <span>                     parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="using-the-rstatix-package">Using the <code>rstatix</code> package<a class="anchor" aria-label="anchor" href="#using-the-rstatix-package"></a>
@@ -386,7 +386,7 @@ the appropriate x and y position automatically, in a single step.</p>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, </span>
 <span>               label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>,</span>
 <span>               remove.bracket <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-16-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="384"></p>
 </div>
 <div class="section level2">
 <h2 id="many-more-examples">Many more examples<a class="anchor" aria-label="anchor" href="#many-more-examples"></a>
@@ -415,7 +415,7 @@ bars indicate 1 standard deviation from the mean.</p>
 <span></span>
 <span><span class="co"># normal plot</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, y.position <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-17-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="384"></p>
 </div>
 <div class="section level3">
 <h3 id="compare-mean-vs-reference">Compare mean vs reference<a class="anchor" aria-label="anchor" href="#compare-mean-vs-reference"></a>
@@ -445,7 +445,7 @@ the mean.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, label <span class="op">=</span> <span class="st">"p.adj.signif"</span>, remove.bracket <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="700"></p>
 <p>Now, compare overall mean <code>len</code> (base mean) to the mean
 <code>len</code> for each <code>dose</code>. Error bars indicate 1
 standard deviation from the mean.</p>
@@ -466,7 +466,7 @@ standard deviation from the mean.</p>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, </span>
 <span>               label <span class="op">=</span> <span class="st">"p.adj.signif"</span>, </span>
 <span>               y.position <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-19-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="384"></p>
 <p>Now, compare the mean <code>len</code> for each <code>dose</code> to
 some arbitrary value, say <code>26</code> in this case. Error bars
 indicate 1 standard deviation from the mean.</p>
@@ -494,7 +494,7 @@ indicate 1 standard deviation from the mean.</p>
 <span>               x <span class="op">=</span> <span class="st">"factor(dose)"</span>, </span>
 <span>               y <span class="op">=</span> <span class="fl">37</span>,</span>
 <span>               label <span class="op">=</span> <span class="st">"p.adj.signif"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-20-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="384"></p>
 </div>
 <div class="section level3">
 <h3 id="multiple-pairwise-comparisons">Multiple pairwise comparisons<a class="anchor" aria-label="anchor" href="#multiple-pairwise-comparisons"></a>
@@ -515,7 +515,7 @@ slightly shorten side-by-side brackets.</p>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, </span>
 <span>               y.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">44</span>, <span class="fl">41</span>, <span class="fl">44</span><span class="op">)</span>,</span>
 <span>               bracket.shorten <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0</span>, <span class="fl">0.025</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-21-1.png" width="384"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="384"></p>
 </div>
 <div class="section level3">
 <h3 id="grouped-pairwise-comparisons">Grouped pairwise comparisons<a class="anchor" aria-label="anchor" href="#grouped-pairwise-comparisons"></a>
@@ -556,7 +556,7 @@ change the bracket spacing between different groups.</li>
 <span>               tip.length <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>               bracket.colour <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>               show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-22-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="480"></p>
 <p>Pairwise comparisons <em>within groups</em> of the
 <code>ToothGrowth</code> data set, grouped according to
 <code>supp</code>.</p>
@@ -578,7 +578,7 @@ change the bracket spacing between different groups.</li>
 <span>               xmax <span class="op">=</span> <span class="st">"xmax"</span>,</span>
 <span>               label <span class="op">=</span> <span class="st">"p = {p.adj}"</span>,</span>
 <span>               tip.length <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-23-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="480"></p>
 <p>Pairwise comparisons <em>within groups</em> and <em>between
 groups</em> of the <code>ToothGrowth</code> data set, grouped according
 to <code>supp</code>. You can use <code>bracket.nudge.y</code> to
@@ -611,7 +611,7 @@ to redefine <code>df_p_val2</code>.</p>
 <span>             tip.length <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>             bracket.nudge.y <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>             step.increase <span class="op">=</span> <span class="fl">0.015</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-24-1.png" width="480"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="480"></p>
 </div>
 <div class="section level3">
 <h3 id="facets">Facets<a class="anchor" aria-label="anchor" href="#facets"></a>
@@ -635,7 +635,7 @@ as the faceting variable (in this case <code>"dose"</code>).</p>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="700"></p>
 <p>Facet according to <code>supp</code> and then compare mean
 <code>len</code> between the three <code>dose</code>. It is important
 that the p-value table <strong>must</strong> have a column with the same
@@ -652,7 +652,7 @@ name as the faceting variable (in this case <code>"supp"</code>).</p>
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="700"></p>
 <p>Facet according to some particular grouping variable called
 <code>grp</code> and <code>dose</code>, and then compare mean
 <code>len</code> between either <code>supp</code>. It is important that
@@ -681,7 +681,7 @@ as the two faceting variables (in this case <code>"grp"</code> and
 <span>  <span class="fu"><a href="../reference/theme_prism.html">theme_prism</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_pvalue.html">add_pvalue</a></span><span class="op">(</span><span class="va">df_p_val</span>, bracket.nudge.y <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="pvalues_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
+<p><img src="pvalues_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 </div>
   </div>
@@ -701,7 +701,7 @@ as the two faceting variables (in this case <code>"grp"</code> and
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>

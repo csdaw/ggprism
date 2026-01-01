@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggprism</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
       <h1 data-toc-skip>Colour, Fill, and Shape Palettes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/v1.0.7/vignettes/colours.Rmd" class="external-link"><code>vignettes/colours.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/csdaw/ggprism/blob/master/vignettes/colours.Rmd" class="external-link"><code>vignettes/colours.Rmd</code></a></small>
       <div class="hidden name"><code>colours.Rmd</code></div>
 
     </div>
@@ -152,7 +152,7 @@ vignette outlines how to use <code><a href="../reference/scale_colour_prism.html
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-2-1.png" width="345.6"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="345.6"></p>
 <p><code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> (US spelling also works) functions
 pretty much identically to <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual()</a></code> from
 <code>ggplot2</code>. The default palette for
@@ -163,7 +163,7 @@ pretty much identically to <code><a href="https://ggplot2.tidyverse.org/referenc
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-3-1.png" width="691.2"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>There are several different colour palettes that are built into
 <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -202,7 +202,7 @@ pretty much identically to <code><a href="https://ggplot2.tidyverse.org/referenc
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_colour_prism.html">scale_colour_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"candy_bright"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-5-1.png" width="691.2"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>You can preview a single palette using the
 <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the
 colour scale applied (as well as <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> and
@@ -210,7 +210,7 @@ colour scale applied (as well as <code><a href="../reference/scale_fill_prism.ht
 page</a> for images of most available colour palettes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"flames"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-6-1.png" width="432"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="432"></p>
 </div>
 <div class="section level2">
 <h2 id="fill-scales">Fill scales<a class="anchor" aria-label="anchor" href="#fill-scales"></a>
@@ -227,7 +227,7 @@ page</a> for images of most available colour palettes.</p>
 <span>  <span class="fu"><a href="../reference/scale_shape_prism.html">scale_shape_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"filled"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-7-1.png" width="345.6"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="345.6"></p>
 <p><code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> functions pretty much identically to
 <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual()</a></code> from <code>ggplot2</code>. The default
 palette for <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code> is
@@ -238,7 +238,7 @@ palette for <code><a href="../reference/scale_fill_prism.html">scale_fill_prism(
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-8-1.png" width="691.2"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>There are several different fill palettes that are built into
 <code><a href="../reference/scale_fill_prism.html">scale_fill_prism()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -269,7 +269,7 @@ palette for <code><a href="../reference/scale_fill_prism.html">scale_fill_prism(
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">base</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_fill_prism.html">scale_fill_prism</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"neon"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-10-1.png" width="691.2"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>You can preview a single palette using the
 <code><a href="../reference/preview_theme.html">preview_theme()</a></code> function. It shows a sample plot with the
 colour scale applied (as well as <code><a href="../reference/scale_colour_prism.html">scale_colour_prism()</a></code> and
@@ -277,7 +277,7 @@ colour scale applied (as well as <code><a href="../reference/scale_colour_prism.
 page</a> for images of most available fill palettes.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_theme.html">preview_theme</a></span><span class="op">(</span><span class="st">"diazo"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-11-1.png" width="432"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="432"></p>
 </div>
 <div class="section level2">
 <h2 id="shape-scales">Shape scales<a class="anchor" aria-label="anchor" href="#shape-scales"></a>
@@ -318,7 +318,7 @@ palette.</p>
 <span></span>
 <span><span class="co"># show the shapes in the palette "complete"</span></span>
 <span><span class="fu">show_shapes</span><span class="op">(</span><span class="st">"complete"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-13-1.png" width="345.6"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="345.6"></p>
 <p>We’ll define a base plot to see <code><a href="../reference/scale_shape_prism.html">scale_shape_prism()</a></code> in
 action.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -343,7 +343,7 @@ action.</p>
 <span><span class="co">#&gt;   that many of them.</span></span>
 <span><span class="co">#&gt; Warning: Removed 62 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-14-1.png" width="345.6"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="345.6"></p>
 <p>Then we’ll compare the 3 shape palettes to the <code>ggplot2</code>
 base plot.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -363,7 +363,7 @@ base plot.</p>
 <span><span class="co">#&gt;   that many of them.</span></span>
 <span><span class="co">#&gt; Warning: Removed 62 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="colours_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="colours_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 </div>
   </div>
 
@@ -382,7 +382,7 @@ base plot.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>
