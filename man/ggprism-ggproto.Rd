@@ -3,20 +3,10 @@
 \docType{data}
 \name{GeomTicks}
 \alias{GeomTicks}
-\alias{StatBracket}
 \alias{GeomBracket}
 \title{ggproto classes for ggprism}
-\format{
-An object of class \code{StatBracket} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 4.
-
-An object of class \code{GeomBracket} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 5.
-}
-\usage{
-StatBracket
-
-GeomBracket
-}
 \description{
 ggproto classes for ggprism
 }
+\keyword{datasets}
 \keyword{internal}

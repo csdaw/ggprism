@@ -61,16 +61,16 @@ be plotted. Can also be a single number to plot all p-values at the same
 height or a \code{numeric} vector that will override \code{data}.}
 
 \item{parse}{\code{logical}. Default is \code{FALSE}. If \code{TRUE} the text labels will
-be parsed into expressions and displayed as described in \code{?plotmath}.}
+be parsed into expressions and displayed as described in \link[grDevices:plotmath]{grDevices::plotmath}.}
 
-\item{label.size}{\code{numeric}. Size of text.}
+\item{label.size}{\code{numeric}. Size of text. Default is \code{3.2}.}
 
-\item{colour, color}{\code{string}. Colour of text.}
+\item{colour, color}{\code{string}. Colour of text. Default is \code{"black"}.}
 
-\item{tip.length}{\code{numeric} vector. Length of bracket tips.
-Use \code{0} to remove tips.}
+\item{tip.length}{\code{numeric} vector. Length of bracket tips. Default is \code{0.03},
+use \code{0} to remove tips.}
 
-\item{bracket.size}{\code{numeric}. Line width of bracket.}
+\item{bracket.size}{\code{numeric}. Line width of bracket. Default is \code{0.6}.}
 
 \item{bracket.colour, bracket.color}{\code{string}. Colour of bracket. Default is
 \code{NULL} which causes brackets to inherit the colour of the text.}
@@ -88,8 +88,7 @@ p-values. Useful for slightly adjusting p-values if the text is cut off.}
 \item{remove.bracket}{\code{logical}. If \code{TRUE} all brackets are
 removed and p-value is shown as text only.}
 
-\item{coord.flip}{\code{logical}. If \code{TRUE} p-values are rotated by
-90 degrees. Should be used with \code{\link[ggplot2]{coord_flip}}}
+\item{coord.flip}{\code{logical}. This argument is deprecated.}
 
 \item{position}{\code{string} or call to position function such as
 \code{\link[ggplot2]{position_dodge}}. Typically used for adjusting x
@@ -99,8 +98,7 @@ position of p-values to be in line with dodged data.}
 \code{\link[ggplot2]{layer}}. See below for allowed values.}
 }
 \value{
-Returns a \emph{layer} ggproto object with either \code{geom = GeomBracket} or
-\code{geom = GeomText}.
+Returns a ggplot2 \code{Layer} object that can be added to a plot.
 }
 \description{
 Add p-values with or without brackets to a ggplot.
@@ -108,13 +106,12 @@ Add p-values with or without brackets to a ggplot.
 See \href{https://csdaw.github.io/ggprism/articles/pvalues.html}{here}
 or the examples section below for examples of how to use.
 
-\code{add_pvalue} is a refactored version of
+\code{add_pvalue} is a heavily re-written version of
 \code{stat_pvalue_manual} from
-\href{https://github.com/kassambara/ggpubr}{kassambara/ggpubr}, altered to
-have less dependencies, and more flexibility with input format and
-aesthetics. Any examples using \code{stat_pvalue_manual} found on
+\href{https://github.com/kassambara/ggpubr}{kassambara/ggpubr}. Any examples
+using \code{stat_pvalue_manual} found on
 \href{https://www.datanovia.com/en/?s=p-value&search-type=default}{Datanovia}
-will also work with \code{add_pvalue}.
+should also work with \code{add_pvalue} with minimal to no alterations.
 }
 \section{Allowed ... values}{
 
@@ -186,7 +183,7 @@ two.means <- tibble::tribble(
 
 ggplot(tg, aes(x = supp, y = len)) +
   geom_boxplot() +
-  add_pvalue(two.means, label = "p = {p}")
+  add_pvalue(two.means, label = "p = {p}", parse = TRUE)
 
 ## you can change aesthetics of the bracket and label
 ggplot(tg, aes(x = supp, y = len)) +
@@ -194,6 +191,7 @@ ggplot(tg, aes(x = supp, y = len)) +
   add_pvalue(
     two.means,
     label = "p = {p}",
+    parse = TRUE,
     colour = "red", # label
     label.size = 6, # label
     fontface = "bold", # label

@@ -1,359 +1,375 @@
 #### Setup ---------------------------------------------------------------------
-
-## load libraries
+library(tinytest)
 library(ggplot2)
+library(dplyr)
+using("tinysnapshot")
+options(tinysnapshot_os = "Darwin") # see Sys.info()["sysname"]
+options(tinysnapshot_device = "svglite")
 
-## data to plot
+## Most of these tests are borrowed from the p-value vignette
+
+#### Basic use (brackets) ------------------------------------------------------
+p <- ggplot(datasets::sleep, aes(x = group, y = extra)) +
+  geom_point(aes(shape = group), position = position_jitter(width = 0.1, seed = 1)) +
+  stat_summary(geom = "crossbar", fun = mean, colour = "red", width = 0.2) +
+  theme_prism() +
+  theme(legend.position = "none")
+
+# construct p-value data.frame
+result <- t.test(extra ~ group, data = sleep)$p.value
+result <- signif(result, digits = 3)
+df_p_val <- data.frame(
+  group1 = "1",
+  group2 = "2",
+  label = result,
+  y.position = 6
+)
+
+# add p-value brackets
+p1 <- p + add_pvalue(df_p_val,
+                     xmin = "group1",
+                     xmax = "group2",
+                     label = "label",
+                     y.position = "y.position")
+
+expect_snapshot_plot(p1, label = "add_pvalue01")
+
+# change the plot look
+# change bracket and label aesthetics
+p2 <- p + add_pvalue(df_p_val,
+                     label = "p = {label}",
+                     colour = "red", # label
+                     label.size = 8, # label
+                     fontface = "bold", # label
+                     fontfamily = "serif", # label
+                     angle = 45, # label
+                     hjust = 1, # label
+                     vjust = 2, # label
+                     bracket.colour = "blue", # bracket
+                     bracket.size = 1, # bracket
+                     linetype = "dashed", # bracket
+                     lineend = "round") # bracket
+
+expect_snapshot_plot(p2, label = "add_pvalue02")
+
+# make bracket tips longer and use coord_flip
+p3 <- p + add_pvalue(df_p_val, tip.length = 0.15) +
+  coord_flip()
+
+expect_snapshot_plot(p3, label = "add_pvalue03")
+
+# change bracket tips independently
+# (make one side disappear and the other longer)
+p4 <- p + add_pvalue(df_p_val, tip.length = c(0.2, 0))
+
+expect_snapshot_plot(p4, label = "add_pvalue04")
+
+
+
+
+#### Basic use (no brackets) ---------------------------------------------------
+
+# position label above "group1"
+p5 <- p + add_pvalue(df_p_val, label = "p = {label}",
+                     remove.bracket = TRUE, x = 1)
+
+expect_snapshot_plot(p5, label = "add_pvalue05")
+
+# create a box plot of the ToothGrowth data set
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_boxplot(aes(fill = dose), colour = "black") +
+  theme_prism() +
+  theme(legend.position = "none")
+
+# compare means again reference
+result1 <- t.test(len ~ dose,
+                  data = subset(ToothGrowth, dose %in% c(0.5, 1.0)))$p.value
+result2 <- t.test(len ~ dose,
+                  data = subset(ToothGrowth, dose %in% c(0.5, 2.0)))$p.value
+
+# Benjamini-Hochberg correction for multiple testing
+result <- p.adjust(c(result1, result2), method = "BH")
+
+# don't need group2 column (i.e. xmax)
+# instead just specify x position in the same way as y.position
+df_p_val <- data.frame(
+  group1 = c(0.5, 0.5),
+  group2 = c(1, 2),
+  x = c(2, 3),
+  label = signif(result, digits = 3),
+  y.position = c(35, 35)
+)
+
+p6 <- p + add_pvalue(df_p_val,
+                     xmin = "group1",
+                     x = "x",
+                     label = "p = {label}",
+                     y.position = "y.position",
+                     label.size = 3.2,
+                     fontface = "bold")
+
+expect_snapshot_plot(p6, label = "add_pvalue06")
+
+# as above but with italics
+df_p_val$p.exprs.ital <- lapply(
+  paste(round(log10(df_p_val$label), 0)),
+  function(x) bquote(italic("P = 1x10"^.(x)))
+)
+
+p7 <- p + add_pvalue(df_p_val,
+                     xmin = "group1",
+                     x = "x",
+                     label = "p.exprs.ital",
+                     y.position = "y.position",
+                     parse = TRUE)
+
+expect_snapshot_plot(p7, label = "add_pvalue07")
+
+
+
+
+#### Compare two means ---------------------------------------------------------
+
+df_p_val <- rstatix::t_test(ToothGrowth, len ~ supp) %>%
+  rstatix::add_x_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) +
+  stat_summary(geom = "col", fun = mean) +
+  stat_summary(geom = "errorbar",
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 35)) +
+  scale_y_continuous(breaks = seq(0, 35, 5), expand = c(0, 0))
+
+# normal plot
+p8 <- p + add_pvalue(df_p_val, y.position = 30)
+
+expect_snapshot_plot(p8, label = "add_pvalue08")
+
+
+
+#### Compare mean vs reference -------------------------------------------------
+
+df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "0.5") %>%
+  rstatix::add_xy_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  stat_summary(geom = "col", fun = mean) +
+  stat_summary(geom = "errorbar",
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 40)) +
+  scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
+
+# with brackets
+p9 <- p + add_pvalue(df_p_val, label = "p.adj.signif")
+
+# without brackets
+p10 <- p + add_pvalue(df_p_val, label = "p.adj.signif", remove.bracket = TRUE)
+
+expect_snapshot_plot(p9, label = "add_pvalue09")
+
+expect_snapshot_plot(p10, label = "add_pvalue10")
+
+
+df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose, ref.group = "all")
+
+p11 <- p + add_pvalue(df_p_val,
+                      label = "p.adj.signif",
+                      y.position = 35)
+
+expect_snapshot_plot(p11, label = "add_pvalue11")
+
+
+df_p_val <- ToothGrowth %>%
+  rstatix::group_by(factor(dose)) %>%
+  rstatix::t_test(len ~ 1, mu = 26) %>%
+  rstatix::adjust_pvalue(p.col = "p", method = "holm") %>%
+  rstatix::add_significance(p.col = "p.adj")
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  stat_summary(geom = "col", fun = mean) +
+  stat_summary(geom = "errorbar",
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 40)) +
+  scale_y_continuous(breaks = seq(0, 40, 5), expand = c(0, 0))
+
+# remember xmin and x are referring to the column dames in df_p_val
+p12 <- p + add_pvalue(df_p_val,
+                      xmin = "group1",
+                      x = "factor(dose)",
+                      y = 37,
+                      label = "p.adj.signif")
+
+expect_snapshot_plot(p12, label = "add_pvalue12")
+
+
+
+
+#### Multiple pairwise comparisons ---------------------------------------------
+
+df_p_val <- rstatix::t_test(ToothGrowth, len ~ dose)
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.2) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 45)) +
+  scale_y_continuous(breaks = seq(0, 45, 5), expand = c(0, 0))
+
+p13 <- p + add_pvalue(df_p_val,
+                      y.position = c(44, 41, 44),
+                      bracket.shorten = c(0.025, 0, 0.025))
+
+expect_snapshot_plot(p13, label = "add_pvalue13")
+
+
+
+
+#### Grouped pairwise comparisons ----------------------------------------------
+
+df_p_val <- ToothGrowth %>%
+  rstatix::group_by(supp) %>%
+  rstatix::t_test(len ~ dose) %>%
+  rstatix::add_xy_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_boxplot(aes(fill = supp)) +
+  theme_prism()
+
+# remember colour and step.group.by are referring to a column name in df_p_val
+p14 <- p + add_pvalue(df_p_val,
+                      label = "p = {p.adj}",
+                      colour = "supp",
+                      fontface = "bold",
+                      step.group.by = "supp",
+                      step.increase = 0.1,
+                      tip.length = 0,
+                      bracket.colour = "black",
+                      show.legend = FALSE)
+
+expect_snapshot_plot(p14, label = "add_pvalue14")
+
+
+df_p_val <- ToothGrowth %>%
+  rstatix::group_by(dose) %>%
+  rstatix::t_test(len ~ supp) %>%
+  rstatix::adjust_pvalue(p.col = "p", method = "bonferroni") %>%
+  rstatix::add_significance(p.col = "p.adj") %>%
+  rstatix::add_xy_position(x = "dose", dodge = 0.8) # important for positioning!
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_boxplot(aes(fill = supp)) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 40))
+
+p15 <- p + add_pvalue(df_p_val,
+                      xmin = "xmin",
+                      xmax = "xmax",
+                      label = "p = {p.adj}",
+                      tip.length = 0)
+
+expect_snapshot_plot(p15, label = "add_pvalue15")
+
+
+df_p_val1 <- ToothGrowth %>%
+  rstatix::group_by(dose) %>%
+  rstatix::t_test(len ~ supp) %>%
+  rstatix::adjust_pvalue(p.col = "p", method = "bonferroni") %>%
+  rstatix::add_significance(p.col = "p.adj") %>%
+  rstatix::add_xy_position(x = "dose", dodge = 0.8) # important for positioning!
+
+df_p_val2 <- rstatix::t_test(ToothGrowth, len ~ dose,
+                             p.adjust.method = "bonferroni") %>%
+  rstatix::add_xy_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_boxplot(aes(fill = supp)) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 45))
+
+p16 <- p + add_pvalue(df_p_val1,
+                      xmin = "xmin",
+                      xmax = "xmax",
+                      label = "p = {p.adj}",
+                      tip.length = 0) +
+  add_pvalue(df_p_val2,
+             label = "p = {p.adj}",
+             tip.length = 0.01,
+             bracket.nudge.y = 2,
+             step.increase = 0.015)
+
+expect_snapshot_plot(p16, label = "add_pvalue16")
+
+
+
+
+#### Facets --------------------------------------------------------------------
+
+df_p_val <- ToothGrowth %>%
+  rstatix::group_by(dose) %>%
+  rstatix::t_test(len ~ supp) %>%
+  rstatix::add_xy_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(supp), y = len)) +
+  geom_boxplot(width = 0.2) +
+  facet_wrap(
+    ~ dose, scales = "free",
+    labeller = labeller(dose = function(x) paste("dose =", x))
+  ) +
+  theme_prism()
+
+p17 <- p + add_pvalue(df_p_val)
+
+expect_snapshot_plot(p17, label = "add_pvalue17")
+
+
+df_p_val <- ToothGrowth %>%
+  rstatix::group_by(supp) %>%
+  rstatix::t_test(len ~ dose) %>%
+  rstatix::add_xy_position()
+
+p <- ggplot(ToothGrowth, aes(x = factor(dose), y = len)) +
+  geom_boxplot(width = 0.4) +
+  facet_wrap(~ supp, scales = "free") +
+  theme_prism()
+
+p18 <- p + add_pvalue(df_p_val)
+
+expect_snapshot_plot(p18, label = "add_pvalue18")
+
+
+# add a grouping variable to ToothGrowth
 tg <- ToothGrowth
-tg$dose <- as.factor(tg$dose)
-tg$group <- factor(rep(c("grp1", "grp2"), 30))
+tg$dose <- factor(tg$dose)
+tg$grp <- factor(rep(c("grp1", "grp2"), 30))
 
-## minimal examples of statistic tables (brackets):
-# one group
-one.mean <- tibble::tribble(
-  ~group1, ~group2,      ~p.signif, ~y.position, ~dose,
-  "1",     "null model", "****",    35,          "0.5",
-  "1",     "null model", "****",    35,          "1",
-  "1",     "null model", "****",    35,          "2"
+# construct the p-value table by hand
+df_p_val <- data.frame(
+  group1 = c("OJ", "OJ"),
+  group2 = c("VC", "VC"),
+  p.adj = c(0.0449, 0.00265),
+  y.position = c(22, 27),
+  grp = c("grp1", "grp2"),
+  dose = c("0.5", "1")
 )
 
-# two groups
-two.means <- tibble::tribble(
-  ~group1, ~group2, ~p,     ~y.position,
-  "OJ",    "VC",    0.0606, 36
-)
+p <- ggplot(tg, aes(x = factor(supp), y = len)) +
+  geom_boxplot(width = 0.4) +
+  facet_wrap(grp ~ dose, scales = "free") +
+  theme_prism()
 
-two.means.grouped1 <- tibble::tribble(
-  ~group1, ~group2, ~p.adj,  ~y.position, ~dose,
-  "OJ",    "VC",    0.0127,  24,          "0.5",
-  "OJ",    "VC",    0.00312, 30,          "1",
-  "OJ",    "VC",    0.964,   36.5,        "2"
-)
+p19 <- p + add_pvalue(df_p_val, bracket.nudge.y = 3)
 
-two.means.grouped2 <- tibble::tribble(
-  ~group1, ~group2, ~p.signif, ~y.position, ~group, ~dose,
-  "OJ",    "VC",    "*",       21,          "grp1", "0.5",
-  "OJ",    "VC",    "**",      30,          "grp2", "1"
-)
+expect_snapshot_plot(p19, label = "add_pvalue19")
 
-# each versus ref
-each.vs.ref <- tibble::tribble(
-  ~group1, ~group2, ~p.adj,   ~y.position,
-  "0.5",   "1",     8.80e-14, 35,
-  "0.5",   "2",     1.27e-7,  38
-)
-
-each.vs.ref.grouped <- tibble::tribble(
-  ~group1, ~group2, ~p.signif, ~y.position, ~supp,
-  "0.5",   "1",     "***",     33.6,        "OJ",
-  "0.5",   "2",     "***",     39,          "OJ",
-  "0.5",   "1",     "***",     36.6,        "VC",
-  "0.5",   "2",     "***",     42,          "VC"
-)
-each.vs.ref.grouped$supp <- factor(each.vs.ref.grouped$supp)
-
-each.vs.basemean <- tibble::tribble(
-  ~group1, ~group2, ~p.adj,     ~y.position,
-  "all",   "0.5",   0.00000087, 35,
-  "all",   "1",     0.512,      35,
-  "all",   "2",     0.00000087, 35
-)
-
-# pairwise
-pairwise <- tibble::tribble(
-  ~group1, ~group2,  ~p.signif, ~y.position,
-  "0.5",   "1",      "****",    34,
-  "0.5",   "2",      "****",    36,
-  "1",     "2",      "****",    38
-)
-
-pairwise.grouped <- tibble::tribble(
-  ~group1, ~group2, ~p.adj,  ~y.position, ~supp,
-  "0.5",   "1",     2.63e-4, 33.5,        "OJ",
-  "0.5",   "2",     3.96e-6, 37.6,        "OJ",
-  "1",     "2",     1.18e-1, 41.6,        "OJ",
-  "0.5",   "1",     2.04e-6, 36.5,        "VC",
-  "0.5",   "2",     1.40e-7, 40.6,        "VC",
-  "1",     "2",     2.75e-4, 44.6,        "VC"
-)
-
-## base plots
-base.tg1 <- ggplot(tg, aes(x = supp, y = len)) +
-  geom_boxplot()
-
-base.tg2 <- ggplot(tg, aes(x = dose, y = len)) +
-  geom_boxplot(aes(fill = dose))
-
-base.tg3 <- ggplot(tg, aes(x = dose, y = len)) +
-  geom_boxplot(aes(fill = supp))
-
-base.tg4 <- ggplot(tg, aes(x = supp, y = len)) +
-  geom_boxplot(aes(fill = dose))
-
-#### Tests (brackets) ----------------------------------------------------------
-
-# test that class is StatBracket and inherits Stat
-g <- base.tg1 + add_pvalue(two.means)
-expect_equal(class(g$layers[[2]]$stat), c("StatBracket", "Stat", "ggproto", "gg"))
-
-# test that class is GeomBracket and inherits Geom
-expect_equal(class(g$layers[[2]]$geom), c("GeomBracket", "Geom", "ggproto", "gg"))
-
-# test that label can be glue expression
-g <- base.tg1 + add_pvalue(two.means, label = "p = {p}")
-
-expect_silent(ggplotGrob(g))
-
-# test that label can be column with any name
-two.means$custom.label <- "ns"
-g <- base.tg1 + add_pvalue(two.means, label = "custom.label")
-
-expect_silent(ggplotGrob(g))
-
-# test that label can be parse into expressions and displayed as plotmath
-each.vs.ref$p.exprs <- paste0("P==1*x*10^", round(log10(each.vs.ref$p.adj), 0))
-g <- base.tg2 + add_pvalue(each.vs.ref, label = "p.exprs", parse = TRUE)
-
-expect_silent(ggplotGrob(g))
-
-# test that xmin and xmax can be column with any name
-colnames(two.means)[1:2] <- c("apple", "banana")
-g <- base.tg1 + add_pvalue(two.means, xmin = "apple", xmax = "banana")
-
-expect_silent(ggplotGrob(g))
-colnames(two.means)[1:2] <- c("group1", "group2") # change them back
-
-# test that y.position can be column with any name
-colnames(two.means)[4] <- "orange"
-g <- base.tg1 + add_pvalue(two.means, y.position = "orange")
-
-expect_silent(ggplotGrob(g))
-colnames(two.means)[4] <- "y.position" # change it back
-
-# test that label.size can be adjusted
-g <- base.tg1 + add_pvalue(two.means, label.size = 1)
-
-expect_identical(g$layers[[2]]$aes_params$label.size, 1)
-
-# test that colour or color can be changed manually
-g1 <- base.tg1 + add_pvalue(two.means, colour = "red")
-g2 <- base.tg1 + add_pvalue(two.means, color = "red")
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that colour can be set by grouping variable
-g1 <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp")
-g2 <- base.tg3 + add_pvalue(pairwise.grouped, color = "supp")
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that tip.length can be adjusted
-g1 <- base.tg2 + add_pvalue(each.vs.ref, tip.length = 0.01) # both at once
-g2 <- base.tg2 + add_pvalue(each.vs.ref, tip.length = c(0.01, 0.01)) # individually
-
-expect_identical(
-  rep(g1$layers[[2]]$stat_params$tip.length, 2),
-  g2$layers[[2]]$stat_params$tip.length
-)
-
-# test that tip.length can be negative
-g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = -0.01)
-
-expect_silent(ggplotGrob(g))
-
-# test that tip.length can be zero
-g <- base.tg2 + add_pvalue(each.vs.ref, tip.length = 0)
-
-expect_silent(ggplotGrob(g))
-
-# test that bracket.size can be adjusted
-g1 <- base.tg1 + add_pvalue(two.means, bracket.size = 3) # all at once
-g2 <- base.tg1 + add_pvalue(two.means, bracket.size = c(3, 3, 3)) # individual segments
-
-expect_identical(
-  rep(g1$layers[[2]]$stat_params$bracket.size, 3),
-  g2$layers[[2]]$stat_params$bracket.size
-)
-
-# test that bracket.colour or bracket.color can be changed manually
-g1 <- base.tg1 + add_pvalue(two.means, bracket.colour = "red")
-g2 <- base.tg1 + add_pvalue(two.means, bracket.color = "red")
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that bracket.colour can be adjusted separately to colour
-g <- base.tg1 + add_pvalue(two.means, bracket.colour = "red", colour = "blue")
-
-expect_false(
-  isTRUE(
-    all.equal(
-      g$layers[[2]]$aes_params$colour,
-      g$layers[[2]]$data$bracket.colour
-    )
-  )
-)
-
-# test that brackets can be shortened
-g1 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = 0.05) # all at once
-g2 <- base.tg2 + add_pvalue(pairwise, bracket.shorten = c(0.05, 0.05, 0.05)) #individually
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that bracket.nudge.y works
-g <- base.tg3 + add_pvalue(pairwise.grouped, bracket.nudge.y = 10)
-
-expect_silent(ggplotGrob(g))
-
-# test that step.increase works
-g <- base.tg3 + add_pvalue(pairwise.grouped, step.increase = 0.2,
-                           step.group.by = "supp")
-
-expect_silent(ggplotGrob(g))
-
-# test that step.group.by works
-g <- base.tg3 + add_pvalue(pairwise.grouped, colour = "supp",
-                           step.group.by = "supp")
-
-expect_silent(ggplotGrob(g))
-
-# test that coord.flip works
-g <- base.tg2 + add_pvalue(pairwise, coord.flip = TRUE) +
-  coord_flip()
-
-expect_silent(ggplotGrob(g))
-
-# test that comparison against basemean works
-g <- base.tg2 + add_pvalue(each.vs.basemean)
-
-expect_silent(ggplotGrob(g))
-
-# test that comparison against reference group works with opposite orientation
-g <- base.tg2 + add_pvalue(each.vs.ref, xmin = "group2", xmax = "group1")
-
-expect_silent(ggplotGrob(g))
-
-# test that add_pvalue works with facets using grouped data and free scales
-base.facet <- base.tg1 + facet_wrap(~ dose, scales = "free")
-g <- base.facet + add_pvalue(two.means.grouped1) # must have dose column
-
-expect_equal(length(layer_grob(g)), 3)
-expect_silent(ggplotGrob(g))
-
-gt <- ggplotGrob(g)
-gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
-expect_true(grepl("geom_bracket", gt$children[[4]]$name))
-expect_equal(length(gt$children[[4]]$children), 2)
-
-# test that add_pvalue works with multiply grouped data
-base.facet <- base.tg1 + facet_grid(group ~ dose)
-g <- base.facet + add_pvalue(two.means.grouped2) # must have group, dose columns
-
-expect_equal(length(layer_grob(g)), 6)
-expect_silent(ggplotGrob(g))
-
-gt <- ggplotGrob(g)
-gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
-expect_true(grepl("geom_bracket", gt$children[[4]]$name))
-expect_equal(length(gt$children[[4]]$children), 2)
-
-# test that add_pvalue works with multiple brackets per facet
-base.facet <- base.tg3 + facet_wrap(~ supp)
-g <- base.facet + add_pvalue(pairwise.grouped)
-
-expect_equal(length(layer_grob(g)), 2)
-expect_silent(ggplotGrob(g))
-
-gt <- ggplotGrob(g)
-gt <- gt$grobs[grepl("panel", gt$layout$name)][[1]]
-expect_true(grepl("geom_bracket", gt$children[[4]]$name))
-expect_equal(length(gt$children[[4]]$children), 6)
-
-#### Tests (no brackets) -------------------------------------------------------
-
-# test that remove.bracket works
-g <- base.tg2 + add_pvalue(each.vs.ref, remove.bracket = TRUE)
-expect_silent(ggplotGrob(g))
-
-# test that remove.bracket works with opposite reference orientation
-g <- base.tg2 + add_pvalue(each.vs.ref, remove.bracket = TRUE,
-                           xmin = "group2", xmax = "group1")
-expect_silent(ggplotGrob(g))
-
-# test that class is GeomText when brackets are removed
-# need to provide x
-g <- base.tg1 + add_pvalue(two.means, x = 1.5, remove.bracket = TRUE)
-expect_equal(class(g$layers[[2]]$geom), c("GeomText", "Geom", "ggproto", "gg"))
-
-# test that comparison against null works
-g <- base.tg2 + add_pvalue(one.mean, x = "dose", y = 35)
-
-expect_silent(ggplotGrob(g))
-
-# test that manual xmax = NULL works
-g <- base.tg3 + add_pvalue(two.means.grouped1, xmin = "dose", xmax = NULL)
-
-expect_silent(ggplotGrob(g))
-
-# test that colour or color can be changed manually (no brackets)
-g1 <- base.tg2 + add_pvalue(one.mean, x = "dose", colour = "blue")
-g2 <- base.tg2 + add_pvalue(one.mean, x = "dose", color = "blue")
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that colour can be set by grouping variable
-g1 <- base.tg2 + add_pvalue(one.mean, x = "dose", colour = "dose")
-g2 <- base.tg2 + add_pvalue(one.mean, x = "dose", color = "dose")
-
-# not a good way to test equivalency, see https://github.com/r-lib/waldo/issues/56
-expect_equal(g1$layers[[2]]$data, g2$layers[[2]]$data)
-
-# test that coord.flip works (no brackets)
-g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
-                           remove.bracket = TRUE) +
-  coord_flip()
-
-expect_silent(ggplotGrob(g))
-
-# test that changing label angle works (no brackets)
-g <- base.tg2 + add_pvalue(each.vs.ref, coord.flip = TRUE,
-                           remove.bracket = TRUE, angle = 90) +
-  coord_flip()
-
-expect_silent(ggplotGrob(g))
-
-# test that grouped comparison against reference works
-g <- base.tg4 + add_pvalue(each.vs.ref.grouped, x = "supp")
-
-expect_silent(ggplotGrob(g))
-
-#### Sanity checks -------------------------------------------------------------
-
-# test that warning occurs if colour and color are set
-expect_warning(base.tg1 + add_pvalue(two.means, colour = "red", color = "black"),
-               "Use colour or color but not both.")
-
-# test that warning occurs if bracket.colour and bracket.color are set
-expect_warning(base.tg1 + add_pvalue(two.means, bracket.colour = "blue",
-                                     bracket.color = "red"),
-               "Use bracket.colour or bracket.color but not both.")
-
-# test that specific xmin, xmax works even if group1 and group2 are in the data
-two.means.copy <- two.means
-colnames(two.means.copy)[1:2] <- c("apple", "banana")
-two.means.copy$group1 <- 111
-two.means.copy$group2 <- 222
-
-expect_silent(base.tg1 + add_pvalue(two.means.copy, xmin = "apple", xmax = "banana"))
-
-# test that error occurs if xmin column specified is missing from data
-expect_error(base.tg1 + add_pvalue(two.means, xmin = "apple"),
-             "can't find the xmin variable 'apple' in the data")
-
-# test that error occurs if label column specified is missing from data
-expect_error(base.tg1 + add_pvalue(two.means, label = "apple"),
-             "can't find the label variable 'apple' in the data")
