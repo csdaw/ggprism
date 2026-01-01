@@ -3,6 +3,8 @@ library(tinytest)
 library(ggplot2)
 library(dplyr)
 using("tinysnapshot")
+options(tinysnapshot_os = "Darwin") # see Sys.info()["sysname"]
+options(tinysnapshot_device = "svglite")
 
 ## Most of these tests are borrowed from the p-value vignette
 

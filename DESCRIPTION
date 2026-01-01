@@ -43,6 +43,7 @@ Suggests:
     rmarkdown,
     rstatix,
     rsvg,
+    svglite,
     tidyr,
     tinysnapshot,
     tinytest
