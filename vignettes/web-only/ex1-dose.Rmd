@@ -23,7 +23,7 @@ cell surface receptor when you add increasing concentrations of an agonist
 molecule in the presence or not of a competitive inhibitor. The underlying data 
 set comes from one of the XY dose response tutorials included with Prism. 
 
-![Prism dose reponse curve](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
+![Prism dose reponse curve](prism_dose_response.png){ width=70% }
 
 ## Preparation
 
@@ -79,7 +79,7 @@ First, we'll just give the `ggplot()` function our data.
 p <- ggplot(df, aes(x = log.agonist, y = response))
 ```
 
-![](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
+![](prism_dose_response.png){ width=70% }
 
 Looking at the original
 plot we can see that the dose response curves underlie the data points, so 
@@ -226,7 +226,7 @@ p
 
 And that's it! Our ggplot graph is almost identical to the original.
 
-![Original plot](https://cdn.graphpad.com/assets/0.27.0/images/srcset/prism-get-actionable-help-w1920-800.png){ width=70% }
+![Original plot](prism_dose_response.png){ width=70% }
 
 ## Plot source code
 
